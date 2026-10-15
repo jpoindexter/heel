@@ -189,3 +189,9 @@ Why: "we shouldn't have to give it Gmail code… just take control, open things,
 PRD change: "sends never" → "sends only after the person presses Send on a preview". The S7 Gmail OAuth code stays as a fallback, unwired.
 Watch: in a real turn the model also completed an existing task while drafting. Receipts + Undo caught it; if it repeats, split "mail" turns from task writes in the prompt.
 Evidence: docs/N11-MAIL.md. Reversible? Yes (routes and one action; nothing stored).
+
+## 2026-10-15 — B2: the person's own words are never clamped
+Choice: the green "what you asked" bubble wraps in full (no `-webkit-line-clamp`); the reply region already scrolls inside itself (`--reply-max-height`), so a long question costs scrolling, not truncation. Task titles keep the 2-line clamp because their text element carries no padding, so the ellipsis renders.
+Why: `-webkit-line-clamp` clips at the content box but `overflow: hidden` clips at the padding box, so a padded bubble shows a sliced third line (Jason's screenshot). Clamping someone's own question also hides what the answer refers to.
+Verified (real window, light + dark): a 192-character question shows 5 full lines, scrollHeight = clientHeight; a 170-character task title shows 2 lines with "…".
+Reversible? Yes (one class).

@@ -11,7 +11,8 @@
   --ring-room: 6px; /* the focus ring (3px + 2px offset) must fit inside clipped scroll regions */
   --compose-max-height: 96px; /* the input grows to about four lines, then scrolls */
   --parked-max-height: 160px;
-  --reply-max-height: 38vh; /* a long answer scrolls inside itself; the tasks under it keep their room */
+  --reply-max-height: 38vh;
+  --message-max-width: 86%; /* the asked bubble keeps a little air on its left */ /* a long answer scrolls inside itself; the tasks under it keep their room */
   --toast-gap: var(--space-2);
   --z-card: 5; /* the open chat card floats over the list */
   --z-toast: 10;
