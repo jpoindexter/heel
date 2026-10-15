@@ -9,7 +9,7 @@
     "preview": "vite preview",
     "tauri": "tauri",
     "test": "vitest run",
-    "typecheck": "tsc --noEmit && tsc --noEmit -p sidecar",
+    "typecheck": "tsc --noEmit && tsc --noEmit -p sidecar && tsc --noEmit -p tsconfig.node.json",
     "sidecar": "tsx sidecar/server/main.ts",
     "dev:all": "concurrently -k -n vite,sidecar \"npm:dev\" \"npm:sidecar\""
   },
