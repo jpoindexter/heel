@@ -3,8 +3,9 @@ import type { HistoryMessage } from "../../shared/api";
 import type { Store } from "../store/store";
 import { MAX_ACTIONS_PER_REPLY, MAX_SAY_CHARS } from "./actions";
 import type { TaskRefs } from "./execute";
+import { skillsDir } from "./skills-dir";
 
-const SKILLS_DIR = new URL("../../skills/nd-skills/", import.meta.url);
+const SKILLS_DIR = skillsDir(process.env, new URL("../../skills/nd-skills/", import.meta.url));
 const SKILL_CHAR_LIMIT = 5_000;
 const MAX_TASKS_IN_PROMPT = 10;
 const ROUTER = "nd-executive-function-router";

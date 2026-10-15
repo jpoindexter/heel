@@ -1,14 +1,8 @@
 import { randomUUID } from "node:crypto";
 import { DatabaseSync } from "node:sqlite";
 import type { Ctx } from "./context";
-import { activeFocus, endFocus, startFocus } from "./focus";
-import { interruptState, spendInterrupt } from "./interrupts";
-import { getLedger, upsertLedger } from "./ledger";
 import { currentVersion, migrateDown, migrateUp } from "./migrations";
-import { listParked, parkIdea, promoteParked, unparkIdea } from "./parked";
-import type { FocusOutcome, TaskStatus } from "./schema";
-import { getBrain, setBrain } from "./settings";
-import { addTask, completeTask, dropTask, getTask, listTasks, restoreTask, setNowStep, startTask } from "./tasks";
+import { systemRepositories, todayRepositories } from "./repositories";
 
 export type StoreOptions = {
   /** File path, or ":memory:" (default). */
@@ -19,7 +13,7 @@ export type StoreOptions = {
 
 /**
  * The one place that touches SQLite. node:sqlite is marked experimental by Node, so it stays
- * behind this file: swapping to better-sqlite3 later changes this file and migrations.ts only.
+ * behind this file: swapping to better-sqlite3 later changes this file, repositories.ts and migrations.ts only.
  */
 export function openStore(options: StoreOptions = {}) {
   const db = new DatabaseSync(options.path ?? ":memory:");
@@ -29,39 +23,8 @@ export function openStore(options: StoreOptions = {}) {
   migrateUp(db, ctx.now);
 
   return {
-    tasks: {
-      add: (input: unknown) => addTask(ctx, input),
-      get: (id: string) => getTask(ctx, id),
-      list: (statuses?: readonly TaskStatus[]) => listTasks(ctx, statuses),
-      start: (id: string) => startTask(ctx, id),
-      complete: (id: string) => completeTask(ctx, id),
-      drop: (id: string) => dropTask(ctx, id),
-      restore: (id: string) => restoreTask(ctx, id),
-      setNowStep: (id: string, step: string | null) => setNowStep(ctx, id, step),
-    },
-    parked: {
-      park: (input: unknown) => parkIdea(ctx, input),
-      list: (includePromoted?: boolean) => listParked(ctx, includePromoted),
-      promote: (id: string) => promoteParked(ctx, id),
-      unpark: (id: string) => unparkIdea(ctx, id),
-    },
-    focus: {
-      start: (input: unknown) => startFocus(ctx, input),
-      end: (id: string, outcome: FocusOutcome) => endFocus(ctx, id, outcome),
-      active: () => activeFocus(ctx),
-    },
-    interrupts: {
-      state: () => interruptState(ctx),
-      spend: (reason: unknown) => spendInterrupt(ctx, reason),
-    },
-    ledger: {
-      get: (taskId: string | null) => getLedger(ctx, taskId),
-      upsert: (taskId: string | null, patch: unknown) => upsertLedger(ctx, taskId, patch),
-    },
-    settings: {
-      getBrain: () => getBrain(ctx),
-      setBrain: (input: unknown) => setBrain(ctx, input),
-    },
+    ...todayRepositories(ctx),
+    ...systemRepositories(ctx),
     schemaVersion: () => currentVersion(db),
     rollbackTo: (version: number) => migrateDown(db, version),
     close: () => db.close(),

@@ -5,6 +5,7 @@ import type { Store } from "../store/store";
 import { registerBrainRoutes } from "./brain-routes";
 import { applyGuards } from "./guards";
 import { registerFocusRoutes } from "./focus-routes";
+import { registerMessagesRoutes } from "./messages-routes";
 import { registerTodayRoutes } from "./today-routes";
 
 export type AppDeps = {
@@ -25,5 +26,6 @@ export function createApp(deps: AppDeps) {
   registerBrainRoutes(app, deps);
   registerTodayRoutes(app, deps);
   registerFocusRoutes(app, deps);
+  registerMessagesRoutes(app, deps);
   return app;
 }

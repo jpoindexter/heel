@@ -76,6 +76,24 @@ export const MIGRATIONS: readonly Migration[] = [
     `,
     down: `DROP TABLE settings;`,
   },
+  {
+    id: 3,
+    name: "messages",
+    // The panel's conversation, so it survives a restart. `payload` is the panel's message as JSON (validated on read).
+    // Clearing is soft (cleared_at) so "Clear conversation" can be undone; rows are purged after the retention period.
+    up: `
+      CREATE TABLE messages (
+        seq INTEGER PRIMARY KEY AUTOINCREMENT,
+        client_id INTEGER NOT NULL,
+        payload TEXT NOT NULL,
+        created_at INTEGER NOT NULL,
+        updated_at INTEGER NOT NULL,
+        cleared_at INTEGER
+      );
+      CREATE UNIQUE INDEX messages_client ON messages (client_id);
+    `,
+    down: `DROP TABLE messages;`,
+  },
 ];
 
 const ENSURE_TABLE = `

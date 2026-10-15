@@ -149,3 +149,8 @@
 .first-run p {
   margin: 0 0 var(--space-1);
 }
+
+.clear-conversation {
+  align-self: center;
+  margin-top: var(--space-2);
+}

@@ -51,3 +51,7 @@ pub(crate) const FADE_EVENT: &str = "heel:fade";
 pub(crate) const FADE_MS: u64 = 200;
 /// Tells the panel which edge faces Greg and where his centre is, so its tail can point at him. Must equal PANEL_ANCHOR_EVENT in src/events.ts (a test enforces it).
 pub(crate) const PANEL_ANCHOR_EVENT: &str = "heel:panel-anchor";
+/// The packaged helper: where Tauri puts the bundled resources (tried in order), its log, and how long it gets to finish on quit.
+pub(crate) const SIDECAR_BUNDLE_DIRS: [&str; 2] = ["resources/sidecar", "sidecar"];
+pub(crate) const SIDECAR_LOG_FILE: &str = "sidecar.log";
+pub(crate) const SIDECAR_STOP_GRACE_MS: u64 = 1_500;

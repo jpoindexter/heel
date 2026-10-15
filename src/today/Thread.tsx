@@ -11,13 +11,15 @@ type Props = {
   onRetry: (id: number) => void;
   onOpenSettings: () => void;
   onUndo: (id: number, index: number) => void;
+  onClear: () => void;
 };
 
 /** The conversation column (scroll rules live in useThreadScroll). */
-export function Thread({ messages, summary, onRetry, onOpenSettings, onUndo }: Props) {
+export function Thread({ messages, summary, onRetry, onOpenSettings, onUndo, onClear }: Props) {
   const { scroller, showJump, onScroll, jumpToLatest } = useThreadScroll(messages);
 
   const lastId = messages.at(-1)?.id;
+  const waiting = messages.some((m) => m.role === "heel" && m.status === "pending");
 
   return (
     <div className="thread-wrap">
@@ -37,6 +39,9 @@ export function Thread({ messages, summary, onRetry, onOpenSettings, onUndo }: P
             />
           </div>
         ))}
+        {messages.length > 0 && !waiting && (
+          <Button size="1" variant="ghost" color="gray" className="clear-conversation" onClick={onClear}>Clear conversation</Button>
+        )}
       </div>
       {showJump && <Button size="2" variant="solid" color="gray" highContrast className="jump" onClick={jumpToLatest}>Jump to latest</Button>}
     </div>

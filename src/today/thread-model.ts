@@ -1,15 +1,14 @@
-import { MAX_HISTORY_MESSAGES, type ActionOutcomeDto, type ApiResult, type HistoryMessage, type TurnResultDto, type UndoDto } from "../../shared/api";
+import { MAX_HISTORY_MESSAGES, type ActionOutcomeDto, type ApiResult, type HistoryMessage, type ReceiptDto, type StoredMessage, type TurnResultDto } from "../../shared/api";
 import { replyError } from "./today-model";
 
 /** One line of "what Heel did". `undo` is how to reverse it; `undone` once the person has. */
-export type Receipt = { ok: boolean; text: string; undo: UndoDto | null; undone: boolean };
+export type Receipt = ReceiptDto;
 
-export type Message =
-  /** `text` is what the model gets; `label` (a chip's name) is what the thread shows instead, when given. */
-  | { id: number; role: "user"; text: string; label?: string }
-  | { id: number; role: "heel"; status: "pending" }
-  | { id: number; role: "heel"; status: "said"; say: string; receipts: Receipt[] }
-  | { id: number; role: "heel"; status: "failed"; message: string; offerSettings: boolean; retryText: string };
+/**
+ * What the thread shows. Everything but a turn still waiting for the AI is a `StoredMessage`, which is exactly what
+ * is kept across a restart (`text` is what the model gets; a chip's `label` is what the thread shows instead).
+ */
+export type Message = StoredMessage | { id: number; role: "heel"; status: "pending" };
 
 export function toReceipts(applied: readonly ActionOutcomeDto[]): Receipt[] {
   return applied.map((o) => ({ ok: o.ok, text: o.ok ? o.message : `Couldn't: ${o.message}`, undo: o.undo ?? null, undone: false }));

@@ -16,5 +16,5 @@ pub(crate) fn toggle_panel_command(app: AppHandle) {
 pub(crate) fn sidecar_info(app: AppHandle) -> Result<String, String> {
     let dir = app.path().app_data_dir().map_err(|error| error.to_string())?;
     std::fs::read_to_string(dir.join(SIDECAR_FILE))
-        .map_err(|_| "Heel's helper isn't running. Restart Heel.".to_string())
+        .map_err(|_| crate::sidecar_process::last_error(&app).unwrap_or_else(|| "Heel's helper isn't running. Restart Heel.".to_string()))
 }

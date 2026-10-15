@@ -1,0 +1,60 @@
+import type { Ctx } from "./context";
+import { activeFocus, endFocus, startFocus } from "./focus";
+import { interruptState, spendInterrupt } from "./interrupts";
+import { getLedger, upsertLedger } from "./ledger";
+import { clearMessages, listMessages, restoreMessages, saveMessage } from "./messages";
+import { listParked, parkIdea, promoteParked, unparkIdea } from "./parked";
+import type { FocusOutcome, TaskStatus } from "./schema";
+import { getBrain, setBrain } from "./settings";
+import { addTask, completeTask, dropTask, getTask, listTasks, restoreTask, setNowStep, startTask } from "./tasks";
+
+/** The Today side of the store: tasks, parked ideas, focus time-boxes and the working-memory ledger. */
+export function todayRepositories(ctx: Ctx) {
+  return {
+    tasks: {
+      add: (input: unknown) => addTask(ctx, input),
+      get: (id: string) => getTask(ctx, id),
+      list: (statuses?: readonly TaskStatus[]) => listTasks(ctx, statuses),
+      start: (id: string) => startTask(ctx, id),
+      complete: (id: string) => completeTask(ctx, id),
+      drop: (id: string) => dropTask(ctx, id),
+      restore: (id: string) => restoreTask(ctx, id),
+      setNowStep: (id: string, step: string | null) => setNowStep(ctx, id, step),
+    },
+    parked: {
+      park: (input: unknown) => parkIdea(ctx, input),
+      list: (includePromoted?: boolean) => listParked(ctx, includePromoted),
+      promote: (id: string) => promoteParked(ctx, id),
+      unpark: (id: string) => unparkIdea(ctx, id),
+    },
+    focus: {
+      start: (input: unknown) => startFocus(ctx, input),
+      end: (id: string, outcome: FocusOutcome) => endFocus(ctx, id, outcome),
+      active: () => activeFocus(ctx),
+    },
+    ledger: {
+      get: (taskId: string | null) => getLedger(ctx, taskId),
+      upsert: (taskId: string | null, patch: unknown) => upsertLedger(ctx, taskId, patch),
+    },
+  };
+}
+
+/** What keeps Heel itself running: the interrupt budget, the kept conversation and settings. */
+export function systemRepositories(ctx: Ctx) {
+  return {
+    interrupts: {
+      state: () => interruptState(ctx),
+      spend: (reason: unknown) => spendInterrupt(ctx, reason),
+    },
+    messages: {
+      list: () => listMessages(ctx),
+      save: (input: unknown) => saveMessage(ctx, input),
+      clear: () => clearMessages(ctx),
+      restore: (clearedAt: number) => restoreMessages(ctx, clearedAt),
+    },
+    settings: {
+      getBrain: () => getBrain(ctx),
+      setBrain: (input: unknown) => setBrain(ctx, input),
+    },
+  };
+}

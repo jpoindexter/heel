@@ -19,7 +19,11 @@ type Props = { active: boolean; summary: BrainSummary | null; onOpenSettings: ()
 /** The panel's main view: Now strip, conversation, folded task drawer, then chips and the ask box pinned at the bottom. */
 export function ChatView({ active, summary, onOpenSettings }: Props) {
   const tasks = useTasks(client, active);
-  const thread = useThread(client, { onChanged: tasks.refresh, notify: (message) => tasks.showNotice(message, "error") });
+  const thread = useThread(client, {
+    onChanged: tasks.refresh,
+    notify: (message) => tasks.showNotice(message, "error"),
+    onCleared: (undo) => tasks.showNotice("Conversation cleared", "info", undo),
+  });
   const { draft, setDraft, onSend, onChip } = useChatActions({ thread, tasks });
   const { state, notice } = tasks;
 
@@ -50,6 +54,7 @@ export function ChatView({ active, summary, onOpenSettings }: Props) {
         onRetry={thread.retry}
         onOpenSettings={onOpenSettings}
         onUndo={(id, index) => void thread.undoReceipt(id, index)}
+        onClear={() => void thread.clear()}
       />
       {ready && <TaskDrawer tasks={ready.tasks} parked={ready.parked} onComplete={(t) => void tasks.complete(t)} onRemove={(t) => void tasks.remove(t)} onPromote={(i) => void tasks.promote(i)} />}
 

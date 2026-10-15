@@ -152,3 +152,9 @@ Choice: gitleaks scans history and tree on demand (`npm run secrets:scan`) and o
 Audit result 2026-10-15: 42 commits and the working tree scanned; the only findings were fake test-fixture tokens and bytes inside ignored build output. No real secret was ever committed, so nothing needs rotating. Heel's real credentials never live in the repo: the helper token is in the app data folder (`sidecar.json`) and providers use the user's own CLI logins.
 Not covered: the untracked `assets/` (386 MB) and `handoffs/` folders are Jason's and are not scanned for history, only as working files (the tree scan found nothing in them).
 Reversible? Yes.
+
+## 2026-10-15 — Heel runs as a real app; conversation history kept 30 days
+Packaging (V1-10, local use): the helper (sidecar) is bundled with esbuild into the app (`npm run bundle:sidecar`, run by the Tauri build) and the shell starts it with the user's Node (HEEL_NODE, `~/.local/bin`, Homebrew, then a login shell) and stops it on quit. Release builds only; `tauri dev` still uses the dev stack. Needs Node 22+ on the Mac. Not signed or notarized (needs Jason's Apple Developer account). Built with `npm run tauri build -- --bundles app` → `src-tauri/target/release/bundle/macos/Heel.app`.
+Verified (packaged app, via `open`): helper starts, all three providers detected from a normal GUI launch, a real Claude turn answers, quit stops the helper and removes the connection file.
+F7 (Jason approved 2026-10-15): new `messages` table (migration 3, up and down tested). Chat text is kept 30 days then deleted (`MESSAGE_RETENTION_DAYS`); "Clear conversation" hides it (soft delete) with a toast Undo. The last 6 messages are still what the AI sees, now also after a restart.
+Reversible? Yes (migration down; retention is one constant).

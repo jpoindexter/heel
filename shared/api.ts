@@ -134,3 +134,30 @@ export const SpendResultSchema = z.object({
 export type FocusDto = z.output<typeof FocusSchema>;
 export type InterruptStateDto = z.output<typeof InterruptStateSchema>;
 export type SpendResultDto = z.output<typeof SpendResultSchema>;
+
+/* Conversation history (survives a restart) */
+
+export const ReceiptSchema = z.object({ ok: z.boolean(), text: z.string(), undo: UndoSchema.nullable(), undone: z.boolean() });
+
+/** A message the panel keeps. A turn still waiting for the AI ("pending") is never stored. */
+export const StoredMessageSchema = z.discriminatedUnion("role", [
+  z.object({ id: z.number().int(), role: z.literal("user"), text: z.string(), label: z.string().optional() }),
+  z.discriminatedUnion("status", [
+    z.object({ id: z.number().int(), role: z.literal("heel"), status: z.literal("said"), say: z.string(), receipts: z.array(ReceiptSchema) }),
+    z.object({
+      id: z.number().int(),
+      role: z.literal("heel"),
+      status: z.literal("failed"),
+      message: z.string(),
+      offerSettings: z.boolean(),
+      retryText: z.string(),
+    }),
+  ]),
+]);
+export const MessagesStateSchema = z.object({ messages: z.array(StoredMessageSchema), nextId: z.number().int() });
+export const SaveMessageInputSchema = z.object({ message: StoredMessageSchema });
+export const ClearedSchema = z.object({ clearedAt: z.number().nullable(), count: z.number().int() });
+export const RestoreInputSchema = z.object({ clearedAt: z.number() });
+
+export type StoredMessage = z.output<typeof StoredMessageSchema>;
+export type ReceiptDto = z.output<typeof ReceiptSchema>;

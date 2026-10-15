@@ -12,7 +12,8 @@
     "typecheck": "tsc --noEmit && tsc --noEmit -p sidecar && tsc --noEmit -p tsconfig.node.json",
     "sidecar": "tsx sidecar/server/main.ts",
     "secrets:scan": "gitleaks detect --source . --redact --no-banner --config .gitleaks.toml",
-    "dev:all": "concurrently -k -n vite,sidecar \"npm:dev\" \"npm:sidecar\""
+    "dev:all": "concurrently -k -n vite,sidecar \"npm:dev\" \"npm:sidecar\"",
+    "bundle:sidecar": "node scripts/bundle-sidecar.mjs"
   },
   "dependencies": {
     "@hono/node-server": "^2.1.5",

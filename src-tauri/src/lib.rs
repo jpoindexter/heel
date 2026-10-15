@@ -11,6 +11,7 @@ mod menus;
 mod panel_size;
 mod panel_window;
 mod placement;
+mod sidecar_process;
 mod walk;
 
 use anchor::panel_anchor;
@@ -22,6 +23,7 @@ use mascot_menu::{set_life_flags, show_mascot_menu, LifeFlags};
 use menus::{take_pending_view, PendingView};
 use walk::{start_walk, stop_walk, Walker};
 use panel_window::{panel_is_visible, reveal_panel, show_panel, toggle_panel};
+use sidecar_process::SidecarProc;
 use tauri_plugin_global_shortcut::{Code, Modifiers, Shortcut, ShortcutState};
 
 fn hotkey() -> Shortcut {
@@ -43,6 +45,7 @@ pub fn run() {
         .manage(LifeFlags::default())
         .manage(Walker::default())
         .manage(Departure::default())
+        .manage(SidecarProc::default())
         .plugin(
             tauri_plugin_global_shortcut::Builder::new()
                 .with_handler(|app, shortcut, event| {
@@ -58,6 +61,10 @@ pub fn run() {
         .build(tauri::generate_context!())
         .expect("error while building Heel")
         .run(|app, event| {
+            // The packaged app's own helper ends with the app.
+            if let tauri::RunEvent::Exit = event {
+                sidecar_process::stop(app);
+            }
             // Clicking the Dock icon opens the panel if it is hidden.
             #[cfg(target_os = "macos")]
             if let tauri::RunEvent::Reopen { .. } = event {

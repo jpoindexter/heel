@@ -41,6 +41,6 @@ export function useTasks(client: Client, active: boolean) {
     refresh,
     ...actions,
     dismissNotice: () => setNotice(null),
-    showNotice: (message: string, tone: Notice["tone"] = "info") => setNotice({ message, tone }),
+    showNotice: (message: string, tone: Notice["tone"] = "info", undo?: () => void) => setNotice({ message, tone, undo }),
   };
 }

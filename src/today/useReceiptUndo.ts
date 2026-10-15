@@ -9,10 +9,12 @@ type Deps = {
   commit: (next: Message[]) => void;
   notify: (message: string) => void;
   onChanged: () => Promise<void>;
+  /** Keep the message as it is now (a receipt just changed). */
+  persist: (id: number) => void;
 };
 
 /** Reverse one thing Heel did. Marked undone straight away; put back if the helper says no. */
-export function useReceiptUndo({ client, latest, commit, notify, onChanged }: Deps) {
+export function useReceiptUndo({ client, latest, commit, notify, onChanged, persist }: Deps) {
   return useCallback(
     async (id: number, index: number) => {
       const message = latest.current.find((m) => m.id === id);
@@ -24,8 +26,9 @@ export function useReceiptUndo({ client, latest, commit, notify, onChanged }: De
         commit(withReceiptUndone(latest.current, id, index, false));
         notify(result.error.message);
       }
+      persist(id);
       await onChanged();
     },
-    [client, latest, commit, notify, onChanged],
+    [client, latest, commit, notify, onChanged, persist],
   );
 }
