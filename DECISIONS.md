@@ -66,3 +66,11 @@ Choice: new helper routes `GET /tasks`, `POST /tasks/:id/(complete|drop|restore)
 Prompt rule added after a live run: the model said "parked" for something it had added. Wording must match the action (add_task = added, park_idea = parked). The ✓ lines remain the source of truth.
 Verified 2026-10-15 in a browser against the real helper and a real Claude turn: Stuck chip, typed request + Enter, complete + Undo, Park it (empty and with text), no-provider error + Open Settings. NOT verified: inside the real Tauri window (panel 380x620), mascot thinking/done/error reactions, keyboard-only flow, screen reader.
 Reversible? Yes.
+
+## 2026-10-15 — Mascot art: Greg's Dot-compatible sheet is the primary sprite (Riff kept)
+Choice: `public/mascot/greg.png` (Codex's `compatible-dot/spritesheet-extended.png`, 1536x2288, 8x11 cells of 192x208, SHA-256 4353761c...) replaces Riff in `Sprite.tsx`. Its manifest is copied to `public/mascot/greg.dot.json`. Riff's PNG stays in `public/mascot/riff.png` and `assets/riff/`. The denser 16-column six-state set stays optional (Trello V1-11) and must never be read with Dot geometry.
+Why: Jason chose the Dot layout as main (9 actions + 16 look directions). The manifest matches `atlas.ts` for all nine action rows (row and every duration), so the swap is a PNG change.
+Pinned by tests: exact checksum, RGBA dimensions, manifest == atlas, look rows = two rows of 8 fixed poses in 22.5 degree steps.
+Checked 2026-10-15: 73 populated cells, unused cells empty, no cell-edge clipping (>= 6px margin), stable baselines; sprite code loads the sheet at 192x208 and the idle loop steps through 6 frames in a browser.
+Known art issues (measured, not fixed): running-left is ~4.7 points lighter and far less saturated than the other rows; no sit->lie transition (the "thinking" row is a lying pose); no curled-up Rest in this sheet. Smoothness and Jason's visual approval: NOT assessed.
+Reversible? Yes (one URL).

@@ -1,5 +1,5 @@
 // Dot-format sprite atlas: 8 columns x 11 rows of 192x208 cells.
-// Riff's sheet and Greg's future export share this geometry, so swapping art = swapping the PNG.
+// Riff's sheet and Greg's Dot-compatible sheet share this geometry and these timings, so swapping art = swapping the PNG.
 export const CELL_W = 192;
 export const CELL_H = 208;
 export const COLUMNS = 8;

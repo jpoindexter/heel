@@ -2,7 +2,8 @@ import { useEffect, useState } from "react";
 import { CELL_H, CELL_W, MOTIONS, SHEET_H, SHEET_W, framePosition, type MotionName } from "./atlas";
 
 const REDUCED_MOTION = "(prefers-reduced-motion: reduce)";
-const SHEET_URL = "/mascot/riff.png";
+// Greg's Dot-compatible sheet (same 8x11, 192x208 geometry). Riff's original stays at /mascot/riff.png.
+const SHEET_URL = "/mascot/greg.png";
 
 function usePrefersReducedMotion(): boolean {
   const [reduced, setReduced] = useState(() => window.matchMedia(REDUCED_MOTION).matches);
