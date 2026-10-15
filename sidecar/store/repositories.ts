@@ -5,6 +5,7 @@ import { doneToday, history } from "./history";
 import { getLedger, upsertLedger } from "./ledger";
 import { clearMessages, listMessages, restoreMessages, saveMessage } from "./messages";
 import { listParked, parkIdea, promoteParked, unparkIdea } from "./parked";
+import { movePomodoro, readPomodoro, setPomodoroConfig, startCycle } from "./pomodoro";
 import type { FocusOutcome, TaskStatus } from "./schema";
 import { getBrain, getMethod, setBrain, setMethod } from "./settings";
 import { addTask, completeTask, dropTask, getTask, listTasks, patchTask, restoreTask, setNowStep, startTask } from "./tasks";
@@ -42,6 +43,13 @@ export function todayRepositories(ctx: Ctx) {
       list: (days: number) => history(ctx, days),
       doneToday: () => doneToday(ctx),
     },
+    pomodoro: {
+      read: () => readPomodoro(ctx),
+      start: (goal: string, taskId: string | null) => startCycle(ctx, goal, taskId),
+      move: (move: "pause" | "resume" | "skip" | "next" | "stop") => movePomodoro(ctx, move),
+      setConfig: (input: unknown) => setPomodoroConfig(ctx, input),
+    },
+    now: ctx.now,
   };
 }
 

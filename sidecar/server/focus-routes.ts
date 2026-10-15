@@ -1,6 +1,7 @@
 import type { Hono } from "hono";
 import { EndFocusInputSchema, SpendInputSchema, StartFocusInputSchema } from "../../shared/api";
 import { rangeFor } from "../../shared/focus";
+import { effectiveStartedAt } from "../../shared/pomodoro";
 import type { AppDeps } from "./app";
 import { fail, ok, readJson } from "./respond";
 
@@ -8,7 +9,17 @@ import { fail, ok, readJson } from "./respond";
 export function registerFocusRoutes(app: Hono, deps: AppDeps): void {
   const { store } = deps;
 
-  app.get("/focus", (c) => ok(c, { focus: store.focus.active() }));
+  /** A running Pomodoro work phase counts as the active focus, so Greg's pose and the quiet rules follow it without a session row. */
+  const activeFocus = () => {
+    const session = store.focus.active();
+    if (session) return session;
+    const { state } = store.pomodoro.read();
+    if (!state || state.phase !== "work" || state.waiting) return null;
+    const min = state.phaseMin;
+    return { id: "pomodoro", goal: state.goal, taskId: state.taskId, bestMin: min, realisticMin: min, worstMin: min, startedAt: effectiveStartedAt(state, store.now()), endedAt: null, outcome: null };
+  };
+
+  app.get("/focus", (c) => ok(c, { focus: activeFocus() }));
 
   app.post("/focus/start", async (c) => {
     const body = StartFocusInputSchema.safeParse(await readJson(c));

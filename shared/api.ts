@@ -1,5 +1,6 @@
 import { z } from "zod";
 import { SIZES } from "./method";
+import { PHASES, PomodoroConfigSchema, PomodoroStateSchema } from "./pomodoro";
 import { FOCUS_OUTCOMES } from "./focus";
 import { PROVIDER_IDS } from "./providers";
 
@@ -72,6 +73,8 @@ export const TaskSchema = z.object({
 });
 export const TaskPatchSchema = z.object({ size: z.enum(SIZES).nullable(), bucket: z.string().nullable(), estimateMin: z.number().int().positive().nullable() }).partial();
 export { MethodSchema, type Method } from "./method";
+export const PomodoroViewSchema = z.object({ state: PomodoroStateSchema.nullable(), config: PomodoroConfigSchema, ended: z.enum(PHASES).nullable(), remainingMs: z.number() });
+export type PomodoroViewDto = z.output<typeof PomodoroViewSchema>;
 
 export const TasksStateSchema = z.object({ tasks: z.array(TaskSchema), parkedCount: z.number().int(), doneToday: z.number().int() });
 /** What was finished: by local day (YYYY-MM-DD), newest first, and the last seven days' counts, oldest first. */

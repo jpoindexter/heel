@@ -26,8 +26,7 @@ export function fakeProvider(
 }
 
 /** A real app on an in-memory store, with fake providers, called through app.request(). */
-export function setup(overrides: Partial<Record<ProviderId, Provider>> = {}, inboxDeps: Partial<InboxDeps> = {}, mail: MailSource = fakeMail()) {
-  const store = testStore();
+export function setup(overrides: Partial<Record<ProviderId, Provider>> = {}, inboxDeps: Partial<InboxDeps> = {}, mail: MailSource = fakeMail(), store = testStore()) {
   const providers: Record<ProviderId, Provider> = {
     claude: fakeProvider("claude"),
     codex: fakeProvider("codex", { ready: false, detail: "Not signed in. Run codex login in a terminal." }),

@@ -2,6 +2,7 @@ import { useEffect } from "react";
 import { client } from "../api/default-client";
 import { useDigest } from "../inbox/useInbox";
 import { useMailStatus, useOpenMail, useReplyFlow } from "../inbox/useMail";
+import { usePomodoro } from "../focus/usePomodoro";
 import { useNotices } from "../ui/notices";
 import { nowCard } from "./today-model";
 import { useChatActions } from "./useChatActions";
@@ -27,10 +28,12 @@ export function useTodayState(active: boolean, reloadKey: number) {
 
   const ready = tasks.state.phase === "ready" ? tasks.state : null;
   const focus = useTodayFocus(client, active, tasks, ready);
-  useEffect(() => notices.setFocusRunning(focus.session !== null), [focus.session, notices]);
+  const pomodoro = usePomodoro(client, { active, notify: notices.show });
+  const working = focus.session !== null || (pomodoro.view?.state?.phase === "work" && !pomodoro.view.state.waiting);
+  useEffect(() => notices.setFocusRunning(working), [working, notices]);
   const mail = useMailStatus(client, active);
   const digest = useDigest(client, refresh);
   const reply = useReplyFlow(client, tasks.showNotice);
   const openMail = useOpenMail(client, tasks.showNotice);
-  return { tasks, thread, chat, ready, now: ready ? nowCard(ready.tasks) : null, focus, mail, digest, reply, openMail };
+  return { tasks, thread, chat, ready, now: ready ? nowCard(ready.tasks) : null, focus, pomodoro, mail, digest, reply, openMail };
 }

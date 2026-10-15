@@ -79,7 +79,7 @@ export function TodayView({ showing, summary, reloadKey, settings }: Props) {
           <Button size="1" variant="soft" onClick={() => void tasks.refresh()}>Try again</Button>
         </Callout.Root>
       )}
-      <FocusStatus focus={state.focus} />
+      <FocusStatus focus={state.focus} pomodoro={state.pomodoro} onTaskDone={(id) => { const task = state.ready?.tasks.find((t) => t.id === id); if (task) void tasks.complete(task); }} />
       <LayerHost
         base={
           <div className="today-scroll">

@@ -2,6 +2,7 @@ import { Heading, SegmentedControl, Text } from "@radix-ui/themes";
 import { BUILT, SIZINGS, STRUCTURES, TIMERS, type Method, type Sizing, type Structure, type Timer } from "../../shared/method";
 import { useMethod, whatChanges } from "../ui/method";
 import { useNotices } from "../ui/notices";
+import { PomodoroSettings } from "./PomodoroSettings";
 
 const TIMER_LABELS: Record<Timer, string> = { timebox: "Time-box", pomodoro: "Pomodoro" };
 const STRUCTURE_LABELS: Record<Structure, string> = { none: "None", "pickle-jar": "Pickle jar", "one-three-five": "1-3-5", eisenhower: "Eisenhower", frog: "Frog" };
@@ -41,6 +42,7 @@ export function MethodSettings() {
       <Heading as="h2" id="method-heading" size="2">Ways of working</Heading>
       <Text as="p" size="1" color="gray">Pick how the day is shaped. They combine.</Text>
       <Picker label="Timer" value={method.timer} options={TIMERS} built={BUILT.timer} labels={TIMER_LABELS} onChange={(timer) => apply({ ...method, timer })} />
+      {method.timer === "pomodoro" && <PomodoroSettings />}
       <Picker label="Structure" value={method.structure} options={STRUCTURES} built={BUILT.structure} labels={STRUCTURE_LABELS} onChange={(structure) => apply({ ...method, structure })} />
       <Picker label="Sizing" value={method.sizing} options={SIZINGS} built={BUILT.sizing} labels={SIZING_LABELS} onChange={(sizing) => apply({ ...method, sizing })} />
       <Text as="p" size="1" color="gray" role="status">{whatChanges(method)}</Text>

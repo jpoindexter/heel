@@ -21,9 +21,9 @@ describe("PUT /method", () => {
 
   it("refuses a method that is not built yet, in a sentence that says when", async () => {
     // The store says "conflict": the value is valid, just not available yet.
-    const result = method.parse(await setup().send("PUT", "/method", { timer: "pomodoro", structure: "none", sizing: "none" }));
+    const result = method.parse(await setup().send("PUT", "/method", { timer: "timebox", structure: "one-three-five", sizing: "none" }));
     expect(result.ok).toBe(false);
-    if (!result.ok) expect(result.error.message).toContain("N18");
+    if (!result.ok) expect(result.error.message).toContain("N21");
   });
 
   it("rejects a value outside the enums", async () => {

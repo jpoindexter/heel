@@ -26,14 +26,22 @@ function useLeavingRow(run: (task: TaskDto, action: "complete" | "remove") => vo
 
 /** Now, the rest, and the parked ideas. Starting a time-box opens its small form right under the Now row. */
 export function TaskSection({ state }: { state: ReturnType<typeof useTodayState> }) {
-  const { tasks, ready, now, focus } = state;
+  const { tasks, ready, now, focus, pomodoro } = state;
   const [starting, setStarting] = useState(false);
   const rows = useLeavingRow((task, action) => void (action === "complete" ? tasks.complete(task) : tasks.remove(task)));
   const { method } = useMethod();
   const marks = { method, onPatch: (task: TaskDto, change: Parameters<typeof tasks.patch>[1]) => void tasks.patch(task, change) };
   return (
     <>
-      <NowRow now={now} leavingId={rows.leavingId} canTimebox={!focus.session && !starting} onStartBox={() => setStarting(true)} onComplete={rows.complete} onRemove={rows.remove} {...marks} />
+      <NowRow
+        now={now}
+        leavingId={rows.leavingId}
+        canTimebox={!focus.session && !pomodoro.view?.state && !starting}
+        onStartBox={() => (method.timer === "pomodoro" && now ? void pomodoro.start(now.text, now.task.id) : setStarting(true))}
+        onComplete={rows.complete}
+        onRemove={rows.remove}
+        {...marks}
+      />
       {starting && now && !focus.session && (
         <FocusForm
           initialGoal={now.text}

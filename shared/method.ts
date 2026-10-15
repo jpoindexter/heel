@@ -28,14 +28,14 @@ export type Method = z.output<typeof MethodSchema>;
 export const DEFAULT_METHOD: Method = { timer: "timebox", structure: "none", sizing: "none" };
 
 export const BUILT = {
-  timer: ["timebox"] as readonly Timer[],
+  timer: ["timebox", "pomodoro"] as readonly Timer[],
   structure: ["none", "pickle-jar"] as readonly Structure[],
   sizing: ["none", "tshirt"] as readonly Sizing[],
 } as const;
 
 /** Why a choice cannot be made yet, in one sentence; null when it can. */
 export function notBuiltReason(method: Method): string | null {
-  if (!BUILT.timer.includes(method.timer)) return "Pomodoro arrives with the next slice (N18). Time-box is the timer for now.";
+  if (!BUILT.timer.includes(method.timer)) return `${method.timer} is not a timer Heel has.`;
   if (!BUILT.structure.includes(method.structure)) return `${method.structure} arrives later (N21). Pickle jar is the structure you can pick today.`;
   if (!BUILT.sizing.includes(method.sizing)) return "Only T-shirt sizing exists for now.";
   return null;

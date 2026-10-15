@@ -99,6 +99,8 @@ export const HEEL_STATES = {
   error: "puppy:error-facepalm",
   focus: "puppy:focus",
   nudge: "puppy:nudge",
+  /** A break began: a stretch, then back to sitting. */
+  stretch: "puppy:stretch",
 } as const satisfies Record<string, MotionId>;
 
 export type HeelState = keyof typeof HEEL_STATES;

@@ -10,6 +10,7 @@ import { registerFocusRoutes } from "./focus-routes";
 import { registerInboxRoutes } from "./inbox-routes";
 import { registerMailRoutes } from "./mail-routes";
 import { registerMethodRoutes } from "./method-routes";
+import { registerPomodoroRoutes } from "./pomodoro-routes";
 import { registerMessagesRoutes } from "./messages-routes";
 import { registerTodayRoutes, registerTurnRoute } from "./today-routes";
 
@@ -41,5 +42,6 @@ export function createApp(deps: AppDeps) {
   registerInboxRoutes(app, deps);
   registerMailRoutes(app, deps);
   registerMethodRoutes(app, deps);
+  registerPomodoroRoutes(app, deps);
   return app;
 }

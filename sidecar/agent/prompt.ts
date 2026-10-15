@@ -81,6 +81,7 @@ export type Snapshot = { text: string; refs: TaskRefs };
 /** The chosen ways of working, as one line the model can act on (set `bucket` / `size` on add_task). */
 export function methodLine(method: Method): string | null {
   const parts: string[] = [];
+  if (method.timer === "pomodoro") parts.push("Timer: Pomodoro cycles (work, short break, long break after a few)");
   if (method.structure === "pickle-jar") parts.push("Pickle jar: rocks (must do, big) first, then pebbles, then sand (small filler); set \"bucket\" on add_task to rock, pebble or sand");
   else if (method.structure !== "none") parts.push(`Structure: ${method.structure}; set \"bucket\" to one of ${BUCKETS[method.structure].join(", ")}`);
   if (method.sizing === "tshirt") parts.push("T-shirt sizes: set \"size\" on add_task to xs, s, m, l or xl (xs = minutes, xl = half a day)");
