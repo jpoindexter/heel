@@ -19,7 +19,7 @@ export function Panel() {
     <main className="panel">
       <header>
         <h1>Heel</h1>
-        <button type="button" onClick={() => void invoke("toggle_panel")} aria-label="Close panel">
+        <button type="button" onClick={() => void invoke("toggle_panel_command")} aria-label="Close panel">
           Close
         </button>
       </header>

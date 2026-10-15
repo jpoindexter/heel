@@ -44,7 +44,7 @@ export function Mascot() {
     press.current = null;
     if (!start || start.dragging) return;
     setOneShot(HEEL_STATES.greeting);
-    void invoke("toggle_panel");
+    void invoke("toggle_panel_command");
   };
 
   return (
