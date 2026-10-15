@@ -1,3 +1,6 @@
+import { CheckIcon, ChevronDownIcon, ExclamationTriangleIcon } from "@radix-ui/react-icons";
+import { Button, Text } from "@radix-ui/themes";
+import { Collapsible } from "radix-ui";
 import { receiptSummary, type Receipt } from "./thread-model";
 
 type Props = { receipts: readonly Receipt[]; onUndo: (index: number) => void };
@@ -7,23 +10,28 @@ export function Receipts({ receipts, onUndo }: Props) {
   if (receipts.length === 0) return null;
   const { text, hasFailure } = receiptSummary(receipts);
   return (
-    <details className="receipts" data-failure={hasFailure || undefined} open={hasFailure}>
-      <summary>
-        <span className="mark" data-ready={!hasFailure} aria-hidden="true">{hasFailure ? "!" : "✓"}</span>
-        {text}
-      </summary>
-      <ul>
-        {receipts.map((receipt, index) => (
-          <li key={`${index}-${receipt.text}`} data-ok={receipt.ok} data-undone={receipt.undone || undefined}>
-            <span>{receipt.text}</span>
-            {receipt.undone ? (
-              <span className="helper">Undone</span>
-            ) : (
-              receipt.undo && <button type="button" className="button button-quiet" onClick={() => onUndo(index)}>Undo</button>
-            )}
-          </li>
-        ))}
-      </ul>
-    </details>
+    <Collapsible.Root defaultOpen={hasFailure} className="receipts">
+      <Collapsible.Trigger asChild>
+        <Button variant="ghost" size="1" color={hasFailure ? "amber" : "gray"}>
+          {hasFailure ? <ExclamationTriangleIcon aria-hidden="true" /> : <CheckIcon aria-hidden="true" />}
+          {text}
+          <ChevronDownIcon aria-hidden="true" className="chevron" />
+        </Button>
+      </Collapsible.Trigger>
+      <Collapsible.Content>
+        <ul className="receipt-list">
+          {receipts.map((receipt, index) => (
+            <li key={`${index}-${receipt.text}`} data-undone={receipt.undone || undefined}>
+              <Text size="1" color="gray" className="receipt-text">{receipt.text}</Text>
+              {receipt.undone ? (
+                <Text size="1" color="gray">Undone</Text>
+              ) : (
+                receipt.undo && <Button size="1" variant="ghost" onClick={() => onUndo(index)}>Undo</Button>
+              )}
+            </li>
+          ))}
+        </ul>
+      </Collapsible.Content>
+    </Collapsible.Root>
   );
 }

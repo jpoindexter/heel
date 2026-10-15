@@ -4,7 +4,7 @@ import { getCurrentWindow } from "@tauri-apps/api/window";
 import { shouldBlockContextMenu } from "./context-menu";
 import { Mascot } from "./mascot/Mascot";
 import { Panel } from "./panel/Panel";
-import "./styles.css";
+import "./design/base.css";
 
 /** Which window this is. In `npm run dev` a plain browser can preview the panel with ?window=panel. */
 function windowLabel(): string {

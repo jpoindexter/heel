@@ -1,0 +1,14 @@
+/* Window-level reset: the mascot window is transparent, the panel paints its own Theme background. */
+html,
+body,
+#root {
+  margin: 0;
+  background: transparent;
+  overflow: hidden;
+  user-select: none;
+}
+
+/* A hidden view must really be hidden, whatever display a class sets. */
+[hidden] {
+  display: none !important;
+}

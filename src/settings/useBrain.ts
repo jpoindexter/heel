@@ -2,6 +2,7 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import { BrainSettingsSchema, BrainStateSchema, ModelsSchema, TestResultSchema, type BrainSettingsDto, type BrainStateDto } from "../../shared/api";
 import type { ProviderId } from "../../shared/providers";
 import type { Client } from "../api/client";
+import type { Notice } from "../ui/Notifier";
 import { changeMessage } from "./brain-model";
 
 export type BrainView =
@@ -9,10 +10,7 @@ export type BrainView =
   | { phase: "error"; message: string }
   | { phase: "ready"; state: BrainStateDto; models: string[] | null };
 
-export type Notice = { message: string; tone: "info" | "error"; undo?: () => void };
 export type TestState = { phase: "idle" } | { phase: "running" } | { phase: "done"; ok: boolean; message: string };
-
-const NOTICE_MS = 8_000;
 
 /** `onSaved` runs after a change is stored, so other views (the header chip) can reload without waiting for a focus event. */
 export function useBrain(client: Client, active: boolean, onSaved?: () => void) {
@@ -85,12 +83,6 @@ export function useBrain(client: Client, active: boolean, onSaved?: () => void) 
   useEffect(() => {
     if (active) void load();
   }, [active, load]);
-
-  useEffect(() => {
-    if (!notice) return;
-    const timer = window.setTimeout(() => setNotice(null), NOTICE_MS);
-    return () => window.clearTimeout(timer);
-  }, [notice]);
 
   return {
     view,

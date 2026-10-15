@@ -1,6 +1,9 @@
 import { useState } from "react";
+import { Button, Callout } from "@radix-ui/themes";
 import { client } from "../api/default-client";
 import type { BrainSummary } from "../settings/brain-summary";
+import { Notifier } from "../ui/Notifier";
+import "./chat.css";
 import { Compose } from "./Compose";
 import { NowStrip } from "./NowStrip";
 import { TaskDrawer } from "./TaskDrawer";
@@ -42,10 +45,10 @@ export function ChatView({ active, summary, onOpenSettings }: Props) {
   return (
     <div className="chat">
       {state.phase === "error" && (
-        <div role="alert" className="callout">
-          <p>{state.message}</p>
-          <button type="button" className="button" onClick={() => void tasks.refresh()}>Try again</button>
-        </div>
+        <Callout.Root color="amber" role="alert" size="1">
+          <Callout.Text>{state.message}</Callout.Text>
+          <Button size="1" variant="soft" onClick={() => void tasks.refresh()}>Try again</Button>
+        </Callout.Root>
       )}
       <NowStrip now={now} onComplete={() => now && void tasks.complete(now.task)} />
       <Thread
@@ -58,14 +61,7 @@ export function ChatView({ active, summary, onOpenSettings }: Props) {
       {ready && <TaskDrawer tasks={ready.tasks} parked={ready.parked} onComplete={(t) => void tasks.complete(t)} onRemove={(t) => void tasks.remove(t)} onPromote={(i) => void tasks.promote(i)} />}
 
       <div className="compose-zone">
-        {notice && (
-          <div role="status" className="toast" data-tone={notice.tone}>
-            <span>{notice.message}</span>
-            {notice.undo && (
-              <button type="button" className="button button-quiet" onClick={() => { notice.undo?.(); tasks.dismissNotice(); }}>Undo</button>
-            )}
-          </div>
-        )}
+        <Notifier notice={notice} onDismiss={tasks.dismissNotice} />
         <Compose active={active} draft={draft} busy={thread.busy} onDraft={setDraft} onSend={onSend} onChip={(chip) => void onChip(chip)} />
       </div>
     </div>

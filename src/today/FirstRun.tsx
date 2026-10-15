@@ -1,3 +1,4 @@
+import { Badge, Button, Heading, Text } from "@radix-ui/themes";
 import type { BrainSummary } from "../settings/brain-summary";
 
 type Props = { summary: Extract<BrainSummary, { kind: "setup" }>; onOpenSettings: () => void };
@@ -6,21 +7,23 @@ type Props = { summary: Extract<BrainSummary, { kind: "setup" }>; onOpenSettings
 export function FirstRun({ summary, onOpenSettings }: Props) {
   return (
     <section aria-labelledby="first-run-heading" className="first-run">
-      <h2 id="first-run-heading">Set up Heel</h2>
+      <Heading as="h2" id="first-run-heading" size="3">Set up Heel</Heading>
       <ol>
         <li>
-          <span className="mark" data-ready="false" aria-hidden="true">1</span>
+          <Badge color="amber" radius="full" aria-hidden="true">1</Badge>
           <div>
-            <p className="first-run-step">Pick your AI</p>
-            <p className="helper">{summary.reason === "none" ? "Heel needs one to answer. Local keeps everything on this Mac." : summary.detail}</p>
-            <button type="button" className="button button-primary" onClick={onOpenSettings}>Choose AI</button>
+            <Text as="p" size="2" weight="medium">Pick your AI</Text>
+            <Text as="p" size="2" color="gray">
+              {summary.reason === "none" ? "Heel needs one to answer. Local keeps everything on this Mac." : summary.detail}
+            </Text>
+            <Button size="2" onClick={onOpenSettings}>Choose AI</Button>
           </div>
         </li>
         <li>
-          <span className="mark" data-ready="false" aria-hidden="true">2</span>
+          <Badge color="gray" radius="full" aria-hidden="true">2</Badge>
           <div>
-            <p className="first-run-step">Say what's on your mind</p>
-            <p className="helper">Type below. Heel turns it into one small first step.</p>
+            <Text as="p" size="2" weight="medium">Say what's on your mind</Text>
+            <Text as="p" size="2" color="gray">Type below. Heel turns it into one small first step.</Text>
           </div>
         </li>
       </ol>

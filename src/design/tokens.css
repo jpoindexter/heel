@@ -1,0 +1,26 @@
+/*
+ * The only place a raw size, duration or z-index may be written down (quality/no-hardcoded-design.test.ts).
+ * Colours, radii, type, spacing and shadows come from the Radix Theme (accent jade, gray sand, radius small);
+ * these are the few things Heel needs on top, named for what they are.
+ */
+.radix-themes {
+  --viewport-height: 100vh;
+  --hit-target: 44px;
+  --border-width: 1px;
+  --hidden-size: 1px; /* a visually-hidden element must still exist for screen readers */
+  --ring-room: 6px; /* the focus ring (3px + 2px offset) must fit inside clipped scroll regions */
+  --thread-min-height: 96px;
+  --drawer-reserved-height: 440px; /* everything in the panel that is not the drawer or the thread */
+  --message-max-width: 92%;
+  --toast-gap: var(--space-2);
+  --z-toast: 10;
+  --chevron-turn: 90deg;
+  --motion-fast: 150ms;
+  --label-tracking: 0.08em;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .radix-themes {
+    --motion-fast: 0ms;
+  }
+}

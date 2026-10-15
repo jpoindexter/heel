@@ -7,13 +7,8 @@ export const SIZE_ALLOWLIST: Readonly<Record<string, number>> = {
   // M3: split into dock / menus / tray / hit_region / window modules.
   "src-tauri/src/lib.rs::src-tauri/src/lib.rs": 450,
   "src-tauri/src/lib.rs::run": 58,
-  // D6: replaced by Radix tokens + small per-feature stylesheets.
-  "src/styles.css::src/styles.css": 654,
   // D3-D5: components shrink when they stop hand-rolling controls.
-  "src/panel/Panel.tsx::Panel": 65,
-  "src/settings/BrainSettings.tsx::BrainSettings": 56,
   "src/today/ChatView.tsx::ChatView": 59,
-  "src/today/Compose.tsx::Compose": 63,
   "src/today/Thread.tsx::Thread": 57,
   // Hooks: split state / effects / actions when touched next.
   "src/settings/useBrain.ts::useBrain": 91,

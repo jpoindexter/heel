@@ -1,15 +1,13 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import { ParkedListSchema, ParkedResultSchema, TaskResultSchema, TasksStateSchema, UnparkResultSchema, type ParkedIdeaDto, type TaskDto } from "../../shared/api";
 import type { Client } from "../api/client";
+import type { Notice } from "../ui/Notifier";
 
 export type TasksState =
   | { phase: "loading" }
   | { phase: "error"; message: string }
   | { phase: "ready"; tasks: TaskDto[]; parked: ParkedIdeaDto[] };
 
-export type Notice = { message: string; tone: "info" | "error"; undo?: () => void };
-
-const NOTICE_MS = 8_000;
 
 /** Open tasks, parked ideas, and the Undo toast. `active` = this view is showing (hidden views stay mounted, so drafts survive). */
 export function useTasks(client: Client, active: boolean) {
@@ -36,12 +34,6 @@ export function useTasks(client: Client, active: boolean) {
   useEffect(() => {
     if (active) void refresh();
   }, [active, refresh]);
-
-  useEffect(() => {
-    if (!notice) return;
-    const timer = window.setTimeout(() => setNotice(null), NOTICE_MS);
-    return () => window.clearTimeout(timer);
-  }, [notice]);
 
   const fail = useCallback((message: string) => setNotice({ message, tone: "error" }), []);
 

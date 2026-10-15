@@ -1,6 +1,9 @@
-import { useEffect, useRef, type FormEvent, type KeyboardEvent } from "react";
-import { shouldFocusAskBox } from "./focus-rules";
-import { CHIPS, type Chip } from "./today-model";
+import { useRef, type FormEvent, type KeyboardEvent } from "react";
+import { Button, TextArea } from "@radix-ui/themes";
+import { VisuallyHidden } from "radix-ui";
+import { QuickChips } from "./QuickChips";
+import type { Chip } from "./today-model";
+import { useAskFocus } from "./useAskFocus";
 
 type Props = {
   /** This view is the one showing. */
@@ -17,15 +20,7 @@ export function Compose({ active, draft, busy, onDraft, onSend, onChip }: Props)
   const box = useRef<HTMLTextAreaElement>(null);
   const empty = draft.trim().length === 0;
 
-  // Ready to type: when this view shows, and whenever the window regains focus (hotkey, click on Greg).
-  useEffect(() => {
-    const focusBox = () => {
-      if (shouldFocusAskBox(active, document.activeElement?.tagName ?? null)) box.current?.focus();
-    };
-    focusBox();
-    window.addEventListener("focus", focusBox);
-    return () => window.removeEventListener("focus", focusBox);
-  }, [active]);
+  useAskFocus(box, active);
 
   const submit = (event: FormEvent) => {
     event.preventDefault();
@@ -41,37 +36,30 @@ export function Compose({ active, draft, busy, onDraft, onSend, onChip }: Props)
 
   return (
     <div className="compose">
-      <div className="chips" role="group" aria-label="Quick actions">
-        {CHIPS.map((chip) => (
-          <button
-            key={chip.id}
-            type="button"
-            className="button chip"
-            disabled={busy && chip.prompt !== null}
-            onClick={() => {
-              onChip(chip);
-              if (chip.prompt === null) box.current?.focus();
-            }}
-          >
-            {chip.label}
-          </button>
-        ))}
-      </div>
+      <QuickChips
+        busy={busy}
+        onChip={(chip) => {
+          onChip(chip);
+          if (chip.prompt === null) box.current?.focus();
+        }}
+      />
       <form onSubmit={submit} className="ask">
-        <label htmlFor="ask" className="visually-hidden">Ask Heel</label>
-        <textarea
+        <VisuallyHidden.Root asChild><label htmlFor="ask">Ask Heel</label></VisuallyHidden.Root>
+        <TextArea
           id="ask"
           ref={box}
+          size="2"
           rows={2}
           maxLength={4000}
+          resize="none"
           placeholder="What's on your mind?"
           value={draft}
           aria-describedby="ask-help"
           onChange={(event) => onDraft(event.target.value)}
           onKeyDown={onKey}
         />
-        <p id="ask-help" className="visually-hidden">Enter to send. Shift+Enter for a new line.</p>
-        <button type="submit" className="button button-primary" aria-busy={busy} disabled={busy || empty}>Send</button>
+        <VisuallyHidden.Root asChild><p id="ask-help">Enter to send. Shift+Enter for a new line.</p></VisuallyHidden.Root>
+        <Button type="submit" size="3" aria-busy={busy} disabled={busy || empty}>Send</Button>
       </form>
     </div>
   );

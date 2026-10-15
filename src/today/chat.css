@@ -1,0 +1,151 @@
+.chat {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  min-height: 0;
+  gap: var(--space-2);
+  padding: var(--ring-room);
+}
+
+.chat > * {
+  flex: none;
+}
+
+.chat > .thread-wrap {
+  flex: 1;
+}
+
+/* Now strip */
+.now-strip {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+}
+
+.now-line {
+  display: -webkit-box;
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  overflow-wrap: anywhere;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+}
+
+.now-label {
+  margin-right: var(--space-1);
+  letter-spacing: var(--label-tracking);
+}
+
+/* Thread */
+.thread-wrap {
+  position: relative;
+  min-height: var(--thread-min-height);
+}
+
+.thread {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  box-sizing: border-box;
+  height: 100%;
+  padding: var(--space-1) var(--space-1) var(--space-3);
+  overflow-y: auto;
+  overscroll-behavior: contain;
+}
+
+.thread-empty {
+  margin: auto 0;
+  text-align: center;
+}
+
+.msg {
+  box-sizing: border-box;
+  max-width: var(--message-max-width);
+  overflow-wrap: anywhere;
+}
+
+.msg-text {
+  margin: 0 0 var(--space-2);
+}
+
+.msg > :last-child {
+  margin-bottom: 0;
+}
+
+.msg-user {
+  align-self: flex-end;
+}
+
+.msg-heel {
+  align-self: flex-start;
+}
+
+.failed {
+  display: grid;
+  gap: var(--space-2);
+}
+
+.row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+}
+
+.jump {
+  position: absolute;
+  bottom: var(--space-2);
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+/* Receipts + drawer share the same fold-away chevron */
+.chevron {
+  transition: transform var(--motion-fast);
+}
+
+[data-state="open"] > .chevron,
+[data-state="open"] .chevron {
+  transform: rotate(var(--chevron-turn));
+}
+
+.receipts {
+  margin-top: var(--space-2);
+}
+
+.receipt-list {
+  display: grid;
+  gap: var(--space-1);
+  margin: var(--space-1) 0 0;
+  padding: 0 0 0 var(--space-4);
+  list-style: none;
+}
+
+.receipt-list li {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-2);
+}
+
+.receipt-list li[data-undone] .receipt-text {
+  text-decoration: line-through;
+}
+
+.first-run ol {
+  display: grid;
+  gap: var(--space-4);
+  margin: var(--space-3) 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.first-run li {
+  display: flex;
+  gap: var(--space-3);
+  align-items: flex-start;
+}
+
+.first-run p {
+  margin: 0 0 var(--space-1);
+}

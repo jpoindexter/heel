@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from "react";
+import { Button } from "@radix-ui/themes";
 import type { BrainSummary } from "../settings/brain-summary";
 import { replyAlignment } from "./focus-rules";
 import { FirstRun } from "./FirstRun";
@@ -72,7 +73,7 @@ export function Thread({ messages, summary, onRetry, onOpenSettings, onUndo }: P
           </div>
         ))}
       </div>
-      {showJump && <button type="button" className="button jump" onClick={jumpToLatest}>Jump to latest</button>}
+      {showJump && <Button size="2" variant="solid" color="gray" highContrast className="jump" onClick={jumpToLatest}>Jump to latest</Button>}
     </div>
   );
 }
