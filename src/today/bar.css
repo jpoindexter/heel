@@ -81,24 +81,38 @@
   animation-delay: calc(var(--i) * var(--stagger));
 }
 
-/* The open chat card */
+/* The bar's slot never changes height, so the list above it never moves. The open card sits on the slot and grows upward over the list. */
+.bar-slot {
+  position: relative;
+  flex: none;
+  height: var(--bar-height);
+}
+
 .compose-zone {
   position: relative;
   height: 0;
 }
 
 .compose {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: var(--z-card);
   display: flex;
   flex-direction: column;
   gap: var(--space-2);
   padding: var(--space-3) var(--space-3) var(--space-2);
-  background: var(--gray-a3);
+  background: var(--color-panel-solid);
   border-radius: var(--radius-5);
+  box-shadow: var(--shadow-4), 0 0 0 var(--border-width) var(--hairline);
 }
 
-.compose .rt-TextAreaRoot {
+.compose .rt-TextAreaRoot,
+.compose .rt-TextAreaRoot:where(:focus-within) {
   min-height: 0;
   background: transparent;
+  outline: none;
   box-shadow: none;
 }
 

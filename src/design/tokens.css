@@ -13,6 +13,7 @@
   --parked-max-height: 160px;
   --reply-max-height: 38vh; /* a long answer scrolls inside itself; the tasks under it keep their room */
   --toast-gap: var(--space-2);
+  --z-card: 5; /* the open chat card floats over the list */
   --z-toast: 10;
   --chevron-turn: 90deg;
   --motion-fast: 150ms;
@@ -32,7 +33,7 @@
   --tail-room: 28px; /* keeps the tail off the rounded corners */
 
   /* Lines are hairlines by default (Radix's soft grays). Only what you must find to use it gets a stronger edge, below. */
-  --focus-8: var(--accent-11); /* Radix's focus ring is 2.4:1 in light; WCAG 1.4.11 wants 3:1 */
+  --focus-8: var(--gray-a9); /* a quiet gray ring for keyboard focus (3:1 on the panel), never the green */
   --hairline: var(--gray-a5); /* the panel frame, its tail and other decoration */
 }
 

@@ -1,6 +1,7 @@
 import { useCallback } from "react";
 import type { TrayAction } from "./bar-model";
 import { useBar } from "./useBar";
+import { usePointerOutside } from "./usePointerOutside";
 import type { useTodayState } from "./useTodayState";
 
 /** The bar wired to what it does: the four buttons, Enter, ⌘↩, Esc, and when the card folds back. */
@@ -43,9 +44,11 @@ export function useBarActions(state: ReturnType<typeof useTodayState>, onOpenSet
   );
 
   const close = useCallback(() => closeTray(closeComposer), [closeComposer, closeTray]);
+
+  const onPointerOutside = usePointerOutside(bar.composerOpen, chat.isDraftEmpty, close);
   const onBlur = useCallback(() => {
     if (!bar.trayOpen) collapseSoon("blur");
   }, [bar.trayOpen, collapseSoon]);
 
-  return { ...bar, send, add, close, onAction, onBlur };
+  return { ...bar, send, add, close, onAction, onBlur, onPointerOutside };
 }

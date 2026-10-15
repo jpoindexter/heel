@@ -32,7 +32,7 @@ export function TodayView({ showing, onShow, summary, reloadKey, onOpenSettings 
   const emailReady = state.inbox.status?.connected ?? false;
 
   return (
-    <div className="today">
+    <div className="today" onPointerDownCapture={bar.onPointerOutside}>
       {tasks.state.phase === "error" && (
         <Callout.Root color="amber" role="alert" size="1" highContrast>
           <Callout.Text>{tasks.state.message}</Callout.Text>
