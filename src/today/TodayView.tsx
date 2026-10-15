@@ -14,6 +14,7 @@ import { TaskSection } from "./TaskSection";
 import { BottomBar } from "./BottomBar";
 import { useBarActions } from "./useBarActions";
 import { todayKey } from "./history-labels";
+import { useAttention } from "./useAttention";
 import { useHistoryLayer } from "./useHistoryLayer";
 import { useNewTaskFocus } from "./useNewTaskShortcut";
 import { useTodayState } from "./useTodayState";
@@ -70,6 +71,7 @@ export function TodayView({ showing, summary, reloadKey, settings }: Props) {
   const focusSignal = useNewTaskFocus(layers.home, bar.openComposer);
   useLayerFollows(state);
   const history = useHistoryLayer(tasks, layers);
+  useAttention({ state, bar, layers });
 
   return (
     <div className="today" onPointerDownCapture={bar.onPointerOutside}>

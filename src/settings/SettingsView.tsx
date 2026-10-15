@@ -5,6 +5,7 @@ import { EmailSettings } from "../inbox/EmailSettings";
 import type { Density } from "../theme/density";
 import { ActivitySettings } from "./ActivitySettings";
 import { AppearanceSettings } from "./AppearanceSettings";
+import { AttentionSettings } from "./AttentionSettings";
 import { BrainSettings } from "./BrainSettings";
 import { DensitySettings } from "./DensitySettings";
 import { MethodSettings } from "./MethodSettings";
@@ -29,6 +30,8 @@ export function SettingsView({ active, onSaved, preference, onPreference, densit
       <ActivitySettings />
       <Separator size="4" />
       <MethodSettings />
+      <Separator size="4" />
+      <AttentionSettings />
       <Separator size="4" />
       <BrainSettings active={active} onSaved={onSaved} />
       <Separator size="4" />

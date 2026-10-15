@@ -73,6 +73,18 @@ export const TaskSchema = z.object({
 });
 export const TaskPatchSchema = z.object({ size: z.enum(SIZES).nullable(), bucket: z.string().nullable(), estimateMin: z.number().int().positive().nullable() }).partial();
 export { MethodNumbersSchema, MethodSchema, type Method, type MethodNumbers } from "./method";
+/** Attention sense (N24). Off by default; the wander list is where the rabbit-hole rule may look. */
+export const DEFAULT_WANDER_BUNDLES = ["com.apple.Safari", "com.google.Chrome", "company.thebrowser.Browser", "org.mozilla.firefox", "com.apple.MobileSMS", "com.tinyspeck.slackmacgap", "com.hnc.Discord", "com.apple.mail"] as const;
+export const AttentionSettingsSchema = z.object({ enabled: z.boolean().default(false), wanderBundles: z.array(z.string().min(1)).max(50).default([...DEFAULT_WANDER_BUNDLES]) });
+export type AttentionSettings = z.output<typeof AttentionSettingsSchema>;
+export const DEFAULT_ATTENTION_SETTINGS: AttentionSettings = AttentionSettingsSchema.parse({});
+export const AttentionDaySchema = z.object({ date: z.string(), apps: z.record(z.string(), z.object({ name: z.string(), seconds: z.number() })) });
+export const AttentionViewSchema = z.object({ settings: AttentionSettingsSchema, day: AttentionDaySchema });
+export type AttentionViewDto = z.output<typeof AttentionViewSchema>;
+export const AttentionSampleSchema = z.object({ bundle: z.string().min(1), name: z.string(), idleSec: z.number().min(0), intervalSec: z.number().positive(), quiet: z.boolean().default(false), at: z.number().optional() });
+export const NudgeSchema = z.object({ rule: z.enum(["rabbit-hole", "time-suck", "drifting", "hyperfocus"]), text: z.string(), choices: z.array(z.string()) });
+export const NudgeResultSchema = z.object({ nudge: NudgeSchema.nullable() });
+export type NudgeDto = z.output<typeof NudgeSchema>;
 export const PomodoroViewSchema = z.object({ state: PomodoroStateSchema.nullable(), config: PomodoroConfigSchema, ended: z.enum(PHASES).nullable(), remainingMs: z.number() });
 export type PomodoroViewDto = z.output<typeof PomodoroViewSchema>;
 

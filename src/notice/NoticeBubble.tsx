@@ -59,8 +59,8 @@ export function NoticeBubble() {
   const { appearance } = useAppearance();
   const [density] = useDensity();
   const { bubble, leaving, hold, release, leave, gone } = useBubble();
-  const undo = () => {
-    if (bubble) void emit(NOTICE_UNDO_EVENT, { id: bubble.id }).catch(() => undefined);
+  const answer = (choice?: number) => {
+    if (bubble) void emit(NOTICE_UNDO_EVENT, { id: bubble.id, choice }).catch(() => undefined);
     leave();
   };
   return (
@@ -76,8 +76,11 @@ export function NoticeBubble() {
           onAnimationEnd={() => leaving && gone()}
         >
           <Text size="2" className="notice-text">{bubble.message}</Text>
-          {bubble.undoable && (
-            <Button size="1" variant="soft" highContrast onClick={undo}>Undo</Button>
+          {bubble.choices.map((label, index) => (
+            <Button key={label} size="1" variant="soft" color="gray" onClick={() => answer(index)}>{label}</Button>
+          ))}
+          {bubble.undoable && bubble.choices.length === 0 && (
+            <Button size="1" variant="soft" highContrast onClick={() => answer()}>Undo</Button>
           )}
           <span className="notice-tail" aria-hidden="true" />
         </div>

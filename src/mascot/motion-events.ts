@@ -25,3 +25,5 @@ export function beginWork(kind: string): () => void {
 export const settle = () => setMotion(HEEL_STATES.idle);
 export const celebrate = () => playOnce(HEEL_STATES.done);
 export const stumble = () => playOnce(HEEL_STATES.error);
+/** A small paw: "over here", with no sound and no words. */
+export const nudge = () => playOnce(HEEL_STATES.nudge);

@@ -1,8 +1,33 @@
 import { Button, Text } from "@radix-ui/themes";
 import type { HistoryDto } from "../../shared/api";
 import "./history.css";
+import { useEffect } from "react";
+import { useAttentionSettings } from "../ui/attention";
 import { dayLabel, weekdayLetter } from "./history-labels";
+import { hoursText } from "./jar-model";
 import type { useHistory } from "./useHistory";
+
+/** Where the day went, as plain minutes per app, only while attention sense is on and has seen something. */
+function DayWent() {
+  const { settings, day, reloadDay } = useAttentionSettings();
+  useEffect(() => void reloadDay(), [reloadDay]);
+  if (!settings.enabled || !day) return null;
+  const apps = Object.values(day.apps).filter((a) => a.seconds >= 60).sort((a, b) => b.seconds - a.seconds).slice(0, 6);
+  if (apps.length === 0) return null;
+  return (
+    <section className="history-day" aria-label="Where the day went">
+      <Text size="1" weight="medium" color="gray" className="section-label">Where the day went</Text>
+      <ul className="rows">
+        {apps.map((app) => (
+          <li key={app.name} className="task-row history-row">
+            <Text size="2" className="grow task-text clamp-1">{app.name}</Text>
+            <Text size="1" color="gray">{hoursText(Math.round(app.seconds / 60))}</Text>
+          </li>
+        ))}
+      </ul>
+    </section>
+  );
+}
 
 type Props = { history: ReturnType<typeof useHistory>; today: string };
 
@@ -36,6 +61,7 @@ export function HistoryLayer({ history, today }: Props) {
   return (
     <div className="history">
       <WeekStrip week={week} />
+      <DayWent />
       {days.length === 0 && <Text size="2" color="gray" className="history-empty">Nothing finished in the last month. The list is where it starts.</Text>}
       {days.map((day) => (
         <section key={day.date} className="history-day" aria-label={dayLabel(day.date, today)}>

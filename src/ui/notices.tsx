@@ -25,15 +25,15 @@ const NoticesContext = createContext<Notices | null>(null);
 
 const hideBubble = () => void invoke("hide_notice").catch(() => undefined);
 
-/** The bubble's Undo comes back as an event with the notice id; the undo itself never left this window. */
-function useBubbleUndo(undos: React.RefObject<Map<number, () => void>>, dismiss: () => void) {
+/** The bubble's Undo or choice comes back as an event with the notice id; the functions never left this window. */
+function useBubbleUndo(undos: React.RefObject<Map<number, (choice?: number) => void>>, dismiss: () => void) {
   useEffect(() => {
     const unlisten = listen<unknown>(NOTICE_UNDO_EVENT, (event) => {
       const parsed = UndoPayloadSchema.safeParse(event.payload);
       if (!parsed.success) return;
-      const undo = undos.current.get(parsed.data.id);
+      const act = undos.current.get(parsed.data.id);
       undos.current.delete(parsed.data.id);
-      undo?.();
+      act?.(parsed.data.choice);
       dismiss();
       hideBubble();
     }).catch(() => undefined);
@@ -52,7 +52,7 @@ export function NoticesProvider({ quiet, children }: { quiet: boolean; children:
   flags.current.panelVisible = panelVisible;
   flags.current.quiet = quiet;
   const nextId = useRef(0);
-  const undos = useRef(new Map<number, () => void>());
+  const undos = useRef(new Map<number, (choice?: number) => void>());
 
   // The toast's clock is ours, not Radix's: Radix pauses while the window is unfocused, which left toasts stuck for good.
   const clock = useRef<number | undefined>(undefined);
@@ -80,7 +80,7 @@ export function NoticesProvider({ quiet, children }: { quiet: boolean; children:
     release();
     if (route !== "bubble") return;
     undos.current.clear();
-    if (next.undo) undos.current.set(shown.id, next.undo);
+    if (next.undo || next.choices) undos.current.set(shown.id, (choice) => (choice === undefined ? next.undo?.() : next.choices?.[choice]?.run()));
     void invoke("show_notice", { payload: toBubble(shown) }).catch(() => undefined);
   }, [release]);
   useBubbleUndo(undos, dismiss);

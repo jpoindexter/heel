@@ -4,6 +4,7 @@ import type { Provider, ProviderId } from "../agent/providers/types";
 import type { InboxService } from "../inbox/service";
 import type { MailSource } from "../mail/source";
 import type { Store } from "../store/store";
+import { registerAttentionRoutes } from "./attention-routes";
 import { registerBrainRoutes } from "./brain-routes";
 import { applyGuards } from "./guards";
 import { registerFocusRoutes } from "./focus-routes";
@@ -43,5 +44,6 @@ export function createApp(deps: AppDeps) {
   registerMailRoutes(app, deps);
   registerMethodRoutes(app, deps);
   registerPomodoroRoutes(app, deps);
+  registerAttentionRoutes(app, deps);
   return app;
 }

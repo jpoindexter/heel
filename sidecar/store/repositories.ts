@@ -5,6 +5,7 @@ import { doneToday, history } from "./history";
 import { getLedger, upsertLedger } from "./ledger";
 import { clearMessages, listMessages, restoreMessages, saveMessage } from "./messages";
 import { listParked, parkIdea, promoteParked, unparkIdea } from "./parked";
+import { foldAttention, getAttentionDay, getAttentionSettings, setAttentionSettings } from "./attention";
 import { movePomodoro, readPomodoro, setPomodoroConfig, startCycle } from "./pomodoro";
 import type { FocusOutcome, TaskStatus } from "./schema";
 import { getBrain, getMethod, getMethodNumbers, setBrain, setMethod, setMethodNumbers } from "./settings";
@@ -49,6 +50,10 @@ export function todayRepositories(ctx: Ctx) {
       move: (move: "pause" | "resume" | "skip" | "next" | "stop") => movePomodoro(ctx, move),
       setConfig: (input: unknown) => setPomodoroConfig(ctx, input),
     },
+    attention: {
+      day: () => getAttentionDay(ctx),
+      fold: (sample: Parameters<typeof foldAttention>[1], context: Parameters<typeof foldAttention>[2]) => foldAttention(ctx, sample, context),
+    },
     now: ctx.now,
   };
 }
@@ -73,6 +78,8 @@ export function systemRepositories(ctx: Ctx) {
       setMethod: (input: unknown) => setMethod(ctx, input),
       getMethodNumbers: () => getMethodNumbers(ctx),
       setMethodNumbers: (input: unknown) => setMethodNumbers(ctx, input),
+      getAttention: () => getAttentionSettings(ctx),
+      setAttention: (input: unknown) => setAttentionSettings(ctx, input),
     },
   };
 }

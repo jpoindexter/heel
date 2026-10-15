@@ -21,3 +21,5 @@ export const NOTICE_EVENT = "heel:notice";
 export const NOTICE_UNDO_EVENT = "heel:notice-undo";
 /** Sent to Greg's window when something starts or ends (payload: { id, active }): a turn, a digest, a draft. Webview to webview only. */
 export const WORK_EVENT = "heel:work";
+/** Sent to the panel by the shell while attention sense is on (payload: { bundle, name, idle_sec }). Must equal ATTENTION_EVENT in src-tauri/src/constants.rs. */
+export const ATTENTION_EVENT = "heel:attention";

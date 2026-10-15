@@ -1,4 +1,5 @@
 mod anchor;
+mod attention;
 mod app_setup;
 mod appear;
 mod commands;
@@ -19,6 +20,7 @@ mod walk;
 
 use anchor::panel_anchor;
 use appear::{hide_greg, show_greg, Departure};
+use attention::{set_attention_enabled, Attention};
 use commands::{panel_visible, sidecar_info, toggle_panel_command};
 use notice_window::{hide_notice, show_notice};
 use dock::Dock;
@@ -47,6 +49,7 @@ pub fn run() {
     }));
 
     builder
+        .manage(Attention::default())
         .manage(Dock::new())
         .manage(PendingView::new())
         .manage(HitRegion::default())
@@ -64,7 +67,7 @@ pub fn run() {
                 .build(),
         )
         .on_menu_event(|app, event| mascot_menu::on_menu_event(app, event.id().as_ref()))
-        .invoke_handler(tauri::generate_handler![toggle_panel_command, sidecar_info, take_pending_view, set_mascot_hit_region, set_mascot_pressed, show_mascot_menu, set_life_flags, start_walk, stop_walk, hide_greg, show_greg, panel_anchor, helper_status, restart_helper, panel_visible, show_notice, hide_notice])
+        .invoke_handler(tauri::generate_handler![toggle_panel_command, sidecar_info, take_pending_view, set_mascot_hit_region, set_mascot_pressed, show_mascot_menu, set_life_flags, start_walk, stop_walk, hide_greg, show_greg, panel_anchor, helper_status, restart_helper, panel_visible, show_notice, hide_notice, set_attention_enabled])
         .setup(app_setup::setup)
         .build(tauri::generate_context!())
         .expect("error while building Heel")

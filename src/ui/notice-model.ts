@@ -9,6 +9,8 @@ export type Notice = {
   undo?: () => void;
   /** About the running time-box, so it may still show next to Greg during one. */
   aboutFocus?: boolean;
+  /** Up to three ways to answer (a nudge); shown instead of Undo. */
+  choices?: readonly { label: string; run: () => void }[];
 };
 
 /** The notice on screen: numbered so a repeat of the same words still re-animates, counting how many it replaced. */
@@ -37,10 +39,11 @@ export function replaceNotice(current: ShownNotice | null, next: Notice, id: num
 }
 
 /** What the shell carries to the notice window (functions can't cross; Undo goes back by id). */
-export const BubblePayloadSchema = z.object({ id: z.number().int(), message: z.string(), tone: z.enum(["info", "error"]), undoable: z.boolean() });
+export const BubblePayloadSchema = z.object({ id: z.number().int(), message: z.string(), tone: z.enum(["info", "error"]), undoable: z.boolean(), choices: z.array(z.string()).default([]) });
 export type BubblePayload = z.output<typeof BubblePayloadSchema>;
-export const UndoPayloadSchema = z.object({ id: z.number().int() });
+/** Undo, or the index of the choice taken. */
+export const UndoPayloadSchema = z.object({ id: z.number().int(), choice: z.number().int().min(0).optional() });
 
 export function toBubble(notice: ShownNotice): BubblePayload {
-  return { id: notice.id, message: notice.message, tone: notice.tone, undoable: notice.undo !== undefined };
+  return { id: notice.id, message: notice.message, tone: notice.tone, undoable: notice.undo !== undefined, choices: (notice.choices ?? []).map((c) => c.label) };
 }

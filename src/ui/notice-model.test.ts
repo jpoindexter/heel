@@ -34,8 +34,16 @@ describe("replaceNotice", () => {
 describe("toBubble", () => {
   it("carries what the window needs and says whether Undo exists, never the function", () => {
     const bubble = toBubble({ id: 3, count: 1, message: "Completed: x", tone: "info", undo: () => undefined });
-    expect(bubble).toEqual({ id: 3, message: "Completed: x", tone: "info", undoable: true });
+    expect(bubble).toEqual({ id: 3, message: "Completed: x", tone: "info", undoable: true, choices: [] });
     expect(BubblePayloadSchema.safeParse(bubble).success).toBe(true);
     expect(BubblePayloadSchema.safeParse({ ...bubble, tone: "loud" }).success).toBe(false);
+  });
+});
+
+describe("choices", () => {
+  it("cross the window as labels only, and Undo is left out when there are choices", () => {
+    const bubble = toBubble({ id: 4, count: 1, message: "Back to it?", tone: "info", choices: [{ label: "Back to it", run: () => undefined }, { label: "Not now", run: () => undefined }] });
+    expect(bubble.choices).toEqual(["Back to it", "Not now"]);
+    expect(BubblePayloadSchema.safeParse(bubble).success).toBe(true);
   });
 });

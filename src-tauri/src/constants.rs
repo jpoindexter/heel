@@ -66,3 +66,6 @@ pub(crate) const TRAY_RESTART_HELPER_ID: &str = "tray-restart-helper";
 pub(crate) const NOTICE_LABEL: &str = "notice";
 pub(crate) const NOTICE_EVENT: &str = "heel:notice";
 pub(crate) const NOTICE_GAP_LOGICAL_PX: f64 = 4.0;
+/// Attention sense (N24): the event the panel receives (must equal ATTENTION_EVENT in src/events.ts; a test enforces it) and the sample interval.
+pub(crate) const ATTENTION_EVENT: &str = "heel:attention";
+pub(crate) const ATTENTION_INTERVAL_MS: u64 = 5_000;
