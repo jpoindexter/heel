@@ -3,6 +3,7 @@ mod appear;
 mod commands;
 mod constants;
 mod dock;
+mod hidden_state;
 mod hit_region;
 mod mascot_menu;
 mod menus;

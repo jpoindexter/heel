@@ -201,20 +201,21 @@ pub(crate) fn keep_docked(app: &AppHandle, moved_label: &str) {
 }
 
 /// Put the mascot in the bottom-right corner of the primary monitor, above the Dock.
-pub(crate) fn place_mascot(app: &AppHandle) {
+/// Put Greg in his home corner. Returns where, because reading the position back straight after can still give the old one.
+pub(crate) fn place_mascot(app: &AppHandle) -> Option<PhysicalPosition<i32>> {
     let (Some(mascot), Ok(Some(monitor))) = (app.get_webview_window(MASCOT_LABEL), app.primary_monitor())
     else {
-        return;
+        return None;
     };
-    let Ok(size) = mascot.outer_size() else {
-        return;
-    };
+    let size = mascot.outer_size().ok()?;
     let margin = (MARGIN_LOGICAL_PX * monitor.scale_factor()) as i32;
     let screen = monitor.size();
     let origin = monitor.position();
     let x = origin.x + screen.width as i32 - size.width as i32 - margin;
     let y = origin.y + screen.height as i32 - size.height as i32 - margin * DOCK_CLEARANCE_MULTIPLIER;
-    let _ = mascot.set_position(PhysicalPosition::new(x, y));
+    let home = PhysicalPosition::new(x, y);
+    let _ = mascot.set_position(home);
+    Some(home)
 }
 
 pub(crate) fn watch_moves(app: &AppHandle) {

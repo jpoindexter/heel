@@ -9,3 +9,5 @@ export const LIFE_COMMAND_EVENT = "heel:life-command";
 export const WALK_FINISHED_EVENT = "heel:walk-finished";
 /** Sent to Greg's window while the shell moves him for hide / show / quit, so he can run. Must equal RUN_EVENT in src-tauri/src/constants.rs. */
 export const RUN_EVENT = "heel:run";
+/** Sent to Greg's window to fade him out or in (reduced motion). Must equal FADE_EVENT in src-tauri/src/constants.rs. */
+export const FADE_EVENT = "heel:fade";

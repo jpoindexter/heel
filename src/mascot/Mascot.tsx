@@ -6,6 +6,7 @@ import { useActivity } from "./life/useActivity";
 import { useIdleLife } from "./life/useIdleLife";
 import { useLifeCommands } from "./life/useLifeCommands";
 import { useRunEvents } from "./life/useRunEvents";
+import { useFade } from "./useFade";
 import { usePanelOpen } from "./life/usePanelOpen";
 import { HEEL_STATES, motionDuration, parseMotionId, type MotionId } from "./sheets";
 import { Sprite } from "./Sprite";
@@ -18,6 +19,7 @@ export function Mascot() {
   const [lifeMotion, setLifeMotion] = useState<MotionId | null>(null);
   const [activity, setActivity] = useActivity();
   useFocusPresence(activity);
+  const fadeStyle = useFade();
 
   useEffect(() => {
     const unlisten = listen<unknown>(MOTION_EVENT, (event) => {
@@ -50,7 +52,7 @@ export function Mascot() {
   });
 
   return (
-    <div {...gestures} onPointerEnter={life.touch}>
+    <div {...gestures} onPointerEnter={life.touch} style={fadeStyle}>
       <Sprite motion={running ?? oneShot ?? (busy ? base : (lifeMotion ?? HEEL_STATES.idle))} label="Heel, your companion. Click to open the panel." />
     </div>
   );

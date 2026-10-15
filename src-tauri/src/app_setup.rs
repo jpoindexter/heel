@@ -11,7 +11,8 @@ use crate::{hit_region, hotkey};
 pub(crate) fn setup(app: &mut App) -> Result<(), Box<dyn std::error::Error>> {
     let handle = app.handle().clone();
     restore_panel_size(&handle);
-    place_mascot(&handle);
+    let home = place_mascot(&handle);
+    crate::appear::start_up(&handle, home);
     watch_moves(&handle);
     hit_region::start_polling(&handle);
     build_app_menu(&handle)?;

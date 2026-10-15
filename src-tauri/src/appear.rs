@@ -7,7 +7,8 @@ use std::sync::Mutex;
 use serde::Serialize;
 use tauri::{AppHandle, Emitter, Manager, PhysicalPosition, WebviewWindow};
 
-use crate::constants::{EXIT_MAX_MS, EXIT_SPEED_PX_PER_S, MASCOT_LABEL, PANEL_LABEL, QUIT_MAX_MS, RUN_EVENT};
+use crate::constants::{EXIT_MAX_MS, EXIT_SPEED_PX_PER_S, FADE_EVENT, FADE_MS, LAUNCH_DELAY_MS, MASCOT_LABEL, PANEL_LABEL, QUIT_MAX_MS, RUN_EVENT};
+use crate::hidden_state;
 use crate::dock::work_rect;
 use crate::mascot_menu::LifeFlags;
 use crate::panel_window::{announce_panel, panel_is_visible, save_panel_size};
@@ -83,6 +84,17 @@ fn run(app: &AppHandle, stage: &Stage, route: Route, max_ms: u64, on_done: impl 
     });
 }
 
+#[derive(Serialize, Clone)]
+struct Fade {
+    opacity: f64,
+    ms: u64,
+}
+
+/// With reduced motion he fades instead of running: tell his window to fade to `opacity`.
+fn fade(app: &AppHandle, opacity: f64) {
+    let _ = app.emit_to(MASCOT_LABEL, FADE_EVENT, Fade { opacity, ms: FADE_MS });
+}
+
 fn hide_window(app: &AppHandle, label: &str) {
     if let Some(window) = app.get_webview_window(label) {
         let _ = window.hide();
@@ -96,9 +108,15 @@ pub(crate) fn hide_mascot(app: &AppHandle) {
     }
     hide_window(app, PANEL_LABEL);
     announce_panel(app, false);
+    hidden_state::save(app, true);
     let leaving = stage(app).filter(|s| !reduced_motion(app) && s.mascot.is_visible().unwrap_or(false));
     let Some(stage) = leaving else {
-        hide_window(app, MASCOT_LABEL);
+        fade(app, 0.0);
+        let handle = app.clone();
+        std::thread::spawn(move || {
+            std::thread::sleep(std::time::Duration::from_millis(FADE_MS));
+            hide_window(&handle, MASCOT_LABEL);
+        });
         return;
     };
     let route = exit_route(stage.x, stage.width, stage.min_x, stage.max_x);
@@ -116,6 +134,7 @@ pub(crate) fn hide_mascot(app: &AppHandle) {
 
 /// Show Greg again. If he left by running off, he runs back in.
 pub(crate) fn show_mascot(app: &AppHandle) {
+    hidden_state::save(app, false);
     let away = app.state::<Departure>().0.lock().ok().and_then(|mut slot| slot.take());
     let Some(stage) = stage(app) else { return };
     let hidden = !stage.mascot.is_visible().unwrap_or(true);
@@ -128,8 +147,37 @@ pub(crate) fn show_mascot(app: &AppHandle) {
         }
         _ => {
             let _ = stage.mascot.show();
+            fade(app, 1.0);
         }
     }
+}
+
+/// At launch Greg is parked just off-screen but still visible (a hidden window never loads its page), then once the page is up:
+/// if he was hidden when Heel last quit he is hidden for real, otherwise he walks on from the edge.
+pub(crate) fn start_up(app: &AppHandle, home: Option<PhysicalPosition<i32>>) {
+    let Some(mut stage) = stage(app) else { return };
+    if let Some(home) = home {
+        stage.x = home.x;
+        stage.y = home.y;
+    }
+    let route = exit_route(stage.x, stage.width, stage.min_x, stage.max_x);
+    let away = Away { edge: route.direction, rest_x: stage.x.clamp(stage.min_x, stage.max_x) };
+    let start = entry_route(away, stage.width, stage.min_x, stage.max_x);
+    let _ = stage.mascot.set_position(PhysicalPosition::new(start.from_x, stage.y));
+    let was_hidden = hidden_state::load(app);
+    let handle = app.clone();
+    std::thread::spawn(move || {
+        std::thread::sleep(std::time::Duration::from_millis(LAUNCH_DELAY_MS));
+        if !was_hidden {
+            run(&handle, &stage, start, EXIT_MAX_MS, |_| {});
+            return;
+        }
+        let _ = stage.mascot.hide();
+        let _ = stage.mascot.set_position(PhysicalPosition::new(away.rest_x, stage.y));
+        if let Ok(mut slot) = handle.state::<Departure>().0.lock() {
+            *slot = Some(away);
+        }
+    });
 }
 
 #[tauri::command]
@@ -144,8 +192,10 @@ pub(crate) fn show_greg(app: AppHandle) {
 
 /// Show him where he stands, no running (the panel opens next to him, so he must already be in place).
 pub(crate) fn reveal_mascot(app: &AppHandle) {
+    hidden_state::save(app, false);
     if let Some(mascot) = app.get_webview_window(MASCOT_LABEL) {
         let _ = mascot.show();
+        fade(app, 1.0);
     }
 }
 

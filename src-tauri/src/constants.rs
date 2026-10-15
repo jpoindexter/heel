@@ -42,3 +42,10 @@ pub(crate) const EXIT_SPEED_PX_PER_S: f64 = 520.0;
 pub(crate) const EXIT_MAX_MS: u64 = 1_200;
 /// Quitting must feel immediate: he still runs off, but never for longer than this.
 pub(crate) const QUIT_MAX_MS: u64 = 500;
+/// Whether Greg was hidden when Heel last quit, so a restart keeps him hidden.
+pub(crate) const HIDDEN_FILE: &str = "mascot-hidden.json";
+/// At launch he waits for his window to finish loading, then walks on. Must be longer than the page takes to start.
+pub(crate) const LAUNCH_DELAY_MS: u64 = 1_500;
+/// With reduced motion he fades instead of running. Must equal FADE_EVENT in src/events.ts (a test enforces it).
+pub(crate) const FADE_EVENT: &str = "heel:fade";
+pub(crate) const FADE_MS: u64 = 200;
