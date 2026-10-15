@@ -13,3 +13,5 @@ export const RUN_EVENT = "heel:run";
 export const FADE_EVENT = "heel:fade";
 /** Sent to the panel: which edge faces Greg and where his centre is, for its tail. Must equal PANEL_ANCHOR_EVENT in src-tauri/src/constants.rs. */
 export const PANEL_ANCHOR_EVENT = "heel:panel-anchor";
+/** Sent to the panel when the helper's state changes (running, starting, restarting, stopped). Must equal HELPER_STATUS_EVENT in src-tauri/src/constants.rs. */
+export const HELPER_STATUS_EVENT = "heel:helper-status";

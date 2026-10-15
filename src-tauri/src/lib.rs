@@ -5,6 +5,8 @@ mod commands;
 mod constants;
 mod dock;
 mod hidden_state;
+mod helper_health;
+mod helper_watch;
 mod hit_region;
 mod mascot_menu;
 mod menus;
@@ -23,6 +25,7 @@ use mascot_menu::{set_life_flags, show_mascot_menu, LifeFlags};
 use menus::{take_pending_view, PendingView};
 use walk::{start_walk, stop_walk, Walker};
 use panel_window::{panel_is_visible, reveal_panel, show_panel, toggle_panel};
+use helper_watch::{helper_status, restart_helper};
 use sidecar_process::SidecarProc;
 use tauri_plugin_global_shortcut::{Code, Modifiers, Shortcut, ShortcutState};
 
@@ -36,7 +39,10 @@ pub fn run() {
 
     // Must be the first plugin. A second launch exits at once and asks the running Heel to show its panel.
     #[cfg(desktop)]
-    let builder = builder.plugin(tauri_plugin_single_instance::init(|app, _args, _cwd| reveal_panel(app)));
+    let builder = builder.plugin(tauri_plugin_single_instance::init(|app, _args, _cwd| {
+        helper_watch::revive_if_stopped(app);
+        reveal_panel(app);
+    }));
 
     builder
         .manage(Dock::new())
@@ -56,7 +62,7 @@ pub fn run() {
                 .build(),
         )
         .on_menu_event(|app, event| mascot_menu::on_menu_event(app, event.id().as_ref()))
-        .invoke_handler(tauri::generate_handler![toggle_panel_command, sidecar_info, take_pending_view, set_mascot_hit_region, set_mascot_pressed, show_mascot_menu, set_life_flags, start_walk, stop_walk, hide_greg, show_greg, panel_anchor])
+        .invoke_handler(tauri::generate_handler![toggle_panel_command, sidecar_info, take_pending_view, set_mascot_hit_region, set_mascot_pressed, show_mascot_menu, set_life_flags, start_walk, stop_walk, hide_greg, show_greg, panel_anchor, helper_status, restart_helper])
         .setup(app_setup::setup)
         .build(tauri::generate_context!())
         .expect("error while building Heel")
@@ -68,6 +74,7 @@ pub fn run() {
             // Clicking the Dock icon opens the panel if it is hidden.
             #[cfg(target_os = "macos")]
             if let tauri::RunEvent::Reopen { .. } = event {
+                helper_watch::revive_if_stopped(app);
                 if !panel_is_visible(app) {
                     show_panel(app);
                 }

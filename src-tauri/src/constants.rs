@@ -55,3 +55,10 @@ pub(crate) const PANEL_ANCHOR_EVENT: &str = "heel:panel-anchor";
 pub(crate) const SIDECAR_BUNDLE_DIRS: [&str; 2] = ["resources/sidecar", "sidecar"];
 pub(crate) const SIDECAR_LOG_FILE: &str = "sidecar.log";
 pub(crate) const SIDECAR_STOP_GRACE_MS: u64 = 1_500;
+/// Helper supervision (N5): how often it is checked, how long a fresh start may take, how long it must run before past crashes are forgotten.
+/// The event must equal HELPER_STATUS_EVENT in src/events.ts (a test enforces it).
+pub(crate) const HELPER_STATUS_EVENT: &str = "heel:helper-status";
+pub(crate) const HEALTH_INTERVAL_MS: u64 = 3_000;
+pub(crate) const STARTUP_GRACE_MS: u64 = 10_000;
+pub(crate) const HEALTHY_RESET_MS: u64 = 60_000;
+pub(crate) const TRAY_RESTART_HELPER_ID: &str = "tray-restart-helper";

@@ -7,6 +7,8 @@ import "@radix-ui/themes/styles.css";
 import "../design/tokens.css";
 import "./panel.css";
 import { client } from "../api/default-client";
+import { HelperNotice } from "../helper/HelperNotice";
+import { useHelperStatus } from "../helper/useHelperStatus";
 import { OPEN_SETTINGS_EVENT } from "../events";
 import { shouldCloseOnKey } from "./escape";
 import { usePanelAnchor } from "./usePanelAnchor";
@@ -79,6 +81,7 @@ export function Panel() {
   const { summary, refresh: refreshSummary } = useBrainSummary(client, view);
   const { preference, appearance, setPreference } = useAppearance();
   const anchor = usePanelAnchor();
+  const helper = useHelperStatus(() => void refreshSummary());
   useEscapeToClose();
   useOpenSettingsRequests(() => setView("settings"));
 
@@ -107,9 +110,11 @@ export function Panel() {
           </IconButton>
         </header>
 
+        <HelperNotice status={helper.status} error={helper.error} onRestart={() => void helper.restart()} />
+
         {/* Both views stay mounted and are only hidden, so a typed draft, the conversation and the open drawer survive a trip to Settings. */}
         <div className="view" data-fill hidden={view !== "chat"}>
-          <ChatView active={view === "chat"} summary={summary} onOpenSettings={() => setView("settings")} />
+          <ChatView active={view === "chat"} summary={summary} reloadKey={helper.recoveries} onOpenSettings={() => setView("settings")} />
         </div>
         <div className="view" hidden={view !== "settings"}>
           <SettingsView active={view === "settings"} onSaved={() => void refreshSummary()} preference={preference} onPreference={setPreference} />

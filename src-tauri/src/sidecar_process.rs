@@ -13,8 +13,10 @@ use crate::constants::{SIDECAR_BUNDLE_DIRS, SIDECAR_LOG_FILE, SIDECAR_STOP_GRACE
 
 #[derive(Default)]
 pub(crate) struct SidecarProc {
-    child: Mutex<Option<Child>>,
+    pub(crate) child: Mutex<Option<Child>>,
     error: Mutex<Option<String>>,
+    pub(crate) status: Mutex<crate::helper_health::Status>,
+    pub(crate) tracker: Mutex<crate::helper_watch::Tracker>,
 }
 
 /// Where the user's Node may live. A desktop app's PATH is short, so look in the usual places first.
@@ -47,7 +49,7 @@ fn bundled_sidecar(app: &AppHandle) -> Option<PathBuf> {
     SIDECAR_BUNDLE_DIRS.iter().map(|dir| resources.join(dir)).find(|dir| dir.join("sidecar.mjs").is_file())
 }
 
-fn remember_error(app: &AppHandle, message: String) {
+pub(crate) fn remember_error(app: &AppHandle, message: String) {
     if let Ok(mut error) = app.state::<SidecarProc>().error.lock() {
         *error = Some(message);
     }
@@ -58,16 +60,10 @@ pub(crate) fn last_error(app: &AppHandle) -> Option<String> {
     app.state::<SidecarProc>().error.lock().ok().and_then(|error| error.clone())
 }
 
-pub(crate) fn start(app: &AppHandle) {
-    if cfg!(debug_assertions) || std::env::var_os("HEEL_NO_SIDECAR").is_some() {
-        return;
-    }
-    let Some(dir) = bundled_sidecar(app) else {
-        return remember_error(app, "Heel's helper is missing from the app. Reinstall Heel.".into());
-    };
-    let Some(node) = find_node() else {
-        return remember_error(app, "Heel needs Node 22 or newer. Install it (brew install node), then restart Heel.".into());
-    };
+/// Start the helper. Err says, in a sentence, why it could not be started.
+pub(crate) fn spawn(app: &AppHandle) -> Result<Child, String> {
+    let dir = bundled_sidecar(app).ok_or("Heel's helper is missing from the app. Reinstall Heel.")?;
+    let node = find_node().ok_or("Heel needs Node 22 or newer. Install it (brew install node), then restart Heel.")?;
     let data_dir = app.path().app_data_dir().unwrap_or_default();
     let _ = std::fs::create_dir_all(&data_dir);
     let log = OpenOptions::new().create(true).append(true).open(data_dir.join(SIDECAR_LOG_FILE));
@@ -75,21 +71,25 @@ pub(crate) fn start(app: &AppHandle) {
         Ok((a, b)) => (Stdio::from(a), Stdio::from(b)),
         Err(_) => (Stdio::null(), Stdio::null()),
     };
-    let spawned = Command::new(&node)
+    Command::new(&node)
         .arg(dir.join("sidecar.mjs"))
         .env("HEEL_SKILLS_DIR", dir.join("skills/nd-skills"))
         .stdin(Stdio::null())
         .stdout(out)
         .stderr(err)
-        .spawn();
-    match spawned {
-        Ok(child) => {
-            if let Ok(mut slot) = app.state::<SidecarProc>().child.lock() {
-                *slot = Some(child);
-            }
+        .spawn()
+        .map_err(|error| format!("Heel couldn't start its helper with {}: {error}.", node.display()))
+}
+
+/// Packaged app: start the helper and keep it running. Development: the dev stack starts it; the watcher only reports on it.
+pub(crate) fn start(app: &AppHandle) {
+    if !cfg!(debug_assertions) && std::env::var_os("HEEL_NO_SIDECAR").is_none() {
+        match spawn(app) {
+            Ok(child) => crate::helper_watch::adopt(app, child),
+            Err(message) => remember_error(app, message),
         }
-        Err(error) => remember_error(app, format!("Heel couldn't start its helper with {}: {error}.", node.display())),
     }
+    crate::helper_watch::start_watching(app);
 }
 
 /// Ask the helper to finish (it removes its connection file on SIGTERM), then make sure it is gone.

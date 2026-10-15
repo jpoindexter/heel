@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import { Button, Callout } from "@radix-ui/themes";
 import { client } from "../api/default-client";
 import { FocusPanel } from "../focus/FocusPanel";
@@ -17,10 +18,16 @@ import { useTasks } from "./useTasks";
 import { useThread } from "./useThread";
 import { useTodayFocus } from "./useTodayFocus";
 
-type Props = { active: boolean; summary: BrainSummary | null; onOpenSettings: () => void };
+type Props = {
+  active: boolean;
+  summary: BrainSummary | null;
+  /** Changes when the helper came back from not running: reload what is shown. */
+  reloadKey: number;
+  onOpenSettings: () => void;
+};
 
 /** The panel's main view: Now strip, conversation, folded task drawer, then chips and the ask box pinned at the bottom. */
-export function ChatView({ active, summary, onOpenSettings }: Props) {
+export function ChatView({ active, summary, reloadKey, onOpenSettings }: Props) {
   const tasks = useTasks(client, active);
   const thread = useThread(client, {
     onChanged: tasks.refresh,
@@ -28,6 +35,10 @@ export function ChatView({ active, summary, onOpenSettings }: Props) {
     onCleared: (undo) => tasks.showNotice("Conversation cleared", "info", undo),
   });
   const { draft, setDraft, onSend, onChip } = useChatActions({ thread, tasks });
+  const { refresh } = tasks;
+  useEffect(() => {
+    if (reloadKey > 0) void refresh();
+  }, [reloadKey, refresh]);
   const { state, notice } = tasks;
 
   const ready = state.phase === "ready" ? state : null;
