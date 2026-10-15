@@ -46,3 +46,6 @@ Why: one action path for every provider; CLI providers have no tool calling; the
 Deferred: API-key adapter (needs Keychain storage + a key UI) -> Trello. Rule of 3 is already met without it.
 Verified live 2026-10-15: Codex (ChatGPT login) and Ollama (qwen2.5:14b) ran a full turn and wrote tasks. NOT verified live: Claude CLI (not signed in on this machine), only its signed-out status path.
 Reversible? Yes.
+
+## 2026-10-15 — S4 verification update: Claude CLI now live-verified
+Update to the S4 entry above: after `claude auth login`, a full turn through the Claude CLI (max subscription) ran in 5.7s, added a task with a first step, and returned a plain, short reply. All three providers have now run a real turn: Claude 5.7s, Codex 7.1s, Ollama qwen2.5:14b 70.5s (cold).
