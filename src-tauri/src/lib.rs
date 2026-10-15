@@ -7,15 +7,22 @@ use std::time::{SystemTime, UNIX_EPOCH};
 use panel_size::{classify_panel_change, clamp_size, fit_height, parse_saved, should_save, PanelChange, SELF_RESIZE_QUIET_MS};
 use placement::{follow_target, panel_origin, Follower, Point, Rect};
 use tauri::{
-    menu::{Menu, MenuItem},
+    image::Image,
+    menu::{Menu, MenuItem, PredefinedMenuItem},
     tray::TrayIconBuilder,
-    AppHandle, LogicalSize, Manager, PhysicalPosition, WebviewWindow, WindowEvent,
+    AppHandle, Emitter, LogicalSize, Manager, PhysicalPosition, WebviewWindow, WindowEvent,
 };
 use tauri_plugin_global_shortcut::{Code, GlobalShortcutExt, Modifiers, Shortcut, ShortcutState};
 
 const MASCOT_LABEL: &str = "main";
 const PANEL_LABEL: &str = "panel";
 const SIDECAR_FILE: &str = "sidecar.json";
+/// Tells the panel to show Settings. Must equal OPEN_SETTINGS_EVENT in src/events.ts (a test enforces it).
+const OPEN_SETTINGS_EVENT: &str = "heel:open-settings";
+const SETTINGS_VIEW: &str = "settings";
+/// Menu-bar icon: 44x44 raw RGBA, a black silhouette that macOS recolours for light and dark menu bars.
+const TRAY_ICON_RGBA: &[u8] = include_bytes!("../icon-source/tray.rgba");
+const TRAY_ICON_PX: u32 = 44;
 const MARGIN_LOGICAL_PX: f64 = 24.0;
 const PANEL_GAP_LOGICAL_PX: f64 = 8.0;
 const DOCK_CLEARANCE_MULTIPLIER: i32 = 3;
@@ -32,6 +39,9 @@ struct DockState {
 }
 
 struct Dock(Mutex<DockState>);
+
+/// A view the panel should open on next (set by the menu bar before the panel is shown or loaded).
+struct PendingView(Mutex<Option<&'static str>>);
 
 fn now_ms() -> u64 {
     SystemTime::now().duration_since(UNIX_EPOCH).map(|d| d.as_millis() as u64).unwrap_or(0)
@@ -293,21 +303,37 @@ fn sidecar_info(app: AppHandle) -> Result<String, String> {
         .map_err(|_| "Heel's helper isn't running. Restart Heel.".to_string())
 }
 
+/// Open the panel on Settings. The pending flag covers a panel that has not loaded yet; the event covers one that has.
+fn open_settings(app: &AppHandle) {
+    if let Ok(mut pending) = app.state::<PendingView>().0.lock() {
+        *pending = Some(SETTINGS_VIEW);
+    }
+    reveal_panel(app);
+    let _ = app.emit_to(PANEL_LABEL, OPEN_SETTINGS_EVENT, ());
+}
+
+/// The panel asks for its starting view once it is up (and again after the event); asking clears it.
+#[tauri::command]
+fn take_pending_view(app: AppHandle) -> Option<String> {
+    app.state::<PendingView>().0.lock().ok().and_then(|mut pending| pending.take()).map(str::to_string)
+}
+
 fn build_tray(app: &AppHandle) -> tauri::Result<()> {
     let toggle = MenuItem::with_id(app, "toggle", "Show / hide panel", true, None::<&str>)?;
+    let settings = MenuItem::with_id(app, "settings", "Settings…", true, Some("CmdOrCtrl+,"))?;
     let quit = MenuItem::with_id(app, "quit", "Quit Heel", true, None::<&str>)?;
-    let menu = Menu::with_items(app, &[&toggle, &quit])?;
-    let mut tray = TrayIconBuilder::new()
+    let menu = Menu::with_items(app, &[&toggle, &settings, &PredefinedMenuItem::separator(app)?, &quit])?;
+    TrayIconBuilder::new()
+        .icon(Image::new(TRAY_ICON_RGBA, TRAY_ICON_PX, TRAY_ICON_PX))
+        .icon_as_template(true)
         .menu(&menu)
         .on_menu_event(|app, event| match event.id.as_ref() {
             "toggle" => toggle_panel(app),
+            "settings" => open_settings(app),
             "quit" => app.exit(0),
             _ => {}
-        });
-    if let Some(icon) = app.default_window_icon() {
-        tray = tray.icon(icon.clone());
-    }
-    tray.build(app)?;
+        })
+        .build(app)?;
     Ok(())
 }
 
@@ -330,7 +356,8 @@ pub fn run() {
                 })
                 .build(),
         )
-        .invoke_handler(tauri::generate_handler![toggle_panel_command, sidecar_info])
+        .manage(PendingView(Mutex::new(None)))
+        .invoke_handler(tauri::generate_handler![toggle_panel_command, sidecar_info, take_pending_view])
         .setup(|app| {
             let handle = app.handle();
             restore_panel_size(handle);

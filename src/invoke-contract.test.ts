@@ -1,5 +1,6 @@
 import { describe, expect, it } from "vitest";
 import libRs from "../src-tauri/src/lib.rs?raw";
+import { OPEN_SETTINGS_EVENT } from "./events";
 
 const sources = import.meta.glob("./**/*.{ts,tsx}", {
   query: "?raw",
@@ -36,5 +37,12 @@ describe("Tauri command contract", () => {
     const registered = registeredCommands();
     const missing = invokedCommands().filter((name) => !registered.has(name));
     expect(missing, `invoke() names with no #[tauri::command] in lib.rs: ${missing.join(", ")}`).toEqual([]);
+  });
+});
+
+describe("Tauri event contract", () => {
+  it("uses the same name for the open-settings event in Rust and TypeScript", () => {
+    const rust = libRs.match(/OPEN_SETTINGS_EVENT: &str = "([^"]+)"/)?.[1];
+    expect(rust).toBe(OPEN_SETTINGS_EVENT);
   });
 });

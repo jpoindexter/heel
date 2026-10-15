@@ -1,8 +1,10 @@
 import { useEffect, useState } from "react";
 import { invoke } from "@tauri-apps/api/core";
+import { listen } from "@tauri-apps/api/event";
 import { client } from "../api/default-client";
 import { BrainSettings } from "../settings/BrainSettings";
 import { useBrainSummary } from "../settings/useBrainSummary";
+import { OPEN_SETTINGS_EVENT } from "../events";
 import { ChatView } from "../today/ChatView";
 
 type View = "chat" | "settings";
@@ -17,6 +19,21 @@ export function Panel() {
     };
     window.addEventListener("keydown", onKey);
     return () => window.removeEventListener("keydown", onKey);
+  }, []);
+
+  // "Settings…" in the menu bar: ask once at start (the panel may have loaded after the click) and again on each event.
+  // Outside Tauri (the ?window=panel browser preview) there is no shell to ask, so every call is allowed to fail quietly.
+  useEffect(() => {
+    const showPending = async () => {
+      try {
+        if ((await invoke<string | null>("take_pending_view")) === "settings") setView("settings");
+      } catch {
+        /* no shell */
+      }
+    };
+    void showPending();
+    const unlisten = listen(OPEN_SETTINGS_EVENT, () => void showPending()).catch(() => undefined);
+    return () => void unlisten.then((off) => off?.());
   }, []);
 
   return (
