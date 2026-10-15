@@ -140,3 +140,9 @@ Choice: recommend A (Heel pairs with Vanta's Companion API) after a 2-hour spike
 Alternatives: B Vanta as an ACP provider (brain only); C Heel becomes Vanta's avatar; D rebuild in Heel (rejected).
 Why: Vanta already has the pieces Jason listed (companion API, ACP, iMessage/email/Discord gateway, Gmail/Calendar/Drive, cron blueprints, autonomy lanes). Full evidence, gaps and open questions: docs/VANTA-INTEGRATION.md.
 Reversible? Yes until C.
+
+## 2026-10-15 — Vanta × Heel: two things, hook in, newest Vanta (DIRECTION, spike pending)
+Choice: Heel stays its own app and hooks into Vanta (option A, companion pairing) rather than merging into Vanta now. Build against the newest Vanta: `~/Documents/GitHub/docs/Vanta-integration-20261013` (branch `claude/desktop-integration-20261013`, 2026-10-15), not `Vanta-company-api-20261013` or the `_active/Vanta` snapshot. Vanta owns acting on the world; Heel owns the ND layer and every Vanta push goes through Heel's 3/day budget.
+Alternatives: merge into Vanta (C) — revisit after the spike; Vanta already has a thin Electron avatar window and wants an avatar "if cheap", so a lighter C (Greg's sprite player inside that window) is possible later. B (ACP brain only) is the fallback if A's approval flow is too heavy.
+Why: cheapest way to learn whether Vanta's tools work through Heel; reversible, unlike a shell rewrite. Evidence: docs/VANTA-INTEGRATION.md.
+Reversible? Yes. Open: whether Heel's work may change Vanta.

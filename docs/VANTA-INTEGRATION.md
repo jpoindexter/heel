@@ -2,12 +2,19 @@
 
 Audit date 2026-10-15. Read-only pass over Vanta's source; nothing in Vanta was changed or run. Card 23 (V-AUDIT).
 
-**Decision needed from Jason:** pick A, B or C below (recommendation: **A, as a 2-hour spike first**). Two facts only Jason knows are listed at the end.
+**Direction (Jason, 2026-10-15):** two things, Heel hooks into Vanta; merge later only if the hook-in shows it is worth it. Use the **newest Vanta**. **Still open:** may Heel's work change Vanta (question 2 at the end). First step: spike A (2 hours).
 
-## Where I looked
-- `~/Documents/GitHub/docs/Vanta-company-api-20261013/vanta-ts/src` — the full TypeScript runtime (this is where everything below was found).
-- `~/Documents/GitHub/_active/Vanta` — only a desktop *workbench snapshot*: no `package.json`, partial `src`. Its own `AGENTS.md` says so. Not used as evidence.
-- Not verified: which of those two is the Vanta you actually run day to day.
+## Which Vanta (newest)
+`~/Documents/GitHub/docs/` holds about 70 Vanta worktrees. The newest is **`Vanta-integration-20261013`**, branch `claude/desktop-integration-20261013`, last commit 2026-10-15 (`ad0a46ff`). That is the one to build against.
+- The first pass of this audit read `Vanta-company-api-20261013` (2026-10-13). I re-checked the key facts against the newest tree: companion routes, port 7790, off by default, `gmail.modify` scope, iMessage adapter, automation blueprints and ACP are all unchanged.
+- `~/Documents/GitHub/_active/Vanta` is only a workbench snapshot (no `package.json`, partial source, its own `AGENTS.md` says so). Not used.
+- Paths below are relative to `Vanta-integration-20261013/vanta-ts/`.
+
+## What the newest Vanta changed in my read
+- **Vanta already has an avatar window**: `desktop-app/electron/vanta-avatar.mjs` + `avatar.html`. A 124x128 transparent always-on-top Electron window that only shows a connection "phase"; by its own comment it has no server, credentials, transcript, microphone or screen access.
+- Vanta's own `DECISIONS.md` (2026-10-15, item 7) says a desktop agent (avatar or pet) is "wanted if cheap".
+- The current desktop app is `desktop-next/` (an imported Hermes desktop, re-skinned, **Electron**), shipped as one app, `/Applications/Vanta.app`.
+- So Heel-as-avatar is a realistic later step, in a lighter form than rewriting Heel: Greg's sprite player is plain web code (manifests + a sheet), so it could run inside that existing avatar window. The ND layer (Now, time-box, interrupt budget) would not come with it unless ported. That is why the order stays: hook in first, decide on merging after.
 
 ## What Vanta already does (file evidence)
 
@@ -61,6 +68,6 @@ Then, in order (these are the Trello cards under "After V-AUDIT"):
 6. X6 calendar and appointments.
 Decide C only after X1–X3 show where the seams are.
 
-## Questions only Jason can answer
-1. Which Vanta do you actually run: `docs/Vanta-company-api-20261013` (full source) or `_active/Vanta` (snapshot)?
-2. May I change Vanta (a small inbox-events route, a blueprint list/create route), or is it frozen for now?
+## Open question for Jason
+1. ~~Which Vanta?~~ Answered: the newest (`Vanta-integration-20261013`).
+2. May Heel's work change Vanta (a small inbox-events route, a blueprint list/create route)? That branch is where other work is happening, so a change should go on its own branch and be reviewed by you. Until you say yes, the spike uses only what Vanta already exposes.
