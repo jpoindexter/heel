@@ -128,3 +128,9 @@ Contrast, measured in the real window with the Radix tokens actually in use (WCA
 Verified in the real window: both themes screenshotted for empty, thread + receipts, drawer + Undo toast, Settings; keyboard walk earlier (F9). NOT verified: contrast of every possible state (disabled controls are exempt, not measured), macOS "System" following a live OS appearance flip (code path only), VoiceOver. Tests: 217 JS, 24 Rust.
 Left for later cards: M3 (lib.rs still 450 lines), size-allowlist hook/factory entries.
 Reversible? Yes.
+
+## 2026-10-15 — S6 focus time-box + S8 interrupt budget (built as one slice)
+Choice: a box is one guess (15/25/45/60 min); the range is derived (best 0.7x, worst 1.5x, `shared/focus.ts`). At the realistic end the panel shows a check-in that quotes the goal verbatim: Done / Keep going (+gap to the worst case, min 5) / Park something and go back (saves the distraction to Parked, restarts a 10-min box). "Stop box" ends it as abandoned, no questions. Greg wears a focus pose while a box runs and gives ONE silent nudge pose at the end; he never opens the panel or makes a sound. The helper owns the budget: 3 nudges per local day, each reason spoken at most once a day (a restart can't repeat one). Off mode = no pose, no nudge. The check-in itself always waits in the panel, budget or not.
+Alternatives: auto-open the panel at the end (rejected: an interruption); notification banner/sound (rejected: D4, no sound); poll-free timers in the shell (rejected: the helper already has the session and the budget).
+Why: D4 says silent, speaks at time-box end or when opened, 3/day.
+Reversible? Yes. Deviation from D4: the daily limit is a named constant (`DAILY_INTERRUPT_LIMIT`), not yet a setting, to avoid a settings UI before a real user wants one. Ratios and the return-box length are constants in `shared/focus.ts`.

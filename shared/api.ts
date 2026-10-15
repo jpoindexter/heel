@@ -1,4 +1,5 @@
 import { z } from "zod";
+import { FOCUS_OUTCOMES } from "./focus";
 import { PROVIDER_IDS } from "./providers";
 
 /** Wire contract between the sidecar server and the panel. Both sides validate with these. */
@@ -101,3 +102,35 @@ export type TaskDto = z.output<typeof TaskSchema>;
 export type TasksStateDto = z.output<typeof TasksStateSchema>;
 export type TurnResultDto = z.output<typeof TurnResultSchema>;
 export type ActionOutcomeDto = z.output<typeof ActionOutcomeSchema>;
+
+/* Focus time-boxes and the interrupt budget */
+
+export const FocusSchema = z.object({
+  id: z.string(),
+  goal: z.string(),
+  taskId: z.string().nullable(),
+  bestMin: z.number().int(),
+  realisticMin: z.number().int(),
+  worstMin: z.number().int(),
+  startedAt: z.number(),
+  endedAt: z.number().nullable(),
+  outcome: z.enum(FOCUS_OUTCOMES).nullable(),
+});
+export const FocusStateSchema = z.object({ focus: FocusSchema.nullable() });
+export const StartFocusInputSchema = z.object({
+  goal: z.string(),
+  taskId: z.string().nullable().default(null),
+  realisticMin: z.number().int(),
+});
+export const EndFocusInputSchema = z.object({ outcome: z.enum(FOCUS_OUTCOMES) });
+export const InterruptStateSchema = z.object({ limit: z.number().int(), used: z.number().int(), remaining: z.number().int() });
+export const SpendInputSchema = z.object({ reason: z.string() });
+export const SpendResultSchema = z.object({
+  allowed: z.boolean(),
+  remaining: z.number().int(),
+  why: z.enum(["spent", "already", "budget"]),
+});
+
+export type FocusDto = z.output<typeof FocusSchema>;
+export type InterruptStateDto = z.output<typeof InterruptStateSchema>;
+export type SpendResultDto = z.output<typeof SpendResultSchema>;

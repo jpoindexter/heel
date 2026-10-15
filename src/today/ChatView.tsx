@@ -1,5 +1,7 @@
 import { Button, Callout } from "@radix-ui/themes";
 import { client } from "../api/default-client";
+import { FocusPanel } from "../focus/FocusPanel";
+import { useFocus } from "../focus/useFocus";
 import type { BrainSummary } from "../settings/brain-summary";
 import { Notifier } from "../ui/Notifier";
 import "./chat.css";
@@ -23,6 +25,14 @@ export function ChatView({ active, summary, onOpenSettings }: Props) {
 
   const ready = state.phase === "ready" ? state : null;
   const now = ready ? nowCard(ready.tasks) : null;
+  const focus = useFocus(client, {
+    active,
+    onTaskDone: (id) => {
+      const task = ready?.tasks.find((t) => t.id === id);
+      if (task) void tasks.complete(task);
+    },
+    onError: (message) => tasks.showNotice(message, "error"),
+  });
 
   return (
     <div className="chat">
@@ -33,6 +43,7 @@ export function ChatView({ active, summary, onOpenSettings }: Props) {
         </Callout.Root>
       )}
       <NowStrip now={now} onComplete={() => now && void tasks.complete(now.task)} />
+      <FocusPanel focus={focus} now={now} />
       <Thread
         messages={thread.messages}
         summary={summary}

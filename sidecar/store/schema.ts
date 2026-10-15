@@ -1,14 +1,15 @@
 import { z } from "zod";
+import { FOCUS_OUTCOMES, type FocusOutcome } from "../../shared/focus";
+
+export { FOCUS_OUTCOMES, type FocusOutcome };
 
 export const MAX_TEXT = 500;
 export const MAX_IDEA = 1000;
 
 export const TASK_STATUSES = ["todo", "doing", "done", "dropped"] as const;
 export const TASK_SOURCES = ["manual", "capture", "inbox"] as const;
-export const FOCUS_OUTCOMES = ["continued", "parked_and_returned", "done", "abandoned"] as const;
 
 export type TaskStatus = (typeof TASK_STATUSES)[number];
-export type FocusOutcome = (typeof FOCUS_OUTCOMES)[number];
 
 const text = (label: string, max = MAX_TEXT) =>
   z

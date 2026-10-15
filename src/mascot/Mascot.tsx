@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { invoke } from "@tauri-apps/api/core";
 import { listen } from "@tauri-apps/api/event";
+import { useFocusPresence } from "../focus/useFocusPresence";
 import { useActivity } from "./life/useActivity";
 import { useIdleLife } from "./life/useIdleLife";
 import { useLifeCommands } from "./life/useLifeCommands";
@@ -16,6 +17,7 @@ export function Mascot() {
   const [oneShot, setOneShot] = useState<MotionId | null>(null);
   const [lifeMotion, setLifeMotion] = useState<MotionId | null>(null);
   const [activity, setActivity] = useActivity();
+  useFocusPresence(activity);
 
   useEffect(() => {
     const unlisten = listen<unknown>(MOTION_EVENT, (event) => {

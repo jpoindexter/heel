@@ -79,6 +79,8 @@ export const HEEL_STATES = {
   greeting: "dot:waving",
   done: "dot:jumping",
   error: "dot:failed",
+  focus: "smooth:focus",
+  nudge: "smooth:nudge",
 } as const satisfies Record<string, MotionId>;
 
 export type HeelState = keyof typeof HEEL_STATES;

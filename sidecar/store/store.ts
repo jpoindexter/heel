@@ -2,6 +2,7 @@ import { randomUUID } from "node:crypto";
 import { DatabaseSync } from "node:sqlite";
 import type { Ctx } from "./context";
 import { activeFocus, endFocus, startFocus } from "./focus";
+import { interruptState, spendInterrupt } from "./interrupts";
 import { getLedger, upsertLedger } from "./ledger";
 import { currentVersion, migrateDown, migrateUp } from "./migrations";
 import { listParked, parkIdea, promoteParked, unparkIdea } from "./parked";
@@ -48,6 +49,10 @@ export function openStore(options: StoreOptions = {}) {
       start: (input: unknown) => startFocus(ctx, input),
       end: (id: string, outcome: FocusOutcome) => endFocus(ctx, id, outcome),
       active: () => activeFocus(ctx),
+    },
+    interrupts: {
+      state: () => interruptState(ctx),
+      spend: (reason: unknown) => spendInterrupt(ctx, reason),
     },
     ledger: {
       get: (taskId: string | null) => getLedger(ctx, taskId),

@@ -4,6 +4,7 @@ import type { Provider, ProviderId } from "../agent/providers/types";
 import type { Store } from "../store/store";
 import { registerBrainRoutes } from "./brain-routes";
 import { applyGuards } from "./guards";
+import { registerFocusRoutes } from "./focus-routes";
 import { registerTodayRoutes } from "./today-routes";
 
 export type AppDeps = {
@@ -23,5 +24,6 @@ export function createApp(deps: AppDeps) {
   app.get("/health", (c) => ok(c, { status: "ok" }));
   registerBrainRoutes(app, deps);
   registerTodayRoutes(app, deps);
+  registerFocusRoutes(app, deps);
   return app;
 }
