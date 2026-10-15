@@ -154,3 +154,14 @@
   align-self: center;
   margin-top: var(--space-2);
 }
+
+.quick-add {
+  display: flex;
+  gap: var(--space-2);
+  margin-bottom: var(--space-2);
+}
+
+.quick-add > :first-child {
+  flex: 1;
+  min-width: 0;
+}

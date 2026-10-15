@@ -27,6 +27,16 @@ export function createTaskActions({ client, refresh, dropLocally, notify }: Deps
     notify({ message: `${action === "complete" ? "Completed" : "Removed"}: ${task.title}`, tone: "info", undo });
   };
 
+  /** Add a task by hand (no AI). Undo drops it again. */
+  const add = async (title: string): Promise<boolean> => {
+    const result = await client.post("/tasks", TaskResultSchema, { title });
+    if (!result.ok) return fail(result.error.message), false;
+    const undo = undoWith(() => client.post(`/tasks/${result.data.task.id}/drop`, TaskResultSchema));
+    notify({ message: `Added: ${result.data.task.title}`, tone: "info", undo });
+    await refresh();
+    return true;
+  };
+
   /** Park what is in the ask box. Undo forgets it again. */
   const park = async (text: string): Promise<boolean> => {
     const result = await client.post("/parked", ParkedResultSchema, { text });
@@ -44,5 +54,5 @@ export function createTaskActions({ client, refresh, dropLocally, notify }: Deps
     await refresh();
   };
 
-  return { complete: (task: TaskDto) => settle(task, "complete"), remove: (task: TaskDto) => settle(task, "drop"), park, promote };
+  return { complete: (task: TaskDto) => settle(task, "complete"), remove: (task: TaskDto) => settle(task, "drop"), add, park, promote };
 }

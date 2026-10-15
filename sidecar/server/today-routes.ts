@@ -1,5 +1,5 @@
 import type { Hono } from "hono";
-import { TextInputSchema, TurnInputSchema } from "../../shared/api";
+import { AddTaskInputSchema, TextInputSchema, TurnInputSchema } from "../../shared/api";
 import { runTurn } from "../agent/turn";
 import type { Result } from "../store/result";
 import type { AppDeps } from "./app";
@@ -9,11 +9,19 @@ const TEXT_HINT = "Send {\"text\": \"...\"}.";
 
 type Transition = "complete" | "drop" | "restore";
 
-/** Tasks, parking, and the conversation turn: everything the Today tab calls. */
+/** Tasks and parked ideas: what the drawer and the Now strip call. */
 export function registerTodayRoutes(app: Hono, deps: AppDeps): void {
   const { store } = deps;
 
   app.get("/tasks", (c) => ok(c, { tasks: store.tasks.list(), parkedCount: store.parked.list().length }));
+
+  /** Add a task by hand: no AI, so it is instant and costs nothing. */
+  app.post("/tasks", async (c) => {
+    const body = AddTaskInputSchema.safeParse(await readJson(c));
+    if (!body.success) return fail(c, "invalid", 'Send {"title": "..."}.');
+    const added = store.tasks.add({ title: body.data.title, nowStep: body.data.nowStep ?? null, source: "manual" });
+    return added.ok ? ok(c, { task: added.value }) : fail(c, added.error.code, added.error.message);
+  });
 
   app.post("/tasks/:id/:action", (c) => {
     const action = c.req.param("action") as Transition;
@@ -47,6 +55,11 @@ export function registerTodayRoutes(app: Hono, deps: AppDeps): void {
     const result = store.parked.unpark(c.req.param("id"));
     return result.ok ? ok(c, result.value) : fail(c, result.error.code, result.error.message);
   });
+}
+
+/** The conversation turn: ask the chosen AI, apply only what validates. */
+export function registerTurnRoute(app: Hono, deps: AppDeps): void {
+  const { store } = deps;
 
   app.post("/turn", async (c) => {
     const body = TurnInputSchema.safeParse(await readJson(c));

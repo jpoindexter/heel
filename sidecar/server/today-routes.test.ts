@@ -145,3 +145,30 @@ describe("POST /turn", () => {
     expect(await setup().post("/turn", { nope: 1 })).toMatchObject({ ok: false, error: { code: "invalid" } });
   });
 });
+
+describe("POST /tasks (quick add, no AI)", () => {
+  const post = (path: string, body: unknown) => setup().post(path, body);
+
+  it("adds a manual task straight away and lists it", async () => {
+    const { post: send, json } = setup();
+    expect(await send("/tasks", { title: "  Email Aoi  " })).toMatchObject({ ok: true, data: { task: { title: "Email Aoi", source: "manual", status: "todo", nowStep: null } } });
+    expect(tasksState.parse(await json("/tasks"))).toMatchObject({ data: { tasks: [{ title: "Email Aoi" }] } });
+  });
+
+  it("keeps an optional first step", async () => {
+    expect(await post("/tasks", { title: "Ship", nowStep: "Open the repo" })).toMatchObject({ ok: true, data: { task: { nowStep: "Open the repo" } } });
+  });
+
+  it("refuses an empty or missing title with a sentence", async () => {
+    expect(await post("/tasks", { title: "   " })).toMatchObject({ ok: false, error: { code: "invalid" } });
+    expect(await post("/tasks", {})).toMatchObject({ ok: false, error: { code: "invalid" } });
+  });
+
+  it("puts new tasks after the existing ones, so the first one stays Now", async () => {
+    const { post: send, json } = setup();
+    await send("/tasks", { title: "First" });
+    await send("/tasks", { title: "Second" });
+    const state = tasksState.parse(await json("/tasks"));
+    expect(state.ok && state.data.tasks.map((t) => t.title)).toEqual(["First", "Second"]);
+  });
+});

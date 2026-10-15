@@ -8,7 +8,7 @@ import { applyGuards } from "./guards";
 import { registerFocusRoutes } from "./focus-routes";
 import { registerInboxRoutes } from "./inbox-routes";
 import { registerMessagesRoutes } from "./messages-routes";
-import { registerTodayRoutes } from "./today-routes";
+import { registerTodayRoutes, registerTurnRoute } from "./today-routes";
 
 export type AppDeps = {
   store: Store;
@@ -28,6 +28,7 @@ export function createApp(deps: AppDeps) {
   app.get("/health", (c) => ok(c, { status: "ok" }));
   registerBrainRoutes(app, deps);
   registerTodayRoutes(app, deps);
+  registerTurnRoute(app, deps);
   registerFocusRoutes(app, deps);
   registerMessagesRoutes(app, deps);
   registerInboxRoutes(app, deps);

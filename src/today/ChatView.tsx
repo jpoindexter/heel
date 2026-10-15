@@ -3,11 +3,11 @@ import { client } from "../api/default-client";
 import { FocusPanel } from "../focus/FocusPanel";
 import { InboxPanel } from "../inbox/InboxPanel";
 import { useInboxConnection } from "../inbox/useInbox";
-import { useFocus } from "../focus/useFocus";
 import type { BrainSummary } from "../settings/brain-summary";
 import { Notifier } from "../ui/Notifier";
 import "./chat.css";
 import { Compose } from "./Compose";
+import { QuickAdd } from "./QuickAdd";
 import { NowStrip } from "./NowStrip";
 import { TaskDrawer } from "./TaskDrawer";
 import { Thread } from "./Thread";
@@ -15,6 +15,7 @@ import { nowCard } from "./today-model";
 import { useChatActions } from "./useChatActions";
 import { useTasks } from "./useTasks";
 import { useThread } from "./useThread";
+import { useTodayFocus } from "./useTodayFocus";
 
 type Props = { active: boolean; summary: BrainSummary | null; onOpenSettings: () => void };
 
@@ -32,14 +33,7 @@ export function ChatView({ active, summary, onOpenSettings }: Props) {
   const ready = state.phase === "ready" ? state : null;
   const now = ready ? nowCard(ready.tasks) : null;
   const inbox = useInboxConnection(client, active);
-  const focus = useFocus(client, {
-    active,
-    onTaskDone: (id) => {
-      const task = ready?.tasks.find((t) => t.id === id);
-      if (task) void tasks.complete(task);
-    },
-    onError: (message) => tasks.showNotice(message, "error"),
-  });
+  const focus = useTodayFocus(client, active, tasks, ready);
 
   return (
     <div className="chat">
@@ -64,6 +58,7 @@ export function ChatView({ active, summary, onOpenSettings }: Props) {
 
       <div className="compose-zone">
         <Notifier notice={notice} onDismiss={tasks.dismissNotice} />
+        <QuickAdd active={active} onAdd={tasks.add} />
         <Compose active={active} draft={draft} busy={thread.busy} onDraft={setDraft} onSend={onSend} onStop={thread.stop} onChip={(chip) => void onChip(chip)} />
       </div>
     </div>

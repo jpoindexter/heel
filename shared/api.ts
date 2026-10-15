@@ -196,3 +196,7 @@ export const AddInboxTaskInputSchema = z.object({ messageId: z.string(), title: 
 export type InboxStatusDto = z.output<typeof InboxStatusSchema>;
 export type DigestItemDto = z.output<typeof DigestItemSchema>;
 export type DigestDto = z.output<typeof DigestSchema>;
+
+/* Quick add (no AI) */
+
+export const AddTaskInputSchema = z.object({ title: z.string(), nowStep: z.string().nullable().optional() });
