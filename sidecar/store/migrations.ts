@@ -64,6 +64,18 @@ export const MIGRATIONS: readonly Migration[] = [
       DROP TABLE tasks;
     `,
   },
+  {
+    id: 2,
+    name: "settings",
+    up: `
+      CREATE TABLE settings (
+        key TEXT PRIMARY KEY,
+        value TEXT NOT NULL,
+        updated_at INTEGER NOT NULL
+      );
+    `,
+    down: `DROP TABLE settings;`,
+  },
 ];
 
 const ENSURE_TABLE = `

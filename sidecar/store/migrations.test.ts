@@ -22,20 +22,27 @@ describe("migrations", () => {
   it("applies up, rolls all the way back down, and applies again", () => {
     const db = new DatabaseSync(":memory:");
     const now = () => 1;
-    expect(migrateUp(db, now)).toBe(1);
-    expect(tableNames(db)).toEqual(["focus_sessions", "ledger", "parked", "schema_migrations", "tasks"]);
+    expect(migrateUp(db, now)).toBe(2);
+    expect(tableNames(db)).toEqual(["focus_sessions", "ledger", "parked", "schema_migrations", "settings", "tasks"]);
     expect(migrateDown(db, 0)).toBe(0);
     expect(tableNames(db)).toEqual(["schema_migrations"]);
-    expect(migrateUp(db, now)).toBe(1);
-    expect(currentVersion(db)).toBe(1);
+    expect(migrateUp(db, now)).toBe(2);
+    expect(currentVersion(db)).toBe(2);
   });
 
   it("is idempotent: running up twice does not re-apply", () => {
     const db = new DatabaseSync(":memory:");
     migrateUp(db, () => 1);
-    expect(migrateUp(db, () => 2)).toBe(1);
+    expect(migrateUp(db, () => 2)).toBe(2);
     const row = db.prepare("SELECT COUNT(*) AS n FROM schema_migrations").get();
-    expect(Number(row?.n)).toBe(1);
+    expect(Number(row?.n)).toBe(2);
+  });
+
+  it("rolls back only the newest migration and keeps earlier data tables", () => {
+    const db = new DatabaseSync(":memory:");
+    migrateUp(db, () => 1);
+    expect(migrateDown(db, 1)).toBe(1);
+    expect(tableNames(db)).toEqual(["focus_sessions", "ledger", "parked", "schema_migrations", "tasks"]);
   });
 
   it("enforces one active focus session in the database itself, not only in app code", () => {
@@ -61,7 +68,7 @@ describe("persistence", () => {
 
     const second = openStore({ path });
     expect(second.tasks.list().map((t) => t.title)).toEqual(["Survive a restart"]);
-    expect(second.schemaVersion()).toBe(1);
+    expect(second.schemaVersion()).toBe(2);
     second.close();
   });
 });

@@ -6,6 +6,7 @@ import { getLedger, upsertLedger } from "./ledger";
 import { currentVersion, migrateDown, migrateUp } from "./migrations";
 import { listParked, parkIdea, promoteParked } from "./parked";
 import type { FocusOutcome, TaskStatus } from "./schema";
+import { getBrain, setBrain } from "./settings";
 import { addTask, completeTask, dropTask, getTask, listTasks, restoreTask, setNowStep, startTask } from "./tasks";
 
 export type StoreOptions = {
@@ -50,6 +51,10 @@ export function openStore(options: StoreOptions = {}) {
     ledger: {
       get: (taskId: string | null) => getLedger(ctx, taskId),
       upsert: (taskId: string | null, patch: unknown) => upsertLedger(ctx, taskId, patch),
+    },
+    settings: {
+      getBrain: () => getBrain(ctx),
+      setBrain: (input: unknown) => setBrain(ctx, input),
     },
     schemaVersion: () => currentVersion(db),
     rollbackTo: (version: number) => migrateDown(db, version),

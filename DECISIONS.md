@@ -38,3 +38,11 @@ Alternatives: better-sqlite3 (stable, native build step), rusqlite in the Tauri 
 Why: no new native dependency; Node 22.23 runs it. Risk: Node marks node:sqlite experimental, so the API could change. It is confined to `sidecar/store/store.ts` and `migrations.ts`, so a swap is a two-file change.
 Reversible? Yes.
 Also: one active focus session is enforced twice (app check + partial unique index in the DB); undo for delete/complete = `restore`, not a hard delete.
+
+## 2026-10-15 — S4 agent core: providers behind one interface, actions validated before any write
+Choice: `Provider` interface with three adapters (claude CLI, codex CLI, Ollama HTTP). The model replies with one JSON object `{say, actions[]}`; the app validates it with Zod, maps short refs (t1, t2) to real ids, and only then writes. One retry with the rejection reason, then a plain error and no writes. Allowed actions are local, undoable writes only (autonomy L1). Provider/model choice is stored in `settings` (migration 2).
+Alternatives: provider-native tool calling (not available on the CLIs); API-key adapter now.
+Why: one action path for every provider; CLI providers have no tool calling; the safety boundary lives in app code.
+Deferred: API-key adapter (needs Keychain storage + a key UI) -> Trello. Rule of 3 is already met without it.
+Verified live 2026-10-15: Codex (ChatGPT login) and Ollama (qwen2.5:14b) ran a full turn and wrote tasks. NOT verified live: Claude CLI (not signed in on this machine), only its signed-out status path.
+Reversible? Yes.
