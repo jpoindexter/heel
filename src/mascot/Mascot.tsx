@@ -55,18 +55,20 @@ function Greg() {
   const busy = working || oneShot !== null || base !== HEEL_STATES.idle;
   const life = useIdleLife({ activity, panelOpen, busy, setLifeMotion });
   const running = useRunEvents(life.touch);
-  useLifeCommands(activity, life.asleep, { nap: life.nap, wake: life.touch, walk: life.walk, setActivity });
+  useLifeCommands(activity, life.asleep, { nap: life.nap, wake: life.wake, walk: life.walk, setActivity });
   useEffect(() => {
     if (panelOpen) life.touch();
   }, [panelOpen, life.touch]);
 
   const gestures = usePointerGestures(() => {
-    life.touch();
+    life.wake();
     setOneShot(HEEL_STATES.greeting);
     void invoke("toggle_panel_command");
   });
 
-  const motion = running ?? oneShot ?? work.motion ?? (busy ? base : (lifeMotion ?? HEEL_STATES.idle));
+  // An asked-for nap outranks work and the app's pose; a run or a one-shot still shows over it.
+  const own = lifeMotion ?? HEEL_STATES.idle;
+  const motion = running ?? oneShot ?? (life.asleep ? own : (work.motion ?? (busy ? base : own)));
   return (
     <div {...gestures} onPointerEnter={life.touch} style={fadeStyle} className={work.move === "sway" ? "sway" : undefined}>
       <Sprite motion={motion} label="Heel, your companion. Click to open the panel." />

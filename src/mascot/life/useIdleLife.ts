@@ -3,7 +3,7 @@ import type { MotionId } from "../sheets";
 import { useReducedMotion } from "../useReducedMotion";
 import { LEAD_IN_MS, MOTIONS } from "./config";
 import type { Activity } from "./config";
-import { decide, initialState, interact, type LifeState } from "./engine";
+import { decide, initialState, nap as napNow, wake as wakeNow, type LifeState } from "./engine";
 import { usePlanPlayer } from "./usePlanPlayer";
 
 const TICK_MS = 1_000;
@@ -28,7 +28,8 @@ type Options = {
 
 /**
  * Runs the idle-life engine: once a second it asks what Greg should do, plays the steps, and goes back to sitting.
- * `touch` is any contact from the person (wakes him, resets the quiet stretch); `nap` sends him to sleep now.
+ * `touch` is any light contact (a hover, the panel opening): it wakes him unless he was asked to nap. `wake` is a click
+ * or the menu and always gets him up; `nap` sends him to sleep now, whatever else is going on.
  */
 export function useIdleLife({ activity, panelOpen, busy, setLifeMotion }: Options) {
   const reducedMotion = useReducedMotion();
@@ -37,12 +38,18 @@ export function useIdleLife({ activity, panelOpen, busy, setLifeMotion }: Option
 
   const { play, cancel } = usePlanPlayer(setLifeMotion);
 
-  const touch = useCallback(() => {
+  const wake = useCallback(() => {
     cancel();
-    state.current = interact(state.current, Date.now(), activity, Math.random);
+    const result = wakeNow(state.current, Date.now(), activity, Math.random, reducedMotion);
+    state.current = result.state;
     setAsleep(false);
-    setLifeMotion(null);
-  }, [activity, cancel, setLifeMotion]);
+    if (result.plan) void play(result.plan);
+    else setLifeMotion(null);
+  }, [activity, cancel, play, reducedMotion, setLifeMotion]);
+
+  const touch = useCallback(() => {
+    if (!state.current.napping) wake();
+  }, [wake]);
 
   /** Take a walk now (from the right-click menu), unless something else owns him. */
   const walk = useCallback(() => {
@@ -50,8 +57,12 @@ export function useIdleLife({ activity, panelOpen, busy, setLifeMotion }: Option
   }, [busy, play]);
 
   const nap = useCallback(() => {
-    state.current = { ...state.current, lastActiveAt: Number.NEGATIVE_INFINITY, nextAt: 0 };
-  }, []);
+    cancel();
+    const result = napNow(state.current, Date.now(), reducedMotion);
+    state.current = result.state;
+    setAsleep(true);
+    void play(result.plan);
+  }, [cancel, play, reducedMotion]);
 
   useEffect(() => {
     if (activity === "off") touch();
@@ -68,6 +79,6 @@ export function useIdleLife({ activity, panelOpen, busy, setLifeMotion }: Option
     return () => window.clearInterval(timer);
   }, [activity, panelOpen, busy, reducedMotion, play]);
 
-  return { touch, nap, walk, asleep };
+  return { touch, wake, nap, walk, asleep };
 }
 

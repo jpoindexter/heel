@@ -11,6 +11,8 @@ export type LifeState = {
   /** Not before this time. */
   nextAt: number;
   sleeping: boolean;
+  /** The person asked for this sleep: a hover or the panel opening does not wake him; a click or the menu does. */
+  napping: boolean;
   lastBehavior: Behavior | null;
 };
 
@@ -43,11 +45,11 @@ function pickWeighted(weights: Readonly<Record<string, number>>, rng: Rng): stri
 /** Any touch from the person: wake up, forget the schedule, and give them a quiet stretch before anything happens. */
 export function interact(state: LifeState, now: number, activity: Activity, rng: Rng): LifeState {
   const gap = activity === "off" ? RECHECK_MS : between(rng, FIRST_GAP_MS[activity]);
-  return { ...state, lastActiveAt: now, sleeping: false, nextAt: now + gap };
+  return { ...state, lastActiveAt: now, sleeping: false, napping: false, nextAt: now + gap };
 }
 
 export function initialState(now: number, activity: Activity, rng: Rng): LifeState {
-  return interact({ lastActiveAt: now, nextAt: 0, sleeping: false, lastBehavior: null }, now, activity, rng);
+  return interact({ lastActiveAt: now, nextAt: 0, sleeping: false, napping: false, lastBehavior: null }, now, activity, rng);
 }
 
 export const planDuration = (plan: Plan): number => plan.steps.reduce((sum, step) => sum + (Number.isFinite(step.ms) ? step.ms : 0), 0);
@@ -59,8 +61,10 @@ function glances(rng: Rng): Step[] {
 }
 
 const step = (motion: Step["motion"], ms: number): Step => ({ motion, ms });
+/** Getting up is played, never cut: wake-up → sit-down. */
+const rise = (): Step[] => [step(MOTIONS.wakeUp, CLIP_MS.wakeUp), step(MOTIONS.sitDown, CLIP_MS.sitDown)];
 /** Lying down and getting up again are played, never cut: lie-down → (lying) → wake-up → sit-down. */
-const lieThenRise = (lying: Step[]): Step[] => [step(MOTIONS.lieDown, CLIP_MS.lieDown), ...lying, step(MOTIONS.wakeUp, CLIP_MS.wakeUp), step(MOTIONS.sitDown, CLIP_MS.sitDown)];
+const lieThenRise = (lying: Step[]): Step[] => [step(MOTIONS.lieDown, CLIP_MS.lieDown), ...lying, ...rise()];
 
 /** His games, habits and small nature moments: one picked at random, each a short authored sequence. */
 function extras(behavior: "play" | "groom" | "sniff" | "nature" | "gag", rng: Rng): Step[] {
@@ -93,6 +97,8 @@ function planFor(behavior: Behavior, rng: Rng): Plan {
       return { behavior, steps: lieThenRise([step(MOTIONS.focus, LIE_DOWN_MS)]) };
     case "sleep":
       return { behavior, steps: [step(MOTIONS.lieDown, CLIP_MS.lieDown), step(MOTIONS.focus, SETTLE_MS), step(MOTIONS.curlUp, CLIP_MS.curlUp), step(MOTIONS.rest, Infinity)] };
+    case "wake":
+      return { behavior, steps: rise() };
     case "walk": {
       const direction = rng() < 0.5 ? "left" : "right";
       return { behavior, steps: [step(MOTIONS.listening, LEAD_IN_MS)], walk: { direction } };
@@ -124,4 +130,19 @@ export function decide(state: LifeState, ctx: Context, rng: Rng): { state: LifeS
   const plan = planFor(pickWeighted(weights, rng) as Behavior, rng);
   const nextAt = ctx.now + planDuration(plan) + between(rng, GAP_MS[activity]);
   return { state: { ...state, nextAt, lastBehavior: plan.behavior }, plan };
+}
+
+/**
+ * The person asked for a nap: lie down now, whatever else is going on (the panel open, a box running, Quiet), and hold
+ * until they wake him. Under reduced motion he is simply at rest, no lying-down played.
+ */
+export function nap(state: LifeState, now: number, reducedMotion: boolean): { state: LifeState; plan: Plan } {
+  const plan: Plan = reducedMotion ? { behavior: "sleep", steps: [step(MOTIONS.rest, Infinity)] } : planFor("sleep", () => 0);
+  return { state: { ...state, lastActiveAt: now, nextAt: Infinity, sleeping: true, napping: true, lastBehavior: "sleep" }, plan };
+}
+
+/** Up from sleep: the rise is played (cut under reduced motion), then the usual quiet stretch. Awake already: just the stretch. */
+export function wake(state: LifeState, now: number, activity: Activity, rng: Rng, reducedMotion: boolean): { state: LifeState; plan: Plan | null } {
+  const plan = state.sleeping && !reducedMotion ? planFor("wake", rng) : null;
+  return { state: interact(state, now, activity, rng), plan };
 }

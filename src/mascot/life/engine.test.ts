@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 import { MAX_PER_HOUR, SLEEP_AFTER_MS } from "./config";
-import { decide, initialState, interact, planDuration, type Context, type LifeState, type Plan } from "./engine";
+import { decide, initialState, interact, nap, planDuration, wake, type Context, type LifeState, type Plan } from "./engine";
 import { isMotionId } from "../sheets";
 
 /** A deterministic dice: the same seed gives the same rolls. */
@@ -101,7 +101,7 @@ describe("sleep", () => {
 
   it("wakes on any interaction and starts a fresh quiet stretch", () => {
     const rng = seeded(6);
-    const asleep: LifeState = { lastActiveAt: -SLEEP_AFTER_MS.calm, nextAt: Infinity, sleeping: true, lastBehavior: "sleep" };
+    const asleep: LifeState = { lastActiveAt: -SLEEP_AFTER_MS.calm, nextAt: Infinity, sleeping: true, napping: false, lastBehavior: "sleep" };
     const awake = interact(asleep, 1_000, "calm", rng);
     expect(awake.sleeping).toBe(false);
     expect(awake.nextAt).toBeGreaterThanOrEqual(1_000 + 60_000);
@@ -110,6 +110,43 @@ describe("sleep", () => {
 
   it("sleeps sooner when lively", () => {
     expect(SLEEP_AFTER_MS.lively).toBeLessThan(SLEEP_AFTER_MS.calm);
+  });
+});
+
+describe("an asked-for nap", () => {
+  it("lies down now even with the panel open, a box running or Quiet on, and stays down", () => {
+    const rng = seeded(7);
+    const { state, plan } = nap(initialState(0, "calm", rng), 0, false);
+    expect(plan.steps[0]!.motion).toBe("puppy:lie-down");
+    expect(plan.steps.at(-1)).toEqual({ motion: "puppy:rest", ms: Infinity });
+    expect(state).toMatchObject({ sleeping: true, napping: true });
+    for (const over of [{ panelOpen: true }, { focusActive: true }, { activity: "off" as const }, {}]) {
+      const later = decide(state, ctx({ now: 99 * MIN, ...over }), rng);
+      expect(later.plan).toBeNull();
+      expect(later.state.sleeping).toBe(true);
+    }
+  });
+
+  it("is just the rest pose under reduced motion", () => {
+    const { plan } = nap(initialState(0, "calm", seeded(8)), 0, true);
+    expect(plan.steps).toEqual([{ motion: "puppy:rest", ms: Infinity }]);
+  });
+
+  it("gets up with wake-up then sit-down, then keeps the usual quiet stretch", () => {
+    const rng = seeded(9);
+    const { state: asleep } = nap(initialState(0, "calm", rng), 0, false);
+    const { state: awake, plan } = wake(asleep, 1_000, "calm", rng, false);
+    expect(plan?.steps.map((s) => s.motion)).toEqual(["puppy:wake-up", "puppy:sit-down"]);
+    expect(awake).toMatchObject({ sleeping: false, napping: false });
+    expect(awake.nextAt).toBeGreaterThanOrEqual(1_000 + 60_000);
+    expect(decide(awake, ctx({ now: 2_000 }), rng).plan).toBeNull();
+  });
+
+  it("cuts the rise under reduced motion and plays nothing when he was awake", () => {
+    const rng = seeded(10);
+    const { state: asleep } = nap(initialState(0, "calm", rng), 0, false);
+    expect(wake(asleep, 1_000, "calm", rng, true).plan).toBeNull();
+    expect(wake(initialState(0, "calm", rng), 1_000, "calm", rng, false).plan).toBeNull();
   });
 });
 

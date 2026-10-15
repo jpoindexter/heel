@@ -3,8 +3,8 @@ import type { MotionId } from "../sheets";
 
 export const ACTIVITIES = ["off", "calm", "lively"] as const;
 export type Activity = (typeof ACTIVITIES)[number];
-/** What he does on his own. `gag` only when the person has opted in (bathroom humour is nobody's default). */
-export type Behavior = "lookAround" | "wave" | "paw" | "layDown" | "sleep" | "walk" | "play" | "groom" | "sniff" | "nature" | "gag";
+/** What he does on his own. `gag` only when the person has opted in (bathroom humour is nobody's default). `wake` is the rise after sleep. */
+export type Behavior = "lookAround" | "wave" | "paw" | "layDown" | "sleep" | "wake" | "walk" | "play" | "groom" | "sniff" | "nature" | "gag";
 
 const SECOND = 1_000;
 const MINUTE = 60 * SECOND;
@@ -28,7 +28,7 @@ export const SLEEP_AFTER_MS: Readonly<Record<Exclude<Activity, "off">, number>> 
 };
 
 /** Relative odds of each behaviour. Sleep is not drawn: it only follows long idleness. Gags are off unless opted in. */
-export const WEIGHTS: Readonly<Record<Exclude<Activity, "off">, Readonly<Record<Exclude<Behavior, "sleep">, number>>>> = {
+export const WEIGHTS: Readonly<Record<Exclude<Activity, "off">, Readonly<Record<Exclude<Behavior, "sleep" | "wake">, number>>>> = {
   calm: { lookAround: 30, wave: 8, paw: 12, layDown: 12, walk: 12, play: 6, groom: 10, sniff: 8, nature: 6, gag: 0 },
   lively: { lookAround: 20, wave: 10, paw: 10, layDown: 8, walk: 25, play: 10, groom: 7, sniff: 10, nature: 8, gag: 0 },
 };
