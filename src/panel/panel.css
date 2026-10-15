@@ -20,10 +20,10 @@
   display: flex;
   flex-direction: column;
   height: 100%;
-  padding: var(--space-4);
-  gap: var(--space-3);
+  padding: var(--space-3);
+  gap: var(--space-2);
   background: var(--color-panel-solid);
-  border: var(--border-width) solid var(--gray-a8);
+  border: var(--border-width) solid var(--hairline);
   border-radius: var(--radius-4);
 }
 
@@ -39,12 +39,12 @@
 
 [data-tail="bottom"] .panel-tail {
   top: calc(100% + var(--border-width));
-  border-top: var(--tail-size) solid var(--gray-a8);
+  border-top: var(--tail-size) solid var(--hairline);
 }
 
 [data-tail="top"] .panel-tail {
   bottom: calc(100% + var(--border-width));
-  border-bottom: var(--tail-size) solid var(--gray-a8);
+  border-bottom: var(--tail-size) solid var(--hairline);
 }
 
 .panel-header {

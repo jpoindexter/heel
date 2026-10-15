@@ -30,8 +30,8 @@
       {
         "label": "panel",
         "title": "Heel panel",
-        "width": 380,
-        "height": 620,
+        "width": 300,
+        "height": 420,
         "visible": false,
         "decorations": false,
         "transparent": true,
@@ -41,8 +41,8 @@
         "resizable": true,
         "visibleOnAllWorkspaces": true,
         "acceptFirstMouse": true,
-        "minWidth": 340,
-        "minHeight": 420,
+        "minWidth": 280,
+        "minHeight": 320,
         "maxWidth": 640,
         "maxHeight": 900
       }

@@ -169,3 +169,8 @@ Choice: in the packaged app the shell checks the helper every 3 s (its port answ
 Verified (packaged app): kill -9 → new healthy helper in 4.4 s; 4 kills in a row → gave up with the banner "The helper kept stopping without saying why"; re-open → helper back in 0.6 s; quit leaves nothing running.
 Not verified: clicking the panel's Restart button or the tray item (no click injection), sleep/wake, a hung (alive but unresponsive) helper, Node missing mid-run.
 Reversible? Yes.
+
+## 2026-10-15 — N2: two apps (Tasks, Agent), compact, hairline borders
+Choice: the panel is two screens behind header tabs (Tasks, Agent) + a gear; default 300x420 (47% smaller by area); Radix scaling 90% (Settings > Size switches to 100%); borders are hairlines except text fields and tick boxes, which keep a 3:1 edge. The saved-size file is now `panel-size-v2.json` so the old large size doesn't carry over.
+Why: Jason: "we need an agent app, a task app... this looks complicated"; "all the super dark lines across everything, you aren't keeping it elegant". My earlier fix made every border 3:1; WCAG 1.4.11 only requires that for the parts needed to use a control.
+Evidence: docs/design/n2/. Reversible? Yes (tokens + one setting).

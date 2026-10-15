@@ -5,11 +5,11 @@
  */
 .radix-themes {
   --viewport-height: 100vh;
-  --hit-target: 44px;
+  --hit-target: 32px; /* a row; the smallest target Heel draws is 24px (WCAG 2.2), with space around it */
   --border-width: 1px;
   --hidden-size: 1px; /* a visually-hidden element must still exist for screen readers */
   --ring-room: 6px; /* the focus ring (3px + 2px offset) must fit inside clipped scroll regions */
-  --thread-min-height: 96px;
+  --thread-min-height: 64px;
   --drawer-reserved-height: 440px; /* everything in the panel that is not the drawer or the thread */
   --message-max-width: 92%;
   --toast-gap: var(--space-2);
@@ -20,14 +20,19 @@
   --tail-size: 10px; /* the panel's tail pointing at Greg */
   --tail-room: 28px; /* keeps the tail off the rounded corners */
 
-  /* Radix's default control borders (1.6:1) and focus ring (2.4:1 light) are under WCAG 1.4.11's 3:1: step them up. */
-  --gray-a7: var(--gray-a9);
-  --gray-a8: var(--gray-a10); /* unchecked checkbox edge */
-  --focus-8: var(--accent-11);
+  /* Lines are hairlines by default (Radix's soft grays). Only what you must find to use it gets a stronger edge, below. */
+  --focus-8: var(--accent-11); /* Radix's focus ring is 2.4:1 in light; WCAG 1.4.11 wants 3:1 */
+  --hairline: var(--gray-a5); /* the panel frame, its tail and other decoration */
 }
 
 @media (prefers-reduced-motion: reduce) {
   .radix-themes {
     --motion-fast: 0ms;
   }
+}
+
+/* The things you have to find to use them (text fields, an unticked checkbox) keep a 3:1 edge (WCAG 1.4.11). Everything else stays light. */
+.radix-themes :where(.rt-TextFieldRoot, .rt-TextAreaRoot, .rt-CheckboxRoot) {
+  --gray-a7: var(--gray-a9);
+  --gray-a8: var(--gray-a10);
 }

@@ -1,12 +1,12 @@
 .settings {
   display: grid;
-  gap: var(--space-4);
+  gap: var(--space-3);
   padding: var(--ring-room);
 }
 
 .settings-section {
   display: grid;
-  gap: var(--space-3);
+  gap: var(--space-2);
 }
 
 .settings-section p {

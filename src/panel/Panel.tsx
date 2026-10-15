@@ -1,8 +1,8 @@
-import { useEffect, useState, type CSSProperties } from "react";
+import { useCallback, useEffect, useState, type CSSProperties } from "react";
 import { invoke } from "@tauri-apps/api/core";
 import { listen } from "@tauri-apps/api/event";
-import { ArrowLeftIcon, ChevronDownIcon, Cross2Icon } from "@radix-ui/react-icons";
-import { Button, Heading, IconButton, Theme } from "@radix-ui/themes";
+import { ArrowLeftIcon, Cross2Icon, GearIcon } from "@radix-ui/react-icons";
+import { Button, Heading, IconButton, SegmentedControl, Theme } from "@radix-ui/themes";
 import "@radix-ui/themes/styles.css";
 import "../design/tokens.css";
 import "./panel.css";
@@ -14,10 +14,12 @@ import { shouldCloseOnKey } from "./escape";
 import { usePanelAnchor } from "./usePanelAnchor";
 import { SettingsView } from "../settings/SettingsView";
 import { useBrainSummary } from "../settings/useBrainSummary";
+import { SCALING } from "../theme/density";
+import { useDensity } from "../theme/useDensity";
 import { useAppearance } from "../theme/useAppearance";
-import { ChatView } from "../today/ChatView";
+import { ChatView, type Tab } from "../today/ChatView";
 
-type View = "chat" | "settings";
+type View = Tab | "settings";
 
 /** "Settings…" in the menu bar: ask once at start (the panel may have loaded after the click) and again on each event. */
 function useOpenSettingsRequests(open: () => void): void {
@@ -47,20 +49,36 @@ function useEscapeToClose(): void {
 
 const closePanel = () => void invoke("toggle_panel_command");
 
-function ChatHeader({ label, needsSetup, onSettings }: { label: string; needsSetup: boolean; onSettings: () => void }) {
+/** Which screen is showing (Tasks, Agent or Settings) and which tab Back from Settings returns to. */
+function usePanelView() {
+  const [view, setView] = useState<View>("tasks");
+  const [lastTab, setLastTab] = useState<Tab>("tasks");
+  const goTab = useCallback((tab: Tab) => {
+    setLastTab(tab);
+    setView(tab);
+  }, []);
+  const openSettings = useCallback(() => setView("settings"), []);
+  return { view, setView, lastTab, goTab, openSettings };
+}
+
+/** How the panel looks: light or dark, and how big. */
+function usePanelLook() {
+  const { preference, appearance, setPreference } = useAppearance();
+  const [density, setDensity] = useDensity();
+  return { preference, appearance, setPreference, density, setDensity };
+}
+
+function TabsHeader({ tab, onTab, onSettings }: { tab: Tab; onTab: (tab: Tab) => void; onSettings: () => void }) {
   return (
     <>
-      <Heading as="h1" size="4" data-tauri-drag-region className="grow">Heel</Heading>
-      <Button
-        variant="soft"
-        color={needsSetup ? "amber" : "gray"}
-        className="model-chip"
-        aria-label={`AI: ${label}. Change in Settings`}
-        onClick={onSettings}
-      >
-        <span className="model-chip-label">{label}</span>
-        <ChevronDownIcon aria-hidden="true" />
-      </Button>
+      <SegmentedControl.Root size="1" value={tab} onValueChange={(value) => (value === "tasks" || value === "agent") && onTab(value)} aria-label="Screen">
+        <SegmentedControl.Item value="tasks">Tasks</SegmentedControl.Item>
+        <SegmentedControl.Item value="agent">Agent</SegmentedControl.Item>
+      </SegmentedControl.Root>
+      <span data-tauri-drag-region className="grow" />
+      <IconButton variant="ghost" color="gray" aria-label="Settings" onClick={onSettings}>
+        <GearIcon aria-hidden="true" />
+      </IconButton>
     </>
   );
 }
@@ -68,29 +86,29 @@ function ChatHeader({ label, needsSetup, onSettings }: { label: string; needsSet
 function SettingsHeader({ onBack }: { onBack: () => void }) {
   return (
     <>
-      <Button variant="soft" color="gray" onClick={onBack}>
+      <Button variant="ghost" color="gray" size="1" onClick={onBack}>
         <ArrowLeftIcon aria-hidden="true" /> Back
       </Button>
-      <Heading as="h1" size="4" data-tauri-drag-region className="grow">Settings</Heading>
+      <Heading as="h1" size="2" data-tauri-drag-region className="grow">Settings</Heading>
     </>
   );
 }
 
 export function Panel() {
-  const [view, setView] = useState<View>("chat");
-  const { summary, refresh: refreshSummary } = useBrainSummary(client, view);
-  const { preference, appearance, setPreference } = useAppearance();
-  const anchor = usePanelAnchor();
-  const helper = useHelperStatus(() => void refreshSummary());
+  const { view, setView, lastTab, goTab, openSettings } = usePanelView();
+  const { summary, refresh: refreshSummary } = useBrainSummary(client, view === "settings" ? "settings" : "chat");
+  const look = usePanelLook();
+  const [anchor, helper] = [usePanelAnchor(), useHelperStatus(() => void refreshSummary())];
   useEscapeToClose();
-  useOpenSettingsRequests(() => setView("settings"));
+  useOpenSettingsRequests(openSettings);
 
   return (
     <Theme
-      appearance={appearance}
+      appearance={look.appearance}
       accentColor="jade"
       grayColor="sand"
       radius="small"
+      scaling={SCALING[look.density]}
       panelBackground="solid"
       hasBackground={false}
       className="panel-theme"
@@ -100,11 +118,7 @@ export function Panel() {
       <main className="panel">
         <span className="panel-tail" aria-hidden="true" />
         <header data-tauri-drag-region className="panel-header">
-          {view === "chat" ? (
-            <ChatHeader label={summary?.label ?? "Settings"} needsSetup={summary?.kind === "setup"} onSettings={() => setView("settings")} />
-          ) : (
-            <SettingsHeader onBack={() => setView("chat")} />
-          )}
+          {view === "settings" ? <SettingsHeader onBack={() => setView(lastTab)} /> : <TabsHeader tab={view} onTab={goTab} onSettings={openSettings} />}
           <IconButton variant="ghost" color="gray" aria-label="Close panel" onClick={closePanel}>
             <Cross2Icon aria-hidden="true" />
           </IconButton>
@@ -112,12 +126,19 @@ export function Panel() {
 
         <HelperNotice status={helper.status} error={helper.error} onRestart={() => void helper.restart()} />
 
-        {/* Both views stay mounted and are only hidden, so a typed draft, the conversation and the open drawer survive a trip to Settings. */}
-        <div className="view" data-fill hidden={view !== "chat"}>
-          <ChatView active={view === "chat"} summary={summary} reloadKey={helper.recoveries} onOpenSettings={() => setView("settings")} />
+        {/* Both screens stay mounted and are only hidden, so a draft, the conversation and a half-typed task survive a trip to Settings. */}
+        <div className="view" data-fill hidden={view === "settings"}>
+          <ChatView view={view} onTab={goTab} summary={summary} reloadKey={helper.recoveries} onOpenSettings={openSettings} />
         </div>
         <div className="view" hidden={view !== "settings"}>
-          <SettingsView active={view === "settings"} onSaved={() => void refreshSummary()} preference={preference} onPreference={setPreference} />
+          <SettingsView
+            active={view === "settings"}
+            onSaved={() => void refreshSummary()}
+            preference={look.preference}
+            onPreference={look.setPreference}
+            density={look.density}
+            onDensity={look.setDensity}
+          />
         </div>
       </main>
     </Theme>

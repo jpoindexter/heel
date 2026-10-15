@@ -8,7 +8,7 @@ export function QuickChips({ busy, onChip }: Props) {
   return (
     <div className="chips" role="group" aria-label="Quick actions">
       {CHIPS.map((chip) => (
-        <Button key={chip.id} type="button" size="3" variant="surface" color="gray" disabled={busy && chip.prompt !== null} onClick={() => onChip(chip)}>
+        <Button key={chip.id} type="button" size="1" variant="soft" color="gray" disabled={busy && chip.prompt !== null} onClick={() => onChip(chip)}>
           {chip.label}
         </Button>
       ))}

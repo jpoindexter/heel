@@ -4,9 +4,10 @@
 use serde::{Deserialize, Serialize};
 
 /// Logical pixels. These must match minWidth/minHeight/maxWidth/maxHeight in tauri.conf.json.
-pub const MIN_SIZE: (f64, f64) = (340.0, 420.0);
+pub const MIN_SIZE: (f64, f64) = (280.0, 320.0);
 pub const MAX_SIZE: (f64, f64) = (640.0, 900.0);
-pub const SAVE_FILE: &str = "panel-size.json";
+/// v2: the compact panel (N2). A size saved by the old, larger panel must not carry over.
+pub const SAVE_FILE: &str = "panel-size-v2.json";
 /// Resizing fires an event per pixel; write the file at most this often.
 pub const SAVE_INTERVAL_MS: u64 = 400;
 /// After Heel resizes the panel itself (fit to screen), ignore the resulting events for this long.

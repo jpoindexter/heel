@@ -15,13 +15,13 @@ export function ActivitySettings() {
   const [activity, setActivity] = useActivity();
   return (
     <section aria-labelledby="activity-heading" className="settings-section">
-      <Heading as="h2" id="activity-heading" size="3">Greg's activity</Heading>
+      <Heading as="h2" id="activity-heading" size="2">Greg's activity</Heading>
       <SegmentedControl.Root value={activity} onValueChange={(value) => isActivity(value) && setActivity(value)} aria-label="Greg's activity">
         {ACTIVITIES.map((choice) => (
           <SegmentedControl.Item key={choice} value={choice}>{LABELS[choice]}</SegmentedControl.Item>
         ))}
       </SegmentedControl.Root>
-      <Text as="p" size="2" color="gray">{HELP[activity]}</Text>
+      <Text as="p" size="1" color="gray">{HELP[activity]}</Text>
     </section>
   );
 }

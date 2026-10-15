@@ -1,77 +1,44 @@
-import { useEffect } from "react";
 import { Button, Callout } from "@radix-ui/themes";
-import { client } from "../api/default-client";
-import { FocusPanel } from "../focus/FocusPanel";
-import { InboxPanel } from "../inbox/InboxPanel";
-import { useInboxConnection } from "../inbox/useInbox";
+import { FocusStatus } from "../focus/FocusStatus";
 import type { BrainSummary } from "../settings/brain-summary";
 import { Notifier } from "../ui/Notifier";
+import { AgentView } from "./AgentView";
 import "./chat.css";
-import { Compose } from "./Compose";
-import { QuickAdd } from "./QuickAdd";
-import { NowStrip } from "./NowStrip";
-import { TaskDrawer } from "./TaskDrawer";
-import { Thread } from "./Thread";
-import { nowCard } from "./today-model";
-import { useChatActions } from "./useChatActions";
-import { useTasks } from "./useTasks";
-import { useThread } from "./useThread";
-import { useTodayFocus } from "./useTodayFocus";
+import { TasksView } from "./TasksView";
+import { useTodayState } from "./useTodayState";
+
+export type Tab = "tasks" | "agent";
 
 type Props = {
-  active: boolean;
+  /** Which screen shows; "settings" hides both (they stay mounted, so a draft or a half-typed task survives a trip to Settings). */
+  view: Tab | "settings";
+  onTab: (tab: Tab) => void;
   summary: BrainSummary | null;
   /** Changes when the helper came back from not running: reload what is shown. */
   reloadKey: number;
   onOpenSettings: () => void;
 };
 
-/** The panel's main view: Now strip, conversation, folded task drawer, then chips and the ask box pinned at the bottom. */
-export function ChatView({ active, summary, reloadKey, onOpenSettings }: Props) {
-  const tasks = useTasks(client, active);
-  const thread = useThread(client, {
-    onChanged: tasks.refresh,
-    notify: (message) => tasks.showNotice(message, "error"),
-    onCleared: (undo) => tasks.showNotice("Conversation cleared", "info", undo),
-  });
-  const { draft, setDraft, onSend, onChip } = useChatActions({ thread, tasks });
-  const { refresh } = tasks;
-  useEffect(() => {
-    if (reloadKey > 0) void refresh();
-  }, [reloadKey, refresh]);
-  const { state, notice } = tasks;
-
-  const ready = state.phase === "ready" ? state : null;
-  const now = ready ? nowCard(ready.tasks) : null;
-  const inbox = useInboxConnection(client, active);
-  const focus = useTodayFocus(client, active, tasks, ready);
-
+/** The two apps, Tasks and Agent, with a running time-box or its check-in above whichever is showing. */
+export function ChatView({ view, onTab, summary, reloadKey, onOpenSettings }: Props) {
+  const state = useTodayState(view !== "settings", reloadKey);
+  const { tasks } = state;
   return (
     <div className="chat">
-      {state.phase === "error" && (
+      {tasks.state.phase === "error" && (
         <Callout.Root color="amber" role="alert" size="1" highContrast>
-          <Callout.Text>{state.message}</Callout.Text>
+          <Callout.Text>{tasks.state.message}</Callout.Text>
           <Button size="1" variant="soft" onClick={() => void tasks.refresh()}>Try again</Button>
         </Callout.Root>
       )}
-      <NowStrip now={now} onComplete={() => now && void tasks.complete(now.task)} />
-      <FocusPanel focus={focus} now={now} />
-      <InboxPanel client={client} connected={inbox.status?.connected ?? false} onTaskAdded={() => void tasks.refresh()} />
-      <Thread
-        messages={thread.messages}
-        summary={summary}
-        onRetry={thread.retry}
-        onOpenSettings={onOpenSettings}
-        onUndo={(id, index) => void thread.undoReceipt(id, index)}
-        onClear={() => void thread.clear()}
-      />
-      {ready && <TaskDrawer tasks={ready.tasks} parked={ready.parked} onComplete={(t) => void tasks.complete(t)} onRemove={(t) => void tasks.remove(t)} onPromote={(i) => void tasks.promote(i)} />}
-
-      <div className="compose-zone">
-        <Notifier notice={notice} onDismiss={tasks.dismissNotice} />
-        <QuickAdd active={active} onAdd={tasks.add} />
-        <Compose active={active} draft={draft} busy={thread.busy} onDraft={setDraft} onSend={onSend} onStop={thread.stop} onChip={(chip) => void onChip(chip)} />
+      <FocusStatus focus={state.focus} />
+      <div className="tab" hidden={view !== "tasks"}>
+        <TasksView state={state} active={view === "tasks"} onNeedVisible={() => onTab("tasks")} />
       </div>
+      <div className="tab" data-fill hidden={view !== "agent"}>
+        <AgentView state={state} active={view === "agent"} summary={summary} onOpenSettings={onOpenSettings} />
+      </div>
+      <div className="compose-zone"><Notifier notice={tasks.notice} onDismiss={tasks.dismissNotice} /></div>
     </div>
   );
 }

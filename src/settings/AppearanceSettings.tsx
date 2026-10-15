@@ -9,8 +9,8 @@ type Props = { preference: Preference; onPreference: (next: Preference) => void 
 export function AppearanceSettings({ preference, onPreference }: Props) {
   return (
     <section aria-labelledby="appearance-heading" className="settings-section">
-      <Heading as="h2" id="appearance-heading" size="3">Appearance</Heading>
-      <Text as="p" size="2" color="gray">System follows your Mac's light or dark setting.</Text>
+      <Heading as="h2" id="appearance-heading" size="2">Appearance</Heading>
+      <Text as="p" size="1" color="gray">System follows your Mac's light or dark setting.</Text>
       <SegmentedControl.Root value={preference} onValueChange={(value) => isPreference(value) && onPreference(value)} aria-label="Appearance">
         {PREFERENCES.map((choice) => (
           <SegmentedControl.Item key={choice} value={choice}>{LABELS[choice]}</SegmentedControl.Item>

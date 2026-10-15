@@ -20,8 +20,8 @@ export function EmailSettings({ client, active }: Props) {
 
   return (
     <section aria-labelledby="email-heading" className="settings-section">
-      <Heading as="h2" id="email-heading" size="3">Email (Gmail, read-only)</Heading>
-      <Text as="p" size="2" color="gray">
+      <Heading as="h2" id="email-heading" size="2">Email (Gmail, read-only)</Heading>
+      <Text as="p" size="1" color="gray">
         Heel reads your recent unread mail and picks up to three that need you. It can't send, delete or change anything.
       </Text>
       {status?.connected ? (

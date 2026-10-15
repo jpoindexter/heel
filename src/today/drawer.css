@@ -38,6 +38,7 @@
 /* Composer + toast */
 .compose-zone {
   position: relative;
+  height: 0;
 }
 
 .compose {
