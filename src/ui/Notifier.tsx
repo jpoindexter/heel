@@ -1,20 +1,23 @@
 import { Badge, Button, Text } from "@radix-ui/themes";
 import { Toast } from "radix-ui";
-import { NOTICE_MS, type ShownNotice } from "./notice-model";
+import type { ShownNotice } from "./notice-model";
 import "./toast.css";
 
 export type { Notice } from "./notice-model";
 
-type Props = { notice: ShownNotice | null; onDismiss: () => void };
+/** Radix never closes a toast by itself: the provider's clock does (Radix pauses its own while the window is unfocused). */
+const NEVER_MS = 2 ** 31 - 1;
+
+type Props = { notice: ShownNotice | null; onDismiss: () => void; onHold: () => void; onRelease: () => void };
 
 /**
- * The toast: drops in from the panel's top edge, stays NOTICE_MS (longer while hovered or focused), fades out.
+ * The toast: drops in from the panel's top edge, stays NOTICE_MS (held while hovered or focused), fades out.
  * Radix announces it and keeps Undo reachable by keyboard (F8 jumps to it). Its viewport floats, so nothing below moves.
  * One at a time: a newer notice replaces this one and shows how many it stands for.
  */
-export function Notifier({ notice, onDismiss }: Props) {
+export function Notifier({ notice, onDismiss, onHold, onRelease }: Props) {
   return (
-    <Toast.Provider duration={NOTICE_MS} swipeDirection="up" label="Notice">
+    <Toast.Provider duration={NEVER_MS} swipeDirection="up" label="Notice">
       {notice && (
         <Toast.Root
           key={notice.id}
@@ -22,6 +25,10 @@ export function Notifier({ notice, onDismiss }: Props) {
           className="toast"
           data-tone={notice.tone}
           onOpenChange={(open) => !open && onDismiss()}
+          onPointerEnter={onHold}
+          onPointerLeave={onRelease}
+          onFocus={onHold}
+          onBlur={onRelease}
         >
           <Toast.Description asChild>
             <Text size="2" className="toast-text">{notice.message}</Text>

@@ -6,9 +6,10 @@ import { ASSUMED_RUNNING, statusFromPayload, type HelperStatus } from "./status"
 
 /**
  * Whether Heel's helper is running, as the shell sees it. `onRecovered` runs when it comes back after not running,
- * so the panel can reload what it showed (the helper may have a new port and token by then).
+ * so the panel can reload what it showed (the helper may have a new port and token by then). It says what it came
+ * back from: "starting" is a fresh launch, not a comeback worth a notice.
  */
-export function useHelperStatus(onRecovered: () => void) {
+export function useHelperStatus(onRecovered: (from: HelperStatus["state"]) => void) {
   const [status, setStatus] = useState<HelperStatus>(ASSUMED_RUNNING);
   const [error, setError] = useState<string | null>(null);
   /** How many times it has come back; a changing number lets other views reload. */
@@ -22,7 +23,7 @@ export function useHelperStatus(onRecovered: () => void) {
       const next = statusFromPayload(payload);
       if (!next) return;
       if (next.state === "running" && was.current !== "running") {
-        recovered.current();
+        recovered.current(was.current);
         setRecoveries((count) => count + 1);
       }
       was.current = next.state;

@@ -92,16 +92,16 @@ function SettingsHeader({ onBack }: { onBack: () => void }) {
 /** The toast lives at the panel level: every screen's notices drop in from the same top edge. */
 function PanelToast() {
   const notices = useNotices();
-  return <Notifier notice={notices.notice} onDismiss={notices.dismiss} />;
+  return <Notifier notice={notices.notice} onDismiss={notices.dismiss} onHold={notices.hold} onRelease={notices.release} />;
 }
 
 function PanelBody({ look }: { look: ReturnType<typeof usePanelLook> }) {
   const { view, openSettings, showToday } = usePanelView();
   const { summary, refresh: refreshSummary } = useBrainSummary(client, view === "settings" ? "settings" : "chat");
   const notices = useNotices();
-  const helper = useHelperStatus(() => {
+  const helper = useHelperStatus((from) => {
     void refreshSummary();
-    notices.show({ message: "Heel's helper is back", tone: "info" });
+    if (from !== "starting") notices.show({ message: "Heel's helper is back", tone: "info" });
   });
   useEscapeToClose();
   useOpenSettingsRequests(openSettings);

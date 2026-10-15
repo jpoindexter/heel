@@ -2,7 +2,7 @@ import { createContext, useCallback, useContext, useEffect, useMemo, useRef, use
 import { invoke } from "@tauri-apps/api/core";
 import { listen } from "@tauri-apps/api/event";
 import { NOTICE_UNDO_EVENT } from "../events";
-import { replaceNotice, routeNotice, toBubble, UndoPayloadSchema, type Notice, type ShownNotice } from "./notice-model";
+import { NOTICE_MS, replaceNotice, routeNotice, toBubble, UndoPayloadSchema, type Notice, type ShownNotice } from "./notice-model";
 import { usePanelVisible } from "./usePanelVisible";
 
 type ShowOptions = {
@@ -14,6 +14,9 @@ export type Notices = {
   notice: ShownNotice | null;
   show: (notice: Notice, options?: ShowOptions) => void;
   dismiss: () => void;
+  /** The pointer is over the toast, or it has focus: it waits. `release` gives it its full time again. */
+  hold: () => void;
+  release: () => void;
   /** A time-box is running: nothing but its own notices may appear next to Greg. */
   setFocusRunning: (running: boolean) => void;
 };
@@ -51,23 +54,40 @@ export function NoticesProvider({ quiet, children }: { quiet: boolean; children:
   const nextId = useRef(0);
   const undos = useRef(new Map<number, () => void>());
 
-  const dismiss = useCallback(() => setNotice(null), []);
+  // The toast's clock is ours, not Radix's: Radix pauses while the window is unfocused, which left toasts stuck for good.
+  const clock = useRef<number | undefined>(undefined);
+  const hold = useCallback(() => window.clearTimeout(clock.current), []);
+  const dismiss = useCallback(() => {
+    hold();
+    setNotice(null);
+  }, [hold]);
+  const release = useCallback(() => {
+    hold();
+    clock.current = window.setTimeout(dismiss, NOTICE_MS);
+  }, [dismiss, hold]);
+  useEffect(() => hold, [hold]);
+  // Set while the panel was closed, a toast gets its full time once the panel is on screen.
+  useEffect(() => {
+    if (panelVisible && notice) release();
+  }, [panelVisible, notice, release]);
+
   const show = useCallback((next: Notice, options: ShowOptions = {}) => {
     const route = routeNotice(next, flags.current);
     if (route === "silent" || (route === "panel" && options.whenHidden)) return;
     const shown = replaceNotice(null, next, ++nextId.current);
     // The toast is set either way: open the panel within the notice's life and Undo is there, by keyboard too.
     setNotice((current) => replaceNotice(current, next, shown.id));
+    release();
     if (route !== "bubble") return;
     undos.current.clear();
     if (next.undo) undos.current.set(shown.id, next.undo);
     void invoke("show_notice", { payload: toBubble(shown) }).catch(() => undefined);
-  }, []);
+  }, [release]);
   useBubbleUndo(undos, dismiss);
 
   const value = useMemo<Notices>(
-    () => ({ notice, show, dismiss, setFocusRunning: (running) => void (flags.current.focusRunning = running) }),
-    [notice, show, dismiss],
+    () => ({ notice, show, dismiss, hold, release, setFocusRunning: (running) => void (flags.current.focusRunning = running) }),
+    [notice, show, dismiss, hold, release],
   );
   return <NoticesContext.Provider value={value}>{children}</NoticesContext.Provider>;
 }
