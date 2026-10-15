@@ -161,3 +161,38 @@ export const RestoreInputSchema = z.object({ clearedAt: z.number() });
 
 export type StoredMessage = z.output<typeof StoredMessageSchema>;
 export type ReceiptDto = z.output<typeof ReceiptSchema>;
+
+/* Inbox digest (Gmail, read-only) */
+
+export const InboxStatusSchema = z.object({
+  /** A Google client ID and secret have been saved. */
+  configured: z.boolean(),
+  connected: z.boolean(),
+  account: z.string().nullable(),
+  /** Why the last Connect did not finish, in a sentence; null when nothing is wrong. */
+  problem: z.string().nullable(),
+});
+export const SetGmailClientInputSchema = z.object({ clientId: z.string(), clientSecret: z.string() });
+export const InboxConnectSchema = z.object({ url: z.string() });
+export const DigestItemSchema = z.object({
+  messageId: z.string(),
+  from: z.string(),
+  subject: z.string(),
+  /** One literal line: "they ask you to X by Y". */
+  summary: z.string(),
+  /** What to add as a task, in the person's voice. */
+  taskTitle: z.string(),
+});
+export const DigestSchema = z.object({
+  items: z.array(DigestItemSchema),
+  /** How many unread or starred emails were looked at. */
+  considered: z.number().int(),
+  /** Exactly what was sent to the AI, so nothing leaves unseen. */
+  sentToModel: z.string(),
+  checkedAt: z.number(),
+});
+export const AddInboxTaskInputSchema = z.object({ messageId: z.string(), title: z.string() });
+
+export type InboxStatusDto = z.output<typeof InboxStatusSchema>;
+export type DigestItemDto = z.output<typeof DigestItemSchema>;
+export type DigestDto = z.output<typeof DigestSchema>;

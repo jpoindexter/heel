@@ -1,4 +1,6 @@
 import type { Provider, ProviderId, ProviderResult, ProviderStatus } from "../agent/providers/types";
+import { memorySecrets } from "../inbox/keychain";
+import { createInbox, type InboxDeps } from "../inbox/service";
 import { testStore } from "../store/test-helpers";
 import { createApp, DEV_ORIGIN } from "./app";
 
@@ -23,7 +25,7 @@ export function fakeProvider(
 }
 
 /** A real app on an in-memory store, with fake providers, called through app.request(). */
-export function setup(overrides: Partial<Record<ProviderId, Provider>> = {}) {
+export function setup(overrides: Partial<Record<ProviderId, Provider>> = {}, inboxDeps: Partial<InboxDeps> = {}) {
   const store = testStore();
   const providers: Record<ProviderId, Provider> = {
     claude: fakeProvider("claude"),
@@ -31,7 +33,8 @@ export function setup(overrides: Partial<Record<ProviderId, Provider>> = {}) {
     ollama: fakeProvider("ollama", {}, { ok: true, value: ["qwen2.5:14b"] }),
     ...overrides,
   };
-  const app = createApp({ store, providers, token: TOKEN, allowedOrigins: [DEV_ORIGIN] });
+  const inbox = createInbox({ fetch: (async () => new Response("{}", { status: 500 })) as typeof fetch, secrets: memorySecrets(), now: () => 1_000_000, openUrl: async () => undefined, ...inboxDeps });
+  const app = createApp({ store, providers, inbox, token: TOKEN, allowedOrigins: [DEV_ORIGIN] });
   const call = (path: string, init: Init = {}) =>
     app.request(path, { ...init, headers: { host: HOST, "x-heel-token": TOKEN, ...init.headers } });
   const json = async (path: string, init?: Init) => (await call(path, init)).json();

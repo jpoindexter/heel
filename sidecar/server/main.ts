@@ -3,6 +3,10 @@ import { mkdirSync } from "node:fs";
 import { join } from "node:path";
 import { serve } from "@hono/node-server";
 import { createProviders } from "../agent/providers/registry";
+import { runCommand } from "../agent/providers/process";
+import { macKeychain } from "../inbox/keychain";
+import { openUrl } from "../inbox/open-url";
+import { createInbox } from "../inbox/service";
 import { openStore } from "../store/store";
 import { createApp, DEV_ORIGIN, TAURI_ORIGINS } from "./app";
 import { findRunningHelper, removeConnectionFile, writeConnectionFile } from "./connection-file";
@@ -24,7 +28,8 @@ if (running) {
 
 const store = openStore({ path: join(dir, DB_FILE) });
 const token = randomBytes(TOKEN_BYTES).toString("hex");
-const app = createApp({ store, providers: createProviders(), token, allowedOrigins: [DEV_ORIGIN, ...TAURI_ORIGINS] });
+const inbox = createInbox({ fetch, secrets: macKeychain(runCommand), now: Date.now, openUrl });
+const app = createApp({ store, providers: createProviders(), inbox, token, allowedOrigins: [DEV_ORIGIN, ...TAURI_ORIGINS] });
 
 // Port 0 = let the OS pick a free port; the panel finds it in the connection file.
 const server = serve({ fetch: app.fetch, hostname: HOST, port: 0 }, (info) => {

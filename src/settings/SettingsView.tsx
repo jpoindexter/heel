@@ -1,5 +1,7 @@
 import { Separator } from "@radix-ui/themes";
 import type { Preference } from "../theme/appearance";
+import { client } from "../api/default-client";
+import { EmailSettings } from "../inbox/EmailSettings";
 import { ActivitySettings } from "./ActivitySettings";
 import { AppearanceSettings } from "./AppearanceSettings";
 import { BrainSettings } from "./BrainSettings";
@@ -20,6 +22,8 @@ export function SettingsView({ active, onSaved, preference, onPreference }: Prop
       <ActivitySettings />
       <Separator size="4" />
       <BrainSettings active={active} onSaved={onSaved} />
+      <Separator size="4" />
+      <EmailSettings client={client} active={active} />
     </div>
   );
 }
