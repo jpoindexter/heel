@@ -31,3 +31,10 @@ Choice: Heel (dog command: stay close by my side). Repo jpoindexter/heel (privat
 Alternatives: Fetch, Tether, Stay.
 Why: fits a quiet, close companion; nod to Greg the dog without reusing the Greg name (Greg stays the nutrition app for now). No collisions found on GitHub or a web search; this is not a trademark search.
 Reversible? Yes (repo rename is one command). Greg nutrition app rename: undecided, not touched.
+
+## 2026-10-15 — Store: node:sqlite + Zod, behind one adapter
+Choice: Node's built-in `node:sqlite` (no SQLite package), `zod` 4.x (MIT) for every boundary, `@types/node` 22 (dev, types only). Migrations are up/down pairs in `sidecar/store/migrations.ts`; never edit an applied one.
+Alternatives: better-sqlite3 (stable, native build step), rusqlite in the Tauri shell.
+Why: no new native dependency; Node 22.23 runs it. Risk: Node marks node:sqlite experimental, so the API could change. It is confined to `sidecar/store/store.ts` and `migrations.ts`, so a swap is a two-file change.
+Reversible? Yes.
+Also: one active focus session is enforced twice (app check + partial unique index in the DB); undo for delete/complete = `restore`, not a hard delete.
