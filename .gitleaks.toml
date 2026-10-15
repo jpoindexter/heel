@@ -1,0 +1,18 @@
+# Secret scanning for Heel. Run: npm run secrets:scan (also runs before every commit via .githooks/pre-commit).
+title = "Heel"
+
+[extend]
+useDefault = true
+
+[allowlist]
+description = "Known false positives only. Add a path here only after checking the finding is not a real secret."
+paths = [
+  '''src-tauri/target/''',   # compiled build output (also gitignored)
+  '''node_modules/''',
+  '''dist/''',
+]
+regexes = [
+  '''0123456789abcdef0123''',        # fake helper token used in sidecar/server/files.test.ts
+  '''0123456789abcdefTOKEN''',
+  '''test-token-0123456789abcdef''',  # fake token in sidecar/server/test-app.ts
+]

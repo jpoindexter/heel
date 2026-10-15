@@ -146,3 +146,9 @@ Choice: Heel stays its own app and hooks into Vanta (option A, companion pairing
 Alternatives: merge into Vanta (C) — revisit after the spike; Vanta already has a thin Electron avatar window and wants an avatar "if cheap", so a lighter C (Greg's sprite player inside that window) is possible later. B (ACP brain only) is the fallback if A's approval flow is too heavy.
 Why: cheapest way to learn whether Vanta's tools work through Heel; reversible, unlike a shell rewrite. Evidence: docs/VANTA-INTEGRATION.md.
 Reversible? Yes. Open: whether Heel's work may change Vanta.
+
+## 2026-10-15 — Secrets: scan, ignore, block
+Choice: gitleaks scans history and tree on demand (`npm run secrets:scan`) and on every commit (`.githooks/pre-commit`, enabled with `git config core.hooksPath .githooks`, once per clone). `.gitignore` now covers env files, keys and certificates, databases, `sidecar.json` and logs. `.gitleaks.toml` allowlists only the fake test tokens and build output.
+Audit result 2026-10-15: 42 commits and the working tree scanned; the only findings were fake test-fixture tokens and bytes inside ignored build output. No real secret was ever committed, so nothing needs rotating. Heel's real credentials never live in the repo: the helper token is in the app data folder (`sidecar.json`) and providers use the user's own CLI logins.
+Not covered: the untracked `assets/` (386 MB) and `handoffs/` folders are Jason's and are not scanned for history, only as working files (the tree scan found nothing in them).
+Reversible? Yes.

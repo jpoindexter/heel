@@ -3,5 +3,28 @@ dist
 src-tauri/target
 src-tauri/gen
 .DS_Store
-.env
 tsconfig.node.tsbuildinfo
+*.tsbuildinfo
+coverage
+
+# Secrets and local state: never commit these.
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+*.p12
+*.pfx
+*.mobileprovision
+*.cer
+*.keystore
+# Heel's own data: the database and the helper's connection file (port + token) live in the app data folder, not here.
+*.db
+*.db-wal
+*.db-shm
+*.sqlite
+*.sqlite3
+sidecar.json
+# Logs and scratch output
+*.log
+.claude/settings.local.json
