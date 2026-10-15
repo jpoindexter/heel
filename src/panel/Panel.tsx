@@ -17,8 +17,8 @@ const STATE_LABELS: Record<HeelState, string> = {
 export function Panel() {
   return (
     <main className="panel">
-      <header>
-        <h1>Heel</h1>
+      <header data-tauri-drag-region>
+        <h1 data-tauri-drag-region>Heel</h1>
         <button type="button" onClick={() => void invoke("toggle_panel_command")} aria-label="Close panel">
           Close
         </button>

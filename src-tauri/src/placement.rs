@@ -1,0 +1,116 @@
+#[derive(Clone, Copy, Debug, PartialEq, Eq)]
+pub struct Rect {
+    pub x: i32,
+    pub y: i32,
+    pub width: i32,
+    pub height: i32,
+}
+
+pub type Point = (i32, i32);
+
+#[derive(Clone, Copy, Debug, PartialEq, Eq)]
+pub enum Follower {
+    Panel,
+    Mascot,
+}
+
+/// Top-left for the panel: right-aligned to the mascot, above it when there is room,
+/// otherwise below it, and always fully inside the monitor.
+pub fn panel_origin(mascot: Rect, panel_size: (i32, i32), monitor: Rect, gap: i32) -> Point {
+    let (panel_w, panel_h) = panel_size;
+
+    let max_x = (monitor.x + monitor.width - panel_w).max(monitor.x);
+    let x = (mascot.x + mascot.width - panel_w).clamp(monitor.x, max_x);
+
+    let above = mascot.y - panel_h - gap;
+    let y = if above >= monitor.y {
+        above
+    } else {
+        let max_y = (monitor.y + monitor.height - panel_h).max(monitor.y);
+        (mascot.y + mascot.height + gap).min(max_y)
+    };
+
+    (x, y)
+}
+
+/// After one window moved, where the other must go so the pair keeps its docked offset
+/// (offset = panel position minus mascot position). None when it is already there, which is
+/// what stops the two move handlers from chasing each other.
+pub fn follow_target(moved_is_mascot: bool, mascot: Point, panel: Point, offset: Point) -> Option<(Follower, Point)> {
+    if moved_is_mascot {
+        let target = (mascot.0 + offset.0, mascot.1 + offset.1);
+        (target != panel).then_some((Follower::Panel, target))
+    } else {
+        let target = (panel.0 - offset.0, panel.1 - offset.1);
+        (target != mascot).then_some((Follower::Mascot, target))
+    }
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    const PANEL: (i32, i32) = (640, 560);
+    const GAP: i32 = 16;
+
+    fn monitor() -> Rect {
+        Rect { x: 0, y: 0, width: 3024, height: 1964 }
+    }
+
+    fn mascot(x: i32, y: i32) -> Rect {
+        Rect { x, y, width: 384, height: 416 }
+    }
+
+    #[test]
+    fn right_aligns_above_a_bottom_right_mascot_without_leaving_the_screen() {
+        let m = mascot(3024 - 384 - 48, 1964 - 416 - 144);
+        let (x, y) = panel_origin(m, PANEL, monitor(), GAP);
+        assert_eq!(x, m.x + m.width - PANEL.0);
+        assert_eq!(y, m.y - PANEL.1 - GAP);
+        assert!(x + PANEL.0 <= 3024);
+    }
+
+    #[test]
+    fn clamps_to_the_left_edge_when_the_mascot_is_dragged_there() {
+        let (x, _) = panel_origin(mascot(0, 900), PANEL, monitor(), GAP);
+        assert_eq!(x, 0);
+    }
+
+    #[test]
+    fn opens_below_when_there_is_no_room_above() {
+        let m = mascot(1000, 100);
+        let (_, y) = panel_origin(m, PANEL, monitor(), GAP);
+        assert_eq!(y, m.y + m.height + GAP);
+    }
+
+    #[test]
+    fn stays_on_a_secondary_monitor_with_an_offset_origin() {
+        let second = Rect { x: 3024, y: 0, width: 2560, height: 1440 };
+        let m = mascot(3024 + 2560 - 384 - 48, 1440 - 416 - 144);
+        let (x, y) = panel_origin(m, PANEL, second, GAP);
+        assert!(x >= second.x && x + PANEL.0 <= second.x + second.width);
+        assert!(y >= second.y && y + PANEL.1 <= second.y + second.height);
+    }
+
+    #[test]
+    fn panel_follows_the_mascot_with_the_docked_offset() {
+        let offset = (-256, -576);
+        let target = follow_target(true, (1000, 1200), (0, 0), offset);
+        assert_eq!(target, Some((Follower::Panel, (744, 624))));
+    }
+
+    #[test]
+    fn mascot_follows_the_panel_when_the_panel_is_dragged() {
+        let offset = (-256, -576);
+        let target = follow_target(false, (1000, 1200), (900, 700), offset);
+        assert_eq!(target, Some((Follower::Mascot, (1156, 1276))));
+    }
+
+    #[test]
+    fn stops_once_both_windows_agree_so_move_handlers_do_not_chase_each_other() {
+        let offset = (-256, -576);
+        let (mascot_pos, panel_pos) = ((1000, 1200), (744, 624));
+        assert_eq!(follow_target(true, mascot_pos, panel_pos, offset), None);
+        assert_eq!(follow_target(false, mascot_pos, panel_pos, offset), None);
+    }
+}
