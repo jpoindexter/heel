@@ -1,4 +1,5 @@
-import { MAX_HISTORY_MESSAGES, type ActionOutcomeDto, type HistoryMessage, type UndoDto } from "../../shared/api";
+import { MAX_HISTORY_MESSAGES, type ActionOutcomeDto, type ApiResult, type HistoryMessage, type TurnResultDto, type UndoDto } from "../../shared/api";
+import { replyError } from "./today-model";
 
 /** One line of "what Heel did". `undo` is how to reverse it; `undone` once the person has. */
 export type Receipt = { ok: boolean; text: string; undo: UndoDto | null; undone: boolean };
@@ -36,4 +37,17 @@ export const NEAR_BOTTOM_PX = 48;
 
 export function isNearBottom(el: { scrollHeight: number; scrollTop: number; clientHeight: number }): boolean {
   return el.scrollHeight - el.scrollTop - el.clientHeight <= NEAR_BOTTOM_PX;
+}
+
+/** The message that replaces "Thinking…": what Heel said and did, or why it couldn't (with the words to retry). */
+export function answerFrom(result: ApiResult<TurnResultDto>, id: number, askedText: string): Message {
+  if (result.ok) return { id, role: "heel", status: "said", say: result.data.say, receipts: toReceipts(result.data.applied) };
+  return { id, role: "heel", status: "failed", ...replyError(result.error.code, result.error.message), retryText: askedText };
+}
+
+/** The same thread with one receipt marked undone (or put back). Anything else is returned unchanged. */
+export function withReceiptUndone(messages: readonly Message[], id: number, index: number, undone: boolean): Message[] {
+  return messages.map((m) =>
+    m.id === id && m.role === "heel" && m.status === "said" ? { ...m, receipts: m.receipts.map((r, i) => (i === index ? { ...r, undone } : r)) } : m,
+  );
 }

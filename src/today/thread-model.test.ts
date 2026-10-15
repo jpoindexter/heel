@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 import { MAX_HISTORY_MESSAGES } from "../../shared/api";
-import { NEAR_BOTTOM_PX, historyFor, isNearBottom, receiptSummary, toReceipts, type Message } from "./thread-model";
+import { NEAR_BOTTOM_PX, answerFrom, historyFor, isNearBottom, receiptSummary, toReceipts, withReceiptUndone, type Message } from "./thread-model";
 
 describe("toReceipts", () => {
   it("keeps success text, prefixes failures, and carries the undo", () => {
@@ -66,5 +66,35 @@ describe("isNearBottom", () => {
     expect(isNearBottom({ scrollHeight: 1000, scrollTop: 600, clientHeight: 400 })).toBe(true);
     expect(isNearBottom({ scrollHeight: 1000, scrollTop: 600 - NEAR_BOTTOM_PX, clientHeight: 400 })).toBe(true);
     expect(isNearBottom({ scrollHeight: 1000, scrollTop: 500, clientHeight: 400 })).toBe(false);
+  });
+});
+
+describe("answerFrom", () => {
+  it("turns a reply into a said message with receipts", () => {
+    const message = answerFrom({ ok: true, data: { say: "Done.", applied: [{ type: "add_task", ok: true, message: 'Added "x".' }], skills: [], provider: "claude" } }, 7, "asked");
+    expect(message).toMatchObject({ id: 7, role: "heel", status: "said", say: "Done." });
+    expect(message.role === "heel" && message.status === "said" && message.receipts).toHaveLength(1);
+  });
+
+  it("turns a failure into a failed message that remembers what to ask again, and offers Settings when Settings can fix it", () => {
+    const failed = answerFrom({ ok: false, error: { code: "not_ready", message: "Choose an AI." } }, 3, "plan my day");
+    expect(failed).toMatchObject({ status: "failed", message: "Choose an AI.", offerSettings: true, retryText: "plan my day" });
+    expect(answerFrom({ ok: false, error: { code: "timeout", message: "Slow." } }, 3, "x")).toMatchObject({ offerSettings: false });
+  });
+});
+
+describe("withReceiptUndone", () => {
+  const said = (id: number): Message => ({ id, role: "heel", status: "said", say: "x", receipts: [{ ok: true, text: "a", undo: null, undone: false }, { ok: true, text: "b", undo: null, undone: false }] });
+
+  it("marks only the chosen receipt of the chosen message", () => {
+    const next = withReceiptUndone([said(1), said(2)], 2, 1, true);
+    expect(next[0]).toEqual(said(1));
+    expect(next[1]!.role === "heel" && next[1]!.status === "said" && next[1]!.receipts.map((r) => r.undone)).toEqual([false, true]);
+  });
+
+  it("can put it back", () => {
+    const undone = withReceiptUndone([said(1)], 1, 0, true);
+    const back = withReceiptUndone(undone, 1, 0, false);
+    expect(back[0]).toEqual(said(1));
   });
 });

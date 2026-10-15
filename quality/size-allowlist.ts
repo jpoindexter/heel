@@ -1,17 +1,7 @@
 /**
  * Known offenders of the size limits, as `file::name` -> the most lines they may have.
  * This list only shrinks: the test fails when an entry grows, when something new crosses a limit,
- * and when an entry no longer offends (delete it, the debt is paid). Cards in the "UP NEXT" Trello list pay it down.
+ * and when an entry no longer offends (delete it, the debt is paid).
+ * It is empty: every file is <= 300 lines and every function <= 50.
  */
-export const SIZE_ALLOWLIST: Readonly<Record<string, number>> = {
-  // D3-D5: components shrink when they stop hand-rolling controls.
-  "src/today/ChatView.tsx::ChatView": 59,
-  "src/today/Thread.tsx::Thread": 57,
-  // Hooks: split state / effects / actions when touched next.
-  "src/settings/useBrain.ts::useBrain": 91,
-  "src/today/useTasks.ts::useTasks": 89,
-  "src/today/useThread.ts::useThread": 85,
-  // Server/provider factories.
-  "sidecar/agent/providers/ollama.ts::ollamaProvider": 85,
-  "sidecar/server/app.ts::createApp": 57,
-};
+export const SIZE_ALLOWLIST: Readonly<Record<string, number>> = {};

@@ -1,4 +1,3 @@
-import { useState } from "react";
 import { Button, Callout } from "@radix-ui/themes";
 import { client } from "../api/default-client";
 import type { BrainSummary } from "../settings/brain-summary";
@@ -8,7 +7,8 @@ import { Compose } from "./Compose";
 import { NowStrip } from "./NowStrip";
 import { TaskDrawer } from "./TaskDrawer";
 import { Thread } from "./Thread";
-import { PARK_HINT, nowCard, type Chip } from "./today-model";
+import { nowCard } from "./today-model";
+import { useChatActions } from "./useChatActions";
 import { useTasks } from "./useTasks";
 import { useThread } from "./useThread";
 
@@ -18,26 +18,8 @@ type Props = { active: boolean; summary: BrainSummary | null; onOpenSettings: ()
 export function ChatView({ active, summary, onOpenSettings }: Props) {
   const tasks = useTasks(client, active);
   const thread = useThread(client, { onChanged: tasks.refresh, notify: (message) => tasks.showNotice(message, "error") });
-  const [draft, setDraft] = useState("");
+  const { draft, setDraft, onSend, onChip } = useChatActions({ thread, tasks });
   const { state, notice } = tasks;
-
-  const send = (text: string, label?: string) => {
-    if (!text.trim() || thread.busy) return;
-    void thread.send(text, label);
-  };
-
-  const onSend = () => {
-    const text = draft;
-    if (!text.trim() || thread.busy) return;
-    setDraft("");
-    send(text);
-  };
-
-  const onChip = async (chip: Chip) => {
-    if (chip.prompt) return send(chip.prompt, chip.label);
-    if (!draft.trim()) return tasks.showNotice(PARK_HINT);
-    if (await tasks.park(draft)) setDraft("");
-  };
 
   const ready = state.phase === "ready" ? state : null;
   const now = ready ? nowCard(ready.tasks) : null;
