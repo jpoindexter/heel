@@ -44,15 +44,27 @@ fn docked_origin(mascot: &WebviewWindow, panel: &WebviewWindow) -> Option<Point>
     Some(panel_origin(mascot_rect, (panel_size.width as i32, panel_size.height as i32), monitor_rect, gap))
 }
 
+fn panel_is_visible(app: &AppHandle) -> bool {
+    app.get_webview_window(PANEL_LABEL)
+        .and_then(|panel| panel.is_visible().ok())
+        .unwrap_or(false)
+}
+
 /// Show the panel docked to the mascot, or hide it if already visible.
 fn toggle_panel(app: &AppHandle) {
+    if panel_is_visible(app) {
+        if let Some(panel) = app.get_webview_window(PANEL_LABEL) {
+            let _ = panel.hide();
+        }
+    } else {
+        show_panel(app);
+    }
+}
+
+fn show_panel(app: &AppHandle) {
     let Some(panel) = app.get_webview_window(PANEL_LABEL) else {
         return;
     };
-    if panel.is_visible().unwrap_or(false) {
-        let _ = panel.hide();
-        return;
-    }
     if let Some(mascot) = app.get_webview_window(MASCOT_LABEL) {
         if let (Some(origin), Some(mascot_at)) = (docked_origin(&mascot, &panel), window_point(&mascot)) {
             if let Ok(mut offset) = app.state::<DockOffset>().0.lock() {
@@ -162,10 +174,6 @@ pub fn run() {
         )
         .invoke_handler(tauri::generate_handler![toggle_panel_command])
         .setup(|app| {
-            // No Dock icon: Heel lives as a mascot + tray item.
-            #[cfg(target_os = "macos")]
-            app.set_activation_policy(tauri::ActivationPolicy::Accessory);
-
             let handle = app.handle();
             place_mascot(handle);
             watch_moves(handle);
@@ -173,6 +181,17 @@ pub fn run() {
             app.global_shortcut().register(hotkey())?;
             Ok(())
         })
-        .run(tauri::generate_context!())
-        .expect("error while running Heel");
+        .build(tauri::generate_context!())
+        .expect("error while building Heel")
+        .run(|app, event| {
+            // Clicking the Dock icon opens the panel if it is hidden.
+            #[cfg(target_os = "macos")]
+            if let tauri::RunEvent::Reopen { .. } = event {
+                if !panel_is_visible(app) {
+                    show_panel(app);
+                }
+            }
+            #[cfg(not(target_os = "macos"))]
+            let _ = (app, event);
+        });
 }
