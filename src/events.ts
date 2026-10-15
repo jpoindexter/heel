@@ -19,3 +19,5 @@ export const HELPER_STATUS_EVENT = "heel:helper-status";
 export const NOTICE_EVENT = "heel:notice";
 /** Sent by the notice window when its Undo is pressed (payload: the notice id). Webview to webview only. */
 export const NOTICE_UNDO_EVENT = "heel:notice-undo";
+/** Sent to Greg's window when something starts or ends (payload: { id, active }): a turn, a digest, a draft. Webview to webview only. */
+export const WORK_EVENT = "heel:work";

@@ -2,6 +2,7 @@ import { useCallback, useEffect, useState } from "react";
 import { DraftReplySchema, MailStatusSchema, SendReplySchema, type DigestItemDto } from "../../shared/api";
 import { z } from "zod";
 import type { Client } from "../api/client";
+import { beginWork } from "../mascot/motion-events";
 import { sentNotice } from "./reply-model";
 
 const Opened = z.object({ opened: z.boolean() });
@@ -37,7 +38,9 @@ export function useReplyFlow(client: Client, notify: Notify) {
   const draft = useCallback(
     async (item: DigestItemDto, instruction: string) => {
       setState({ phase: "drafting", item, instruction });
+      const endWork = beginWork("draft");
       const result = await client.post("/mail/reply/draft", DraftReplySchema, { messageId: item.messageId, from: item.from, subject: item.subject, summary: item.summary, instruction });
+      endWork();
       setState(result.ok ? { phase: "preview", item, instruction, body: result.data.draft, sentToModel: result.data.sentToModel } : { phase: "error", item, instruction, message: result.error.message });
     },
     [client],

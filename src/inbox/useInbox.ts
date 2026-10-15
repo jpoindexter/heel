@@ -2,6 +2,7 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import { z } from "zod";
 import { DigestSchema, InboxConnectSchema, InboxStatusSchema, type DigestDto, type InboxStatusDto } from "../../shared/api";
 import type { Client } from "../api/client";
+import { beginWork } from "../mascot/motion-events";
 
 /** After Connect the person is in their browser; look again this often (and for this long) until Google has sent them back. */
 const WATCH_MS = 2_000;
@@ -77,7 +78,9 @@ export function useDigest(client: Client, onTaskAdded: () => void) {
 
   const check = useCallback(async () => {
     setState({ phase: "loading" });
+    const endWork = beginWork("digest");
     const result = await client.post("/mail/digest", DigestSchema);
+    endWork();
     setState(result.ok ? { phase: "ready", digest: result.data, added: [] } : { phase: "error", message: result.error.message });
   }, [client]);
 

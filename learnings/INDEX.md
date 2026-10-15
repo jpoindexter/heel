@@ -5,3 +5,4 @@
 - [2026-10-15 patch-asserts-its-target](2026-10-15-patch-asserts-its-target.md) — A scripted text edit asserts its anchor exists before replacing; patch the file `rg` named, not where the symbol is defined.
 - [2026-10-15 line-clamp-clips-in-padding](2026-10-15-line-clamp-clips-in-padding.md) — Put `-webkit-line-clamp` on an unpadded inner text element, never on the padded box; or don't clamp text the person wrote.
 - [2026-10-15 act-on-timed-ui-in-the-same-step](2026-10-15-act-on-timed-ui-in-the-same-step.md) — When verifying anything that disappears on a timer, detect and act in one step; a driven unfocused window needs a `focus` event before a Radix toast fades.
+- [2026-10-15 storage-event-skips-the-writer](2026-10-15-storage-event-skips-the-writer.md) — To test a cross-window setting, change it where the product changes it, never by poking the reader's storage; clear it first so the write is a real change.

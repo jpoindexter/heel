@@ -1,5 +1,5 @@
 import { emit } from "@tauri-apps/api/event";
-import { MOTION_EVENT } from "../events";
+import { MOTION_EVENT, WORK_EVENT } from "../events";
 import { HEEL_STATES, motionDuration, type MotionId } from "./sheets";
 
 /** Tell the mascot window what to do. A plain browser preview has no mascot window, so failures are ignored. */
@@ -13,7 +13,14 @@ export async function playOnce(motion: MotionId): Promise<void> {
   window.setTimeout(() => void setMotion(HEEL_STATES.idle), motionDuration(motion));
 }
 
-export const thinking = () => setMotion(HEEL_STATES.thinking);
+let flights = 0;
+
+/** Heel started doing something (a turn, a digest, a draft): Greg shows work until the returned function says it ended. */
+export function beginWork(kind: string): () => void {
+  const id = `${kind}-${++flights}`;
+  void emit(WORK_EVENT, { id, active: true }).catch(() => undefined);
+  return () => void emit(WORK_EVENT, { id, active: false }).catch(() => undefined);
+}
 /** Back to sitting, with no fuss (the person stopped him). */
 export const settle = () => setMotion(HEEL_STATES.idle);
 export const celebrate = () => playOnce(HEEL_STATES.done);

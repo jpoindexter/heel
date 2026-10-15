@@ -1,7 +1,7 @@
 import { useCallback, type MutableRefObject } from "react";
 import { TurnResultSchema, type HistoryMessage } from "../../shared/api";
 import type { Client } from "../api/client";
-import { celebrate, settle, stumble, thinking } from "../mascot/motion-events";
+import { beginWork, celebrate, settle, stumble } from "../mascot/motion-events";
 import type { Notice } from "../ui/notice-model";
 import { answerFrom, answerNotice, historyFor, type Message } from "./thread-model";
 import { useClearConversation } from "./useClearConversation";
@@ -44,9 +44,10 @@ export function useThread(client: Client, { onChanged, notify, onCleared, onAnsw
   const { begin, end, stop } = useStoppable();
   const ask = useCallback(
     async (text: string, history: HistoryMessage[], pendingId: number): Promise<boolean> => {
-      void thinking();
+      const endWork = beginWork("turn");
       const result = await client.post("/turn", TurnResultSchema, { text, history }, begin());
       end();
+      endWork();
       const answer = answerFrom(result, pendingId, text);
       commit(latest.current.map((m) => (m.id === pendingId ? answer : m)));
       persist(pendingId);

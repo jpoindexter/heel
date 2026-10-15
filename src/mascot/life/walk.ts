@@ -7,9 +7,10 @@ export type Direction = "left" | "right";
 export type WalkStarted = { direction: Direction; duration_ms: number };
 
 /** Ask the shell to glide Greg's window along the screen. Null when there is no room, or no shell (browser preview). */
-export async function startWalk(direction: Direction, rng: () => number): Promise<WalkStarted | null> {
+export async function startWalk(direction: Direction, rng: () => number, distancePx?: number): Promise<WalkStarted | null> {
   const [min, max] = WALK_DISTANCE_PX;
-  return invoke<WalkStarted | null>("start_walk", { direction, distance: min + rng() * (max - min) }).catch(() => null);
+  const distance = distancePx ?? min + rng() * (max - min);
+  return invoke<WalkStarted | null>("start_walk", { direction, distance }).catch(() => null);
 }
 
 export const stopWalk = () => void invoke("stop_walk").catch(() => undefined);

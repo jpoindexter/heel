@@ -1,0 +1,75 @@
+/* Greg's window: the sprite, and the signs of work over his head (N13). The window is transparent and exactly one cell. */
+.mascot-theme {
+  position: relative;
+  background: transparent;
+}
+
+/* While Heel works with the panel docked to him he sways in place instead of walking off with the panel in tow. */
+.sway {
+  animation: sway calc(var(--motion-base) * 6) ease-in-out infinite alternate;
+}
+
+@keyframes sway {
+  from { transform: translateX(calc(-1 * var(--sway-distance))); }
+  to { transform: translateX(var(--sway-distance)); }
+}
+
+/* The thought bubble sits up and to the right of his head, with two small puffs trailing down toward it. */
+.thought {
+  position: absolute;
+  top: var(--space-2);
+  right: var(--space-3);
+  display: flex;
+  gap: var(--space-1);
+  align-items: center;
+  padding: var(--space-2) var(--space-3);
+  background: var(--color-panel-solid);
+  border: var(--border-width) solid var(--hairline);
+  border-radius: var(--radius-6);
+  box-shadow: var(--shadow-3);
+  animation: rise var(--motion-base) var(--ease-out) both;
+}
+
+.thought-dot {
+  width: var(--space-1);
+  height: var(--space-1);
+  background: var(--gray-11);
+  border-radius: var(--radius-6);
+  animation: pulse calc(var(--motion-base) * 5) ease-in-out infinite;
+}
+
+.thought-dot:nth-child(2) {
+  animation-delay: calc(var(--stagger) * 4);
+}
+
+.thought-dot:nth-child(3) {
+  animation-delay: calc(var(--stagger) * 8);
+}
+
+.thought-trail {
+  position: absolute;
+  top: 100%;
+  left: var(--space-2);
+  width: var(--space-2);
+  height: var(--space-2);
+  background: var(--color-panel-solid);
+  border: var(--border-width) solid var(--hairline);
+  border-radius: var(--radius-6);
+}
+
+.thought-trail-small {
+  top: calc(100% + var(--space-3));
+  left: 0;
+  width: var(--space-1);
+  height: var(--space-1);
+}
+
+@keyframes rise {
+  from { opacity: 0; transform: translateY(var(--rise-distance)); }
+  to { opacity: 1; transform: none; }
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 0.35; }
+  50% { opacity: 1; }
+}
