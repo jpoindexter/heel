@@ -111,3 +111,24 @@ export const CHEW_MS = 4 * SECOND;
 export const WALK_DISTANCE_PX: readonly [number, number] = [240, 560];
 /** Give a walk this long beyond its planned time before assuming the shell forgot to say it ended. */
 export const WALK_GRACE_MS = 1_000;
+
+/** Gaze (N25): where his eyes are in the window, how near the pointer must be, and how long a calm glance lasts. */
+export const LOOK_STEPS = 16;
+export const GAZE_EYE = { x: 96, y: 90 } as const;
+export const GAZE_RANGE_PX = 400;
+export const GLANCE_HOLD_MS = 2_500;
+export const GLANCE_REST_MS = 6 * SECOND;
+/** The glance clock: a calm glance ends on time even when the pointer has stopped. */
+export const GAZE_TICK_MS = 500;
+/** Coming over (N25, Lively): the pointer resting low on the screen for a few seconds, a stride away. */
+export const REST_MS = 3 * SECOND;
+export const REST_JITTER_PX = 8;
+export const COME_BOTTOM_PX = 180;
+export const COME_MIN_PX = 220;
+export const COME_MAX_PX = 900;
+export const COME_STOP_SHORT_PX = 120;
+export const COME_COOLDOWN_MS = 10 * MINUTE;
+/** Quiet this long, and the next move earns a stretch and a yawn. */
+export const LONG_IDLE_MS = 10 * MINUTE;
+/** From this hour (local) he yawns once for the evening. */
+export const EVENING_HOUR = 21;

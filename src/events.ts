@@ -23,3 +23,7 @@ export const NOTICE_UNDO_EVENT = "heel:notice-undo";
 export const WORK_EVENT = "heel:work";
 /** Sent to the panel by the shell while attention sense is on (payload: { bundle, name, idle_sec }). Must equal ATTENTION_EVENT in src-tauri/src/constants.rs. */
 export const ATTENTION_EVENT = "heel:attention";
+/** Sent to Greg's window by the shell: where the pointer is in his window frame (payload: { x, y, bottom }). Must equal POINTER_EVENT in src-tauri/src/constants.rs. */
+export const POINTER_EVENT = "heel:pointer";
+/** Sent to Greg's window by the panel while the chat card holds text (payload: boolean). Webview to webview only. */
+export const TYPING_EVENT = "heel:typing";

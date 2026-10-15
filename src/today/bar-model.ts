@@ -46,3 +46,6 @@ export function barHint(draftEmpty: boolean, thinking: boolean): string {
   if (draftEmpty) return "";
   return thinking ? "Heel is thinking" : "↩ ask Heel · ⌘↩ add as task";
 }
+
+/** After the chat card empties, wait this long before Greg stops listening (a retype would otherwise flicker him). */
+export const TYPING_CLEAR_MS = 600;

@@ -8,8 +8,10 @@ import "./mascot.css";
 import { useFocusPresence } from "../focus/useFocusPresence";
 import { useAppearance } from "../theme/useAppearance";
 import { useActivity } from "./life/useActivity";
+import { MOTIONS } from "./life/config";
 import { useIdleLife } from "./life/useIdleLife";
 import { useLifeCommands } from "./life/useLifeCommands";
+import { usePointerLife } from "./life/usePointerLife";
 import { useRunEvents } from "./life/useRunEvents";
 import { useFade } from "./useFade";
 import { usePanelOpen } from "./life/usePanelOpen";
@@ -18,6 +20,7 @@ import { Sprite } from "./Sprite";
 import { ThoughtBubble } from "./ThoughtBubble";
 import { usePointerGestures } from "./usePointerGestures";
 import { useReducedMotion } from "./useReducedMotion";
+import { useTyping } from "./useTyping";
 import { useWork } from "./useWork";
 import { useWorkMotion } from "./useWorkMotion";
 import { MOTION_EVENT } from "../events";
@@ -49,16 +52,21 @@ function Greg() {
   const fadeStyle = useFade();
   const panelOpen = usePanelOpen();
   const working = useWork();
-  const work = useWorkMotion({ working, panelOpen, reducedMotion: useReducedMotion(), quiet: activity === "off" });
+  const reducedMotion = useReducedMotion();
+  const work = useWorkMotion({ working, panelOpen, reducedMotion, quiet: activity === "off" });
 
   // The app owns Greg while Heel works, thinks or celebrates; his own life only fills the quiet.
   const busy = working || oneShot !== null || base !== HEEL_STATES.idle;
   const life = useIdleLife({ activity, panelOpen, busy, setLifeMotion });
-  const running = useRunEvents(life.touch);
+  const running = useRunEvents(life.touch, life.greet);
   useLifeCommands(activity, life.asleep, { nap: life.nap, wake: life.wake, walk: life.walk, setActivity });
   useEffect(() => {
     if (panelOpen) life.touch();
   }, [panelOpen, life.touch]);
+  // Free to look about: nothing else is showing on him and nothing is being done to him.
+  const free = lifeMotion === null && !busy && !life.asleep && running === null;
+  const gaze = usePointerLife({ activity, free, reducedMotion, come: life.come, stretch: life.stretch });
+  const typing = useTyping();
 
   const gestures = usePointerGestures(() => {
     life.wake();
@@ -66,8 +74,9 @@ function Greg() {
     void invoke("toggle_panel_command");
   });
 
-  // An asked-for nap outranks work and the app's pose; a run or a one-shot still shows over it.
-  const own = lifeMotion ?? HEEL_STATES.idle;
+  // An asked-for nap outranks work and the app's pose; a run or a one-shot still shows over it. When he is free: the
+  // listening tilt while the chat card holds text, else his gaze toward the pointer, else sitting.
+  const own = lifeMotion ?? (typing && free ? MOTIONS.listening : (gaze ?? HEEL_STATES.idle));
   const motion = running ?? oneShot ?? (life.asleep ? own : (work.motion ?? (busy ? base : own)));
   return (
     <div {...gestures} onPointerEnter={life.touch} style={fadeStyle} className={work.move === "sway" ? "sway" : undefined}>

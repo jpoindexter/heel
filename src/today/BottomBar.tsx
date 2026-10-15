@@ -2,6 +2,7 @@ import { Bar } from "./Bar";
 import { Compose } from "./Compose";
 import type { useBarActions } from "./useBarActions";
 import type { useTodayState } from "./useTodayState";
+import { useTypingSignal } from "./useTypingSignal";
 
 type Props = {
   state: ReturnType<typeof useTodayState>;
@@ -20,6 +21,7 @@ export function BottomBar({
   emailReady,
 }: Props) {
   const { thread, chat } = state;
+  useTypingSignal(bar.composerOpen ? chat.draft : "");
   return (
     <div className="bar-slot">
       {bar.composerOpen ? (

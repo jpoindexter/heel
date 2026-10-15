@@ -83,6 +83,9 @@ fn poll_once(app: &AppHandle) {
         let scale = mascot.scale_factor().ok()?;
         Some(((cursor.x - origin.x as f64) / scale, (cursor.y - origin.y as f64) / scale))
     })();
+    if let Some(pointer) = pointer {
+        crate::pointer_sense::report(app, &mascot, pointer);
+    }
     let shared = app.state::<HitRegion>();
     let Ok(mut state) = shared.0.lock() else {
         return;

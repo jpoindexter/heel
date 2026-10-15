@@ -3,7 +3,7 @@ import { CARRY_MS, CHEW_MS, CLIP_MS, FIRST_GAP_MS, GAG_WEIGHT, GAP_MS, GLANCES, 
 
 /** One thing Greg does for a while. `ms: Infinity` holds until the person interrupts (sleeping). */
 export type Step = { motion: MotionId; ms: number };
-export type Plan = { behavior: Behavior; steps: Step[]; walk?: { direction: "left" | "right" } };
+export type Plan = { behavior: Behavior; steps: Step[]; walk?: { direction: "left" | "right"; distancePx?: number } };
 
 export type LifeState = {
   /** When the person last touched Greg or the panel. */
@@ -13,6 +13,8 @@ export type LifeState = {
   sleeping: boolean;
   /** The person asked for this sleep: a hover or the panel opening does not wake him; a click or the menu does. */
   napping: boolean;
+  /** One yawn per evening (N25). */
+  eveningYawned: boolean;
   lastBehavior: Behavior | null;
 };
 
@@ -25,6 +27,8 @@ export type Context = {
   canWalk: boolean;
   /** The person opted in to the bathroom gags. Off by default. */
   gags?: boolean;
+  /** Late in the day (local): one yawn, then nothing more of it. */
+  evening?: boolean;
 };
 
 export type Rng = () => number;
@@ -49,7 +53,7 @@ export function interact(state: LifeState, now: number, activity: Activity, rng:
 }
 
 export function initialState(now: number, activity: Activity, rng: Rng): LifeState {
-  return interact({ lastActiveAt: now, nextAt: 0, sleeping: false, napping: false, lastBehavior: null }, now, activity, rng);
+  return interact({ lastActiveAt: now, nextAt: 0, sleeping: false, napping: false, eveningYawned: false, lastBehavior: null }, now, activity, rng);
 }
 
 export const planDuration = (plan: Plan): number => plan.steps.reduce((sum, step) => sum + (Number.isFinite(step.ms) ? step.ms : 0), 0);
@@ -123,6 +127,11 @@ export function decide(state: LifeState, ctx: Context, rng: Rng): { state: LifeS
     const plan = planFor("sleep", rng);
     return { state: { ...state, sleeping: true, nextAt: Infinity, lastBehavior: "sleep" }, plan };
   }
+  if (ctx.evening && !state.eveningYawned) {
+    const plan: Plan = { behavior: "groom", steps: [step(MOTIONS.yawn, CLIP_MS.yawn)] };
+    return { state: { ...state, eveningYawned: true, nextAt: ctx.now + planDuration(plan) + between(rng, GAP_MS[activity]), lastBehavior: "groom" }, plan };
+  }
+  if (!ctx.evening && state.eveningYawned) state = { ...state, eveningYawned: false };
 
   const weights: Record<string, number> = { ...WEIGHTS[activity], gag: ctx.gags ? GAG_WEIGHT : 0 };
   if (!ctx.canWalk) delete weights.walk;
@@ -146,3 +155,10 @@ export function wake(state: LifeState, now: number, activity: Activity, rng: Rng
   const plan = state.sleeping && !reducedMotion ? planFor("wake", rng) : null;
   return { state: interact(state, now, activity, rng), plan };
 }
+
+/** Arriving (launch, show): a wave, then he sits. */
+export const greetPlan = (): Plan => ({ behavior: "wave", steps: [step(MOTIONS.wave, WAVE_MS), step(MOTIONS.sitDown, CLIP_MS.sitDown)] });
+/** The person is back after a long quiet stretch: a stretch and a yawn. */
+export const stretchPlan = (): Plan => ({ behavior: "groom", steps: [step(MOTIONS.stretch, CLIP_MS.stretch), step(MOTIONS.yawn, CLIP_MS.yawn)] });
+/** Coming over to where the pointer rests (Lively): a lead-in, then the walk, stopping short. */
+export const comePlan = (direction: "left" | "right", distancePx: number): Plan => ({ behavior: "walk", steps: [step(MOTIONS.listening, LEAD_IN_MS)], walk: { direction, distancePx } });

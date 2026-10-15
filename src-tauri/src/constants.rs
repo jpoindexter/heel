@@ -17,6 +17,10 @@ pub(crate) const PANEL_GAP_LOGICAL_PX: f64 = 8.0;
 pub(crate) const DOCK_CLEARANCE_MULTIPLIER: i32 = 3;
 /// A resize fires per pixel; the docked panel snaps back onto Greg once no resize has come for this long.
 pub(crate) const RESIZE_SETTLE_MS: u64 = 350;
+/// Where the pointer is, in Greg's window frame (N25). Must equal POINTER_EVENT in src/events.ts (a test enforces it).
+pub(crate) const POINTER_EVENT: &str = "heel:pointer";
+/// The pointer must move at least this far (logical px) before Greg's window hears about it again.
+pub(crate) const POINTER_MIN_MOVE_LOGICAL_PX: f64 = 3.0;
 /// Right-click menu on Greg, and the tray's "Show Greg". One id each.
 pub(crate) const MASCOT_MENU_TOGGLE_ID: &str = "mascot-toggle";
 pub(crate) const MASCOT_MENU_SETTINGS_ID: &str = "mascot-settings";

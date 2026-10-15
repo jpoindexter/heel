@@ -15,6 +15,7 @@ mod notice_window;
 mod panel_size;
 mod panel_window;
 mod placement;
+mod pointer_sense;
 mod panel_place;
 mod sidecar_process;
 mod undock;
@@ -56,6 +57,7 @@ pub fn run() {
         .manage(Dock::new())
         .manage(PendingView::new())
         .manage(HitRegion::default())
+        .manage(pointer_sense::PointerSense::default())
         .manage(LifeFlags::default())
         .manage(Walker::default())
         .manage(Departure::default())

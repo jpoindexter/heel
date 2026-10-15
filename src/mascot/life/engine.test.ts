@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 import { MAX_PER_HOUR, SLEEP_AFTER_MS } from "./config";
-import { decide, initialState, interact, nap, planDuration, wake, type Context, type LifeState, type Plan } from "./engine";
+import { comePlan, decide, greetPlan, initialState, interact, nap, planDuration, stretchPlan, wake, type Context, type LifeState, type Plan } from "./engine";
 import { isMotionId } from "../sheets";
 
 /** A deterministic dice: the same seed gives the same rolls. */
@@ -101,7 +101,7 @@ describe("sleep", () => {
 
   it("wakes on any interaction and starts a fresh quiet stretch", () => {
     const rng = seeded(6);
-    const asleep: LifeState = { lastActiveAt: -SLEEP_AFTER_MS.calm, nextAt: Infinity, sleeping: true, napping: false, lastBehavior: "sleep" };
+    const asleep: LifeState = { lastActiveAt: -SLEEP_AFTER_MS.calm, nextAt: Infinity, sleeping: true, napping: false, eveningYawned: false, lastBehavior: "sleep" };
     const awake = interact(asleep, 1_000, "calm", rng);
     expect(awake.sleeping).toBe(false);
     expect(awake.nextAt).toBeGreaterThanOrEqual(1_000 + 60_000);
@@ -169,5 +169,27 @@ describe("cadence", () => {
     expect(count).toBeGreaterThan(0);
     expect(count).toBeLessThanOrEqual(MAX_PER_HOUR[activity]);
     expect(busyMs / (60 * MIN)).toBeLessThan(0.5);
+  });
+});
+
+describe("the rest of a dog's day (N25)", () => {
+  it("yawns once in the evening, then not again until the next evening", () => {
+    const rng = seeded(11);
+    const state = { ...initialState(0, "calm", rng), nextAt: 0 };
+    const first = decide(state, ctx({ now: 1 * MIN, evening: true }), rng);
+    expect(first.plan?.steps.map((s) => s.motion)).toEqual(["puppy:yawn"]);
+    expect(first.state.eveningYawned).toBe(true);
+    const again = decide({ ...first.state, nextAt: 0 }, ctx({ now: 2 * MIN, evening: true }), rng);
+    expect(again.plan?.steps.map((s) => s.motion)).not.toEqual(["puppy:yawn"]);
+    const morning = decide({ ...again.state, nextAt: 0 }, ctx({ now: 3 * MIN, evening: false }), rng);
+    expect(morning.state.eveningYawned).toBe(false);
+  });
+
+  it("greets with a wave then sits, stretches and yawns on a return, and comes over a given distance", () => {
+    expect(greetPlan().steps.map((s) => s.motion)).toEqual(["puppy:wave", "puppy:sit-down"]);
+    expect(stretchPlan().steps.map((s) => s.motion)).toEqual(["puppy:stretch", "puppy:yawn"]);
+    const come = comePlan("left", 300);
+    expect(come.walk).toEqual({ direction: "left", distancePx: 300 });
+    for (const plan of [greetPlan(), stretchPlan(), come]) for (const step of plan.steps) expect(isMotionId(step.motion) && step.ms > 0).toBe(true);
   });
 });

@@ -1,9 +1,10 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import type { MotionId } from "../sheets";
 import { useReducedMotion } from "../useReducedMotion";
-import { LEAD_IN_MS, MOTIONS } from "./config";
+import { EVENING_HOUR } from "./config";
 import type { Activity } from "./config";
 import { decide, initialState, nap as napNow, wake as wakeNow, type LifeState } from "./engine";
+import { useLifeMoves } from "./useLifeMoves";
 import { usePlanPlayer } from "./usePlanPlayer";
 
 const TICK_MS = 1_000;
@@ -51,10 +52,8 @@ export function useIdleLife({ activity, panelOpen, busy, setLifeMotion }: Option
     if (!state.current.napping) wake();
   }, [wake]);
 
-  /** Take a walk now (from the right-click menu), unless something else owns him. */
-  const walk = useCallback(() => {
-    if (!busy) void play({ behavior: "walk", steps: [{ motion: MOTIONS.listening, ms: LEAD_IN_MS }], walk: { direction: Math.random() < 0.5 ? "left" : "right" } });
-  }, [busy, play]);
+  const sleeping = useCallback(() => state.current.sleeping, []);
+  const moves = useLifeMoves({ activity, panelOpen, busy, reducedMotion, play, sleeping });
 
   const nap = useCallback(() => {
     cancel();
@@ -70,7 +69,7 @@ export function useIdleLife({ activity, panelOpen, busy, setLifeMotion }: Option
 
   useEffect(() => {
     const timer = window.setInterval(() => {
-      const ctx = { now: Date.now(), activity, panelOpen, focusActive: busy, reducedMotion, canWalk: true, gags: gagsOn() };
+      const ctx = { now: Date.now(), activity, panelOpen, focusActive: busy, reducedMotion, canWalk: true, gags: gagsOn(), evening: new Date().getHours() >= EVENING_HOUR };
       const result = decide(state.current, ctx, Math.random);
       state.current = result.state;
       setAsleep(result.state.sleeping);
@@ -79,6 +78,6 @@ export function useIdleLife({ activity, panelOpen, busy, setLifeMotion }: Option
     return () => window.clearInterval(timer);
   }, [activity, panelOpen, busy, reducedMotion, play]);
 
-  return { touch, wake, nap, walk, asleep };
+  return { touch, wake, nap, ...moves, asleep };
 }
 

@@ -28,6 +28,8 @@ pub(crate) struct Departure(Mutex<Option<Away>>);
 struct Run {
     direction: Direction,
     duration_ms: u64,
+    /// Coming on screen (launch, show), so his window can greet when the run ends.
+    arriving: bool,
 }
 
 /// The way off: toward whichever side of the usable screen he is nearer, until his window is fully past the edge.
@@ -74,10 +76,10 @@ fn reduced_motion(app: &AppHandle) -> bool {
 }
 
 /// Run along `route` with the run pose showing; nothing else may move him until he arrives.
-fn run(app: &AppHandle, stage: &Stage, route: Route, max_ms: u64, on_done: impl FnOnce(&AppHandle) + Send + 'static) {
+fn run(app: &AppHandle, stage: &Stage, route: Route, max_ms: u64, arriving: bool, on_done: impl FnOnce(&AppHandle) + Send + 'static) {
     let total_ms = duration_ms(route, stage.scale, EXIT_SPEED_PX_PER_S, max_ms);
     app.state::<Walker>().locked.store(true, Ordering::SeqCst);
-    let _ = app.emit_to(MASCOT_LABEL, RUN_EVENT, Run { direction: route.direction, duration_ms: total_ms });
+    let _ = app.emit_to(MASCOT_LABEL, RUN_EVENT, Run { direction: route.direction, duration_ms: total_ms, arriving });
     glide(app, stage.mascot.clone(), Glide { route, y: stage.y, total_ms, cancellable: false }, move |app| {
         app.state::<Walker>().locked.store(false, Ordering::SeqCst);
         on_done(app);
@@ -125,7 +127,7 @@ pub(crate) fn hide_mascot(app: &AppHandle) {
         *slot = Some(away);
     }
     let (mascot, y) = (stage.mascot.clone(), stage.y);
-    run(app, &stage, route, EXIT_MAX_MS, move |_| {
+    run(app, &stage, route, EXIT_MAX_MS, false, move |_| {
         // Hide first, then stand him back where he was, so any plain show() puts him on screen.
         let _ = mascot.hide();
         let _ = mascot.set_position(PhysicalPosition::new(away.rest_x, y));
@@ -143,7 +145,7 @@ pub(crate) fn show_mascot(app: &AppHandle) {
             let route = entry_route(away, stage.width, stage.min_x, stage.max_x);
             let _ = stage.mascot.set_position(PhysicalPosition::new(route.from_x, stage.y));
             let _ = stage.mascot.show();
-            run(app, &stage, route, EXIT_MAX_MS, |_| {});
+            run(app, &stage, route, EXIT_MAX_MS, true, |_| {});
         }
         _ => {
             let _ = stage.mascot.show();
@@ -169,7 +171,7 @@ pub(crate) fn start_up(app: &AppHandle, home: Option<PhysicalPosition<i32>>) {
     std::thread::spawn(move || {
         std::thread::sleep(std::time::Duration::from_millis(LAUNCH_DELAY_MS));
         if !was_hidden {
-            run(&handle, &stage, start, EXIT_MAX_MS, |_| {});
+            run(&handle, &stage, start, EXIT_MAX_MS, true, |_| {});
             return;
         }
         let _ = stage.mascot.hide();
@@ -204,7 +206,7 @@ pub(crate) fn goodbye(app: &AppHandle) {
     hide_window(app, PANEL_LABEL);
     let leaving = stage(app).filter(|s| !reduced_motion(app) && s.mascot.is_visible().unwrap_or(false));
     match leaving {
-        Some(stage) => run(app, &stage, exit_route(stage.x, stage.width, stage.min_x, stage.max_x), QUIT_MAX_MS, |app| app.exit(0)),
+        Some(stage) => run(app, &stage, exit_route(stage.x, stage.width, stage.min_x, stage.max_x), QUIT_MAX_MS, false, |app| app.exit(0)),
         None => app.exit(0),
     }
 }

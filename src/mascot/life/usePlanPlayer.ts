@@ -18,7 +18,7 @@ export function usePlanPlayer(setLifeMotion: (motion: MotionId | null) => void) 
         if (!Number.isFinite(step.ms)) return;
         await new Promise((resolve) => window.setTimeout(resolve, step.ms));
       }
-      const started = plan.walk && current() ? await startWalk(plan.walk.direction, Math.random) : null;
+      const started = plan.walk && current() ? await startWalk(plan.walk.direction, Math.random, plan.walk.distancePx) : null;
       if (started && current()) {
         setLifeMotion(started.direction === "left" ? MOTIONS.runLeft : MOTIONS.runRight);
         await walkFinished(started.duration_ms);

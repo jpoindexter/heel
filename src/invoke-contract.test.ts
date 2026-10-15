@@ -2,7 +2,7 @@ import { describe, expect, it } from "vitest";
 const rustSources = import.meta.glob("../src-tauri/src/*.rs", { query: "?raw", import: "default", eager: true }) as Record<string, string>;
 const libRs = rustSources["../src-tauri/src/lib.rs"] ?? "";
 const allRust = Object.values(rustSources).join("\n");
-import { ATTENTION_EVENT, LIFE_COMMAND_EVENT, NOTICE_EVENT, OPEN_SETTINGS_EVENT, FADE_EVENT, HELPER_STATUS_EVENT, PANEL_ANCHOR_EVENT, PANEL_VISIBLE_EVENT, RUN_EVENT, WALK_FINISHED_EVENT } from "./events";
+import { ATTENTION_EVENT, LIFE_COMMAND_EVENT, NOTICE_EVENT, OPEN_SETTINGS_EVENT, FADE_EVENT, HELPER_STATUS_EVENT, PANEL_ANCHOR_EVENT, PANEL_VISIBLE_EVENT, RUN_EVENT, WALK_FINISHED_EVENT, POINTER_EVENT } from "./events";
 
 const sources = import.meta.glob("./**/*.{ts,tsx}", {
   query: "?raw",
@@ -54,6 +54,7 @@ describe("Tauri event contract", () => {
     ["PANEL_ANCHOR_EVENT", PANEL_ANCHOR_EVENT],
     ["NOTICE_EVENT", NOTICE_EVENT],
     ["ATTENTION_EVENT", ATTENTION_EVENT],
+    ["POINTER_EVENT", POINTER_EVENT],
   ])("uses the same name for %s in Rust and TypeScript", (constant, typescript) => {
     const rust = allRust.match(new RegExp(`${constant}: &str = "([^"]+)"`))?.[1];
     expect(rust).toBe(typescript);
