@@ -8,3 +8,4 @@
 - [2026-10-15 storage-event-skips-the-writer](2026-10-15-storage-event-skips-the-writer.md) — To test a cross-window setting, change it where the product changes it, never by poking the reader's storage; clear it first so the write is a real change.
 - [2026-10-15 test-suite-kills-the-dev-stack](2026-10-15-test-suite-kills-the-dev-stack.md) — While driving the real app, run targeted tests; the full suite takes the dev helper down, so run it between sessions and restart the app after.
 - [2026-10-15 sheet-cache-keyed-by-file](2026-10-15-sheet-cache-keyed-by-file.md) — When a type that was 1:1 with a file becomes 1:n, grep for caches keyed on the old identity; verify a hidden invoke by recomputing its input, not by wrapping the bridge.
+- [2026-10-15 pipe-hides-the-gate](2026-10-15-pipe-hides-the-gate.md) — Never put a gate behind a pipe when its status decides the next step; capture to a file, test `$?`, then filter.
