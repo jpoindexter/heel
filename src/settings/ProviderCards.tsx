@@ -14,7 +14,7 @@ export function ProviderCards({ state, onChoose }: Props) {
           <Flex direction="column" gap="1" width="100%">
             <Text size="2" weight="medium">{row.label}</Text>
             <Flex align="center" gap="2" wrap="wrap">
-              <Badge color={row.ready ? "jade" : "amber"}>{row.statusText}</Badge>
+              <Badge color={row.ready ? "jade" : "amber"} highContrast>{row.statusText}</Badge>
               <Text size="1" color="gray">{row.detail}</Text>
             </Flex>
           </Flex>

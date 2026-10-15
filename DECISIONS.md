@@ -118,3 +118,13 @@ Shipped: the dog reports its opaque box per frame (hit-region.ts, sprite pixels,
 Isolation switches if it persists: `HEEL_NO_HOTKEY=1` (skip the Cmd+Shift+H global shortcut), `HEEL_ACCESSORY=1` (no Dock icon, never takes app activation). Run `HEEL_NO_HOTKEY=1 npm run tauri dev` and retest the mic; then `HEEL_ACCESSORY=1`. Whichever fixes it is the cause.
 Note: Vanta Desktop has its own dictation (Cmd+Shift+D); not suspected, listed in the Vanta audit.
 Reversible? Yes.
+
+## 2026-10-15 — D2-D7 done: Radix migration, light/dark/system, tokens only, contrast report
+Built: the whole panel (header, chips, composer, Now strip, thread, receipts, task drawer, toast, first-run, Settings) now uses Radix Themes components and radix-ui primitives (Collapsible, Toast, VisuallyHidden) with the small radius. Light, dark and System (follows the Mac live) ship; Settings > Appearance switches at once and is remembered (verified in the real Heel window: both directions, localStorage). `src/styles.css` (654 lines) is gone; only `src/design/tokens.css` (raw values live here), `base.css` and three small layout files remain. The quality tests pass with an EMPTY design allowlist: no hex/px/ms literal anywhere else (quality/no-hardcoded-design.test.ts).
+Contrast, measured in the real window with the Radix tokens actually in use (WCAG AA: text 4.5, UI 3):
+ text   light / dark — body 16.3 / 16.3 · secondary 6.0 / 9.0 · placeholder 6.0 / 9.3 (was 3.9 / 4.5, fixed) · soft button 5.3 / 7.6 · high-contrast Send 16.0 / 16.3 (default solid jade + white was 3.15, fixed) · high-contrast badges 10.5-11.0 / 11.4-13.1 (were 4.3 / 8.0) · ghost Undo 4.8 / 10.3
+ UI     light / dark — control border 3.3 / 3.7 (Radix default 1.6 / 2.1, raised via --gray-a7) · unchecked checkbox 3.9 / 4.5 (was 1.9 / 3.0) · focus ring 4.8 / 10.3 (was 2.4 / 3.9)
+ Callouts now use high contrast (amber-12): the 4.28 light pair is gone.
+Verified in the real window: both themes screenshotted for empty, thread + receipts, drawer + Undo toast, Settings; keyboard walk earlier (F9). NOT verified: contrast of every possible state (disabled controls are exempt, not measured), macOS "System" following a live OS appearance flip (code path only), VoiceOver. Tests: 217 JS, 24 Rust.
+Left for later cards: M3 (lib.rs still 450 lines), size-allowlist hook/factory entries.
+Reversible? Yes.

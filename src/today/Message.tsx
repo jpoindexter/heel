@@ -41,7 +41,7 @@ export function Message({ message, canRetry, onRetry, onOpenSettings, onUndo }: 
       )}
       {message.status === "failed" && (
         <div className="failed">
-          <Callout.Root color="amber" size="1" role="alert">
+          <Callout.Root color="amber" size="1" role="alert" highContrast>
             <Callout.Icon><ExclamationTriangleIcon /></Callout.Icon>
             <Callout.Text>{message.message}</Callout.Text>
           </Callout.Root>

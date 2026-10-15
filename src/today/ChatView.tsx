@@ -45,7 +45,7 @@ export function ChatView({ active, summary, onOpenSettings }: Props) {
   return (
     <div className="chat">
       {state.phase === "error" && (
-        <Callout.Root color="amber" role="alert" size="1">
+        <Callout.Root color="amber" role="alert" size="1" highContrast>
           <Callout.Text>{state.message}</Callout.Text>
           <Button size="1" variant="soft" onClick={() => void tasks.refresh()}>Try again</Button>
         </Callout.Root>

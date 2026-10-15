@@ -31,6 +31,7 @@ export function Notifier({ notice, onDismiss }: Props) {
               <Button
                 size="2"
                 variant="soft"
+                highContrast
                 onClick={() => {
                   notice.undo?.();
                   onDismiss();

@@ -1,4 +1,4 @@
-import { CheckIcon, ChevronDownIcon, ExclamationTriangleIcon } from "@radix-ui/react-icons";
+import { CheckIcon, ChevronRightIcon, ExclamationTriangleIcon } from "@radix-ui/react-icons";
 import { Button, Text } from "@radix-ui/themes";
 import { Collapsible } from "radix-ui";
 import { receiptSummary, type Receipt } from "./thread-model";
@@ -15,7 +15,7 @@ export function Receipts({ receipts, onUndo }: Props) {
         <Button variant="ghost" size="1" color={hasFailure ? "amber" : "gray"}>
           {hasFailure ? <ExclamationTriangleIcon aria-hidden="true" /> : <CheckIcon aria-hidden="true" />}
           {text}
-          <ChevronDownIcon aria-hidden="true" className="chevron" />
+          <ChevronRightIcon aria-hidden="true" className="chevron" />
         </Button>
       </Collapsible.Trigger>
       <Collapsible.Content>

@@ -20,7 +20,7 @@ export function BrainSettings({ active, onSaved }: Props) {
       <Text as="p" size="2" color="gray">Pick the AI Heel uses. What you type goes to that provider. Local keeps it on this Mac.</Text>
       {view.phase === "loading" && <Text role="status" size="2">Checking your providers…</Text>}
       {view.phase === "error" && (
-        <Callout.Root color="amber" role="alert" size="1">
+        <Callout.Root color="amber" role="alert" size="1" highContrast>
           <Callout.Text>{view.message}</Callout.Text>
           <Button size="1" variant="soft" onClick={() => void brain.refresh()}>Try again</Button>
         </Callout.Root>

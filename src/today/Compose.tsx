@@ -59,7 +59,7 @@ export function Compose({ active, draft, busy, onDraft, onSend, onChip }: Props)
           onKeyDown={onKey}
         />
         <VisuallyHidden.Root asChild><p id="ask-help">Enter to send. Shift+Enter for a new line.</p></VisuallyHidden.Root>
-        <Button type="submit" size="3" aria-busy={busy} disabled={busy || empty}>Send</Button>
+        <Button type="submit" size="3" highContrast aria-busy={busy} disabled={busy || empty}>Send</Button>
       </form>
     </div>
   );
