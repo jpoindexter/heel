@@ -134,3 +134,9 @@ Choice: a box is one guess (15/25/45/60 min); the range is derived (best 0.7x, w
 Alternatives: auto-open the panel at the end (rejected: an interruption); notification banner/sound (rejected: D4, no sound); poll-free timers in the shell (rejected: the helper already has the session and the budget).
 Why: D4 says silent, speaks at time-box end or when opened, 3/day.
 Reversible? Yes. Deviation from D4: the daily limit is a named constant (`DAILY_INTERRUPT_LIMIT`), not yet a setting, to avoid a settings UI before a real user wants one. Ratios and the return-box length are constants in `shared/focus.ts`.
+
+## 2026-10-15 — V-AUDIT result: Vanta × Heel (PROPOSED, awaiting Jason)
+Choice: recommend A (Heel pairs with Vanta's Companion API) after a 2-hour spike (X1); Vanta owns acting on the world (mail, texts, calendar, cron, approvals), Heel owns the ND layer and every Vanta push goes through Heel's 3/day budget. Not locked: nothing is built until Jason picks A / B / C.
+Alternatives: B Vanta as an ACP provider (brain only); C Heel becomes Vanta's avatar; D rebuild in Heel (rejected).
+Why: Vanta already has the pieces Jason listed (companion API, ACP, iMessage/email/Discord gateway, Gmail/Calendar/Drive, cron blueprints, autonomy lanes). Full evidence, gaps and open questions: docs/VANTA-INTEGRATION.md.
+Reversible? Yes until C.
