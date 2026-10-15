@@ -71,3 +71,26 @@ Decide C only after X1–X3 show where the seams are.
 ## Open question for Jason
 1. ~~Which Vanta?~~ Answered: the newest (`Vanta-integration-20261013`).
 2. May Heel's work change Vanta (a small inbox-events route, a blueprint list/create route)? That branch is where other work is happening, so a change should go on its own branch and be reviewed by you. Until you say yes, the spike uses only what Vanta already exposes.
+
+## X1 spike result (2026-10-15, stopped early on purpose)
+Setup: isolated Vanta (`heel/x1-companion-spike`, worktree `docs/Vanta-heel-x1-20261015`), own home, own ephemeral kernel, local Ollama, loopback only. Nothing touched Jason's real Vanta data. Temporary tokens deleted.
+
+**Worked (executed):**
+- Pairing: 6-character code → device token; requests without a token get 401.
+- One real chat turn through `POST /api/companion/chat` with the token: HTTP 200, Vanta's answer plus a Vanta receipt. 4–40 s on a cold local model.
+- A tool call through the companion (`write_file`, `shell_cmd`) returns its steps in the receipt.
+
+**Not observed:** a real Vanta *approval* request answered from outside. Five attempts did not raise one (see below), so `GET/POST /api/companion/approval` is read from the code only. The spike is not "passed" by its own Done line.
+
+**Findings that matter for Heel's safety rules:**
+1. Vanta wrote a file inside its project root and ran a shell `echo` with **no approval**, even after switching its access mode to `ask`. Heel cannot assume Vanta asks before acting.
+2. Some actions the *model* refused in chat ("please confirm") instead of raising a formal approval; the kernel flatly denied `rm`. So "approval" is not one clean channel.
+3. The native Vanta app starts with the companion **on** (`companion: !args.includes("--no-companion")`) and binds `0.0.0.0` (whole LAN); only the plain CLI is off by default. My earlier "off by default" was true only for the CLI. Pairing needs a code, but the exposure is real.
+4. `/api/access-mode` is not a companion route: Heel cannot tighten Vanta's mode itself.
+5. Vanta's `claude-code` provider reads the Claude OAuth token from the macOS Keychain (Vanta's own notes call it a grey area).
+6. The pairing response lists LAN URLs even when bound to loopback (cosmetic).
+
+**Vanta change made (own branch, not pushed):** `--companion-local` = companion on, 127.0.0.1 only. Additive, tested (`native-shell.test.ts`), Vanta's own commit hooks passed. `--companion` is unchanged.
+
+## Scope decision: freeze here
+Heel's PRD v0 is one real workday on Jason's Mac; that has not happened (S9). Texts, cron, calendar and Vanta pass-through (X2–X7) are platform work before one real user day. They are frozen until S9 is done and says it is needed. The finding above (Vanta acts without asking) also means X5/X6 need a design decision before any code.

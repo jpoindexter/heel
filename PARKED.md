@@ -29,3 +29,6 @@ Captured: 2026-10-15. Why parked: Plan/Stuck send a long prompt that shows as th
 
 ## Panel placement fallback: flip below Greg (or beside) when there is no room above
 Captured: 2026-10-15. Why parked: seen in the real window: with the panel open Greg can't be dragged into the upper part of the screen (the panel hits the menu bar and pulls Greg back). Fix = place the panel below/beside Greg when above doesn't fit. Cost: small-medium (placement.rs + tests).
+
+## Vanta integration X2–X7 (inbox events, texts, cron, calendar, Vanta as brain, Greg in Vanta's avatar window)
+Captured: 2026-10-15. Why parked: PRD v0 = one real workday (S9) not done yet; this is platform work before a user day. X1 spike proved pairing + one chat turn, not approvals, and showed Vanta acts without asking in some modes. Cost to revisit: X1 finish ~2h (needs a way to raise a real approval), then X2–X6 each 1–3 days. Promote when: S9 is done and Jason names the one thing he missed most.
