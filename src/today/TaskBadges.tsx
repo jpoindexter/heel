@@ -2,13 +2,14 @@ import { Badge } from "@radix-ui/themes";
 import type { TaskDto } from "../../shared/api";
 import type { Method } from "../../shared/method";
 import { bucketLabel, nextBucket, nextSize, sizeLabel } from "./method-model";
+import { splitSuggested } from "./size-model";
 
 export type Patch = (task: TaskDto, patch: { size?: TaskDto["size"]; bucket?: string | null }) => void;
 
-type Props = { task: TaskDto; method: Method; onPatch: Patch };
+type Props = { task: TaskDto; method: Method; onPatch: Patch; /** A big task: offer to split it with Heel. */ onSplit?: (task: TaskDto) => void };
 
 /** The small marks a method adds to a row: a size (XS–XL) and a bucket. A tap walks to the next value; none is a value too. */
-export function TaskBadges({ task, method, onPatch }: Props) {
+export function TaskBadges({ task, method, onPatch, onSplit }: Props) {
   const showSize = method.sizing === "tshirt";
   const showBucket = method.structure !== "none";
   if (!showSize && !showBucket) return null;
@@ -26,6 +27,11 @@ export function TaskBadges({ task, method, onPatch }: Props) {
           <button type="button" aria-label={`Size: ${sizeLabel(task.size)}. Change`} onClick={() => onPatch(task, { size: nextSize(task.size) })}>
             {sizeLabel(task.size)}
           </button>
+        </Badge>
+      )}
+      {showSize && onSplit && splitSuggested(task.size) && (
+        <Badge asChild size="1" variant="outline" color="gray" radius="full">
+          <button type="button" onClick={() => onSplit(task)}>Split it?</button>
         </Badge>
       )}
     </span>

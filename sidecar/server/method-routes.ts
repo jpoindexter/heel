@@ -1,5 +1,5 @@
 import type { Hono } from "hono";
-import { MethodSchema } from "../../shared/method";
+import { MethodNumbersSchema, MethodSchema } from "../../shared/method";
 import type { AppDeps } from "./app";
 import { fail, ok, readJson } from "./respond";
 
@@ -11,6 +11,15 @@ export function registerMethodRoutes(app: Hono, { store }: AppDeps): void {
     const body = MethodSchema.safeParse(await readJson(c));
     if (!body.success) return fail(c, "invalid", 'Send {"timer": "timebox", "structure": "none" | "pickle-jar", "sizing": "none" | "tshirt"}.');
     const saved = store.settings.setMethod(body.data);
+    return saved.ok ? ok(c, saved.value) : fail(c, saved.error.code, saved.error.message);
+  });
+
+  app.get("/method/numbers", (c) => ok(c, store.settings.getMethodNumbers()));
+
+  app.put("/method/numbers", async (c) => {
+    const body = MethodNumbersSchema.safeParse(await readJson(c));
+    if (!body.success) return fail(c, "invalid", body.error.issues[0]?.message ?? "Numbers must be whole minutes.");
+    const saved = store.settings.setMethodNumbers(body.data);
     return saved.ok ? ok(c, saved.value) : fail(c, saved.error.code, saved.error.message);
   });
 

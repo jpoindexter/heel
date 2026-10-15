@@ -7,6 +7,8 @@ import { ParkedList } from "./ParkedList";
 import { LaterList, NowRow } from "./TaskRows";
 import type { useTodayState } from "./useTodayState";
 import { useMethod } from "../ui/method";
+import { JarMeter } from "./JarMeter";
+import { minutesForSize, splitPrompt } from "./size-model";
 
 /** A ticked or removed row fades out first, then the write happens (it is the write that shows Undo). */
 function useLeavingRow(run: (task: TaskDto, action: "complete" | "remove") => void) {
@@ -26,13 +28,15 @@ function useLeavingRow(run: (task: TaskDto, action: "complete" | "remove") => vo
 
 /** Now, the rest, and the parked ideas. Starting a time-box opens its small form right under the Now row. */
 export function TaskSection({ state }: { state: ReturnType<typeof useTodayState> }) {
-  const { tasks, ready, now, focus, pomodoro } = state;
+  const { tasks, ready, now, focus, pomodoro, thread } = state;
   const [starting, setStarting] = useState(false);
   const rows = useLeavingRow((task, action) => void (action === "complete" ? tasks.complete(task) : tasks.remove(task)));
-  const { method } = useMethod();
-  const marks = { method, onPatch: (task: TaskDto, change: Parameters<typeof tasks.patch>[1]) => void tasks.patch(task, change) };
+  const { method, numbers } = useMethod();
+  const ask = (prompt: string, label: string) => void thread.send(prompt, label);
+  const marks = { method, onPatch: (task: TaskDto, change: Parameters<typeof tasks.patch>[1]) => void tasks.patch(task, change), onSplit: (task: TaskDto) => ask(splitPrompt(task.title), "Split") };
   return (
     <>
+      <JarMeter tasks={ready?.tasks ?? []} method={method} numbers={numbers} onAsk={ask} />
       <NowRow
         now={now}
         leavingId={rows.leavingId}
@@ -45,6 +49,7 @@ export function TaskSection({ state }: { state: ReturnType<typeof useTodayState>
       {starting && now && !focus.session && (
         <FocusForm
           initialGoal={now.text}
+          initialMinutes={minutesForSize(now.task.size, numbers)}
           onCancel={() => setStarting(false)}
           onStart={(goal, realisticMin) => void focus.start({ goal, taskId: now.task.id, realisticMin }).then((started) => started && setStarting(false))}
         />

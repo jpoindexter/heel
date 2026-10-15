@@ -72,7 +72,7 @@ export const TaskSchema = z.object({
   estimateMin: z.number().nullable(),
 });
 export const TaskPatchSchema = z.object({ size: z.enum(SIZES).nullable(), bucket: z.string().nullable(), estimateMin: z.number().int().positive().nullable() }).partial();
-export { MethodSchema, type Method } from "./method";
+export { MethodNumbersSchema, MethodSchema, type Method, type MethodNumbers } from "./method";
 export const PomodoroViewSchema = z.object({ state: PomodoroStateSchema.nullable(), config: PomodoroConfigSchema, ended: z.enum(PHASES).nullable(), remainingMs: z.number() });
 export type PomodoroViewDto = z.output<typeof PomodoroViewSchema>;
 

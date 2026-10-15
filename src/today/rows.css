@@ -78,3 +78,18 @@
 .task-row:focus-within .row-action {
   opacity: 1;
 }
+
+/* The jar's one line over the list; "full" adds a calm sentence and one way out. */
+.jar-meter {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+  align-items: center;
+  padding: 0 var(--space-3);
+}
+
+.jar-full {
+  display: inline-flex;
+  gap: var(--space-2);
+  align-items: center;
+}

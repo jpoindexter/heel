@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { DEFAULT_METHOD, MethodSchema, notBuiltReason, type Method } from "../../shared/method";
+import { DEFAULT_METHOD, DEFAULT_METHOD_NUMBERS, MethodNumbersSchema, MethodSchema, notBuiltReason, type Method, type MethodNumbers } from "../../shared/method";
 import { PROVIDER_IDS, type ProviderId } from "../../shared/providers";
 import type { Ctx } from "./context";
 import { fail, ok, type Result } from "./result";
@@ -9,6 +9,7 @@ export { PROVIDER_IDS, type ProviderId };
 
 const BRAIN_KEY = "brain";
 const METHOD_KEY = "method";
+const NUMBERS_KEY = "method-numbers";
 const MAX_MODEL_LENGTH = 200;
 
 export const BrainSettingsInput = z.object({
@@ -67,5 +68,27 @@ export function setMethod(ctx: Ctx, input: unknown): Result<Method> {
        ON CONFLICT (key) DO UPDATE SET value = excluded.value, updated_at = excluded.updated_at`,
     )
     .run(METHOD_KEY, JSON.stringify(parsed.data), ctx.now());
+  return ok(parsed.data);
+}
+
+export function getMethodNumbers(ctx: Ctx): MethodNumbers {
+  const row = ctx.db.prepare("SELECT value FROM settings WHERE key = ?").get(NUMBERS_KEY);
+  if (!row) return DEFAULT_METHOD_NUMBERS;
+  try {
+    return MethodNumbersSchema.safeParse(JSON.parse(String(row.value))).data ?? DEFAULT_METHOD_NUMBERS;
+  } catch {
+    return DEFAULT_METHOD_NUMBERS;
+  }
+}
+
+export function setMethodNumbers(ctx: Ctx, input: unknown): Result<MethodNumbers> {
+  const parsed = MethodNumbersSchema.safeParse(input);
+  if (!parsed.success) return fail("invalid", firstIssue(parsed.error));
+  ctx.db
+    .prepare(
+      `INSERT INTO settings (key, value, updated_at) VALUES (?, ?, ?)
+       ON CONFLICT (key) DO UPDATE SET value = excluded.value, updated_at = excluded.updated_at`,
+    )
+    .run(NUMBERS_KEY, JSON.stringify(parsed.data), ctx.now());
   return ok(parsed.data);
 }

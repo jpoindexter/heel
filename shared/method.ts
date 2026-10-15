@@ -57,3 +57,15 @@ export const BUCKET_LABELS: Readonly<Record<string, string>> = {
   frog: "Frog",
   rest: "Rest",
 };
+
+/** The numbers behind the methods (N19 jar, N20 sizes), kept by the helper. Minutes everywhere; hours only in the UI. */
+export const MethodNumbersSchema = z.object({
+  /** Real work the day holds (minutes). */
+  jarCapacityMin: z.number().int().min(30).max(720).default(240),
+  maxRocks: z.number().int().min(1).max(5).default(2),
+  sizeMinutes: z
+    .object({ xs: z.number().int().min(1).max(600).default(10), s: z.number().int().min(1).max(600).default(25), m: z.number().int().min(1).max(600).default(50), l: z.number().int().min(1).max(600).default(120), xl: z.number().int().min(1).max(600).default(240) })
+    .default({ xs: 10, s: 25, m: 50, l: 120, xl: 240 }),
+});
+export type MethodNumbers = z.output<typeof MethodNumbersSchema>;
+export const DEFAULT_METHOD_NUMBERS: MethodNumbers = MethodNumbersSchema.parse({});

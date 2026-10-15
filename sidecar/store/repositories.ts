@@ -7,7 +7,7 @@ import { clearMessages, listMessages, restoreMessages, saveMessage } from "./mes
 import { listParked, parkIdea, promoteParked, unparkIdea } from "./parked";
 import { movePomodoro, readPomodoro, setPomodoroConfig, startCycle } from "./pomodoro";
 import type { FocusOutcome, TaskStatus } from "./schema";
-import { getBrain, getMethod, setBrain, setMethod } from "./settings";
+import { getBrain, getMethod, getMethodNumbers, setBrain, setMethod, setMethodNumbers } from "./settings";
 import { addTask, completeTask, dropTask, getTask, listTasks, patchTask, restoreTask, setNowStep, startTask } from "./tasks";
 
 /** The Today side of the store: tasks, parked ideas, focus time-boxes and the working-memory ledger. */
@@ -71,6 +71,8 @@ export function systemRepositories(ctx: Ctx) {
       setBrain: (input: unknown) => setBrain(ctx, input),
       getMethod: () => getMethod(ctx),
       setMethod: (input: unknown) => setMethod(ctx, input),
+      getMethodNumbers: () => getMethodNumbers(ctx),
+      setMethodNumbers: (input: unknown) => setMethodNumbers(ctx, input),
     },
   };
 }
