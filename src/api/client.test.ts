@@ -91,4 +91,22 @@ describe("api client", () => {
     const client = createClient({ readInfo: async () => INFO, fetch: async () => reply({ ok: true, data: { hello: 5 } }) });
     expect(await client.get("/x", Hello)).toMatchObject({ ok: false, error: { code: "bad_response" } });
   });
+
+  it("answers a stopped request with 'aborted' and keeps using the same helper connection", async () => {
+    let reads = 0;
+    const stop = new AbortController();
+    const client = createClient({
+      readInfo: async () => (reads++, INFO),
+      fetch: (async (_url: unknown, init?: RequestInit) => {
+        const signal = init?.signal;
+        if (signal) return new Promise<Response>((_ok, reject) => (signal.aborted ? reject(new DOMException("x", "AbortError")) : signal.addEventListener("abort", () => reject(new DOMException("x", "AbortError")))));
+        return reply({ ok: true, data: { hello: "again" } });
+      }) as typeof fetch,
+    });
+    const pending = client.post("/turn", Hello, {}, stop.signal);
+    stop.abort();
+    expect(await pending).toEqual({ ok: false, error: { code: "aborted", message: "Stopped." } });
+    expect(await client.get("/x", Hello)).toEqual({ ok: true, data: { hello: "again" } });
+    expect(reads).toBe(1);
+  });
 });

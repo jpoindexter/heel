@@ -14,5 +14,7 @@ export async function playOnce(motion: MotionId): Promise<void> {
 }
 
 export const thinking = () => setMotion(HEEL_STATES.thinking);
+/** Back to sitting, with no fuss (the person stopped him). */
+export const settle = () => setMotion(HEEL_STATES.idle);
 export const celebrate = () => playOnce(HEEL_STATES.done);
 export const stumble = () => playOnce(HEEL_STATES.error);

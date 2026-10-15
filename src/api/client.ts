@@ -7,6 +7,8 @@ const OFFLINE: ApiResult<never> = {
   error: { code: "offline", message: "Heel's helper isn't running. Restart Heel." },
 };
 
+const STOPPED: ApiResult<never> = { ok: false, error: { code: "aborted", message: "Stopped." } };
+
 type Fetcher = typeof fetch;
 type ReadInfo = () => Promise<ConnectionInfo | null>;
 
@@ -54,6 +56,7 @@ export function createClient(deps: ClientDeps = {}) {
       if (!parsed.success) return { ok: false, error: { code: "bad_response", message: "Heel's helper sent something unexpected. Restart Heel." } };
       return parsed.data as ApiResult<z.output<T>>;
     } catch {
+      if (init.signal?.aborted) return STOPPED;
       info = null;
       return OFFLINE;
     }
@@ -62,8 +65,9 @@ export function createClient(deps: ClientDeps = {}) {
   return {
     get: <T extends z.ZodType>(path: string, schema: T) => send(path, schema, { method: "GET" }),
     put: <T extends z.ZodType>(path: string, schema: T, body: unknown) => send(path, schema, { method: "PUT", body: JSON.stringify(body) }),
-    post: <T extends z.ZodType>(path: string, schema: T, body?: unknown) =>
-      send(path, schema, { method: "POST", body: body === undefined ? undefined : JSON.stringify(body) }),
+    /** `signal` lets the caller stop the request; a stopped request answers with code "aborted". */
+    post: <T extends z.ZodType>(path: string, schema: T, body?: unknown, signal?: AbortSignal) =>
+      send(path, schema, { method: "POST", body: body === undefined ? undefined : JSON.stringify(body), signal }),
   };
 }
 

@@ -19,6 +19,8 @@ export type TurnDeps = {
   provider: Provider;
   model: string | null;
   loadSkill?: SkillLoader;
+  /** When it aborts the turn stops and nothing is written. */
+  signal?: AbortSignal;
 };
 
 const turnError = (code: TurnError["code"], message: string): TurnResult => ({ ok: false, error: { code, message } });
@@ -41,8 +43,9 @@ export async function runTurn(deps: TurnDeps, userText: string, history: readonl
 
   let prompt = basePrompt;
   for (let attempt = 1; attempt <= MAX_ATTEMPTS; attempt += 1) {
-    const response = await deps.provider.complete({ system, prompt, model: deps.model });
+    const response = await deps.provider.complete({ system, prompt, model: deps.model, signal: deps.signal });
     if (!response.ok) return { ok: false, error: response.error };
+    if (deps.signal?.aborted) return turnError("aborted", "Stopped.");
 
     const parsed = parseAgentReply(response.value);
     if (parsed.ok) {

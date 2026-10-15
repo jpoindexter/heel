@@ -100,3 +100,15 @@ describe("ollama provider", () => {
     expect(await empty.complete(REQUEST)).toMatchObject({ ok: false, error: { code: "empty" } });
   });
 });
+
+describe("ollama complete when stopped", () => {
+  it("returns aborted instead of 'not running' when the caller stops the request", async () => {
+    const stop = new AbortController();
+    const fetching = (async (_url: unknown, init?: RequestInit) =>
+      new Promise<Response>((_resolve, reject) => init?.signal?.addEventListener("abort", () => reject(new DOMException("aborted", "AbortError"))))) as typeof fetch;
+    const provider = ollamaProvider(fakeDeps({ fetch: fetching }));
+    const pending = provider.complete({ system: "s", prompt: "p", model: "llama", signal: stop.signal });
+    stop.abort();
+    expect(await pending).toEqual({ ok: false, error: { code: "aborted", message: "Stopped." } });
+  });
+});

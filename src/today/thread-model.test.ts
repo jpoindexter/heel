@@ -81,6 +81,15 @@ describe("answerFrom", () => {
     expect(failed).toMatchObject({ status: "failed", message: "Choose an AI.", offerSettings: true, retryText: "plan my day" });
     expect(answerFrom({ ok: false, error: { code: "timeout", message: "Slow." } }, 3, "x")).toMatchObject({ offerSettings: false });
   });
+
+  it("keeps what the person asked when they stopped it, so they can ask again", () => {
+    expect(answerFrom({ ok: false, error: { code: "aborted", message: "Stopped." } }, 4, "plan my day")).toMatchObject({
+      status: "failed",
+      message: "Stopped.",
+      offerSettings: false,
+      retryText: "plan my day",
+    });
+  });
 });
 
 describe("withReceiptUndone", () => {

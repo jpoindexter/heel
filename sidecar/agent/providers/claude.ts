@@ -60,6 +60,7 @@ export function claudeProvider(deps: ProviderDeps): Provider {
         input: request.prompt,
         timeoutMs: request.timeoutMs ?? DEFAULT_COMPLETE_TIMEOUT_MS,
         cwd: deps.workdir,
+        signal: request.signal,
       });
       if (!run.ok) return mapRunFailure(run, CLI, "claude auth login");
       return run.stdout ? okResult(run.stdout) : failResult("empty", "Claude returned an empty answer. Try again.");

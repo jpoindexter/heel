@@ -13,7 +13,7 @@ export type ProviderStatus = {
   detail: string;
 };
 
-export type ProviderErrorCode = "not_installed" | "not_signed_in" | "not_ready" | "timeout" | "failed" | "empty";
+export type ProviderErrorCode = "not_installed" | "not_signed_in" | "not_ready" | "timeout" | "failed" | "empty" | "aborted";
 
 export type ProviderError = { code: ProviderErrorCode; message: string };
 
@@ -25,6 +25,8 @@ export type CompleteRequest = {
   /** null = let the provider choose its default model. */
   model: string | null;
   timeoutMs?: number;
+  /** Aborting it stops the work (kills the CLI, drops the HTTP request) and the result is an "aborted" error. */
+  signal?: AbortSignal;
 };
 
 export interface Provider {

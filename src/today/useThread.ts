@@ -1,9 +1,10 @@
 import { useCallback } from "react";
 import { TurnResultSchema, type HistoryMessage } from "../../shared/api";
 import type { Client } from "../api/client";
-import { celebrate, stumble, thinking } from "../mascot/motion-events";
+import { celebrate, settle, stumble, thinking } from "../mascot/motion-events";
 import { answerFrom, historyFor } from "./thread-model";
 import { useReceiptUndo } from "./useReceiptUndo";
+import { useStoppable } from "./useStoppable";
 import { useThreadState } from "./useThreadState";
 
 type Options = {
@@ -16,17 +17,19 @@ type Options = {
 export function useThread(client: Client, { onChanged, notify }: Options) {
   const { messages, latest, nextId, commit, isBusy } = useThreadState();
   const undoReceipt = useReceiptUndo({ client, latest, commit, notify, onChanged });
+  const { begin, end, stop } = useStoppable();
 
   const ask = useCallback(
     async (text: string, history: HistoryMessage[], pendingId: number): Promise<boolean> => {
       void thinking();
-      const result = await client.post("/turn", TurnResultSchema, { text, history });
+      const result = await client.post("/turn", TurnResultSchema, { text, history }, begin());
+      end();
       commit(latest.current.map((m) => (m.id === pendingId ? answerFrom(result, pendingId, text) : m)));
-      void (result.ok ? celebrate() : stumble());
+      void (result.ok ? celebrate() : result.error.code === "aborted" ? settle() : stumble());
       await onChanged();
       return result.ok;
     },
-    [client, commit, latest, onChanged],
+    [begin, client, commit, end, latest, onChanged],
   );
 
   /** Ask the AI. Returns true when it answered, so the caller can clear the ask box. */
@@ -56,5 +59,5 @@ export function useThread(client: Client, { onChanged, notify }: Options) {
     [ask, commit, isBusy, latest],
   );
 
-  return { messages, busy: messages.some((m) => m.role === "heel" && m.status === "pending"), send, retry, undoReceipt };
+  return { messages, busy: messages.some((m) => m.role === "heel" && m.status === "pending"), send, retry, stop, undoReceipt };
 }

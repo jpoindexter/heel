@@ -26,6 +26,20 @@ describe("runCommand", () => {
     expect(Date.now() - started).toBeLessThan(5_000);
   });
 
+  it("kills a running process when the caller aborts, and says it was stopped", async () => {
+    const stop = new AbortController();
+    const started = Date.now();
+    const running = runCommand(process.execPath, ["-e", "setTimeout(() => {}, 20000)"], { timeoutMs: 15_000, signal: stop.signal });
+    setTimeout(() => stop.abort(), 150);
+    expect(await running).toMatchObject({ ok: false, kind: "aborted" });
+    expect(Date.now() - started).toBeLessThan(5_000);
+  });
+
+  it("does not start work that was already stopped", async () => {
+    const result = await runCommand(process.execPath, ["-e", "setTimeout(() => {}, 20000)"], { timeoutMs: 15_000, signal: AbortSignal.abort() });
+    expect(result).toMatchObject({ ok: false, kind: "aborted" });
+  });
+
   it("reports a program that cannot start", async () => {
     const result = await runCommand("/nonexistent/heel-test", [], { timeoutMs: 1_000 });
     expect(result).toMatchObject({ ok: false, kind: "spawn" });

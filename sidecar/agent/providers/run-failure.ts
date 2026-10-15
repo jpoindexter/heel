@@ -9,6 +9,7 @@ export function mapRunFailure(
   cli: string,
   signInCommand: string,
 ): ProviderResult<never> {
+  if (result.kind === "aborted") return failResult("aborted", "Stopped.");
   if (result.kind === "timeout") {
     return failResult("timeout", `${cli} took too long to answer. Try again, or pick a different provider in Settings.`);
   }

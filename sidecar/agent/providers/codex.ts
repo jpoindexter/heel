@@ -55,6 +55,7 @@ export function codexProvider(deps: ProviderDeps): Provider {
         input: prompt,
         timeoutMs: request.timeoutMs ?? DEFAULT_COMPLETE_TIMEOUT_MS,
         cwd: deps.workdir,
+        signal: request.signal,
       });
       if (!run.ok) return mapRunFailure(run, CLI, "codex login");
       return run.stdout ? okResult(run.stdout) : failResult("empty", "Codex returned an empty answer. Try again.");

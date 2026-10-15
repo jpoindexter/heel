@@ -12,11 +12,22 @@ type Props = {
   busy: boolean;
   onDraft: (value: string) => void;
   onSend: () => void;
+  /** Stop the answer in flight. */
+  onStop: () => void;
   onChip: (chip: Chip) => void;
 };
 
+/** Same slot, same size: Send becomes Stop while Heel is thinking, so there is one place to look. */
+function SendOrStop({ busy, empty, onStop }: { busy: boolean; empty: boolean; onStop: () => void }) {
+  return busy ? (
+    <Button type="button" size="3" variant="soft" color="gray" highContrast onClick={onStop}>Stop</Button>
+  ) : (
+    <Button type="submit" size="3" highContrast disabled={empty}>Send</Button>
+  );
+}
+
 /** Three fixed chips (same place, same order, always) and the ask box (real label, hidden visually; the placeholder is only a hint). */
-export function Compose({ active, draft, busy, onDraft, onSend, onChip }: Props) {
+export function Compose({ active, draft, busy, onDraft, onSend, onStop, onChip }: Props) {
   const box = useRef<HTMLTextAreaElement>(null);
   const empty = draft.trim().length === 0;
 
@@ -59,7 +70,7 @@ export function Compose({ active, draft, busy, onDraft, onSend, onChip }: Props)
           onKeyDown={onKey}
         />
         <VisuallyHidden.Root asChild><p id="ask-help">Enter to send. Shift+Enter for a new line.</p></VisuallyHidden.Root>
-        <Button type="submit" size="3" highContrast aria-busy={busy} disabled={busy || empty}>Send</Button>
+        <SendOrStop busy={busy} empty={empty} onStop={onStop} />
       </form>
     </div>
   );

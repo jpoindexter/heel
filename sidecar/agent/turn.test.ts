@@ -92,3 +92,22 @@ describe("runTurn", () => {
     if (result.ok) expect(result.applied[0]).toMatchObject({ ok: false });
   });
 });
+
+describe("runTurn when stopped", () => {
+  it("writes nothing, even if the model had already answered", async () => {
+    const store = testStore();
+    const stop = new AbortController();
+    const provider = fakeProvider([good({ say: "Added.", actions: [{ type: "add_task", title: "Ship" }] })]);
+    const slow: Provider = { ...provider, complete: async (request) => { stop.abort(); return provider.complete(request); } };
+    const result = await runTurn({ store, provider: slow, model: null, signal: stop.signal }, "ship it");
+    expect(result).toEqual({ ok: false, error: { code: "aborted", message: "Stopped." } });
+    expect(store.tasks.list()).toEqual([]);
+  });
+
+  it("passes the stop signal to the provider so it can kill its work", async () => {
+    const stop = new AbortController();
+    const provider = fakeProvider([good({ say: "ok", actions: [] })]);
+    await runTurn({ store: testStore(), provider, model: null, signal: stop.signal }, "hi");
+    expect(provider.requests[0]!.signal).toBe(stop.signal);
+  });
+});

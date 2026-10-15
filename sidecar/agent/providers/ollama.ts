@@ -83,6 +83,9 @@ function chatBody(model: string, system: string, prompt: string): string {
   });
 }
 
+/** The timeout, plus the caller's stop signal when there is one. */
+const withStop = (timeout: AbortSignal, stop?: AbortSignal): AbortSignal => (stop ? AbortSignal.any([timeout, stop]) : timeout);
+
 async function complete(deps: Deps, request: CompleteRequest): Promise<ProviderResult<string>> {
   if (!request.model) return failResult("not_ready", "Choose a local model in Settings > Brain first.");
   try {
@@ -90,7 +93,7 @@ async function complete(deps: Deps, request: CompleteRequest): Promise<ProviderR
       method: "POST",
       headers: { "content-type": "application/json" },
       body: chatBody(request.model, request.system, request.prompt),
-      signal: AbortSignal.timeout(request.timeoutMs ?? DEFAULT_COMPLETE_TIMEOUT_MS),
+      signal: withStop(AbortSignal.timeout(request.timeoutMs ?? DEFAULT_COMPLETE_TIMEOUT_MS), request.signal),
     });
     if (!response.ok) return failResult("failed", await explain(response, request.model));
     const parsed = Chat.safeParse(await response.json());
@@ -98,6 +101,7 @@ async function complete(deps: Deps, request: CompleteRequest): Promise<ProviderR
     const content = parsed.data.message.content.trim();
     return content ? okResult(content) : failResult("empty", "The local model returned an empty answer. Try again.");
   } catch (error) {
+    if (request.signal?.aborted) return failResult("aborted", "Stopped.");
     const timedOut = error instanceof Error && error.name === "TimeoutError";
     return timedOut ? failResult("timeout", "The local model took too long. Try a smaller model.") : failResult("not_ready", NOT_RUNNING);
   }

@@ -1,14 +1,14 @@
-import { spawn } from "node:child_process";
+import { spawn, type ChildProcess } from "node:child_process";
 
 const MAX_STDOUT_CHARS = 256_000;
 const MAX_STDERR_CHARS = 64_000;
 const KILL_GRACE_MS = 2_000;
 
-export type RunOptions = { input?: string; timeoutMs: number; cwd?: string };
+export type RunOptions = { input?: string; timeoutMs: number; cwd?: string; signal?: AbortSignal };
 
 export type RunResult =
   | { ok: true; stdout: string; stderr: string }
-  | { ok: false; kind: "spawn" | "timeout" | "exit"; message: string; stdout: string; stderr: string };
+  | { ok: false; kind: "spawn" | "timeout" | "exit" | "aborted"; message: string; stdout: string; stderr: string };
 
 export type RunCommand = (executable: string, args: readonly string[], options: RunOptions) => Promise<RunResult>;
 
@@ -21,28 +21,46 @@ function lastLine(text: string): string {
   return text.trim().split("\n").at(-1) ?? "";
 }
 
+/** Ends the child when time runs out or the caller aborts, and remembers which of the two it was. */
+function guard(child: ChildProcess, options: RunOptions) {
+  const why = { timedOut: false, aborted: false };
+  let killer: NodeJS.Timeout | undefined;
+  const stop = () => {
+    child.kill("SIGTERM");
+    killer = setTimeout(() => child.kill("SIGKILL"), KILL_GRACE_MS);
+  };
+  const timer = setTimeout(() => {
+    why.timedOut = true;
+    stop();
+  }, options.timeoutMs);
+  const onAbort = () => {
+    why.aborted = true;
+    stop();
+  };
+  if (options.signal?.aborted) onAbort();
+  else options.signal?.addEventListener("abort", onAbort, { once: true });
+  const clear = () => {
+    clearTimeout(timer);
+    if (killer) clearTimeout(killer);
+    options.signal?.removeEventListener("abort", onAbort);
+  };
+  return { why, clear };
+}
+
 /** Run a program without a shell, with a hard timeout and bounded output. Never throws. */
 export const runCommand: RunCommand = (executable, args, options) =>
   new Promise((resolve) => {
     let stdout = "";
     let stderr = "";
-    let timedOut = false;
     let settled = false;
-    let killer: NodeJS.Timeout | undefined;
 
     const child = spawn(executable, [...args], { cwd: options.cwd, shell: false, stdio: ["pipe", "pipe", "pipe"] });
-
-    const timer = setTimeout(() => {
-      timedOut = true;
-      child.kill("SIGTERM");
-      killer = setTimeout(() => child.kill("SIGKILL"), KILL_GRACE_MS);
-    }, options.timeoutMs);
+    const { why, clear } = guard(child, options);
 
     const finish = (result: RunResult) => {
       if (settled) return;
       settled = true;
-      clearTimeout(timer);
-      if (killer) clearTimeout(killer);
+      clear();
       resolve(result);
     };
 
@@ -54,7 +72,8 @@ export const runCommand: RunCommand = (executable, args, options) =>
       finish({ ok: false, kind: "spawn", message: `Couldn't start ${executable}: ${error.message}`, stdout, stderr }),
     );
     child.on("close", (code, signal) => {
-      if (timedOut) {
+      if (why.aborted) return finish({ ok: false, kind: "aborted", message: "Stopped.", stdout, stderr });
+      if (why.timedOut) {
         return finish({ ok: false, kind: "timeout", message: `Timed out after ${options.timeoutMs} ms.`, stdout, stderr });
       }
       if (code !== 0) {

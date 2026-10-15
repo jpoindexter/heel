@@ -53,7 +53,7 @@ export function registerTodayRoutes(app: Hono, deps: AppDeps): void {
     if (!body.success) return fail(c, "invalid", TEXT_HINT);
     const { provider, model } = store.settings.getBrain();
     if (!provider) return fail(c, "not_ready", "Choose an AI provider in Settings first.");
-    const result = await runTurn({ store, provider: deps.providers[provider], model }, body.data.text, body.data.history);
+    const result = await runTurn({ store, provider: deps.providers[provider], model, signal: c.req.raw.signal }, body.data.text, body.data.history);
     if (!result.ok) return fail(c, result.error.code, result.error.message);
     return ok(c, { say: result.say, applied: result.applied, skills: result.skills, provider: result.provider });
   });

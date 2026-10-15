@@ -44,7 +44,7 @@ export function ChatView({ active, summary, onOpenSettings }: Props) {
 
       <div className="compose-zone">
         <Notifier notice={notice} onDismiss={tasks.dismissNotice} />
-        <Compose active={active} draft={draft} busy={thread.busy} onDraft={setDraft} onSend={onSend} onChip={(chip) => void onChip(chip)} />
+        <Compose active={active} draft={draft} busy={thread.busy} onDraft={setDraft} onSend={onSend} onStop={thread.stop} onChip={(chip) => void onChip(chip)} />
       </div>
     </div>
   );
