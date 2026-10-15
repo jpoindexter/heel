@@ -1,5 +1,7 @@
 import { describe, expect, it } from "vitest";
-import libRs from "../src-tauri/src/lib.rs?raw";
+const rustSources = import.meta.glob("../src-tauri/src/*.rs", { query: "?raw", import: "default", eager: true }) as Record<string, string>;
+const libRs = rustSources["../src-tauri/src/lib.rs"] ?? "";
+const allRust = Object.values(rustSources).join("\n");
 import { OPEN_SETTINGS_EVENT } from "./events";
 
 const sources = import.meta.glob("./**/*.{ts,tsx}", {
@@ -42,7 +44,7 @@ describe("Tauri command contract", () => {
 
 describe("Tauri event contract", () => {
   it("uses the same name for the open-settings event in Rust and TypeScript", () => {
-    const rust = libRs.match(/OPEN_SETTINGS_EVENT: &str = "([^"]+)"/)?.[1];
+    const rust = allRust.match(/OPEN_SETTINGS_EVENT: &str = "([^"]+)"/)?.[1];
     expect(rust).toBe(OPEN_SETTINGS_EVENT);
   });
 });

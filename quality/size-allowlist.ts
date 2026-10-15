@@ -4,9 +4,6 @@
  * and when an entry no longer offends (delete it, the debt is paid). Cards in the "UP NEXT" Trello list pay it down.
  */
 export const SIZE_ALLOWLIST: Readonly<Record<string, number>> = {
-  // M3: split into dock / menus / tray / hit_region / window modules.
-  "src-tauri/src/lib.rs::src-tauri/src/lib.rs": 450,
-  "src-tauri/src/lib.rs::run": 58,
   // D3-D5: components shrink when they stop hand-rolling controls.
   "src/today/ChatView.tsx::ChatView": 59,
   "src/today/Thread.tsx::Thread": 57,
