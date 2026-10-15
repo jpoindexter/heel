@@ -11,3 +11,5 @@ export const WALK_FINISHED_EVENT = "heel:walk-finished";
 export const RUN_EVENT = "heel:run";
 /** Sent to Greg's window to fade him out or in (reduced motion). Must equal FADE_EVENT in src-tauri/src/constants.rs. */
 export const FADE_EVENT = "heel:fade";
+/** Sent to the panel: which edge faces Greg and where his centre is, for its tail. Must equal PANEL_ANCHOR_EVENT in src-tauri/src/constants.rs. */
+export const PANEL_ANCHOR_EVENT = "heel:panel-anchor";

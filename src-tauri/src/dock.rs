@@ -22,6 +22,8 @@ pub(crate) struct DockState {
     last_saved: u64,
     /// The size the person chose (logical px). Docking may shrink the panel to fit; it grows back to this when there is room.
     pub(crate) desired: (f64, f64),
+    /// Which edge of the panel faces Greg, for the tail.
+    pub(crate) anchor: crate::anchor::AnchorPayload,
 }
 
 pub(crate) struct Dock(pub(crate) Mutex<DockState>);
@@ -98,6 +100,7 @@ pub(crate) fn dock_panel(app: &AppHandle, mascot: &WebviewWindow, panel: &Webvie
         return;
     };
     let _ = panel.set_position(PhysicalPosition::new(origin.0, origin.1));
+    crate::anchor::announce(app, mascot, origin, scale);
     if let Ok(mut state) = app.state::<Dock>().0.lock() {
         state.offset = (origin.0 - mascot_at.0, origin.1 - mascot_at.1);
         state.panel_size = (size_px.0 as u32, size_px.1 as u32);
@@ -145,6 +148,9 @@ pub(crate) fn on_panel_resized(app: &AppHandle) {
     };
     if save {
         save_panel_size(app);
+    }
+    if let Ok(scale) = panel.scale_factor() {
+        crate::anchor::announce(app, &mascot, panel_at, scale);
     }
 }
 
@@ -234,6 +240,6 @@ pub(crate) fn watch_moves(app: &AppHandle) {
 
 impl Dock {
     pub(crate) fn new() -> Self {
-        Dock(Mutex::new(DockState { offset: (0, 0), panel_size: (0, 0), ignore_resize_until: 0, last_saved: 0, desired: (0.0, 0.0) }))
+        Dock(Mutex::new(DockState { offset: (0, 0), panel_size: (0, 0), ignore_resize_until: 0, last_saved: 0, desired: (0.0, 0.0), anchor: Default::default() }))
     }
 }

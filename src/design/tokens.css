@@ -17,6 +17,8 @@
   --chevron-turn: 90deg;
   --motion-fast: 150ms;
   --label-tracking: 0.08em;
+  --tail-size: 10px; /* the panel's tail pointing at Greg */
+  --tail-room: 28px; /* keeps the tail off the rounded corners */
 
   /* Radix's default control borders (1.6:1) and focus ring (2.4:1 light) are under WCAG 1.4.11's 3:1: step them up. */
   --gray-a7: var(--gray-a9);

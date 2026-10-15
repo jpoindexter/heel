@@ -1,15 +1,50 @@
+/* The window is transparent: the rounded frame and its tail are drawn here, and the tail's room is reserved on the side facing Greg. */
 .panel-theme {
+  box-sizing: border-box;
   height: var(--viewport-height);
   overflow: hidden;
+  background: transparent;
+}
+
+.panel-theme[data-tail="bottom"] {
+  padding-bottom: var(--tail-size);
+}
+
+.panel-theme[data-tail="top"] {
+  padding-top: var(--tail-size);
 }
 
 .panel {
+  position: relative;
   box-sizing: border-box;
   display: flex;
   flex-direction: column;
   height: 100%;
   padding: var(--space-4);
   gap: var(--space-3);
+  background: var(--color-panel-solid);
+  border: var(--border-width) solid var(--gray-a8);
+  border-radius: var(--radius-4);
+}
+
+.panel-tail {
+  position: absolute;
+  left: clamp(var(--tail-room), var(--tail-x), calc(100% - var(--tail-room)));
+  width: 0;
+  height: 0;
+  border-right: var(--tail-size) solid transparent;
+  border-left: var(--tail-size) solid transparent;
+  transform: translateX(-50%);
+}
+
+[data-tail="bottom"] .panel-tail {
+  top: calc(100% + var(--border-width));
+  border-top: var(--tail-size) solid var(--gray-a8);
+}
+
+[data-tail="top"] .panel-tail {
+  bottom: calc(100% + var(--border-width));
+  border-bottom: var(--tail-size) solid var(--gray-a8);
 }
 
 .panel-header {

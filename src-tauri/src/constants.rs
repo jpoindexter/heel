@@ -49,3 +49,5 @@ pub(crate) const LAUNCH_DELAY_MS: u64 = 1_500;
 /// With reduced motion he fades instead of running. Must equal FADE_EVENT in src/events.ts (a test enforces it).
 pub(crate) const FADE_EVENT: &str = "heel:fade";
 pub(crate) const FADE_MS: u64 = 200;
+/// Tells the panel which edge faces Greg and where his centre is, so its tail can point at him. Must equal PANEL_ANCHOR_EVENT in src/events.ts (a test enforces it).
+pub(crate) const PANEL_ANCHOR_EVENT: &str = "heel:panel-anchor";

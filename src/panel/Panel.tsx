@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, type CSSProperties } from "react";
 import { invoke } from "@tauri-apps/api/core";
 import { listen } from "@tauri-apps/api/event";
 import { ArrowLeftIcon, ChevronDownIcon, Cross2Icon } from "@radix-ui/react-icons";
@@ -9,6 +9,7 @@ import "./panel.css";
 import { client } from "../api/default-client";
 import { OPEN_SETTINGS_EVENT } from "../events";
 import { shouldCloseOnKey } from "./escape";
+import { usePanelAnchor } from "./usePanelAnchor";
 import { SettingsView } from "../settings/SettingsView";
 import { useBrainSummary } from "../settings/useBrainSummary";
 import { useAppearance } from "../theme/useAppearance";
@@ -77,12 +78,24 @@ export function Panel() {
   const [view, setView] = useState<View>("chat");
   const { summary, refresh: refreshSummary } = useBrainSummary(client, view);
   const { preference, appearance, setPreference } = useAppearance();
+  const anchor = usePanelAnchor();
   useEscapeToClose();
   useOpenSettingsRequests(() => setView("settings"));
 
   return (
-    <Theme appearance={appearance} accentColor="jade" grayColor="sand" radius="small" panelBackground="solid" className="panel-theme">
+    <Theme
+      appearance={appearance}
+      accentColor="jade"
+      grayColor="sand"
+      radius="small"
+      panelBackground="solid"
+      hasBackground={false}
+      className="panel-theme"
+      data-tail={anchor.edge}
+      style={{ "--tail-x": `${anchor.offset}px` } as CSSProperties}
+    >
       <main className="panel">
+        <span className="panel-tail" aria-hidden="true" />
         <header data-tauri-drag-region className="panel-header">
           {view === "chat" ? (
             <ChatHeader label={summary?.label ?? "Settings"} needsSetup={summary?.kind === "setup"} onSettings={() => setView("settings")} />

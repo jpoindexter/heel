@@ -51,6 +51,25 @@ pub fn choose_side(space_above: f64, space_below: f64, min_height: f64) -> Side 
     }
 }
 
+/// Which edge of the panel faces Greg, and how far along that edge (from the panel's left) his centre is.
+#[derive(Clone, Copy, Debug, PartialEq)]
+pub struct Anchor {
+    pub edge: AnchorEdge,
+    pub offset: i32,
+}
+
+#[derive(Clone, Copy, Debug, PartialEq, Eq)]
+pub enum AnchorEdge {
+    Top,
+    Bottom,
+}
+
+/// The panel sits above Greg (its bottom edge faces him) or below him (its top edge does).
+pub fn anchor_for(mascot: Rect, panel_origin: Point) -> Anchor {
+    let edge = if panel_origin.1 < mascot.y { AnchorEdge::Bottom } else { AnchorEdge::Top };
+    Anchor { edge, offset: mascot.x + mascot.width / 2 - panel_origin.0 }
+}
+
 /// True when a window at `origin` with `size` lies entirely inside `area`.
 pub fn fits_inside(origin: Point, size: (i32, i32), area: Rect) -> bool {
     origin.0 >= area.x
@@ -164,5 +183,14 @@ mod tests {
         let (mascot_pos, panel_pos) = ((1000, 1200), (744, 624));
         assert_eq!(follow_target(true, mascot_pos, panel_pos, offset), None);
         assert_eq!(follow_target(false, mascot_pos, panel_pos, offset), None);
+    }
+
+    #[test]
+    fn tail_faces_greg_from_the_edge_next_to_him_and_points_at_his_centre() {
+        let greg = Rect { x: 1000, y: 700, width: 200, height: 200 };
+        let above = anchor_for(greg, (820, 80));
+        assert_eq!(above, Anchor { edge: AnchorEdge::Bottom, offset: 280 });
+        let below = anchor_for(Rect { y: 20, ..greg }, (820, 240));
+        assert_eq!(below, Anchor { edge: AnchorEdge::Top, offset: 280 });
     }
 }
