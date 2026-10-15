@@ -64,7 +64,7 @@ pub(crate) fn show_panel(app: &AppHandle) {
     let Some(panel) = app.get_webview_window(PANEL_LABEL) else {
         return;
     };
-    crate::mascot_menu::show_mascot(app);
+    crate::appear::reveal_mascot(app);
     if let Some(mascot) = app.get_webview_window(MASCOT_LABEL) {
         dock_panel(app, &mascot, &panel);
     }

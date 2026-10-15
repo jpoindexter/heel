@@ -60,9 +60,9 @@ pub(crate) fn build_tray(app: &AppHandle) -> tauri::Result<()> {
         .menu(&menu)
         .on_menu_event(|app, event| match event.id.as_ref() {
             "toggle" => toggle_panel(app),
-            TRAY_SHOW_GREG_ID => crate::mascot_menu::show_mascot(app),
+            TRAY_SHOW_GREG_ID => crate::appear::show_mascot(app),
             TRAY_SETTINGS_ID => open_settings(app),
-            "quit" => app.exit(0),
+            "quit" => crate::appear::goodbye(app),
             _ => {}
         })
         .build(app)?;

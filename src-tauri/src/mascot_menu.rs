@@ -9,10 +9,11 @@ use tauri::{
 
 use crate::constants::{
     LIFE_COMMAND_EVENT, MASCOT_LABEL, MASCOT_MENU_HIDE_ID, MASCOT_MENU_NAP_ID, MASCOT_MENU_QUIET_ID, MASCOT_MENU_QUIT_ID, MASCOT_MENU_WALK_ID, MASCOT_MENU_SETTINGS_ID,
-    MASCOT_MENU_TOGGLE_ID, PANEL_LABEL, TRAY_SHOW_GREG_ID,
+    MASCOT_MENU_TOGGLE_ID, TRAY_SHOW_GREG_ID,
 };
+use crate::appear::{goodbye, hide_mascot, show_mascot};
 use crate::menus::open_settings;
-use crate::panel_window::{announce_panel, panel_is_visible, save_panel_size, toggle_panel};
+use crate::panel_window::{panel_is_visible, toggle_panel};
 
 /// What Greg is up to, pushed here by his window so the menu can say "Wake up" and tick "Quiet mode".
 #[derive(Default)]
@@ -22,12 +23,14 @@ pub(crate) struct LifeFlags(pub(crate) Mutex<Flags>);
 pub(crate) struct Flags {
     pub quiet: bool,
     pub asleep: bool,
+    /// The system asks for less motion: hiding, showing and quitting then skip the running.
+    pub reduced_motion: bool,
 }
 
 #[tauri::command]
-pub(crate) fn set_life_flags(app: AppHandle, quiet: bool, asleep: bool) {
+pub(crate) fn set_life_flags(app: AppHandle, quiet: bool, asleep: bool, reduced_motion: bool) {
     if let Ok(mut flags) = app.state::<LifeFlags>().0.lock() {
-        *flags = Flags { quiet, asleep };
+        *flags = Flags { quiet, asleep, reduced_motion };
     }
 }
 
@@ -78,28 +81,9 @@ pub(crate) fn show_mascot_menu(app: AppHandle) {
     }
 }
 
-/// Greg leaves (and the panel with him). The tray's "Show Greg" brings him back.
-pub(crate) fn hide_mascot(app: &AppHandle) {
-    if panel_is_visible(app) {
-        save_panel_size(app);
-    }
-    for label in [PANEL_LABEL, MASCOT_LABEL] {
-        if let Some(window) = app.get_webview_window(label) {
-            let _ = window.hide();
-        }
-    }
-    announce_panel(app, false);
-}
-
 /// Tell Greg's window to do something (a nap, waking up, toggling quiet mode).
 fn life_command(app: &AppHandle, command: &str) {
     let _ = app.emit_to(MASCOT_LABEL, LIFE_COMMAND_EVENT, command);
-}
-
-pub(crate) fn show_mascot(app: &AppHandle) {
-    if let Some(mascot) = app.get_webview_window(MASCOT_LABEL) {
-        let _ = mascot.show();
-    }
 }
 
 /// Every menu item click lands here (the app menu, Greg's menu and the tray share one event stream).
@@ -115,7 +99,7 @@ pub(crate) fn on_menu_event(app: &AppHandle, id: &str) {
         MASCOT_MENU_WALK_ID => life_command(app, "walk"),
         MASCOT_MENU_QUIET_ID => life_command(app, "toggle-quiet"),
         TRAY_SHOW_GREG_ID => show_mascot(app),
-        MASCOT_MENU_QUIT_ID => app.exit(0),
+        MASCOT_MENU_QUIT_ID => goodbye(app),
         _ => {}
     }
 }
@@ -124,7 +108,7 @@ pub(crate) fn on_menu_event(app: &AppHandle, id: &str) {
 mod tests {
     use super::*;
 
-    const AWAKE: Flags = Flags { quiet: false, asleep: false };
+    const AWAKE: Flags = Flags { quiet: false, asleep: false, reduced_motion: false };
 
     fn ids(entries: &[Entry]) -> Vec<&'static str> {
         entries

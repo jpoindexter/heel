@@ -4,6 +4,7 @@ import { listen } from "@tauri-apps/api/event";
 import { useActivity } from "./life/useActivity";
 import { useIdleLife } from "./life/useIdleLife";
 import { useLifeCommands } from "./life/useLifeCommands";
+import { useRunEvents } from "./life/useRunEvents";
 import { usePanelOpen } from "./life/usePanelOpen";
 import { HEEL_STATES, motionDuration, parseMotionId, type MotionId } from "./sheets";
 import { Sprite } from "./Sprite";
@@ -34,6 +35,7 @@ export function Mascot() {
   const busy = oneShot !== null || base !== HEEL_STATES.idle;
   const panelOpen = usePanelOpen();
   const life = useIdleLife({ activity, panelOpen, busy, setLifeMotion });
+  const running = useRunEvents(life.touch);
   useLifeCommands(activity, life.asleep, { nap: life.nap, wake: life.touch, walk: life.walk, setActivity });
   useEffect(() => {
     if (panelOpen) life.touch();
@@ -47,7 +49,7 @@ export function Mascot() {
 
   return (
     <div {...gestures} onPointerEnter={life.touch}>
-      <Sprite motion={oneShot ?? (busy ? base : (lifeMotion ?? HEEL_STATES.idle))} label="Heel, your companion. Click to open the panel." />
+      <Sprite motion={running ?? oneShot ?? (busy ? base : (lifeMotion ?? HEEL_STATES.idle))} label="Heel, your companion. Click to open the panel." />
     </div>
   );
 }

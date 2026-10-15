@@ -1,4 +1,5 @@
 mod app_setup;
+mod appear;
 mod commands;
 mod constants;
 mod dock;
@@ -10,6 +11,7 @@ mod panel_window;
 mod placement;
 mod walk;
 
+use appear::{hide_greg, show_greg, Departure};
 use commands::{sidecar_info, toggle_panel_command};
 use dock::Dock;
 use hit_region::{set_mascot_hit_region, set_mascot_pressed, HitRegion};
@@ -37,6 +39,7 @@ pub fn run() {
         .manage(HitRegion::default())
         .manage(LifeFlags::default())
         .manage(Walker::default())
+        .manage(Departure::default())
         .plugin(
             tauri_plugin_global_shortcut::Builder::new()
                 .with_handler(|app, shortcut, event| {
@@ -47,7 +50,7 @@ pub fn run() {
                 .build(),
         )
         .on_menu_event(|app, event| mascot_menu::on_menu_event(app, event.id().as_ref()))
-        .invoke_handler(tauri::generate_handler![toggle_panel_command, sidecar_info, take_pending_view, set_mascot_hit_region, set_mascot_pressed, show_mascot_menu, set_life_flags, start_walk, stop_walk])
+        .invoke_handler(tauri::generate_handler![toggle_panel_command, sidecar_info, take_pending_view, set_mascot_hit_region, set_mascot_pressed, show_mascot_menu, set_life_flags, start_walk, stop_walk, hide_greg, show_greg])
         .setup(app_setup::setup)
         .build(tauri::generate_context!())
         .expect("error while building Heel")

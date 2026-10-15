@@ -3,6 +3,7 @@ import { invoke } from "@tauri-apps/api/core";
 import { listen } from "@tauri-apps/api/event";
 import { LIFE_COMMAND_EVENT } from "../../events";
 import type { Activity } from "./config";
+import { useReducedMotion } from "../useReducedMotion";
 
 type Handlers = { nap: () => void; wake: () => void; walk: () => void; setActivity: (next: Activity) => void };
 
@@ -18,7 +19,8 @@ export function useLifeCommands(activity: Activity, asleep: boolean, { nap, wake
     return () => void unlisten.then((off) => off?.());
   }, [activity, nap, wake, walk, setActivity]);
 
+  const reducedMotion = useReducedMotion();
   useEffect(() => {
-    void invoke("set_life_flags", { quiet: activity === "off", asleep }).catch(() => undefined);
-  }, [activity, asleep]);
+    void invoke("set_life_flags", { quiet: activity === "off", asleep, reducedMotion }).catch(() => undefined);
+  }, [activity, asleep, reducedMotion]);
 }

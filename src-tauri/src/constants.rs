@@ -35,3 +35,10 @@ pub(crate) const WALK_MAX_MS: u64 = 6_000;
 pub(crate) const WALK_STEP_MS: u64 = 16;
 /// A walk shorter than this is not worth starting (he is against a wall).
 pub(crate) const WALK_MIN_PX: f64 = 40.0;
+/// Greg running (sprite pose) while the shell moves his window for hide / show / quit. Must equal RUN_EVENT in src/events.ts (a test enforces it).
+pub(crate) const RUN_EVENT: &str = "heel:run";
+/// Leaving and arriving are brisk: faster than a stroll, capped so hiding never makes anyone wait.
+pub(crate) const EXIT_SPEED_PX_PER_S: f64 = 520.0;
+pub(crate) const EXIT_MAX_MS: u64 = 1_200;
+/// Quitting must feel immediate: he still runs off, but never for longer than this.
+pub(crate) const QUIT_MAX_MS: u64 = 500;

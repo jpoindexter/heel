@@ -1,17 +1,23 @@
 //! Greg walking along the bottom of the screen: where to, how fast, and moving his window there smoothly.
 
-use std::sync::atomic::{AtomicU64, Ordering};
+use std::sync::atomic::{AtomicBool, AtomicU64, Ordering};
 use std::time::Duration;
 
 use serde::{Deserialize, Serialize};
-use tauri::{AppHandle, Emitter, Manager, PhysicalPosition};
+use tauri::{AppHandle, Emitter, Manager, PhysicalPosition, WebviewWindow};
 
 use crate::constants::{MASCOT_LABEL, WALK_FINISHED_EVENT, WALK_MAX_MS, WALK_MIN_PX, WALK_SPEED_PX_PER_S, WALK_STEP_MS};
+#[cfg(test)]
+use crate::constants::{EXIT_SPEED_PX_PER_S, QUIT_MAX_MS};
 use crate::dock::work_rect;
 
-/// Which walk is running. Starting or stopping bumps it; a running walk stops when its number is no longer current.
+/// Which walk is running. Starting or stopping bumps `ticket`; a running walk stops when its number is no longer current.
+/// `locked` is set while he runs off or on (hide / show / quit): nothing else may move him then.
 #[derive(Default)]
-pub(crate) struct Walker(AtomicU64);
+pub(crate) struct Walker {
+    pub(crate) ticket: AtomicU64,
+    pub(crate) locked: AtomicBool,
+}
 
 #[derive(Clone, Copy, Debug, PartialEq, Eq, Serialize, Deserialize)]
 #[serde(rename_all = "lowercase")]
@@ -57,9 +63,35 @@ pub(crate) fn plan_route(from_x: i32, wanted: Direction, distance: f64, min_x: i
     Some(Route { direction, from_x, to_x })
 }
 
-pub(crate) fn duration_ms(route: Route, scale: f64) -> u64 {
+pub(crate) fn duration_ms(route: Route, scale: f64, speed_px_per_s: f64, max_ms: u64) -> u64 {
     let logical = (route.to_x - route.from_x).abs() as f64 / scale;
-    (((logical / WALK_SPEED_PX_PER_S) * 1000.0) as u64).clamp(1, WALK_MAX_MS)
+    (((logical / speed_px_per_s) * 1000.0) as u64).clamp(1, max_ms)
+}
+
+/// One window move: along `route` at height `y`, taking `total_ms`. A cancellable glide stops when a newer walk or `stop_walk` outranks it.
+pub(crate) struct Glide {
+    pub route: Route,
+    pub y: i32,
+    pub total_ms: u64,
+    pub cancellable: bool,
+}
+
+/// Move `window` along the glide on its own thread, then call `on_done`.
+pub(crate) fn glide(app: &AppHandle, window: WebviewWindow, glide: Glide, on_done: impl FnOnce(&AppHandle) + Send + 'static) {
+    let walker = app.state::<Walker>();
+    let ticket = walker.ticket.fetch_add(1, Ordering::SeqCst) + 1;
+    let handle = app.clone();
+    std::thread::spawn(move || {
+        let steps = (glide.total_ms / WALK_STEP_MS).max(1);
+        for step in 1..=steps {
+            if glide.cancellable && handle.state::<Walker>().ticket.load(Ordering::SeqCst) != ticket {
+                break;
+            }
+            let _ = window.set_position(PhysicalPosition::new(x_at(glide.route, step as f64 / steps as f64), glide.y));
+            std::thread::sleep(Duration::from_millis(WALK_STEP_MS));
+        }
+        on_done(&handle);
+    });
 }
 
 #[derive(Serialize)]
@@ -72,6 +104,9 @@ pub(crate) struct WalkStarted {
 /// The window glides on its own thread; `heel:walk-finished` is sent when it arrives or is stopped.
 #[tauri::command]
 pub(crate) fn start_walk(app: AppHandle, direction: Direction, distance: f64) -> Option<WalkStarted> {
+    if app.state::<Walker>().locked.load(Ordering::SeqCst) {
+        return None;
+    }
     let mascot = app.get_webview_window(MASCOT_LABEL)?;
     let pos = mascot.outer_position().ok()?;
     let width = mascot.outer_size().ok()?.width as i32;
@@ -79,28 +114,17 @@ pub(crate) fn start_walk(app: AppHandle, direction: Direction, distance: f64) ->
     let scale = monitor.scale_factor();
     let area = work_rect(&monitor);
     let route = plan_route(pos.x, direction, distance * scale, area.x, area.x + area.width - width, WALK_MIN_PX * scale)?;
-    let total = duration_ms(route, scale);
-    let ticket = app.state::<Walker>().0.fetch_add(1, Ordering::SeqCst) + 1;
-
-    let handle = app.clone();
-    std::thread::spawn(move || {
-        let steps = (total / WALK_STEP_MS).max(1);
-        for step in 1..=steps {
-            if handle.state::<Walker>().0.load(Ordering::SeqCst) != ticket {
-                break;
-            }
-            let _ = mascot.set_position(PhysicalPosition::new(x_at(route, step as f64 / steps as f64), pos.y));
-            std::thread::sleep(Duration::from_millis(WALK_STEP_MS));
-        }
-        let _ = handle.emit_to(MASCOT_LABEL, WALK_FINISHED_EVENT, ());
+    let total_ms = duration_ms(route, scale, WALK_SPEED_PX_PER_S, WALK_MAX_MS);
+    glide(&app, mascot, Glide { route, y: pos.y, total_ms, cancellable: true }, |app| {
+        let _ = app.emit_to(MASCOT_LABEL, WALK_FINISHED_EVENT, ());
     });
-    Some(WalkStarted { direction: route.direction, duration_ms: total })
+    Some(WalkStarted { direction: route.direction, duration_ms: total_ms })
 }
 
 /// Stop wherever he is (the person touched him or opened the panel).
 #[tauri::command]
 pub(crate) fn stop_walk(app: AppHandle) {
-    app.state::<Walker>().0.fetch_add(1, Ordering::SeqCst);
+    app.state::<Walker>().ticket.fetch_add(1, Ordering::SeqCst);
 }
 
 #[cfg(test)]
@@ -149,8 +173,9 @@ mod tests {
     #[test]
     fn duration_follows_distance_and_is_capped() {
         let short = Route { direction: Direction::Right, from_x: 0, to_x: 280 };
-        assert_eq!(duration_ms(short, 2.0), 1000);
+        assert_eq!(duration_ms(short, 2.0, WALK_SPEED_PX_PER_S, WALK_MAX_MS), 1000);
         let long = Route { direction: Direction::Right, from_x: 0, to_x: 100_000 };
-        assert_eq!(duration_ms(long, 2.0), WALK_MAX_MS);
+        assert_eq!(duration_ms(long, 2.0, WALK_SPEED_PX_PER_S, WALK_MAX_MS), WALK_MAX_MS);
+        assert_eq!(duration_ms(long, 2.0, EXIT_SPEED_PX_PER_S, QUIT_MAX_MS), QUIT_MAX_MS);
     }
 }
