@@ -9,3 +9,4 @@
 - [2026-10-15 test-suite-kills-the-dev-stack](2026-10-15-test-suite-kills-the-dev-stack.md) — While driving the real app, run targeted tests; the full suite takes the dev helper down, so run it between sessions and restart the app after.
 - [2026-10-15 sheet-cache-keyed-by-file](2026-10-15-sheet-cache-keyed-by-file.md) — When a type that was 1:1 with a file becomes 1:n, grep for caches keyed on the old identity; verify a hidden invoke by recomputing its input, not by wrapping the bridge.
 - [2026-10-15 pipe-hides-the-gate](2026-10-15-pipe-hides-the-gate.md) — Never put a gate behind a pipe when its status decides the next step; capture to a file, test `$?`, then filter.
+- [2026-10-15 sample-on-the-sensor-thread](2026-10-15-sample-on-the-sensor-thread.md) — Native sensors sample on their own thread; to show a budgeted threshold rule once, backdate to just under it and send one real sample.
