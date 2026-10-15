@@ -26,8 +26,12 @@ export function Mascot() {
     return () => window.clearTimeout(timer);
   }, [oneShot]);
 
+  // While pressing on Greg the window must stay clickable, wherever the pointer drifts during a drag.
+  const setPressed = (pressed: boolean) => void invoke("set_mascot_pressed", { pressed }).catch(() => undefined);
+
   const onPointerDown = (event: PointerEvent) => {
     press.current = { x: event.clientX, y: event.clientY, dragging: false };
+    setPressed(true);
   };
 
   const onPointerMove = (event: PointerEvent) => {
@@ -42,6 +46,7 @@ export function Mascot() {
   const onPointerUp = () => {
     const start = press.current;
     press.current = null;
+    setPressed(false);
     if (!start || start.dragging) return;
     setOneShot(HEEL_STATES.greeting);
     void invoke("toggle_panel_command");

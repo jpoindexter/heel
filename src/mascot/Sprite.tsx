@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { useHitRegion } from "./useHitRegion";
 import { CELL_H, CELL_W, MOTIONS, SHEET_H, SHEET_W, framePosition, type MotionName } from "./atlas";
 
 const REDUCED_MOTION = "(prefers-reduced-motion: reduce)";
@@ -33,6 +34,7 @@ export function Sprite({ motion, label }: { motion: MotionName; label: string })
     return () => window.clearTimeout(timer);
   }, [motion, reduced]);
 
+  useHitRegion(SHEET_URL, motion, frame);
   const { x, y } = framePosition(motion, frame);
   return (
     <div

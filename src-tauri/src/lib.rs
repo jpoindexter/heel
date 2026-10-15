@@ -1,9 +1,11 @@
+mod hit_region;
 mod panel_size;
 mod placement;
 
 use std::sync::Mutex;
 use std::time::{SystemTime, UNIX_EPOCH};
 
+use hit_region::{set_mascot_hit_region, set_mascot_pressed, HitRegion};
 use panel_size::{classify_panel_change, clamp_size, fit_height, parse_saved, should_save, PanelChange, SELF_RESIZE_QUIET_MS};
 use placement::{choose_side, fits_inside, follow_target, panel_origin, Follower, Point, Rect, Side};
 use tauri::{
@@ -407,20 +409,29 @@ pub fn run() {
                 .build(),
         )
         .manage(PendingView(Mutex::new(None)))
+        .manage(HitRegion::default())
         .on_menu_event(|app, event| {
             if event.id().as_ref() == APP_SETTINGS_ID {
                 open_settings(app);
             }
         })
-        .invoke_handler(tauri::generate_handler![toggle_panel_command, sidecar_info, take_pending_view])
+        .invoke_handler(tauri::generate_handler![toggle_panel_command, sidecar_info, take_pending_view, set_mascot_hit_region, set_mascot_pressed])
         .setup(|app| {
             let handle = app.handle();
             restore_panel_size(handle);
             place_mascot(handle);
             watch_moves(handle);
+            hit_region::start_polling(handle);
             build_app_menu(handle)?;
             build_tray(handle)?;
-            app.global_shortcut().register(hotkey())?;
+            // Isolation switches for hunting input/focus conflicts with other apps (see DECISIONS: B1).
+            if std::env::var_os("HEEL_NO_HOTKEY").is_none() {
+                app.global_shortcut().register(hotkey())?;
+            }
+            #[cfg(target_os = "macos")]
+            if std::env::var_os("HEEL_ACCESSORY").is_some() {
+                app.set_activation_policy(tauri::ActivationPolicy::Accessory);
+            }
             Ok(())
         })
         .build(tauri::generate_context!())

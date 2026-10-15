@@ -111,3 +111,10 @@ Reversible? Yes (git).
 
 ## 2026-10-15 — Vanta: audit before any build
 Jason wants Heel to do "basically everything" (texts, email/calendar alerts, cron jobs) by reusing Vanta's backend, or to become Vanta's avatar. Read-only look at ~/Documents/GitHub/_active/Vanta and docs/Vanta-company-api-20261013: Vanta already has messaging gateway, Google services, scheduled/ambient work, ACP server/client, a companion API with pairing + per-device tokens, R0-R5 autonomy with receipts, and a floating avatar. Plan: finish cards 01-22, then card 23 (V-AUDIT) decides between A companion pairing, B ACP provider, C avatar-merge; D (rebuild in Heel) is not recommended. No integration code before that decision.
+
+## 2026-10-15 — B1 mic/dictation bug: click-through shipped; cause NOT confirmed
+Report: while Heel runs, the mic controls/transcription in the Claude and Codex apps don't work. Checked: Heel holds no audio handle, no secure-input flag, no TCC log lines. Most plausible cause found in code: Greg's 192x208 transparent always-on-top window caught every click inside its rectangle, although the dog fills only ~116x165 of it (measured in the real window); anything underneath (e.g. a mic button) was dead there.
+Shipped: the dog reports its opaque box per frame (hit-region.ts, sprite pixels, tested); Rust polls the pointer every 30 ms and makes the window click-through outside that box (+8px padding), never while pressing on Greg, never when the box is unknown (hit_region.rs, 4 tests). Verified in the real window: region reported (37,37 116x165), pointer maths right, ignore flips on when the pointer is outside. NOT verified: a click really reaching the app below, and that this fixes the mic problem (I cannot press a mic button or hear audio here).
+Isolation switches if it persists: `HEEL_NO_HOTKEY=1` (skip the Cmd+Shift+H global shortcut), `HEEL_ACCESSORY=1` (no Dock icon, never takes app activation). Run `HEEL_NO_HOTKEY=1 npm run tauri dev` and retest the mic; then `HEEL_ACCESSORY=1`. Whichever fixes it is the cause.
+Note: Vanta Desktop has its own dictation (Cmd+Shift+D); not suspected, listed in the Vanta audit.
+Reversible? Yes.
