@@ -78,6 +78,17 @@ fn show_panel(app: &AppHandle) {
     let _ = panel.set_focus();
 }
 
+/// Bring the panel forward: show it if hidden, focus it if already open.
+fn reveal_panel(app: &AppHandle) {
+    if panel_is_visible(app) {
+        if let Some(panel) = app.get_webview_window(PANEL_LABEL) {
+            let _ = panel.set_focus();
+        }
+    } else {
+        show_panel(app);
+    }
+}
+
 /// Keep the visible panel and the mascot moving together, whichever one the user drags.
 fn keep_docked(app: &AppHandle, moved_label: &str) {
     let (Some(mascot), Some(panel)) = (
@@ -171,7 +182,13 @@ fn build_tray(app: &AppHandle) -> tauri::Result<()> {
 
 #[cfg_attr(mobile, tauri::mobile_entry_point)]
 pub fn run() {
-    tauri::Builder::default()
+    let builder = tauri::Builder::default();
+
+    // Must be the first plugin. A second launch exits at once and asks the running Heel to show its panel.
+    #[cfg(desktop)]
+    let builder = builder.plugin(tauri_plugin_single_instance::init(|app, _args, _cwd| reveal_panel(app)));
+
+    builder
         .manage(DockOffset(Mutex::new((0, 0))))
         .plugin(
             tauri_plugin_global_shortcut::Builder::new()

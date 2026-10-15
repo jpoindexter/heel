@@ -55,3 +55,8 @@ Choice: `sidecar/server` (Hono + @hono/node-server, MIT) binds 127.0.0.1 on a ra
 Dev flow: `npm run tauri dev` runs `npm run dev:all` (concurrently: vite + sidecar). New deps: hono 4.13, @hono/node-server 2.1, concurrently 10 (dev). All MIT.
 Not done: shipping a built app (the sidecar must be bundled and started/stopped by the app) -> Trello V1-10. `heel.db` is 0644 inside a 0700 folder.
 Reversible? Yes.
+
+## 2026-10-15 — One Heel at a time (app and helper)
+Choice: `tauri-plugin-single-instance` 2.5.4 (Apache-2.0 OR MIT, official tauri-apps) registered first; a second launch exits at once and the running Heel brings its panel forward. The helper adds its own guard: it will not start if the recorded port already answers /health with the recorded token, and it deletes the connection file only if the token inside is its own.
+Why: a failed second launch deleted the first helper's connection file, and two Heel windows ended up open.
+Verified 2026-10-15: a second launch exited with code 0 in 0.1s and one process kept running. Not observed: the panel actually appearing on that second launch.
