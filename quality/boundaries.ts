@@ -8,7 +8,7 @@ const ROOT = join(import.meta.dirname, "..");
 export const PUBLIC_ENTRY_POINTS: Readonly<Record<string, readonly string[]>> = {
   mascot: ["src/mascot/motion-events.ts", "src/mascot/life/activity.ts", "src/mascot/life/useActivity.ts", "src/mascot/life/config.ts"],
   settings: ["src/settings/SettingsView.tsx", "src/settings/brain-summary.ts", "src/settings/useBrainSummary.ts"],
-  today: ["src/today/ChatView.tsx"],
+  today: ["src/today/TodayView.tsx"],
   panel: [],
 };
 

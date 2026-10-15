@@ -31,17 +31,20 @@ export function historyFor(messages: readonly Message[]): HistoryMessage[] {
   return said.slice(-MAX_HISTORY_MESSAGES);
 }
 
-/** Auto-follow new messages only while the person is already at the bottom; otherwise offer "Jump to latest". */
-export const NEAR_BOTTOM_PX = 48;
-
-export function isNearBottom(el: { scrollHeight: number; scrollTop: number; clientHeight: number }): boolean {
-  return el.scrollHeight - el.scrollTop - el.clientHeight <= NEAR_BOTTOM_PX;
-}
-
 /** The message that replaces "Thinking…": what Heel said and did, or why it couldn't (with the words to retry). */
 export function answerFrom(result: ApiResult<TurnResultDto>, id: number, askedText: string): Message {
   if (result.ok) return { id, role: "heel", status: "said", say: result.data.say, receipts: toReceipts(result.data.applied) };
   return { id, role: "heel", status: "failed", ...replyError(result.error.code, result.error.message), retryText: askedText };
+}
+
+export type HeelMessage = Extract<Message, { role: "heel" }>;
+
+/** The panel shows only the latest exchange: what was asked, and Heel's answer (older turns still feed the model's history). */
+export function latestExchange(messages: readonly Message[]): { asked: string | null; heel: HeelMessage } | null {
+  const last = messages.at(-1);
+  if (!last || last.role !== "heel") return null;
+  const before = messages.at(-2);
+  return { asked: before && before.role === "user" ? (before.label ?? before.text) : null, heel: last };
 }
 
 /** The same thread with one receipt marked undone (or put back). Anything else is returned unchanged. */

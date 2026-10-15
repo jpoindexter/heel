@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 import { MAX_HISTORY_MESSAGES } from "../../shared/api";
-import { NEAR_BOTTOM_PX, answerFrom, historyFor, isNearBottom, receiptSummary, toReceipts, withReceiptUndone, type Message } from "./thread-model";
+import { answerFrom, historyFor, latestExchange, receiptSummary, toReceipts, withReceiptUndone, type Message } from "./thread-model";
 
 describe("toReceipts", () => {
   it("keeps success text, prefixes failures, and carries the undo", () => {
@@ -61,13 +61,6 @@ describe("historyFor", () => {
   });
 });
 
-describe("isNearBottom", () => {
-  it("is true within the threshold and false once the person has scrolled up", () => {
-    expect(isNearBottom({ scrollHeight: 1000, scrollTop: 600, clientHeight: 400 })).toBe(true);
-    expect(isNearBottom({ scrollHeight: 1000, scrollTop: 600 - NEAR_BOTTOM_PX, clientHeight: 400 })).toBe(true);
-    expect(isNearBottom({ scrollHeight: 1000, scrollTop: 500, clientHeight: 400 })).toBe(false);
-  });
-});
 
 describe("answerFrom", () => {
   it("turns a reply into a said message with receipts", () => {
@@ -105,5 +98,28 @@ describe("withReceiptUndone", () => {
     const undone = withReceiptUndone([said(1)], 1, 0, true);
     const back = withReceiptUndone(undone, 1, 0, false);
     expect(back[0]).toEqual(said(1));
+  });
+});
+
+describe("latestExchange", () => {
+  const said = (id: number): Message => ({ id, role: "heel", status: "said", say: "ok", receipts: [] });
+
+  it("is nothing for an empty thread", () => {
+    expect(latestExchange([])).toBeNull();
+  });
+
+  it("pairs Heel's last answer with what was asked, preferring a chip's label", () => {
+    const thread: Message[] = [
+      { id: 1, role: "user", text: "old" },
+      said(2),
+      { id: 3, role: "user", text: "Help me plan what to do next.", label: "Plan" },
+      said(4),
+    ];
+    expect(latestExchange(thread)).toEqual({ asked: "Plan", heel: said(4) });
+  });
+
+  it("shows a pending answer too, so Thinking… has a place", () => {
+    const pending: Message = { id: 2, role: "heel", status: "pending" };
+    expect(latestExchange([{ id: 1, role: "user", text: "hi" }, pending])).toEqual({ asked: "hi", heel: pending });
   });
 });

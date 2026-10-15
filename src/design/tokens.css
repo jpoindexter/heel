@@ -9,9 +9,9 @@
   --border-width: 1px;
   --hidden-size: 1px; /* a visually-hidden element must still exist for screen readers */
   --ring-room: 6px; /* the focus ring (3px + 2px offset) must fit inside clipped scroll regions */
-  --thread-min-height: 64px;
-  --drawer-reserved-height: 440px; /* everything in the panel that is not the drawer or the thread */
-  --message-max-width: 92%;
+  --compose-max-height: 96px; /* the input grows to about four lines, then scrolls */
+  --parked-max-height: 160px;
+  --reply-max-height: 30vh; /* a long answer scrolls inside itself; the tasks under it keep their room */
   --toast-gap: var(--space-2);
   --z-toast: 10;
   --chevron-turn: 90deg;

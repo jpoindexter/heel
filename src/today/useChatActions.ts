@@ -1,31 +1,43 @@
-import { useState } from "react";
-import { PARK_HINT, type Chip } from "./today-model";
+import { useRef, useState } from "react";
+import { DEFAULT_MODE, modeAfterSubmit, type ComposeMode } from "./compose-model";
+import { titleFromInput } from "./quick-add";
+import type { Chip } from "./today-model";
 import type { useTasks } from "./useTasks";
 import type { useThread } from "./useThread";
 
 type Deps = { thread: ReturnType<typeof useThread>; tasks: ReturnType<typeof useTasks> };
 
-/** What the ask box and the chips do: ask the AI (clearing the box), or park what is typed. */
+/** What the one input and the chips do: add a task, park an idea, or ask the AI. Enter does whatever the mode says. */
 export function useChatActions({ thread, tasks }: Deps) {
   const [draft, setDraft] = useState("");
+  const [mode, setMode] = useState<ComposeMode>(DEFAULT_MODE);
+  const inFlight = useRef(false);
 
-  const send = (text: string, label?: string) => {
+  const ask = (text: string, label?: string) => {
     if (!text.trim() || thread.busy) return;
     void thread.send(text, label);
   };
 
-  const onSend = () => {
-    const text = draft;
-    if (!text.trim() || thread.busy) return;
-    setDraft("");
-    send(text);
+  const submit = async () => {
+    if (inFlight.current || !draft.trim()) return;
+    if (mode === "ask") {
+      if (thread.busy) return;
+      const text = draft;
+      setDraft("");
+      return ask(text);
+    }
+    inFlight.current = true;
+    try {
+      const done = mode === "add" ? await tasks.add(titleFromInput(draft) ?? "") : await tasks.park(draft);
+      if (!done) return;
+      setDraft("");
+      setMode(modeAfterSubmit(mode));
+    } finally {
+      inFlight.current = false;
+    }
   };
 
-  const onChip = async (chip: Chip) => {
-    if (chip.prompt) return send(chip.prompt, chip.label);
-    if (!draft.trim()) return tasks.showNotice(PARK_HINT);
-    if (await tasks.park(draft)) setDraft("");
-  };
+  const onChip = (chip: Chip) => ask(chip.prompt, chip.label);
 
-  return { draft, setDraft, onSend, onChip };
+  return { draft, setDraft, mode, setMode, submit, onChip };
 }

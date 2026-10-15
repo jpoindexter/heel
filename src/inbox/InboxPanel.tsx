@@ -1,19 +1,12 @@
 import { Button, Card, Text } from "@radix-ui/themes";
 import { Collapsible } from "radix-ui";
-import type { Client } from "../api/client";
 import "./inbox.css";
-import { useDigest } from "./useInbox";
+import type { useDigest } from "./useInbox";
 
-type Props = { client: Client; connected: boolean; onTaskAdded: () => void };
-
-/** Under the focus area: "Check email" reads recent mail and offers up to three as tasks, each in one literal line. */
-export function InboxPanel({ client, connected, onTaskAdded }: Props) {
-  const { state, check, addTask, dismiss } = useDigest(client, onTaskAdded);
-  if (!connected) return null;
-
-  if (state.phase === "idle") {
-    return <Button className="inbox-start" size="2" variant="soft" color="gray" onClick={() => void check()}>Check email</Button>;
-  }
+/** What "Email" found: up to three items, each in one literal line with a one-click task. Nothing shows until it is asked for. */
+export function InboxPanel({ digest: controller }: { digest: ReturnType<typeof useDigest> }) {
+  const { state, check, addTask, dismiss } = controller;
+  if (state.phase === "idle") return null;
   if (state.phase === "loading") return <Text size="2" color="gray" role="status">Reading your inbox…</Text>;
   if (state.phase === "error") {
     return (

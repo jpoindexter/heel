@@ -1,4 +1,5 @@
-.chat {
+/* The Today screen: tasks on top, the latest reply under them, one input at the bottom. Soft surfaces, no ruled lines. */
+.today {
   display: flex;
   flex: 1;
   flex-direction: column;
@@ -7,96 +8,83 @@
   padding: var(--ring-room);
 }
 
-.chat > * {
+.today > * {
   flex: none;
 }
 
-/* The two screens: each fills what is left under the time-box strip. */
-.chat > .tab {
+.today > .today-scroll {
   display: flex;
   flex: 1;
   flex-direction: column;
+  gap: var(--space-1);
   min-height: 0;
-  gap: var(--space-2);
-}
-
-.tab > * {
-  flex: none;
-}
-
-.tab > .thread-wrap {
-  flex: 1;
-}
-
-.tasks-view {
-  display: flex;
-  flex: 1;
-  flex-direction: column;
-  gap: var(--space-2);
-  min-height: 0;
-  overflow-y: auto;
-}
-
-.tasks-view > * {
-  flex: none;
-}
-
-.tasks-empty {
-  padding: var(--space-3) 0;
-  text-align: center;
-}
-
-.agent-which {
-  align-self: flex-start;
-}
-
-/* Now strip */
-.now-strip {
-  display: flex;
-  align-items: center;
-  gap: var(--space-3);
-}
-
-.now-line {
-  display: -webkit-box;
-  flex: 1;
-  min-width: 0;
-  overflow: hidden;
-  overflow-wrap: anywhere;
-  -webkit-box-orient: vertical;
-  -webkit-line-clamp: 2;
-}
-
-.now-label {
-  margin-right: var(--space-1);
-  letter-spacing: var(--label-tracking);
-}
-
-/* Thread */
-.thread-wrap {
-  position: relative;
-  min-height: var(--thread-min-height);
-}
-
-.thread {
-  display: flex;
-  flex-direction: column;
-  gap: var(--space-2);
-  box-sizing: border-box;
-  height: 100%;
-  padding: var(--space-1) var(--space-1) var(--space-3);
   overflow-y: auto;
   overscroll-behavior: contain;
 }
 
-.thread-empty {
-  margin: auto 0;
+.today-scroll > * {
+  flex: none;
+}
+
+.tasks-empty {
+  padding: var(--space-4) 0;
   text-align: center;
 }
 
+/* Task rows: one line each; Now is the only highlighted one. The remove cross shows on hover or keyboard focus. */
+.task-row {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  min-height: var(--hit-target);
+  padding: 0 var(--space-2);
+  background: var(--gray-a2);
+  border-radius: var(--radius-4);
+}
+
+.task-row[data-now] {
+  padding-block: var(--space-1);
+  background: var(--gray-a4);
+}
+
+.task-text {
+  margin: 0;
+  overflow-wrap: anywhere;
+}
+
+.row-action {
+  opacity: 0;
+  transition: opacity var(--motion-fast);
+}
+
+.task-row:hover .row-action,
+.task-row:focus-within .row-action {
+  opacity: 1;
+}
+
+/* The reply */
+.reply {
+  max-height: var(--reply-max-height);
+  overflow-y: auto;
+  padding: var(--space-2) var(--space-3);
+  background: var(--gray-a3);
+  border-radius: var(--radius-4);
+}
+
+.reply-head {
+  display: flex;
+  gap: var(--space-2);
+  align-items: flex-start;
+}
+
+.reply-asked {
+  display: -webkit-box;
+  overflow: hidden;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
+}
+
 .msg {
-  box-sizing: border-box;
-  max-width: var(--message-max-width);
   overflow-wrap: anywhere;
 }
 
@@ -106,14 +94,6 @@
 
 .msg > :last-child {
   margin-bottom: 0;
-}
-
-.msg-user {
-  align-self: flex-end;
-}
-
-.msg-heel {
-  align-self: flex-start;
 }
 
 .failed {
@@ -127,14 +107,7 @@
   gap: var(--space-2);
 }
 
-.jump {
-  position: absolute;
-  bottom: var(--space-2);
-  left: 50%;
-  transform: translateX(-50%);
-}
-
-/* Receipts + drawer share the same fold-away chevron */
+/* Receipts + the parked fold share the same fold-away chevron */
 .chevron {
   transition: transform var(--motion-fast);
 }
@@ -167,35 +140,79 @@
   text-decoration: line-through;
 }
 
-.first-run ol {
+.first-run {
+  display: flex;
+  gap: var(--space-2);
+  align-items: center;
+}
+
+/* Quick chips + the one input */
+.chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+}
+
+.compose-zone {
+  position: relative;
+  height: 0;
+}
+
+.compose {
   display: grid;
-  gap: var(--space-4);
-  margin: var(--space-3) 0 0;
+  grid-template-columns: auto 1fr auto;
+  gap: var(--space-2);
+  align-items: end;
+}
+
+.compose .rt-TextAreaRoot {
+  min-height: 0;
+  border-radius: var(--radius-4);
+}
+
+/* The one accent in the panel: a round green send button, like the + on the phone-app references. A black icon on the green stays readable in light and dark. */
+.send-fab {
+  color: var(--black-a12);
+  background: linear-gradient(135deg, var(--jade-9), var(--lime-9));
+}
+
+.send-fab:disabled {
+  color: var(--gray-a9);
+  background: var(--gray-a3);
+}
+
+.compose .rt-TextAreaInput {
+  max-height: var(--compose-max-height);
+}
+
+/* Placeholder text is real text: Radix's default (gray-a10) is 3.9:1 in light, so use the secondary-text step. */
+.compose .rt-TextAreaInput::placeholder {
+  color: var(--gray-11);
+}
+
+.toast-viewport {
+  position: absolute;
+  right: 0;
+  bottom: 100%;
+  left: 0;
+  z-index: var(--z-toast);
+  margin: 0 0 var(--toast-gap);
   padding: 0;
   list-style: none;
 }
 
-.first-run li {
+.toast {
   display: flex;
-  gap: var(--space-3);
-  align-items: flex-start;
-}
-
-.first-run p {
-  margin: 0 0 var(--space-1);
-}
-
-.clear-conversation {
-  align-self: center;
-  margin-top: var(--space-2);
-}
-
-.quick-add {
-  display: flex;
+  align-items: center;
+  justify-content: space-between;
   gap: var(--space-2);
+  padding: var(--space-2) var(--space-3);
+  background: var(--color-panel-solid);
+  border: var(--border-width) solid var(--hairline);
+  border-radius: var(--radius-3);
+  box-shadow: var(--shadow-4);
 }
 
-.quick-add > :first-child {
-  flex: 1;
-  min-width: 0;
+.toast[data-tone="error"] {
+  border-color: var(--amber-9);
 }

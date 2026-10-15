@@ -32,12 +32,12 @@ describe("nowCard", () => {
 });
 
 describe("chips", () => {
-  it("are exactly three, in a fixed order, with verb labels", () => {
-    expect(CHIPS.map((c) => c.label)).toEqual(["Plan", "Stuck", "Park it"]);
+  it("are two asking starters, in a fixed order, with verb labels (Email is added by the view when connected)", () => {
+    expect(CHIPS.map((c) => c.label)).toEqual(["Plan", "Stuck"]);
   });
 
-  it("send a prompt for Plan and Stuck, and none for Park it (it acts on the typed text)", () => {
-    expect(CHIPS.map((c) => c.prompt === null)).toEqual([false, false, true]);
+  it("each send a real prompt to the AI", () => {
+    expect(CHIPS.every((c) => c.prompt.length > 10)).toBe(true);
   });
 });
 

@@ -54,6 +54,11 @@
   cursor: grab;
 }
 
+.panel-title {
+  letter-spacing: var(--label-tracking);
+  text-transform: uppercase;
+}
+
 .grow {
   flex: 1;
   min-width: 0;

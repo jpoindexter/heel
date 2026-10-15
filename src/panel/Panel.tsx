@@ -2,7 +2,7 @@ import { useCallback, useEffect, useState, type CSSProperties } from "react";
 import { invoke } from "@tauri-apps/api/core";
 import { listen } from "@tauri-apps/api/event";
 import { ArrowLeftIcon, Cross2Icon, GearIcon } from "@radix-ui/react-icons";
-import { Button, Heading, IconButton, SegmentedControl, Theme } from "@radix-ui/themes";
+import { Button, Heading, IconButton, Text, Theme } from "@radix-ui/themes";
 import "@radix-ui/themes/styles.css";
 import "../design/tokens.css";
 import "./panel.css";
@@ -17,9 +17,9 @@ import { useBrainSummary } from "../settings/useBrainSummary";
 import { SCALING } from "../theme/density";
 import { useDensity } from "../theme/useDensity";
 import { useAppearance } from "../theme/useAppearance";
-import { ChatView, type Tab } from "../today/ChatView";
+import { TodayView } from "../today/TodayView";
 
-type View = Tab | "settings";
+type View = "today" | "settings";
 
 /** "Settings…" in the menu bar: ask once at start (the panel may have loaded after the click) and again on each event. */
 function useOpenSettingsRequests(open: () => void): void {
@@ -49,16 +49,12 @@ function useEscapeToClose(): void {
 
 const closePanel = () => void invoke("toggle_panel_command");
 
-/** Which screen is showing (Tasks, Agent or Settings) and which tab Back from Settings returns to. */
+/** Which screen is showing: Today (everything) or Settings behind the gear. */
 function usePanelView() {
-  const [view, setView] = useState<View>("tasks");
-  const [lastTab, setLastTab] = useState<Tab>("tasks");
-  const goTab = useCallback((tab: Tab) => {
-    setLastTab(tab);
-    setView(tab);
-  }, []);
+  const [view, setView] = useState<View>("today");
   const openSettings = useCallback(() => setView("settings"), []);
-  return { view, setView, lastTab, goTab, openSettings };
+  const showToday = useCallback(() => setView("today"), []);
+  return { view, openSettings, showToday };
 }
 
 /** How the panel looks: light or dark, and how big. */
@@ -68,14 +64,10 @@ function usePanelLook() {
   return { preference, appearance, setPreference, density, setDensity };
 }
 
-function TabsHeader({ tab, onTab, onSettings }: { tab: Tab; onTab: (tab: Tab) => void; onSettings: () => void }) {
+function TodayHeader({ onSettings }: { onSettings: () => void }) {
   return (
     <>
-      <SegmentedControl.Root size="1" value={tab} onValueChange={(value) => (value === "tasks" || value === "agent") && onTab(value)} aria-label="Screen">
-        <SegmentedControl.Item value="tasks">Tasks</SegmentedControl.Item>
-        <SegmentedControl.Item value="agent">Agent</SegmentedControl.Item>
-      </SegmentedControl.Root>
-      <span data-tauri-drag-region className="grow" />
+      <Text size="1" weight="medium" color="gray" data-tauri-drag-region className="panel-title grow">Heel</Text>
       <IconButton variant="ghost" color="gray" aria-label="Settings" onClick={onSettings}>
         <GearIcon aria-hidden="true" />
       </IconButton>
@@ -95,7 +87,7 @@ function SettingsHeader({ onBack }: { onBack: () => void }) {
 }
 
 export function Panel() {
-  const { view, setView, lastTab, goTab, openSettings } = usePanelView();
+  const { view, openSettings, showToday } = usePanelView();
   const { summary, refresh: refreshSummary } = useBrainSummary(client, view === "settings" ? "settings" : "chat");
   const look = usePanelLook();
   const [anchor, helper] = [usePanelAnchor(), useHelperStatus(() => void refreshSummary())];
@@ -118,7 +110,7 @@ export function Panel() {
       <main className="panel">
         <span className="panel-tail" aria-hidden="true" />
         <header data-tauri-drag-region className="panel-header">
-          {view === "settings" ? <SettingsHeader onBack={() => setView(lastTab)} /> : <TabsHeader tab={view} onTab={goTab} onSettings={openSettings} />}
+          {view === "settings" ? <SettingsHeader onBack={showToday} /> : <TodayHeader onSettings={openSettings} />}
           <IconButton variant="ghost" color="gray" aria-label="Close panel" onClick={closePanel}>
             <Cross2Icon aria-hidden="true" />
           </IconButton>
@@ -126,9 +118,9 @@ export function Panel() {
 
         <HelperNotice status={helper.status} error={helper.error} onRestart={() => void helper.restart()} />
 
-        {/* Both screens stay mounted and are only hidden, so a draft, the conversation and a half-typed task survive a trip to Settings. */}
+        {/* Both screens stay mounted and are only hidden, so a draft, the reply and a half-typed task survive a trip to Settings. */}
         <div className="view" data-fill hidden={view === "settings"}>
-          <ChatView view={view} onTab={goTab} summary={summary} reloadKey={helper.recoveries} onOpenSettings={openSettings} />
+          <TodayView showing={view === "today"} onShow={showToday} summary={summary} reloadKey={helper.recoveries} onOpenSettings={openSettings} />
         </div>
         <div className="view" hidden={view !== "settings"}>
           <SettingsView

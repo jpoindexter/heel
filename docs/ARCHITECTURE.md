@@ -20,7 +20,7 @@ docs/ DECISIONS.md PARKED.md ROADMAP.md PRD.md ERRORS.md learnings/
 | Shared UI pieces | `src/ui/` | e.g. `Notifier` (Radix Toast); feature-free |
 | Typed helper client | `src/api/` | every response validated |
 | Panel shell | `src/panel/` | header, views, Esc, menu-bar requests |
-| Chat, tasks, drawer | `src/today/` | `ChatView` is the public entry |
+| Today: tasks, reply, one input | `src/today/` | `TodayView` is the public entry |
 | Settings | `src/settings/` | `SettingsView`, `brain-summary`, `useBrainSummary` are public |
 | Mascot | `src/mascot/` | sprite, atlas, hit region; `motion-events` is public |
 | Agent loop | `sidecar/agent/` | prompt, actions (Zod), executor, providers |

@@ -9,18 +9,15 @@ export function nowCard(tasks: readonly TaskDto[]): NowCard | null {
   return first.nowStep ? { text: first.nowStep, taskTitle: first.title, task: first } : { text: first.title, taskTitle: null, task: first };
 }
 
-export type ChipId = "plan" | "stuck" | "park";
+export type ChipId = "plan" | "stuck";
 
-export type Chip = { id: ChipId; label: string; /** null = acts on the text in the ask box instead of asking the AI */ prompt: string | null };
+export type Chip = { id: ChipId; label: string; prompt: string };
 
-/** Fixed order and position (predictability). Labels are verbs; at most three. */
+/** Fixed order and position (predictability). One tap asks the AI; with Email (when connected) there are at most three chips. */
 export const CHIPS: readonly Chip[] = [
   { id: "plan", label: "Plan", prompt: "Help me plan what to do next. Pick the one smallest next step." },
   { id: "stuck", label: "Stuck", prompt: "I'm stuck and I don't know where to start. Give me one small first step." },
-  { id: "park", label: "Park it", prompt: null },
 ];
-
-export const PARK_HINT = "Type the idea first, then press Park it.";
 
 const NEEDS_SETTINGS = new Set(["not_ready", "not_signed_in", "not_installed"]);
 

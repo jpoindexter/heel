@@ -7,8 +7,3 @@ export function shouldFocusAskBox(tabActive: boolean, focusedTag: string | null)
   if (!tabActive) return false;
   return focusedTag === null || focusedTag === "BODY" || focusedTag === "TEXTAREA";
 }
-
-/** Where a new answer lands in the thread: its first line if it is taller than the view (so reading starts at the top), else its end. */
-export function replyAlignment(replyHeight: number, viewHeight: number): "start" | "end" {
-  return replyHeight > viewHeight ? "start" : "end";
-}
