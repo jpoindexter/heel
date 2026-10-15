@@ -12,7 +12,7 @@ mod placement;
 use commands::{sidecar_info, toggle_panel_command};
 use dock::Dock;
 use hit_region::{set_mascot_hit_region, set_mascot_pressed, HitRegion};
-use mascot_menu::show_mascot_menu;
+use mascot_menu::{set_life_flags, show_mascot_menu, LifeFlags};
 use menus::{take_pending_view, PendingView};
 use panel_window::{panel_is_visible, reveal_panel, show_panel, toggle_panel};
 use tauri_plugin_global_shortcut::{Code, Modifiers, Shortcut, ShortcutState};
@@ -33,6 +33,7 @@ pub fn run() {
         .manage(Dock::new())
         .manage(PendingView::new())
         .manage(HitRegion::default())
+        .manage(LifeFlags::default())
         .plugin(
             tauri_plugin_global_shortcut::Builder::new()
                 .with_handler(|app, shortcut, event| {
@@ -43,7 +44,7 @@ pub fn run() {
                 .build(),
         )
         .on_menu_event(|app, event| mascot_menu::on_menu_event(app, event.id().as_ref()))
-        .invoke_handler(tauri::generate_handler![toggle_panel_command, sidecar_info, take_pending_view, set_mascot_hit_region, set_mascot_pressed, show_mascot_menu])
+        .invoke_handler(tauri::generate_handler![toggle_panel_command, sidecar_info, take_pending_view, set_mascot_hit_region, set_mascot_pressed, show_mascot_menu, set_life_flags])
         .setup(app_setup::setup)
         .build(tauri::generate_context!())
         .expect("error while building Heel")

@@ -1,8 +1,8 @@
 //! The panel window's life: shown, hidden, brought forward, and its remembered size.
 
-use tauri::{AppHandle, LogicalSize, Manager};
+use tauri::{AppHandle, Emitter, LogicalSize, Manager};
 
-use crate::constants::{MASCOT_LABEL, PANEL_LABEL};
+use crate::constants::{MASCOT_LABEL, PANEL_LABEL, PANEL_VISIBLE_EVENT};
 use crate::dock::{dock_panel, panel_logical_size, Dock};
 use crate::panel_size::{self, clamp_size, parse_saved};
 
@@ -49,9 +49,15 @@ pub(crate) fn toggle_panel(app: &AppHandle) {
         if let Some(panel) = app.get_webview_window(PANEL_LABEL) {
             let _ = panel.hide();
         }
+        announce_panel(app, false);
     } else {
         show_panel(app);
     }
+}
+
+/// Greg needs to know whether the panel is open: he stays still while it is.
+pub(crate) fn announce_panel(app: &AppHandle, visible: bool) {
+    let _ = app.emit_to(MASCOT_LABEL, PANEL_VISIBLE_EVENT, visible);
 }
 
 pub(crate) fn show_panel(app: &AppHandle) {
@@ -64,6 +70,7 @@ pub(crate) fn show_panel(app: &AppHandle) {
     }
     let _ = panel.show();
     let _ = panel.set_focus();
+    announce_panel(app, true);
 }
 
 /// Bring the panel forward: show it if hidden, focus it if already open.

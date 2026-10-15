@@ -63,7 +63,7 @@ describe("motion ids", () => {
   it("name an action on a sheet; a bare name means the Dot sheet", () => {
     expect(parseMotionId("smooth:rest")?.sheet.id).toBe("smooth");
     expect(parseMotionId("idle")?.id).toBe("dot:idle");
-    expect(parseMotionId("dot:running-left")?.action.row).toBe(2);
+    expect(parseMotionId("dot:running-left")?.row).toBe(2);
   });
 
   it("reject unknown sheets, unknown actions and non-strings", () => {
@@ -72,5 +72,21 @@ describe("motion ids", () => {
 
   it("resolve every product state to a real animation", () => {
     for (const id of Object.values(HEEL_STATES)) expect(parseMotionId(id), id).not.toBeNull();
+  });
+});
+
+describe("look poses", () => {
+  it("name one frame of a look row and hold it", () => {
+    const pose = parseMotionId("dot:look-row-9#4");
+    expect(pose).toMatchObject({ id: "dot:look-row-9#4", row: 9, pose: 4, loop: false });
+    expect(motionDuration("dot:look-row-9#4")).toBe(0);
+  });
+
+  it("reject a pose outside the row, or a non-number", () => {
+    for (const bad of ["dot:look-row-9#8", "dot:look-row-9#-1", "dot:look-row-9#x", "dot:idle#2", "smooth:look-row-9#0"]) expect(isMotionId(bad), bad).toBe(false);
+  });
+
+  it("play actions with their own timings and no fixed pose", () => {
+    expect(parseMotionId("smooth:rest")).toMatchObject({ pose: null, loop: true, row: 5 });
   });
 });

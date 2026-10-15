@@ -2,7 +2,7 @@ import { describe, expect, it } from "vitest";
 const rustSources = import.meta.glob("../src-tauri/src/*.rs", { query: "?raw", import: "default", eager: true }) as Record<string, string>;
 const libRs = rustSources["../src-tauri/src/lib.rs"] ?? "";
 const allRust = Object.values(rustSources).join("\n");
-import { OPEN_SETTINGS_EVENT } from "./events";
+import { LIFE_COMMAND_EVENT, OPEN_SETTINGS_EVENT, PANEL_VISIBLE_EVENT } from "./events";
 
 const sources = import.meta.glob("./**/*.{ts,tsx}", {
   query: "?raw",
@@ -43,8 +43,12 @@ describe("Tauri command contract", () => {
 });
 
 describe("Tauri event contract", () => {
-  it("uses the same name for the open-settings event in Rust and TypeScript", () => {
-    const rust = allRust.match(/OPEN_SETTINGS_EVENT: &str = "([^"]+)"/)?.[1];
-    expect(rust).toBe(OPEN_SETTINGS_EVENT);
+  it.each([
+    ["OPEN_SETTINGS_EVENT", OPEN_SETTINGS_EVENT],
+    ["PANEL_VISIBLE_EVENT", PANEL_VISIBLE_EVENT],
+    ["LIFE_COMMAND_EVENT", LIFE_COMMAND_EVENT],
+  ])("uses the same name for %s in Rust and TypeScript", (constant, typescript) => {
+    const rust = allRust.match(new RegExp(`${constant}: &str = "([^"]+)"`))?.[1];
+    expect(rust).toBe(typescript);
   });
 });

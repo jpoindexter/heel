@@ -21,3 +21,8 @@ pub(crate) const MASCOT_MENU_SETTINGS_ID: &str = "mascot-settings";
 pub(crate) const MASCOT_MENU_HIDE_ID: &str = "mascot-hide";
 pub(crate) const MASCOT_MENU_QUIT_ID: &str = "mascot-quit";
 pub(crate) const TRAY_SHOW_GREG_ID: &str = "tray-show-greg";
+/// Greg's life. Must equal PANEL_VISIBLE_EVENT / LIFE_COMMAND_EVENT in src/events.ts (a test enforces it).
+pub(crate) const PANEL_VISIBLE_EVENT: &str = "heel:panel-visible";
+pub(crate) const LIFE_COMMAND_EVENT: &str = "heel:life-command";
+pub(crate) const MASCOT_MENU_NAP_ID: &str = "mascot-nap";
+pub(crate) const MASCOT_MENU_QUIET_ID: &str = "mascot-quiet";

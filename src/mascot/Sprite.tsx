@@ -1,5 +1,5 @@
 import { cellOrigin } from "./timeline";
-import { parseMotionId, type MotionId } from "./sheets";
+import { parseMotionId, type Motion, type MotionId } from "./sheets";
 import { useHitRegion } from "./useHitRegion";
 import { useSpriteClock } from "./useSpriteClock";
 
@@ -12,12 +12,13 @@ export function Sprite({ motion, label }: Props) {
   return <SpritePlayer found={found} label={label} />;
 }
 
-function SpritePlayer({ found, label }: { found: NonNullable<ReturnType<typeof parseMotionId>>; label: string }) {
-  const { sheet, action } = found;
+function SpritePlayer({ found, label }: { found: Motion; label: string }) {
+  const { sheet, row, pose } = found;
   const { manifest } = sheet;
-  const frame = useSpriteClock(action.durationsMs, action.loop ?? true, found.id);
-  useHitRegion(sheet, action.row, frame);
-  const { x, y } = cellOrigin(manifest, action.row, frame);
+  const clockFrame = useSpriteClock(found.durationsMs, found.loop, found.id, pose !== null);
+  const frame = pose ?? clockFrame;
+  useHitRegion(sheet, row, frame);
+  const { x, y } = cellOrigin(manifest, row, frame);
   return (
     <div
       role="img"
