@@ -8,6 +8,7 @@ import "../design/tokens.css";
 import "./panel.css";
 import { client } from "../api/default-client";
 import { OPEN_SETTINGS_EVENT } from "../events";
+import { shouldCloseOnKey } from "./escape";
 import { SettingsView } from "../settings/SettingsView";
 import { useBrainSummary } from "../settings/useBrainSummary";
 import { useAppearance } from "../theme/useAppearance";
@@ -34,7 +35,7 @@ function useOpenSettingsRequests(open: () => void): void {
 function useEscapeToClose(): void {
   useEffect(() => {
     const onKey = (event: KeyboardEvent) => {
-      if (event.key === "Escape") void invoke("toggle_panel_command");
+      if (shouldCloseOnKey(event)) void invoke("toggle_panel_command");
     };
     window.addEventListener("keydown", onKey);
     return () => window.removeEventListener("keydown", onKey);
