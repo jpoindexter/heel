@@ -34,7 +34,7 @@ export function Mascot() {
   const busy = oneShot !== null || base !== HEEL_STATES.idle;
   const panelOpen = usePanelOpen();
   const life = useIdleLife({ activity, panelOpen, busy, setLifeMotion });
-  useLifeCommands(activity, life.asleep, { nap: life.nap, wake: life.touch, setActivity });
+  useLifeCommands(activity, life.asleep, { nap: life.nap, wake: life.touch, walk: life.walk, setActivity });
   useEffect(() => {
     if (panelOpen) life.touch();
   }, [panelOpen, life.touch]);

@@ -26,3 +26,12 @@ pub(crate) const PANEL_VISIBLE_EVENT: &str = "heel:panel-visible";
 pub(crate) const LIFE_COMMAND_EVENT: &str = "heel:life-command";
 pub(crate) const MASCOT_MENU_NAP_ID: &str = "mascot-nap";
 pub(crate) const MASCOT_MENU_QUIET_ID: &str = "mascot-quiet";
+pub(crate) const MASCOT_MENU_WALK_ID: &str = "mascot-walk";
+/// Greg walking (A4b). Must equal WALK_FINISHED_EVENT in src/events.ts (a test enforces it).
+pub(crate) const WALK_FINISHED_EVENT: &str = "heel:walk-finished";
+/// How fast he walks (logical px per second), the longest a walk may take, and how often the window is nudged.
+pub(crate) const WALK_SPEED_PX_PER_S: f64 = 140.0;
+pub(crate) const WALK_MAX_MS: u64 = 6_000;
+pub(crate) const WALK_STEP_MS: u64 = 16;
+/// A walk shorter than this is not worth starting (he is against a wall).
+pub(crate) const WALK_MIN_PX: f64 = 40.0;

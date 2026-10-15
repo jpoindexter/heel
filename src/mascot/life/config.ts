@@ -58,3 +58,8 @@ export const LIE_DOWN_MS = 6 * SECOND;
 export const SETTLE_MS = 3 * SECOND;
 export const WAVE_MS = 1_400;
 export const PAW_MS = 3_180;
+
+/** How far one walk tries to go (logical px), [min, max]. A wall shortens it; no room at all means he stays put. */
+export const WALK_DISTANCE_PX: readonly [number, number] = [240, 560];
+/** Give a walk this long beyond its planned time before assuming the shell forgot to say it ended. */
+export const WALK_GRACE_MS = 1_000;

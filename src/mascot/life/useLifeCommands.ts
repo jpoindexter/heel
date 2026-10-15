@@ -4,18 +4,19 @@ import { listen } from "@tauri-apps/api/event";
 import { LIFE_COMMAND_EVENT } from "../../events";
 import type { Activity } from "./config";
 
-type Handlers = { nap: () => void; wake: () => void; setActivity: (next: Activity) => void };
+type Handlers = { nap: () => void; wake: () => void; walk: () => void; setActivity: (next: Activity) => void };
 
 /** What Greg's right-click menu can ask for, and telling the menu his state (so it can say "Wake up" and tick "Quiet mode"). */
-export function useLifeCommands(activity: Activity, asleep: boolean, { nap, wake, setActivity }: Handlers): void {
+export function useLifeCommands(activity: Activity, asleep: boolean, { nap, wake, walk, setActivity }: Handlers): void {
   useEffect(() => {
     const unlisten = listen<string>(LIFE_COMMAND_EVENT, (event) => {
       if (event.payload === "nap") nap();
       if (event.payload === "wake") wake();
+      if (event.payload === "walk") walk();
       if (event.payload === "toggle-quiet") setActivity(activity === "off" ? "calm" : "off");
     }).catch(() => undefined);
     return () => void unlisten.then((off) => off?.());
-  }, [activity, nap, wake, setActivity]);
+  }, [activity, nap, wake, walk, setActivity]);
 
   useEffect(() => {
     void invoke("set_life_flags", { quiet: activity === "off", asleep }).catch(() => undefined);

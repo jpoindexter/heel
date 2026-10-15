@@ -1,8 +1,10 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import type { MotionId } from "../sheets";
 import { useReducedMotion } from "../useReducedMotion";
+import { LEAD_IN_MS, MOTIONS } from "./config";
 import type { Activity } from "./config";
-import { decide, initialState, interact, type LifeState, type Plan } from "./engine";
+import { decide, initialState, interact, type LifeState } from "./engine";
+import { usePlanPlayer } from "./usePlanPlayer";
 
 const TICK_MS = 1_000;
 
@@ -22,29 +24,21 @@ type Options = {
 export function useIdleLife({ activity, panelOpen, busy, setLifeMotion }: Options) {
   const reducedMotion = useReducedMotion();
   const state = useRef<LifeState>(initialState(Date.now(), activity, Math.random));
-  const running = useRef(0);
   const [asleep, setAsleep] = useState(false);
 
-  const play = useCallback(
-    async (plan: Plan) => {
-      const mine = ++running.current;
-      for (const step of plan.steps) {
-        if (running.current !== mine) return;
-        setLifeMotion(step.motion);
-        if (!Number.isFinite(step.ms)) return;
-        await new Promise((resolve) => window.setTimeout(resolve, step.ms));
-      }
-      if (running.current === mine) setLifeMotion(null);
-    },
-    [setLifeMotion],
-  );
+  const { play, cancel } = usePlanPlayer(setLifeMotion);
 
   const touch = useCallback(() => {
-    running.current += 1;
+    cancel();
     state.current = interact(state.current, Date.now(), activity, Math.random);
     setAsleep(false);
     setLifeMotion(null);
-  }, [activity, setLifeMotion]);
+  }, [activity, cancel, setLifeMotion]);
+
+  /** Take a walk now (from the right-click menu), unless something else owns him. */
+  const walk = useCallback(() => {
+    if (!busy) void play({ behavior: "walk", steps: [{ motion: MOTIONS.listening, ms: LEAD_IN_MS }], walk: { direction: Math.random() < 0.5 ? "left" : "right" } });
+  }, [busy, play]);
 
   const nap = useCallback(() => {
     state.current = { ...state.current, lastActiveAt: Number.NEGATIVE_INFINITY, nextAt: 0 };
@@ -56,7 +50,7 @@ export function useIdleLife({ activity, panelOpen, busy, setLifeMotion }: Option
 
   useEffect(() => {
     const timer = window.setInterval(() => {
-      const ctx = { now: Date.now(), activity, panelOpen, focusActive: busy, reducedMotion, canWalk: false };
+      const ctx = { now: Date.now(), activity, panelOpen, focusActive: busy, reducedMotion, canWalk: true };
       const result = decide(state.current, ctx, Math.random);
       state.current = result.state;
       setAsleep(result.state.sleeping);
@@ -65,6 +59,6 @@ export function useIdleLife({ activity, panelOpen, busy, setLifeMotion }: Option
     return () => window.clearInterval(timer);
   }, [activity, panelOpen, busy, reducedMotion, play]);
 
-  return { touch, nap, asleep };
+  return { touch, nap, walk, asleep };
 }
 

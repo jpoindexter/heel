@@ -5,3 +5,5 @@ export const OPEN_SETTINGS_EVENT = "heel:open-settings";
 export const PANEL_VISIBLE_EVENT = "heel:panel-visible";
 /** Sent to Greg's window by his right-click menu (payload: "nap" | "wake" | "toggle-quiet"). Must equal LIFE_COMMAND_EVENT in constants.rs. */
 export const LIFE_COMMAND_EVENT = "heel:life-command";
+/** Sent to Greg's window when a walk ends or is stopped. Must equal WALK_FINISHED_EVENT in src-tauri/src/constants.rs. */
+export const WALK_FINISHED_EVENT = "heel:walk-finished";
