@@ -139,31 +139,46 @@
   opacity: 1;
 }
 
-/* The reply: what was asked as a small bubble on the right, Heel's answer on the left. */
+/* The reply, shaped like an iOS chat: what was asked as a bubble on the right, Heel's answer on the left, a speaker's gap between them. Each bubble arrives from its author's side. */
 .reply {
   display: flex;
   flex-direction: column;
-  gap: var(--space-1);
+  gap: var(--bubble-gap);
   max-height: var(--reply-max-height);
   padding-bottom: var(--list-fade);
   overflow-y: auto;
-  animation: rise var(--motion-base) var(--ease-out) both;
   mask-image: linear-gradient(to bottom, black calc(100% - var(--list-fade)), transparent);
+}
+
+@keyframes from-right {
+  from { opacity: 0; transform: translateX(var(--roll-distance)); }
+  to { opacity: 1; transform: none; }
+}
+
+@keyframes from-left {
+  from { opacity: 0; transform: translateX(calc(-1 * var(--roll-distance))); }
+  to { opacity: 1; transform: none; }
 }
 
 .bubble-row {
   display: flex;
   gap: var(--space-1);
   align-items: flex-start;
+  animation: from-left var(--motion-base) var(--ease-out) both;
+  animation-delay: calc(var(--stagger) * 2);
 }
 
 .bubble-row.asked {
   justify-content: flex-end;
+  animation-name: from-right;
+  animation-delay: 0s;
 }
 
 .bubble {
+  display: block;
+  box-sizing: border-box;
   padding: var(--space-2) var(--space-3);
-  border-radius: var(--radius-4);
+  border-radius: var(--radius-6);
 }
 
 /* The person's own words are never cut: a long question wraps in full (the reply scrolls inside itself). */
@@ -173,13 +188,13 @@
   white-space: pre-wrap;
   background: var(--accent-a3);
   color: var(--accent-12);
-  border-end-end-radius: var(--radius-1);
+  border-end-end-radius: var(--radius-2);
 }
 
 .bubble-heel {
   min-width: 0;
   background: var(--gray-a3);
-  border-end-start-radius: var(--radius-1);
+  border-end-start-radius: var(--radius-2);
 }
 
 .msg {

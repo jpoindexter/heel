@@ -25,3 +25,23 @@ Chat opens the card with the box focused · ⌘↩ added "Call the printer about
 
 ## Not verified
 VoiceOver with the new bar (the four buttons have names; the tray is a group) · the roll animations at a real 60 fps (judged by DOM state, not frames) · a Mac with Reduce Motion on (tokens go to 0 ms; not toggled live) · Comfortable size · the check-in card's new entrance · packaged app: see the N2 card comment.
+
+## B3 — the two bubbles (2026-10-15, evening)
+
+Jason: "like the iOS chat: one on the right which is me, one on the left which is the computer, more space between each bubble; run the design things, check the spacing grid." Skills applied: grid-and-spacing (8 pt soft grid, 4 pt half-step; proximity = relationship, so a change of speaker gets a bigger gap than a line gap), make-interfaces-feel-better (concentric corners, exits softer than entrances; `text-wrap: pretty` was tried and dropped: WebKit shortened Heel's lines to ~26 characters). References measured by eye: iMessage (speaker gap ≈ 8–12 pt, bubble ≈ 75–80 % of the column, corner ≈ 40 % of a one-line bubble) and the Claude iOS app (equal text size for both speakers).
+
+| What | Token | Value at the default 90 % scale |
+|---|---|---|
+| Gap between the asked bubble and Heel's | `--bubble-gap` = `--space-3` | 10.8 px (was 3.6: a line gap, not a speaker gap) |
+| Bubble inset | `--space-2` / `--space-3` | 7.2 × 10.8 px (inset-squish) |
+| Bubble corners | `--radius-6` | 10.8 px (was 5.4) |
+| Tail corner (bottom-right for you, bottom-left for Heel) | `--radius-2` | 2.7 px |
+| Asked bubble max width | `--message-max-width` | 82 % of the column, border-box, so the left stays open |
+| Heel's bubble | grows to the close button | its right stays open by the button's width |
+| Text size | Radix size 2 for both | 12.6 px (the asked bubble was size 1) |
+| Entrance | `--roll-distance`, `--motion-base`, `--stagger` × 2 | you from the right, Heel from the left 80 ms later; 0 under Reduce Motion |
+| Below the reply | `--list-fade` + the column gap | 18 px fade + 7.2 px |
+
+Found on the way: after B2 removed the clamp the asked bubble was an inline span, so `max-width` never applied; and with `content-box` the 82 % excluded the padding (the bubble measured 90 %). Both fixed here (block, border-box).
+
+Screens (real window): `b3-light.png`, `b3-dark.png` in the session scratchpad until Jason says it reads like the iOS chat; then they move here.

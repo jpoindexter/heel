@@ -39,7 +39,7 @@ export function Reply({ messages, onRetry, onOpenSettings, onUndo, onDismiss }: 
     <section role="log" aria-live="polite" aria-label="Reply" className="reply" data-leaving={leaving || undefined}>
       {asked && (
         <div className="bubble-row asked">
-          <Text size="1" className="bubble bubble-asked">{asked}</Text>
+          <Text size="2" className="bubble bubble-asked">{asked}</Text>
         </div>
       )}
       <div className="bubble-row">
