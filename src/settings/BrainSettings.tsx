@@ -70,8 +70,8 @@ function ModelField({ control, onCommit }: { control: Exclude<ModelControl, { ki
   );
 }
 
-export function BrainSettings() {
-  const brain = useBrain(client);
+export function BrainSettings({ active }: { active: boolean }) {
+  const brain = useBrain(client, active);
   const { view, notice, test } = brain;
 
   return (

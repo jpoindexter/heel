@@ -17,12 +17,15 @@ export type Notice = { message: string; tone: "info" | "error"; undo?: () => voi
 
 const NOTICE_MS = 8_000;
 
-export function useToday(client: Client) {
+/** `active` = this tab is showing. Hidden tabs stay mounted (so drafts survive) but stop refreshing on focus. */
+export function useToday(client: Client, active: boolean) {
   const [state, setState] = useState<TodayState>({ phase: "loading" });
   const [busy, setBusy] = useState(false);
   const [reply, setReply] = useState<Reply | null>(null);
   const [notice, setNotice] = useState<Notice | null>(null);
   const busyRef = useRef(false);
+  const activeRef = useRef(active);
+  activeRef.current = active;
 
   const refresh = useCallback(async () => {
     const result = await client.get("/tasks", TasksStateSchema);
@@ -31,11 +34,17 @@ export function useToday(client: Client) {
 
   useEffect(() => {
     void refresh();
-    // The panel window stays alive between uses: reload whenever it is focused.
-    const onFocus = () => void refresh();
+    // The panel window stays alive between uses: reload whenever it is focused (while this tab is showing).
+    const onFocus = () => {
+      if (activeRef.current) void refresh();
+    };
     window.addEventListener("focus", onFocus);
     return () => window.removeEventListener("focus", onFocus);
   }, [refresh]);
+
+  useEffect(() => {
+    if (active) void refresh();
+  }, [active, refresh]);
 
   useEffect(() => {
     if (!notice) return;

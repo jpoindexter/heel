@@ -1,9 +1,10 @@
+import type { Ref } from "react";
 import type { Reply } from "./useToday";
 
 /** What Heel said and did. A live region, so it is announced without moving focus. */
-export function ReplyArea({ reply, busy, onOpenSettings }: { reply: Reply | null; busy: boolean; onOpenSettings: () => void }) {
+export function ReplyArea({ reply, busy, onOpenSettings, ref }: { reply: Reply | null; busy: boolean; onOpenSettings: () => void; ref?: Ref<HTMLDivElement> }) {
   return (
-    <div role="status" aria-live="polite" className="reply" data-empty={!reply && !busy ? "" : undefined}>
+    <div ref={ref} role="status" aria-live="polite" className="reply" data-empty={!reply && !busy ? "" : undefined}>
       {busy && <p className="helper">Thinking…</p>}
       {reply?.kind === "say" && (
         <>

@@ -49,6 +49,12 @@ describe("buildSystemPrompt", () => {
     expect(buildSystemPrompt([], () => null)).toContain("Rules:");
   });
 
+  it("tells the model the person never sees task refs, so replies name tasks by title", () => {
+    const prompt = buildSystemPrompt([], () => null);
+    expect(prompt).toContain("never by its ref");
+    expect(prompt).toContain("describe each action by what it really was");
+  });
+
   it("loads the real router from the vendored skills", () => {
     expect(buildSystemPrompt(["nd-executive-function-router"])).toContain("### nd-executive-function-router");
   });

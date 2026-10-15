@@ -61,8 +61,12 @@ export function Panel() {
         ))}
       </div>
 
-      <div role="tabpanel" id={`tabpanel-${tab}`} aria-labelledby={`tab-${tab}`} className="scroll" data-fill={tab === "today" ? "" : undefined}>
-        {tab === "today" ? <TodayTab onOpenSettings={() => setTab("settings")} /> : <BrainSettings />}
+      {/* Both tabs stay mounted and are only hidden, so a typed draft, the last reply and the open list survive a trip to Settings. */}
+      <div role="tabpanel" id="tabpanel-today" aria-labelledby="tab-today" className="scroll" data-fill hidden={tab !== "today"}>
+        <TodayTab active={tab === "today"} onOpenSettings={() => setTab("settings")} />
+      </div>
+      <div role="tabpanel" id="tabpanel-settings" aria-labelledby="tab-settings" className="scroll" hidden={tab !== "settings"}>
+        <BrainSettings active={tab === "settings"} />
       </div>
     </main>
   );

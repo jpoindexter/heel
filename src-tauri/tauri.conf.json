@@ -36,9 +36,13 @@
         "decorations": false,
         "alwaysOnTop": true,
         "skipTaskbar": true,
-        "resizable": false,
+        "resizable": true,
         "visibleOnAllWorkspaces": true,
-        "acceptFirstMouse": true
+        "acceptFirstMouse": true,
+        "minWidth": 340,
+        "minHeight": 420,
+        "maxWidth": 640,
+        "maxHeight": 900
       }
     ],
     "security": {

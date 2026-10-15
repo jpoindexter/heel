@@ -14,11 +14,13 @@ export type TestState = { phase: "idle" } | { phase: "running" } | { phase: "don
 
 const NOTICE_MS = 8_000;
 
-export function useBrain(client: Client) {
+export function useBrain(client: Client, active: boolean) {
   const [view, setView] = useState<BrainView>({ phase: "loading" });
   const [notice, setNotice] = useState<Notice | null>(null);
   const [test, setTest] = useState<TestState>({ phase: "idle" });
   const ready = useRef<Extract<BrainView, { phase: "ready" }> | null>(null);
+  const activeRef = useRef(active);
+  activeRef.current = active;
 
   const show = useCallback((next: BrainView) => {
     ready.current = next.phase === "ready" ? next : null;
@@ -70,12 +72,17 @@ export function useBrain(client: Client) {
   }, [client]);
 
   useEffect(() => {
-    void load();
-    // The panel window stays alive between uses: check providers again whenever it is focused.
-    const onFocus = () => void load();
+    // The panel window stays alive between uses: check providers again whenever it is focused (while this tab shows).
+    const onFocus = () => {
+      if (activeRef.current) void load();
+    };
     window.addEventListener("focus", onFocus);
     return () => window.removeEventListener("focus", onFocus);
   }, [load]);
+
+  useEffect(() => {
+    if (active) void load();
+  }, [active, load]);
 
   useEffect(() => {
     if (!notice) return;

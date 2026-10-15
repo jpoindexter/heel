@@ -74,3 +74,9 @@ Pinned by tests: exact checksum, RGBA dimensions, manifest == atlas, look rows =
 Checked 2026-10-15: 73 populated cells, unused cells empty, no cell-edge clipping (>= 6px margin), stable baselines; sprite code loads the sheet at 192x208 and the idle loop steps through 6 frames in a browser.
 Known art issues (measured, not fixed): running-left is ~4.7 points lighter and far less saturated than the other rows; no sit->lie transition (the "thinking" row is a lying pose); no curled-up Rest in this sheet. Smoothness and Jason's visual approval: NOT assessed.
 Reversible? Yes (one URL).
+
+## 2026-10-15 — Panel hotfix H1 (from the flow audit)
+Choice: both tabs stay mounted and are only hidden (draft, reply and expanded list survive a trip to Settings); the reply scrolls into view; the ask box takes focus on open and on window focus (never from a button); the panel is resizable (min 340x420, max 640x900), remembers its size in `panel-size.json`, shrinks to fit above Greg on short screens, and resizing from the top/left edge no longer drags Greg along (a "moved" event whose size changed is treated as a resize). Prompt: replies must name tasks by title, never by the internal t1/t2 refs (seen in a live run).
+Verified in a browser against the real helper: before = 0 px of Claude's reply visible with 8 tasks; after = 232 of 232 px visible; focus, no focus-steal, draft/reply/list survive the tab switch.
+NOT verified: resizing in the real Heel window, that Greg stays put, that the size is remembered after a restart, fit on a short screen. Rust logic is unit tested (16 tests).
+Reversible? Yes.

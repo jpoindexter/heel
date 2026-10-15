@@ -1,13 +1,15 @@
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { client } from "../api/default-client";
 import { Compose } from "./Compose";
+import { revealBlock } from "./focus-rules";
 import { ReplyArea } from "./ReplyArea";
 import { NowSection, TaskList } from "./TaskList";
 import { PARK_HINT, todayView, type Chip } from "./today-model";
 import { useToday } from "./useToday";
 
-export function TodayTab({ onOpenSettings }: { onOpenSettings: () => void }) {
-  const today = useToday(client);
+export function TodayTab({ active, onOpenSettings }: { active: boolean; onOpenSettings: () => void }) {
+  const today = useToday(client, active);
+  const replyRef = useRef<HTMLDivElement>(null);
   const [draft, setDraft] = useState("");
   const [expanded, setExpanded] = useState(false);
   const { state, notice } = today;
@@ -23,6 +25,13 @@ export function TodayTab({ onOpenSettings }: { onOpenSettings: () => void }) {
   };
 
   const view = state.phase === "ready" ? todayView(state.tasks, expanded) : null;
+
+  // The answer (or the "Thinking…" line) is the point of the exchange: never leave it below the fold.
+  useEffect(() => {
+    if (!today.reply && !today.busy) return;
+    const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    replyRef.current?.scrollIntoView({ block: revealBlock(today.reply !== null), behavior: reduced ? "auto" : "smooth" });
+  }, [today.reply, today.busy]);
 
   return (
     <div className="today">
@@ -47,7 +56,7 @@ export function TodayTab({ onOpenSettings }: { onOpenSettings: () => void }) {
             />
           </>
         )}
-        <ReplyArea reply={today.reply} busy={today.busy} onOpenSettings={onOpenSettings} />
+        <ReplyArea ref={replyRef} reply={today.reply} busy={today.busy} onOpenSettings={onOpenSettings} />
       </div>
 
       {notice && (
@@ -59,7 +68,7 @@ export function TodayTab({ onOpenSettings }: { onOpenSettings: () => void }) {
         </div>
       )}
 
-      <Compose draft={draft} busy={today.busy} onDraft={setDraft} onSend={() => void send(draft)} onChip={(chip) => void onChip(chip)} />
+      <Compose active={active} draft={draft} busy={today.busy} onDraft={setDraft} onSend={() => void send(draft)} onChip={(chip) => void onChip(chip)} />
     </div>
   );
 }

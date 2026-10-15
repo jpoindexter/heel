@@ -1,7 +1,10 @@
-import { useRef, type FormEvent, type KeyboardEvent } from "react";
+import { useEffect, useRef, type FormEvent, type KeyboardEvent } from "react";
+import { shouldFocusAskBox } from "./focus-rules";
 import { CHIPS, type Chip } from "./today-model";
 
 type Props = {
+  /** This tab is the one showing. */
+  active: boolean;
   draft: string;
   busy: boolean;
   onDraft: (value: string) => void;
@@ -10,9 +13,19 @@ type Props = {
 };
 
 /** Three fixed chips (same place, same order, always) and the ask box with a real, visible label. */
-export function Compose({ draft, busy, onDraft, onSend, onChip }: Props) {
+export function Compose({ active, draft, busy, onDraft, onSend, onChip }: Props) {
   const box = useRef<HTMLTextAreaElement>(null);
   const empty = draft.trim().length === 0;
+
+  // Ready to type: when this tab shows, and whenever the window regains focus (hotkey, click on Greg).
+  useEffect(() => {
+    const focusBox = () => {
+      if (shouldFocusAskBox(active, document.activeElement?.tagName ?? null)) box.current?.focus();
+    };
+    focusBox();
+    window.addEventListener("focus", focusBox);
+    return () => window.removeEventListener("focus", focusBox);
+  }, [active]);
 
   const submit = (event: FormEvent) => {
     event.preventDefault();

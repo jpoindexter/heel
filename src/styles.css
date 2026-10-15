@@ -16,6 +16,11 @@
   --target: 44px;
 }
 
+/* A hidden tab must really be hidden, whatever display its class sets. */
+[hidden] {
+  display: none !important;
+}
+
 html,
 body,
 #root {

@@ -1,0 +1,167 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Heel — User Flow Report</title>
+<style>
+  :root{--ink:#111;--muted:#666;--line:#ddd;--accent:#0b5fff;--ok:#0a7d33;--warn:#b45309;--bad:#b91c1c;--bg:#fafafa;--card:#fff}
+  *{box-sizing:border-box;margin:0}
+  body{font:16px/1.55 -apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;color:var(--ink);background:var(--bg);padding:48px 24px;max-width:880px;margin:0 auto}
+  h1{font-size:28px;letter-spacing:-.02em}
+  h2{font-size:20px;margin:48px 0 8px;padding-top:24px;border-top:1px solid var(--line)}
+  h3{font-size:15px;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);margin:28px 0 12px}
+  .meta{color:var(--muted);font-size:14px;margin:6px 0 4px}
+  .skills{display:flex;gap:8px;flex-wrap:wrap;margin:16px 0 0}
+  .chip{font-size:13px;padding:3px 10px;border:1px solid var(--line);border-radius:999px;background:var(--card)}
+  .flow{list-style:none;padding:0;margin:16px 0}
+  .flow>li{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:16px 18px;position:relative}
+  .flow>li+li{margin-top:34px}
+  .flow>li+li::before{content:"";position:absolute;top:-27px;left:32px;width:2px;height:20px;background:var(--accent)}
+  .flow>li+li::after{content:"";position:absolute;top:-12px;left:28px;border:5px solid transparent;border-top-color:var(--accent)}
+  .step-n{display:inline-block;font-size:12px;font-weight:700;color:var(--accent);border:1.5px solid var(--accent);border-radius:999px;padding:1px 9px;margin-right:8px;vertical-align:1px}
+  .step-t{font-weight:650}
+  .step-d{color:var(--muted);font-size:14px;margin-top:6px}
+  .cta{font-size:13px;margin-top:8px}
+  .cta b{color:var(--ok)}
+  .branch{font-size:13px;margin-top:8px;padding:8px 12px;background:#f4f6ff;border-left:3px solid var(--accent);border-radius:0 6px 6px 0}
+  .break{font-size:13px;margin-top:8px;padding:8px 12px;background:#fff4f4;border-left:3px solid var(--bad);border-radius:0 6px 6px 0}
+  table{border-collapse:collapse;width:100%;font-size:14px;background:var(--card)}
+  th,td{text-align:left;padding:9px 12px;border:1px solid var(--line);vertical-align:top}
+  th{background:var(--bg);font-size:12px;text-transform:uppercase;letter-spacing:.05em;color:var(--muted)}
+  .pass{color:var(--ok);font-weight:650}.warn{color:var(--warn);font-weight:650}.fail{color:var(--bad);font-weight:650}
+  .overflow{overflow-x:auto}
+  footer{margin-top:56px;padding-top:16px;border-top:1px solid var(--line);color:var(--muted);font-size:13px}
+  @media print{body{background:#fff;padding:0}.flow>li{break-inside:avoid}}
+</style>
+</head>
+<body>
+
+<h1>Heel — User Flow Report</h1>
+<p class="meta">2026-10-15 · Audit of the current desktop flow: Greg (floating mascot) + docked panel (Today and Settings tabs), measured at the real panel size 380 x 620</p>
+<div class="skills">
+  <span class="chip">design</span>
+  <span class="chip">userflow</span>
+  <span class="chip">usedesign</span>
+  <span class="chip">agent-interface-design</span>
+  <span class="chip">flow-app-shell</span>
+  <span class="chip">flow-ai-chat</span>
+  <span class="chip">flow-empty-states</span>
+  <span class="chip">flow-errors</span>
+  <span class="chip">usability-heuristics</span>
+  <span class="chip">make-interfaces-feel-better</span>
+  <span class="chip">components-and-states · accessibility · layout (loaded earlier)</span>
+</div>
+
+<h2>Summary</h2>
+<p>The flow breaks at its most important moment: after you ask Heel something, the answer appears below the visible area. In a measured run with 8 tasks, Claude's reply sat at y=528-705 while the visible content ended at y=416, so 0 px of it was on screen. The cause is structural: one fixed-size window (not resizable) holds a task list, a reply and a composer, and the reply is placed under the list. Fixing the layout (conversation first, tasks collapsible, resizable window) removes most of the "doesn't flow / can't resize / things don't expand" feeling. A second, smaller group of issues is in what the agent says versus what it did.</p>
+
+<h2>Flow: Open Heel, ask, act on tasks, configure</h2>
+<p class="meta">Pattern source: flow-app-shell + flow-ai-chat · Entry point: click Greg, Cmd+Shift+H, tray menu, or Dock icon</p>
+
+<h3>Steps</h3>
+<ol class="flow">
+  <li>
+    <span class="step-n">1</span><span class="step-t">Open the panel</span>
+    <p class="step-d">A fixed 380 x 620 window appears above Greg, right-aligned, with Close, Today / Settings tabs, and an empty-or-full body.</p>
+    <p class="cta">Primary action: <b>start typing</b> → but the ask box is not focused; you must click it first</p>
+    <div class="break">Breaks: the window is not resizable (resizable:false in tauri.conf.json); on a 900 px-tall screen there is no room above Greg, so the panel sits over him.</div>
+  </li>
+  <li>
+    <span class="step-n">2</span><span class="step-t">First run, no AI provider chosen</span>
+    <p class="step-d">The Now card says "Nothing queued yet." Chips and ask box look ready.</p>
+    <p class="cta">Primary action: <b>Plan / Stuck / type + Enter</b> → fails with "Choose an AI provider in Settings first." + Open Settings</p>
+    <div class="break">Breaks: the screen looks ready but cannot work. The fix (Settings) is discovered only after a failed attempt.</div>
+  </li>
+  <li>
+    <span class="step-n">3</span><span class="step-t">Ask or press a chip</span>
+    <p class="step-d">Send turns into "Thinking…" and chips that use the AI are disabled. Takes 5-14 s with Claude/Codex, about 70 s cold with a local model.</p>
+    <p class="cta">Primary action: <b>wait</b> → reply appears</p>
+    <div class="break">Breaks: "Thinking…" and the reply render below the task list, outside the visible area. No stop button. No streaming. The screen looks frozen, then nothing visibly changes.</div>
+  </li>
+  <li>
+    <span class="step-n">4</span><span class="step-t">Read what Heel did</span>
+    <p class="step-d">Reply text plus ✓ lines (Added "...", Focus started: ...). Only the latest reply is kept.</p>
+    <p class="cta">Primary action: <b>act on the first step</b> → Now card</p>
+    <div class="break">Breaks: reply is off-screen with a full list; there is no history; the provider/model that answered is not shown; the reply said "Want to start a focus block?" while the ✓ line showed it had already started one.</div>
+  </li>
+  <li>
+    <span class="step-n">5</span><span class="step-t">Manage tasks</span>
+    <p class="step-d">Now card (first task's next step), then up to 3 tasks with checkbox and remove; "N more" reveals the rest. Complete and remove show an 8 s Undo.</p>
+    <p class="cta">Primary action: <b>checkbox</b> → task leaves the list, Undo toast</p>
+    <div class="break">Breaks: the Now card repeats the first task directly above it; the 2nd task is cut mid-URL; "5 more" is below the fold; "expanding" only lengthens a scroll area inside a fixed window.</div>
+  </li>
+  <li>
+    <span class="step-n">6</span><span class="step-t">Park an idea</span>
+    <p class="step-d">Type text, press Park it. Toast: "Parked: ...". Empty box shows a hint and focuses the box.</p>
+    <p class="cta">Primary action: <b>Park it</b> → idea saved</p>
+    <div class="break">Breaks: parked ideas are never shown again (the count is fetched but not displayed), cannot be undone, and have no way to become tasks even though the store supports promote.</div>
+  </li>
+  <li>
+    <span class="step-n">7</span><span class="step-t">Settings, then back</span>
+    <p class="step-d">Brain: provider radios with status, model field, Test connection, Undo. Works well; error state with Try again.</p>
+    <p class="cta">Primary action: <b>choose provider</b> → saved, toast with Undo</p>
+    <div class="break">Breaks (from the code, Panel.tsx renders one tab at a time; not run): switching to Settings unmounts Today, so a typed draft, the last reply and the expanded list are lost. This hits exactly the path "AI failed, Open Settings, fix, come back".</div>
+  </li>
+</ol>
+
+<h3>Screen inventory</h3>
+<div class="overflow"><table>
+  <tr><th>Screen</th><th>Purpose</th><th>Primary action</th><th>States (empty/loading/error)</th></tr>
+  <tr><td>Greg (mascot window, 192 x 208)</td><td>Presence; open the panel; show thinking/done/error</td><td>Click (open), drag (move)</td><td>Reacts to state; no resize; reduced-motion handled in code, untested end to end</td></tr>
+  <tr><td>Today tab</td><td>Tasks, ask Heel, quick actions</td><td>Type + Enter, or Plan / Stuck / Park it</td><td>Empty: single "nothing queued" copy for first-use and cleared. Loading: plain text. Error: callout + Try again. Busy: Send says "Thinking…"</td></tr>
+  <tr><td>Settings tab (Brain)</td><td>Choose provider and model</td><td>Radio per provider</td><td>Loading text, helper-offline error with Try again, per-provider "Needs setup" with reason</td></tr>
+</table></div>
+
+<h3>Measured at 380 x 620 with 8 tasks</h3>
+<div class="overflow"><table>
+  <tr><th>Measure</th><th>Value</th><th>Why it matters</th></tr>
+  <tr><td>Content window height</td><td>288 px of 620 (46%)</td><td>Header 44 + tabs 44 + compose 177 + padding leave under half the panel for content</td></tr>
+  <tr><td>Visible tasks without scrolling</td><td>about 1.5 of 3</td><td>The second task wraps to 5 lines (long URL) and is cut off</td></tr>
+  <tr><td>Reply visible after pressing Plan</td><td>0 px of 177 px</td><td>Reply at y 528-705; content window ends at y 416</td></tr>
+  <tr><td>Stop/cancel control while thinking</td><td>none</td><td>Local models take about 70 s cold</td></tr>
+  <tr><td>Parked ideas visible anywhere</td><td>no</td><td>3 parked ideas, count not shown</td></tr>
+  <tr><td>Panel position on 900 px screen</td><td>no room above Greg</td><td>14-inch (982) and 16-inch (1117) fit</td></tr>
+</table></div>
+
+<h3>Anti-pattern audit</h3>
+<div class="overflow"><table>
+  <tr><th>Check (from skill)</th><th>Verdict</th><th>Note</th></tr>
+  <tr><td>flow-app-shell: resizable panes, clamp widths, test extremes</td><td class="fail">FAIL</td><td>Both windows fixed size; nothing expands or collapses; no min/max; size not remembered</td></tr>
+  <tr><td>flow-app-shell: fixed chrome small (about 128 px)</td><td class="fail">FAIL</td><td>Header + tabs + compose + padding = 54% of the panel height</td></tr>
+  <tr><td>flow-app-shell: one scroll container per pane; fixed header/nav</td><td class="pass">PASS</td><td>Header, tabs, chips and composer stay fixed; one scroll area</td></tr>
+  <tr><td>flow-app-shell: no blank pane when nothing selected</td><td class="pass">PASS</td><td>Empty Now card has copy</td></tr>
+  <tr><td>flow-ai-chat: response visible; auto-scroll follows, "jump to latest" pill</td><td class="fail">FAIL</td><td>Reply lands below the fold; no scroll-into-view; no pill</td></tr>
+  <tr><td>flow-ai-chat: stream tokens, never a spinner until done</td><td class="fail">FAIL</td><td>Whole reply arrives at once after 5-70 s (CLI providers; streaming not built)</td></tr>
+  <tr><td>flow-ai-chat: stop button during generation</td><td class="fail">FAIL</td><td>None; chips disabled, Send disabled</td></tr>
+  <tr><td>flow-ai-chat: empty state offers concrete example prompts; composer focused</td><td class="warn">WARN</td><td>Chips exist but are generic; ask box not focused on open</td></tr>
+  <tr><td>flow-ai-chat: single column with history</td><td class="fail">FAIL</td><td>Only the latest reply is kept</td></tr>
+  <tr><td>flow-ai-chat: visible model/provider on each answer; visible context</td><td class="fail">FAIL</td><td>Provider is returned by the server but not shown; user cannot see which tasks the AI saw</td></tr>
+  <tr><td>flow-ai-chat: consequential actions gated on the human</td><td class="pass">PASS</td><td>Only local, undoable actions exist (no send/delete outside Heel)</td></tr>
+  <tr><td>flow-ai-chat: say matches do (agent-interface-design: receipts, no contradictions)</td><td class="fail">FAIL</td><td>Reply asked permission for a focus block that the ✓ line showed as already started; no UI exists to end a focus session yet</td></tr>
+  <tr><td>flow-empty-states: first-use vs cleared vs no-results vs error all distinct</td><td class="warn">WARN</td><td>Error is distinct; first-use and cleared share one string; no "needs setup" empty state</td></tr>
+  <tr><td>flow-empty-states: loading indicator matches content (skeleton, delay)</td><td class="warn">WARN</td><td>Plain "Loading your tasks…" text</td></tr>
+  <tr><td>flow-empty-states: optimistic update with undo</td><td class="pass">PASS</td><td>Complete/remove are instant with 8 s Undo</td></tr>
+  <tr><td>flow-errors: undo instead of confirm; preserve typed input on failure</td><td class="pass">PASS</td><td>Draft is cleared only after success</td></tr>
+  <tr><td>flow-errors: every action reversible or recoverable</td><td class="warn">WARN</td><td>Park it has no undo; failed AI turn has no Retry button, only text</td></tr>
+  <tr><td>usability-heuristics H1 visibility of status</td><td class="fail">FAIL (sev 4)</td><td>Thinking and the result are off-screen; the person sees no change</td></tr>
+  <tr><td>usability-heuristics H3 control and freedom</td><td class="warn">WARN (sev 3)</td><td>Cannot stop a long turn; cannot resize or collapse</td></tr>
+  <tr><td>usability-heuristics H8 minimalist; no duplicated information</td><td class="warn">WARN (sev 2)</td><td>Now card repeats the first task directly above it</td></tr>
+  <tr><td>usability-heuristics H6 recognition over recall</td><td class="warn">WARN (sev 2)</td><td>Parked ideas invisible; ask box needs a click before typing</td></tr>
+  <tr><td>make-interfaces-feel-better: concentric radius, polish</td><td class="warn">WARN (sev 1)</td><td>Panel window has square corners and an OS shadow (no rounded, transparent frame); no visual tie to Greg (no tail)</td></tr>
+  <tr><td>accessibility: labels, focus ring, targets, contrast</td><td class="pass">PASS</td><td>Real labels, 44 px targets, 3 px focus ring; screen-reader behavior not tested</td></tr>
+</table></div>
+
+<h2>Open questions &amp; parked items</h2>
+<ul>
+  <li>Layout direction needs a decision: chat-first panel with a collapsible task drawer (recommended), or keep Today as is and only fix scrolling and resizing.</li>
+  <li>Size limits for a resizable panel (suggested: min 340 x 420, max 560 x 860, remembered per screen).</li>
+  <li>Should the AI be allowed to start or end focus sessions before the focus UI (S6) exists? Recommendation: no, remove those two actions until S6 ships.</li>
+  <li>Streaming replies: the Claude CLI supports a streaming output mode; Codex and local models need checking. Not built, not verified.</li>
+  <li>Not tested: screen readers, keyboard-only flow end to end, the real Tauri window at other sizes, display scaling on external monitors.</li>
+</ul>
+
+<footer>Generated with <a href="https://github.com/jpoindexter/ux-flow-skills">ux-flow-skills</a> · patterns proven by shipped products, audited against each skill's anti-pattern list.</footer>
+
+</body>
+</html>
