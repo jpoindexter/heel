@@ -14,7 +14,7 @@ Me (senior UX + solo dev, autism + ADHD + dyslexia + aphantasia). Second user la
 - [ ] Inbox digest: <=3 actions, literal one-line summaries, add as task in one click
 - [ ] One declared focus time-box ran with an end check-in ("where are you vs [goal verbatim]")
 - [ ] It never sent/deleted anything and never spoke past the interrupt budget
-- [ ] Settings > Brain: choose provider and model, test connection (at least 2 providers working)
+- [x] Settings > Brain: choose provider and model, test connection (Claude, Codex and Ollama each ran a real turn; picker confirmed in the real window 2026-10-15)
 
 ## In scope (v0)
 Floating mascot (placeholder art), panel with tasks + ask box + <=3 chips, brain-dump capture, focus session, interrupt budget + Off, read-only Gmail digest, local SQLite.
