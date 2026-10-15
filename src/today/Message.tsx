@@ -12,7 +12,7 @@ type Props = {
 
 function Paragraphs({ text }: { text: string }) {
   return text.split("\n\n").map((paragraph, index) => (
-    <Text as="p" size="2" key={`${index}-${paragraph.slice(0, 12)}`} className="msg-text">{paragraph}</Text>
+    <Text as="p" size="2" key={`${index}-${paragraph.slice(0, 12)}`} className="msg-text in">{paragraph}</Text>
   ));
 }
 
@@ -21,7 +21,7 @@ export function Message({ message, onRetry, onOpenSettings, onUndo }: Props) {
   return (
     <article className="msg" aria-busy={message.status === "pending"}>
       <h3 className="visually-hidden">Heel</h3>
-      {message.status === "pending" && <Text as="p" size="2" color="gray">Thinking…</Text>}
+      {message.status === "pending" && <Text as="p" size="2" color="gray" className="pulse">Thinking…</Text>}
       {message.status === "said" && (
         <>
           <Paragraphs text={message.say} />
@@ -35,8 +35,8 @@ export function Message({ message, onRetry, onOpenSettings, onUndo }: Props) {
             <Callout.Text>{message.message}</Callout.Text>
           </Callout.Root>
           <div className="row">
-            <Button size="1" variant="soft" onClick={onRetry}>Try again</Button>
-            {message.offerSettings && <Button size="1" variant="soft" color="gray" onClick={onOpenSettings}>Open Settings</Button>}
+            <Button size="1" variant="soft" radius="full" onClick={onRetry}>Try again</Button>
+            {message.offerSettings && <Button size="1" variant="soft" radius="full" color="gray" onClick={onOpenSettings}>Open Settings</Button>}
           </div>
         </div>
       )}

@@ -1,0 +1,179 @@
+/* The bar at the bottom: + and one pill, the four round buttons, the open chat card, and the toast above them. */
+/* The bar: + and one pill. The four round buttons share the bar's width, so they spread with the window. */
+.bar {
+  display: flex;
+  gap: var(--space-2);
+  align-items: center;
+  animation: rise var(--motion-base) var(--ease-out) both;
+}
+
+.plus {
+  transition: transform var(--motion-base) var(--ease-snap), background-color var(--motion-fast);
+}
+
+.plus[aria-expanded="true"] {
+  transform: rotate(45deg);
+}
+
+.pill-row {
+  display: flex;
+  flex: 1;
+  gap: var(--space-2);
+  align-items: center;
+  min-width: 0;
+  height: var(--bar-height);
+  padding: 0 var(--space-1) 0 var(--space-3);
+  background: var(--gray-a3);
+  border: 0;
+  border-radius: var(--radius-6);
+  animation: rise var(--motion-base) var(--ease-out) both;
+}
+
+.pill-row.prompt {
+  color: var(--gray-11);
+  font: inherit;
+  text-align: left;
+  cursor: text;
+}
+
+.pill-row.prompt:hover {
+  background: var(--gray-a4);
+}
+
+.tray {
+  display: grid;
+  flex: 1;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  align-items: center;
+  justify-items: center;
+  min-width: 0;
+  height: var(--bar-height);
+}
+
+.round-button {
+  display: grid;
+  flex: none;
+  place-items: center;
+  width: var(--bar-height);
+  height: var(--bar-height);
+  padding: 0;
+  color: var(--gray-12);
+  background: var(--gray-a3);
+  border: 0;
+  border-radius: var(--radius-6);
+  cursor: pointer;
+  animation: roll-in var(--motion-base) var(--ease-out) both;
+  animation-delay: calc(var(--i) * var(--stagger));
+  transition: background-color var(--motion-fast);
+}
+
+.round-button:hover {
+  background: var(--gray-a5);
+}
+
+.round-button[data-dim] {
+  color: var(--gray-10);
+}
+
+.tray[data-closing] .round-button {
+  pointer-events: none;
+  animation: roll-out var(--motion-exit) var(--ease-in) both;
+  animation-delay: calc(var(--i) * var(--stagger));
+}
+
+/* The open chat card */
+.compose-zone {
+  position: relative;
+  height: 0;
+}
+
+.compose {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  padding: var(--space-3) var(--space-3) var(--space-2);
+  background: var(--gray-a3);
+  border-radius: var(--radius-5);
+}
+
+.compose .rt-TextAreaRoot {
+  min-height: 0;
+  background: transparent;
+  box-shadow: none;
+}
+
+.compose .rt-TextAreaInput {
+  max-height: var(--compose-max-height);
+}
+
+.compose .rt-TextAreaInput::placeholder {
+  color: var(--gray-11);
+}
+
+.compose-row {
+  display: flex;
+  gap: var(--space-2);
+  align-items: center;
+}
+
+.compose-row .tray,
+.compose-row .round-button {
+  height: var(--hit-target);
+}
+
+.compose-row .round-button {
+  width: var(--hit-target);
+  background: var(--color-panel-solid);
+}
+
+.hint {
+  padding-left: var(--space-1);
+}
+
+/* The one accent in the panel: a round green send button. A black icon on the green stays readable in light and dark. */
+.send-fab {
+  color: var(--black-a12);
+  background: linear-gradient(135deg, var(--jade-9), var(--lime-9));
+  transition: background-color var(--motion-fast), color var(--motion-fast);
+}
+
+.send-fab:disabled {
+  color: var(--gray-a9);
+  background: var(--gray-a3);
+}
+
+/* The toast pops in above the bar and sinks out. Radix waits for the exit animation before removing it. */
+.toast-viewport {
+  position: absolute;
+  right: 0;
+  bottom: 100%;
+  left: 0;
+  z-index: var(--z-toast);
+  margin: 0 0 var(--toast-gap);
+  padding: 0;
+  list-style: none;
+}
+
+.toast {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-2);
+  padding: var(--space-2) var(--space-3);
+  background: var(--color-panel-solid);
+  border: var(--border-width) solid var(--hairline);
+  border-radius: var(--radius-4);
+  box-shadow: var(--shadow-4);
+}
+
+.toast[data-state="open"] {
+  animation: rise var(--motion-base) var(--ease-out) both;
+}
+
+.toast[data-state="closed"] {
+  animation: sink var(--motion-exit) var(--ease-in) both;
+}
+
+.toast[data-tone="error"] {
+  border-color: var(--amber-9);
+}

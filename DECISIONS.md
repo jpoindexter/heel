@@ -174,3 +174,10 @@ Reversible? Yes.
 Choice: the panel is two screens behind header tabs (Tasks, Agent) + a gear; default 300x420 (47% smaller by area); Radix scaling 90% (Settings > Size switches to 100%); borders are hairlines except text fields and tick boxes, which keep a 3:1 edge. The saved-size file is now `panel-size-v2.json` so the old large size doesn't carry over.
 Why: Jason: "we need an agent app, a task app... this looks complicated"; "all the super dark lines across everything, you aren't keeping it elegant". My earlier fix made every border 3:1; WCAG 1.4.11 only requires that for the parts needed to use a control.
 Evidence: docs/design/n2/. Reversible? Yes (tokens + one setting).
+
+## 2026-10-15 — N2 second pass: one surface, a bar with + and one pill, four round buttons
+Choice: no tabs. One screen: the latest reply (bubbles) above, the task list, and at the bottom a bar of + and one pill. The pill opens a Claude-iOS-style chat card; + pushes four round icon buttons out across the bar (Plan, Stuck, Email, Chat; inside the card: Add task, Park, Plan, Stuck) and they roll back when one is picked. Enter talks to Heel; ⌘↩ adds the text as a task at once; Esc closes. No accordions: receipts and Parked are plain lists. Everything animates in/out with token durations (0 under Reduce Motion).
+Alternatives tried in the prototype (9 rounds): a mode button (Add/Ask/Park) + chips row; a dropdown menu; a tray above the bar; text pills. Jason rejected each as still too many controls or "poorly designed".
+Why: "it should be one or two buttons, super simple, like the AI chat apps"; "four buttons, round, with icons, spread across the width". The Claude iOS composer was the named reference.
+Cost: Enter now waits for the AI (N6's instant add moved to ⌘↩ / + › Add task). Swap is one line in `src/today/bar-model.ts` if S9 shows the wait hurts.
+Evidence: docs/design/n2/README.md, prototype artifact 6uazHQ2GhAUqk7d32SkcKv. Reversible? Yes.

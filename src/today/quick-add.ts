@@ -1,5 +1,7 @@
 /** The most a task title may hold (matches the helper's limit). */
 export const MAX_TASK_TITLE = 500;
+/** The most one message to Heel may hold. */
+export const MAX_ASK_LENGTH = 4000;
 
 /** What to add for what was typed: spaces tidied, nothing for an empty box. */
 export function titleFromInput(typed: string): string | null {

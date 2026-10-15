@@ -1,88 +1,113 @@
-import { useEffect, useRef, type FormEvent, type KeyboardEvent, type RefObject } from "react";
-import { ArrowUpIcon, StopIcon } from "@radix-ui/react-icons";
-import { IconButton, TextArea } from "@radix-ui/themes";
+import { useEffect, useRef, type FormEvent, type KeyboardEvent } from "react";
+import { ArrowUpIcon, PlusIcon, StopIcon } from "@radix-ui/react-icons";
+import { IconButton, Text, TextArea } from "@radix-ui/themes";
 import { VisuallyHidden } from "radix-ui";
-import { modeInfo, type ComposeMode } from "./compose-model";
-import { ModeMenu } from "./ModeMenu";
+import { ActionTray } from "./ActionTray";
+import { CARD_TRAY, barHint, barKey, type TrayAction } from "./bar-model";
+import { MAX_ASK_LENGTH } from "./quick-add";
 import { useAskFocus } from "./useAskFocus";
 import { useAutoGrow } from "./useAutoGrow";
+import "./bar.css";
 
 type Props = {
   /** The Today screen is the one showing. */
   active: boolean;
-  /** Changes when something (Cmd+N) wants the box focused. */
+  /** Changes when something (Cmd+N) wants the box focused again. */
   focusSignal: number;
-  mode: ComposeMode;
   draft: string;
-  /** Heel is thinking. */
-  busy: boolean;
-  onMode: (mode: ComposeMode) => void;
+  thinking: boolean;
+  trayOpen: boolean;
+  trayClosing: boolean;
+  emailReady: boolean;
   onDraft: (value: string) => void;
-  onSubmit: () => void;
-  /** Stop the answer in flight. */
+  onSend: () => void;
+  onAdd: () => void;
+  onClose: () => void;
   onStop: () => void;
+  onToggleTray: () => void;
+  onAction: (action: TrayAction) => void;
+  onFocus: () => void;
+  onBlur: () => void;
 };
 
-function SendOrStop({ stoppable, empty, label, onStop }: { stoppable: boolean; empty: boolean; label: string; onStop: () => void }) {
-  return stoppable ? (
+function SendOrStop({ thinking, empty, onStop }: { thinking: boolean; empty: boolean; onStop: () => void }) {
+  return thinking ? (
     <IconButton type="button" size="2" radius="full" variant="soft" color="gray" highContrast aria-label="Stop" onClick={onStop}>
       <StopIcon aria-hidden="true" />
     </IconButton>
   ) : (
-    <IconButton type="submit" size="2" radius="full" className="send-fab" disabled={empty} aria-label={label}>
+    <IconButton type="submit" size="2" radius="full" className="send-fab" disabled={empty} aria-label="Send to Heel">
       <ArrowUpIcon aria-hidden="true" />
     </IconButton>
   );
 }
 
-function useFocusOnSignal(box: RefObject<HTMLTextAreaElement | null>, signal: number, active: boolean): void {
-  useEffect(() => {
-    if (signal > 0 && active) box.current?.focus();
-  }, [box, signal, active]);
+type RowProps = Pick<Props, "thinking" | "trayOpen" | "trayClosing" | "emailReady" | "onStop" | "onToggleTray" | "onAction"> & { empty: boolean };
+
+/** Under the text: +, then the key hint (or the four buttons in its place), then Send (Stop while Heel thinks). */
+function ComposeRow({ thinking, trayOpen, trayClosing, emailReady, onStop, onToggleTray, onAction, empty }: RowProps) {
+  return (
+    <div className="compose-row">
+      <IconButton type="button" size="2" radius="full" variant="surface" color="gray" className="plus" aria-label="More" aria-expanded={trayOpen} onClick={onToggleTray}>
+        <PlusIcon aria-hidden="true" />
+      </IconButton>
+      {trayOpen ? (
+        <ActionTray actions={CARD_TRAY} closing={trayClosing} emailReady={emailReady} onAction={onAction} />
+      ) : (
+        <Text size="1" color="gray" className="grow hint">{barHint(empty, thinking)}</Text>
+      )}
+      <SendOrStop thinking={thinking} empty={empty} onStop={onStop} />
+    </div>
+  );
 }
 
-/** The one input. A real label (hidden); the placeholder only repeats what the mode button says. Send becomes Stop while Heel thinks an answer. */
-export function Compose({ active, focusSignal, mode, draft, busy, onMode, onDraft, onSubmit, onStop }: Props) {
+/** The open chat card: the text, then one row with +, the key hint (or the four buttons) and Send. Enter talks to Heel. */
+export function Compose(p: Props) {
   const box = useRef<HTMLTextAreaElement>(null);
-  const info = modeInfo(mode);
-  const empty = draft.trim().length === 0;
-  const stoppable = busy && mode === "ask";
+  const empty = p.draft.trim().length === 0;
 
-  useAskFocus(box, active);
-  useAutoGrow(box, draft);
-  useFocusOnSignal(box, focusSignal, active);
+  useAskFocus(box, p.active);
+  useAutoGrow(box, p.draft);
+  useEffect(() => {
+    box.current?.focus();
+  }, [p.focusSignal]);
 
   const submit = (event: FormEvent) => {
     event.preventDefault();
-    if (!empty) onSubmit();
+    if (!empty && !p.thinking) p.onSend();
   };
 
   const onKey = (event: KeyboardEvent<HTMLTextAreaElement>) => {
-    if (event.key === "Enter" && !event.shiftKey && !event.nativeEvent.isComposing) {
-      event.preventDefault();
-      if (!empty) onSubmit();
-    }
+    const key = barKey({ ...event, isComposing: event.nativeEvent.isComposing });
+    if (!key) return;
+    event.preventDefault();
+    if (key === "close") p.onClose();
+    else if (key === "add") p.onAdd();
+    else if (!empty && !p.thinking) p.onSend();
   };
 
   return (
-    <form onSubmit={submit} className="compose">
-      <ModeMenu mode={mode} onMode={onMode} />
-      <VisuallyHidden.Root asChild><label htmlFor="compose">{info.menu}</label></VisuallyHidden.Root>
+    <form onSubmit={submit} className="compose pop">
+      <VisuallyHidden.Root asChild><label htmlFor="compose">Tell Heel what's on your mind</label></VisuallyHidden.Root>
       <TextArea
         id="compose"
         ref={box}
         size="2"
         rows={1}
-        maxLength={info.maxLength}
+        maxLength={MAX_ASK_LENGTH}
         resize="none"
-        placeholder={info.placeholder}
-        value={draft}
+        placeholder="What's on your mind?"
+        value={p.draft}
         aria-describedby="compose-help"
-        onChange={(event) => onDraft(event.target.value)}
+        onChange={(event) => p.onDraft(event.target.value)}
         onKeyDown={onKey}
+        onFocus={p.onFocus}
+        onBlur={p.onBlur}
       />
-      <VisuallyHidden.Root asChild><p id="compose-help">Enter to go. Shift+Enter for a new line. Command N brings you here.</p></VisuallyHidden.Root>
-      <SendOrStop stoppable={stoppable} empty={empty} label={info.menu} onStop={onStop} />
+      <VisuallyHidden.Root asChild>
+        <p id="compose-help">Enter asks Heel. Command Enter adds it as a task. Escape closes. Command N brings you here.</p>
+      </VisuallyHidden.Root>
+      <ComposeRow {...p} empty={empty} />
     </form>
   );
 }

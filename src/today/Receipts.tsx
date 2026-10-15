@@ -1,37 +1,25 @@
-import { CheckIcon, ChevronRightIcon, ExclamationTriangleIcon } from "@radix-ui/react-icons";
+import { CheckIcon, ExclamationTriangleIcon } from "@radix-ui/react-icons";
 import { Button, Text } from "@radix-ui/themes";
-import { Collapsible } from "radix-ui";
-import { receiptSummary, type Receipt } from "./thread-model";
+import type { Receipt } from "./thread-model";
 
 type Props = { receipts: readonly Receipt[]; onUndo: (index: number) => void };
 
-/** What Heel did, folded to one line. Failures are named in the summary and open by default; each undoable write has its own Undo. */
+/** What Heel did, one quiet line each, always visible. Each undoable write has its own Undo; a failure is named, never hidden. */
 export function Receipts({ receipts, onUndo }: Props) {
   if (receipts.length === 0) return null;
-  const { text, hasFailure } = receiptSummary(receipts);
   return (
-    <Collapsible.Root defaultOpen={hasFailure} className="receipts">
-      <Collapsible.Trigger asChild>
-        <Button variant="ghost" size="1" color={hasFailure ? "amber" : "gray"}>
-          {hasFailure ? <ExclamationTriangleIcon aria-hidden="true" /> : <CheckIcon aria-hidden="true" />}
-          {text}
-          <ChevronRightIcon aria-hidden="true" className="chevron" />
-        </Button>
-      </Collapsible.Trigger>
-      <Collapsible.Content>
-        <ul className="receipt-list">
-          {receipts.map((receipt, index) => (
-            <li key={`${index}-${receipt.text}`} data-undone={receipt.undone || undefined}>
-              <Text size="1" color="gray" className="receipt-text">{receipt.text}</Text>
-              {receipt.undone ? (
-                <Text size="1" color="gray">Undone</Text>
-              ) : (
-                receipt.undo && <Button size="1" variant="ghost" onClick={() => onUndo(index)}>Undo</Button>
-              )}
-            </li>
-          ))}
-        </ul>
-      </Collapsible.Content>
-    </Collapsible.Root>
+    <ul className="receipt-list" aria-label="What Heel did">
+      {receipts.map((receipt, index) => (
+        <li key={`${index}-${receipt.text}`} data-undone={receipt.undone || undefined}>
+          {receipt.ok ? <CheckIcon aria-hidden="true" className="receipt-icon" /> : <ExclamationTriangleIcon aria-hidden="true" className="receipt-icon receipt-warn" />}
+          <Text size="1" color={receipt.ok ? "gray" : "amber"} className="receipt-text grow">{receipt.text}</Text>
+          {receipt.undone ? (
+            <Text size="1" color="gray">Undone</Text>
+          ) : (
+            receipt.undo && <Button size="1" variant="ghost" onClick={() => onUndo(index)}>Undo</Button>
+          )}
+        </li>
+      ))}
+    </ul>
   );
 }

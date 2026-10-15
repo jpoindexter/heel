@@ -11,11 +11,22 @@
   --ring-room: 6px; /* the focus ring (3px + 2px offset) must fit inside clipped scroll regions */
   --compose-max-height: 96px; /* the input grows to about four lines, then scrolls */
   --parked-max-height: 160px;
-  --reply-max-height: 30vh; /* a long answer scrolls inside itself; the tasks under it keep their room */
+  --reply-max-height: 38vh; /* a long answer scrolls inside itself; the tasks under it keep their room */
   --toast-gap: var(--space-2);
   --z-toast: 10;
   --chevron-turn: 90deg;
   --motion-fast: 150ms;
+  --motion-base: 220ms; /* things appearing: rise in (ease-out) */
+  --motion-exit: 160ms; /* things leaving: sink out (ease-in), always quicker than arriving */
+  --stagger: 40ms; /* the four round buttons roll out one after another */
+  --ease-out: cubic-bezier(0, 0, 0.2, 1);
+  --ease-in: cubic-bezier(0.4, 0, 1, 1);
+  --ease-snap: cubic-bezier(0.2, 0, 0, 1);
+  --press-scale: 0.96;
+  --rise-distance: 6px;
+  --roll-distance: 14px;
+  --bar-height: 36px;
+  --list-fade: 18px; /* the task list fades out at its bottom edge instead of cutting */
   --label-tracking: 0.08em;
   --tail-size: 10px; /* the panel's tail pointing at Greg */
   --tail-room: 28px; /* keeps the tail off the rounded corners */
@@ -28,6 +39,11 @@
 @media (prefers-reduced-motion: reduce) {
   .radix-themes {
     --motion-fast: 0ms;
+    --motion-base: 0ms;
+    --motion-exit: 0ms;
+    --stagger: 0ms;
+    --rise-distance: 0px;
+    --roll-distance: 0px;
   }
 }
 

@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useState } from "react";
 import { isNewTaskKey } from "./quick-add";
 
-/** Cmd+N from anywhere in the panel (Settings too): `onNewTask` brings the person to the input, set to Add. */
+/** Cmd+N from anywhere in the panel (Settings too): `onNewTask` brings the person to the box. */
 export function useNewTaskShortcut(onNewTask: () => void): void {
   useEffect(() => {
     const onKey = (event: KeyboardEvent) => {
@@ -14,14 +14,14 @@ export function useNewTaskShortcut(onNewTask: () => void): void {
   }, [onNewTask]);
 }
 
-/** Cmd+N: back to Today, input set to Add and focused. `focusSignal` changes each time, for the input to notice. */
-export function useNewTaskFocus(onShow: () => void, setMode: (mode: "add") => void): number {
+/** Cmd+N: back to Today, the chat card open and focused. `focusSignal` changes each time, for the box to notice. */
+export function useNewTaskFocus(onShow: () => void, openComposer: () => void): number {
   const [focusSignal, setFocusSignal] = useState(0);
   const onNewTask = useCallback(() => {
     onShow();
-    setMode("add");
+    openComposer();
     setFocusSignal((count) => count + 1);
-  }, [onShow, setMode]);
+  }, [onShow, openComposer]);
   useNewTaskShortcut(onNewTask);
   return focusSignal;
 }

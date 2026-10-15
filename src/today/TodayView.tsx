@@ -4,11 +4,11 @@ import { InboxPanel } from "../inbox/InboxPanel";
 import type { BrainSummary } from "../settings/brain-summary";
 import { Notifier } from "../ui/Notifier";
 import "./chat.css";
-import { Compose } from "./Compose";
 import { FirstRun } from "./FirstRun";
-import { QuickChips } from "./QuickChips";
 import { Reply } from "./Reply";
 import { TaskSection } from "./TaskSection";
+import { BottomBar } from "./BottomBar";
+import { useBarActions } from "./useBarActions";
 import { useNewTaskFocus } from "./useNewTaskShortcut";
 import { useTodayState } from "./useTodayState";
 
@@ -23,11 +23,13 @@ type Props = {
   onOpenSettings: () => void;
 };
 
-/** The whole panel body: tasks on top, the latest reply under them, one input at the bottom. Nothing else to learn. */
+/** The whole panel body: the latest reply, the tasks, and the bar at the bottom. Nothing else to learn. */
 export function TodayView({ showing, onShow, summary, reloadKey, onOpenSettings }: Props) {
   const state = useTodayState(showing, reloadKey);
-  const { tasks, thread, chat } = state;
-  const focusSignal = useNewTaskFocus(onShow, chat.setMode);
+  const { tasks, thread } = state;
+  const bar = useBarActions(state, onOpenSettings);
+  const focusSignal = useNewTaskFocus(onShow, bar.openComposer);
+  const emailReady = state.inbox.status?.connected ?? false;
 
   return (
     <div className="today">
@@ -49,25 +51,9 @@ export function TodayView({ showing, onShow, summary, reloadKey, onOpenSettings 
         <TaskSection state={state} />
         <InboxPanel digest={state.digest} />
       </div>
-      {chat.mode === "ask" && summary?.kind === "setup" && <FirstRun summary={summary} onOpenSettings={onOpenSettings} />}
-      <QuickChips
-        busy={thread.busy}
-        emailReady={state.inbox.status?.connected ?? false}
-        onChip={chat.onChip}
-        onEmail={() => void state.digest.check()}
-      />
+      {summary?.kind === "setup" && <FirstRun summary={summary} onOpenSettings={onOpenSettings} />}
       <div className="compose-zone"><Notifier notice={tasks.notice} onDismiss={tasks.dismissNotice} /></div>
-      <Compose
-        active={showing}
-        focusSignal={focusSignal}
-        mode={chat.mode}
-        draft={chat.draft}
-        busy={thread.busy}
-        onMode={chat.setMode}
-        onDraft={chat.setDraft}
-        onSubmit={() => void chat.submit()}
-        onStop={thread.stop}
-      />
+      <BottomBar state={state} bar={bar} showing={showing} focusSignal={focusSignal} emailReady={emailReady} />
     </div>
   );
 }
