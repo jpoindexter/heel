@@ -1,18 +1,19 @@
 import { useEffect, useState } from "react";
 import { invoke } from "@tauri-apps/api/core";
 import { listen } from "@tauri-apps/api/event";
-import { HEEL_STATES, isMotionName, motionDuration, type MotionName } from "./atlas";
+import { HEEL_STATES, motionDuration, parseMotionId, type MotionId } from "./sheets";
 import { Sprite } from "./Sprite";
 import { usePointerGestures } from "./usePointerGestures";
 import { MOTION_EVENT } from "../events";
 
 export function Mascot() {
-  const [base, setBase] = useState<MotionName>(HEEL_STATES.idle);
-  const [oneShot, setOneShot] = useState<MotionName | null>(null);
+  const [base, setBase] = useState<MotionId>(HEEL_STATES.idle);
+  const [oneShot, setOneShot] = useState<MotionId | null>(null);
 
   useEffect(() => {
     const unlisten = listen<unknown>(MOTION_EVENT, (event) => {
-      if (isMotionName(event.payload)) setBase(event.payload);
+      const motion = parseMotionId(event.payload);
+      if (motion) setBase(motion.id);
     });
     return () => void unlisten.then((off) => off());
   }, []);

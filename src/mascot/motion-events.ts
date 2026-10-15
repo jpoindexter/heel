@@ -1,14 +1,14 @@
 import { emit } from "@tauri-apps/api/event";
 import { MOTION_EVENT } from "../events";
-import { HEEL_STATES, motionDuration, type MotionName } from "./atlas";
+import { HEEL_STATES, motionDuration, type MotionId } from "./sheets";
 
 /** Tell the mascot window what to do. A plain browser preview has no mascot window, so failures are ignored. */
-export function setMotion(motion: MotionName): Promise<void> {
+export function setMotion(motion: MotionId): Promise<void> {
   return emit(MOTION_EVENT, motion).catch(() => undefined);
 }
 
 /** Play a one-shot pose, then go back to idle. */
-export async function playOnce(motion: MotionName): Promise<void> {
+export async function playOnce(motion: MotionId): Promise<void> {
   await setMotion(motion);
   window.setTimeout(() => void setMotion(HEEL_STATES.idle), motionDuration(motion));
 }

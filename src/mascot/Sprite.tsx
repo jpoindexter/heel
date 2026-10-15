@@ -1,51 +1,34 @@
-import { useEffect, useState } from "react";
+import { cellOrigin } from "./timeline";
+import { parseMotionId, type MotionId } from "./sheets";
 import { useHitRegion } from "./useHitRegion";
-import { CELL_H, CELL_W, MOTIONS, SHEET_H, SHEET_W, framePosition, type MotionName } from "./atlas";
+import { useSpriteClock } from "./useSpriteClock";
 
-const REDUCED_MOTION = "(prefers-reduced-motion: reduce)";
-// Greg's Dot-compatible sheet (same 8x11, 192x208 geometry). Riff's original stays at /mascot/riff.png.
-const SHEET_URL = "/mascot/greg.png";
+type Props = { motion: MotionId; label: string };
 
-function usePrefersReducedMotion(): boolean {
-  const [reduced, setReduced] = useState(() => window.matchMedia(REDUCED_MOTION).matches);
-  useEffect(() => {
-    const query = window.matchMedia(REDUCED_MOTION);
-    const onChange = (event: MediaQueryListEvent) => setReduced(event.matches);
-    query.addEventListener("change", onChange);
-    return () => query.removeEventListener("change", onChange);
-  }, []);
-  return reduced;
+/** Plays one animation from its sheet. Which sheet, how big a cell, how long each frame: all from the manifest. */
+export function Sprite({ motion, label }: Props) {
+  const found = parseMotionId(motion);
+  if (!found) return null;
+  return <SpritePlayer found={found} label={label} />;
 }
 
-export function Sprite({ motion, label }: { motion: MotionName; label: string }) {
-  const reduced = usePrefersReducedMotion();
-  const [frame, setFrame] = useState(0);
-
-  useEffect(() => {
-    setFrame(0);
-    if (reduced) return;
-    const { times } = MOTIONS[motion];
-    let index = 0;
-    let timer = window.setTimeout(function step() {
-      index = (index + 1) % times.length;
-      setFrame(index);
-      timer = window.setTimeout(step, times[index]);
-    }, times[0]);
-    return () => window.clearTimeout(timer);
-  }, [motion, reduced]);
-
-  useHitRegion(SHEET_URL, motion, frame);
-  const { x, y } = framePosition(motion, frame);
+function SpritePlayer({ found, label }: { found: NonNullable<ReturnType<typeof parseMotionId>>; label: string }) {
+  const { sheet, action } = found;
+  const { manifest } = sheet;
+  const frame = useSpriteClock(action.durationsMs, action.loop ?? true, found.id);
+  useHitRegion(sheet, action.row, frame);
+  const { x, y } = cellOrigin(manifest, action.row, frame);
   return (
     <div
       role="img"
       aria-label={label}
       style={{
-        width: CELL_W,
-        height: CELL_H,
-        backgroundImage: `url(${SHEET_URL})`,
-        backgroundSize: `${SHEET_W}px ${SHEET_H}px`,
-        backgroundPosition: `${x}px ${y}px`,
+        width: manifest.cellWidth,
+        height: manifest.cellHeight,
+        backgroundImage: `url(${sheet.url})`,
+        backgroundSize: `${manifest.width}px ${manifest.height}px`,
+        // 0 - n (not -n) so the first cell yields +0, never -0.
+        backgroundPosition: `${0 - x}px ${0 - y}px`,
         backgroundRepeat: "no-repeat",
       }}
     />
