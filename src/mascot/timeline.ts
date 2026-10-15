@@ -17,9 +17,11 @@ export function frameAt(durationsMs: readonly number[], elapsedMs: number, loop:
   return { index: durationsMs.length - 1, finished: false };
 }
 
-/** Top-left of a frame inside the sheet, in px. */
-export function cellOrigin(manifest: Pick<Manifest, "cellWidth" | "cellHeight">, row: number, frame: number): { x: number; y: number } {
-  return { x: manifest.cellWidth * frame, y: manifest.cellHeight * row };
+/** Top-left of a frame inside the sheet, in px. A wrapping sheet continues a row's frames on the rows below. */
+export function cellOrigin(manifest: Pick<Manifest, "cellWidth" | "cellHeight" | "columns" | "wrap">, row: number, frame: number): { x: number; y: number } {
+  const column = manifest.wrap ? frame % manifest.columns : frame;
+  const down = manifest.wrap ? Math.floor(frame / manifest.columns) : 0;
+  return { x: manifest.cellWidth * column, y: manifest.cellHeight * (row + down) };
 }
 
 /** The sample closest to `degrees` on a circle (so 359 is next to 0). */

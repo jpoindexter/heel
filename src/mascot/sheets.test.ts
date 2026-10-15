@@ -2,7 +2,8 @@ import { createHash } from "node:crypto";
 import { existsSync, readFileSync } from "node:fs";
 import { describe, expect, it } from "vitest";
 import { isLookRow } from "./manifest";
-import { DOT_SHEET, HEEL_STATES, SHEETS, SMOOTH_SHEET, isMotionId, motionDuration, parseMotionId } from "./sheets";
+import { DOT_SHEET, HEEL_STATES, PUPPY_SHEETS, SHEETS, SMOOTH_SHEET, isMotionId, motionDuration, parseMotionId } from "./sheets";
+import { LOOK_CLIP, PUPPY_PACK } from "./puppy";
 
 const PNG_RGBA_COLOR_TYPE = 6;
 
@@ -88,5 +89,41 @@ describe("look poses", () => {
 
   it("play actions with their own timings and no fixed pose", () => {
     expect(parseMotionId("smooth:rest")).toMatchObject({ pose: null, loop: true, row: 5 });
+  });
+});
+
+describe("the puppy pack (A8)", () => {
+  const source = JSON.parse(readFileSync("assets/heel/puppy-v1/final/manifest.json", "utf8")) as { animations: Record<string, { frameCount: number; loop: boolean; frames: { durationMs: number }[] }> };
+
+  it("carries every clip of the source pack with the same frame counts, timings and loop flags", () => {
+    expect(Object.keys(PUPPY_PACK.clips).sort()).toEqual(Object.keys(source.animations).sort());
+    for (const [name, clip] of Object.entries(source.animations)) {
+      const ours = PUPPY_PACK.clips[name]!;
+      expect(ours.frames, name).toBe(clip.frameCount);
+      expect(ours.loop, name).toBe(clip.loop);
+      expect(ours.durationsMs, name).toEqual(clip.frames.map((f) => f.durationMs));
+    }
+  });
+
+  it("has a 2x WebP grid on disk for every clip, as wide as its columns say", () => {
+    for (const [name, clip] of Object.entries(PUPPY_PACK.clips)) {
+      const path = `public/mascot/puppy/${name}.webp`;
+      expect(existsSync(path), path).toBe(true);
+      const bytes = readFileSync(path);
+      expect(bytes.subarray(0, 4).toString("ascii"), name).toBe("RIFF");
+      const sheet = PUPPY_SHEETS.get(name)!;
+      expect(sheet.manifest.width).toBe(clip.columns * PUPPY_PACK.cellWidth);
+      expect(sheet.manifest.height).toBe(Math.ceil(clip.frames / clip.columns) * PUPPY_PACK.cellHeight);
+    }
+  });
+
+  it("plays a clip by name, a gaze by frame, and nothing that is not in the pack", () => {
+    expect(parseMotionId("puppy:idle")?.loop).toBe(true);
+    expect(parseMotionId("puppy:wave")?.loop).toBe(false);
+    expect(motionDuration("puppy:wave")).toBe(1882);
+    expect(parseMotionId(`puppy:${LOOK_CLIP}#15`)?.pose).toBe(15);
+    expect(parseMotionId(`puppy:${LOOK_CLIP}#16`)).toBeNull();
+    expect(parseMotionId("puppy:no-such-clip")).toBeNull();
+    for (const id of Object.values(HEEL_STATES)) expect(isMotionId(id), id).toBe(true);
   });
 });

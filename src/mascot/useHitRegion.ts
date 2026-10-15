@@ -7,9 +7,9 @@ import { cellOrigin } from "./timeline";
 const cache = new Map<string, Box | null>();
 const pixelsBySheet = new Map<string, Promise<ImageData | null>>();
 
-/** A sheet's pixels, read once. Null when it can't be read (then the whole window stays clickable). */
+/** A sheet's pixels, read once per image (the puppy clips share one id but each has its own file). Null when it can't be read (then the whole window stays clickable). */
 function loadPixels(sheet: Sheet): Promise<ImageData | null> {
-  const known = pixelsBySheet.get(sheet.id);
+  const known = pixelsBySheet.get(sheet.url);
   if (known) return known;
   const { width, height } = sheet.manifest;
   const loading = new Promise<ImageData | null>((resolve) => {
@@ -19,18 +19,19 @@ function loadPixels(sheet: Sheet): Promise<ImageData | null> {
       canvas.width = width;
       canvas.height = height;
       const context = canvas.getContext("2d", { willReadFrequently: true });
-      context?.drawImage(image, 0, 0);
+      // Drawn at the manifest's logical size: a 2x sheet is sampled down, so the box comes out in logical px.
+      context?.drawImage(image, 0, 0, width, height);
       resolve(context?.getImageData(0, 0, width, height) ?? null);
     };
     image.onerror = () => resolve(null);
     image.src = sheet.url;
   });
-  pixelsBySheet.set(sheet.id, loading);
+  pixelsBySheet.set(sheet.url, loading);
   return loading;
 }
 
 function boxFor(sheet: Sheet, pixels: ImageData, row: number, frame: number): Box | null {
-  const key = `${sheet.id}:${row}:${frame}`;
+  const key = `${sheet.url}:${row}:${frame}`;
   if (!cache.has(key)) {
     const { cellWidth, cellHeight } = sheet.manifest;
     cache.set(key, opaqueBounds(pixels, { ...cellOrigin(sheet.manifest, row, frame), width: cellWidth, height: cellHeight }));

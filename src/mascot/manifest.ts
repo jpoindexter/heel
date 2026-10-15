@@ -26,8 +26,13 @@ export const ManifestSchema = z.object({
   columns: z.number().int().positive(),
   cellWidth: z.number().int().positive(),
   cellHeight: z.number().int().positive(),
+  /** Frames wrap onto the next row after `columns` (one clip per sheet, as the puppy pack is laid out). */
+  wrap: z.boolean().optional(),
   rows: z.array(z.union([ActionRowSchema, LookRowSchema])),
 });
+
+/** How many sheet rows a row's frames take: one, or more when they wrap. */
+export const rowSpan = (manifest: Pick<Manifest, "columns" | "wrap">, frames: number): number => (manifest.wrap ? Math.ceil(frames / manifest.columns) : 1);
 
 export type Manifest = z.output<typeof ManifestSchema>;
 export type ActionRow = z.output<typeof ActionRowSchema>;
@@ -47,8 +52,8 @@ export function validateManifest(manifest: Manifest): string[] {
   for (const row of manifest.rows) {
     if (names.has(row.name)) problems.push(`"${row.name}" appears twice`);
     names.add(row.name);
-    if ((row.row + 1) * manifest.cellHeight > manifest.height) problems.push(`"${row.name}" is on row ${row.row}, below the sheet`);
-    if (row.frames > manifest.columns) problems.push(`"${row.name}" has ${row.frames} frames but the sheet has ${manifest.columns} columns`);
+    if ((row.row + rowSpan(manifest, row.frames)) * manifest.cellHeight > manifest.height) problems.push(`"${row.name}" is on row ${row.row}, below the sheet`);
+    if (!manifest.wrap && row.frames > manifest.columns) problems.push(`"${row.name}" has ${row.frames} frames but the sheet has ${manifest.columns} columns`);
     if (isActionRow(row) && row.durationsMs.length !== row.frames) problems.push(`"${row.name}" has ${row.frames} frames but ${row.durationsMs.length} durations`);
     if (isLookRow(row) && row.anglesDegrees.length !== row.frames) problems.push(`"${row.name}" has ${row.frames} frames but ${row.anglesDegrees.length} angles`);
   }

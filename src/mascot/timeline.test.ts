@@ -37,7 +37,7 @@ describe("frameAt (one-shot)", () => {
 
 describe("cellOrigin", () => {
   it("is the top-left of a frame in a grid", () => {
-    expect(cellOrigin({ cellWidth: 192, cellHeight: 208 }, 3, 2)).toEqual({ x: 384, y: 624 });
+    expect(cellOrigin({ cellWidth: 192, cellHeight: 208, columns: 8 }, 3, 2)).toEqual({ x: 384, y: 624 });
   });
 });
 
@@ -54,5 +54,17 @@ describe("nearestAngleIndex", () => {
     expect(nearestAngleIndex(angles, 359)).toBe(0);
     expect(nearestAngleIndex(angles, -10)).toBe(0);
     expect(nearestAngleIndex(angles, 725)).toBe(0);
+  });
+});
+
+describe("cellOrigin on a wrapping sheet", () => {
+  it("continues a row's frames on the rows below after `columns`", () => {
+    const sheet = { cellWidth: 192, cellHeight: 208, columns: 16, wrap: true };
+    expect(cellOrigin(sheet, 0, 3)).toEqual({ x: 576, y: 0 });
+    expect(cellOrigin(sheet, 0, 16)).toEqual({ x: 0, y: 208 });
+    expect(cellOrigin(sheet, 0, 95)).toEqual({ x: 15 * 192, y: 5 * 208 });
+  });
+  it("never wraps a plain sheet", () => {
+    expect(cellOrigin({ cellWidth: 192, cellHeight: 208, columns: 8 }, 2, 5)).toEqual({ x: 960, y: 416 });
   });
 });

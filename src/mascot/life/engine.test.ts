@@ -83,7 +83,7 @@ describe("behaviours", () => {
       if (plan?.behavior === "walk") walk = plan;
     }
     expect(walk).not.toBeNull();
-    expect(walk!.steps[0]!.motion).toBe("smooth:listening");
+    expect(walk!.steps[0]!.motion).toBe("puppy:listening");
     expect(["left", "right"]).toContain(walk!.walk!.direction);
   });
 });
@@ -94,7 +94,7 @@ describe("sleep", () => {
     const state = idleFor(SLEEP_AFTER_MS.calm, initialState(0, "calm", rng));
     const { state: next, plan } = decide(state, ctx({ now: 0 }), rng);
     expect(plan?.behavior).toBe("sleep");
-    expect(plan!.steps.at(-1)).toEqual({ motion: "smooth:rest", ms: Infinity });
+    expect(plan!.steps.at(-1)).toEqual({ motion: "puppy:rest", ms: Infinity });
     expect(next.sleeping).toBe(true);
     expect(decide(next, ctx({ now: 99 * MIN }), rng).plan).toBeNull();
   });

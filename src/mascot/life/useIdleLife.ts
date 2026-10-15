@@ -7,6 +7,15 @@ import { decide, initialState, interact, type LifeState } from "./engine";
 import { usePlanPlayer } from "./usePlanPlayer";
 
 const TICK_MS = 1_000;
+/** Bathroom gags are opt-in: `localStorage["heel:gags"] = "on"` (a Settings switch comes with N4). */
+export const GAGS_STORAGE_KEY = "heel:gags";
+const gagsOn = (): boolean => {
+  try {
+    return window.localStorage.getItem(GAGS_STORAGE_KEY) === "on";
+  } catch {
+    return false;
+  }
+};
 
 type Options = {
   activity: Activity;
@@ -50,7 +59,7 @@ export function useIdleLife({ activity, panelOpen, busy, setLifeMotion }: Option
 
   useEffect(() => {
     const timer = window.setInterval(() => {
-      const ctx = { now: Date.now(), activity, panelOpen, focusActive: busy, reducedMotion, canWalk: true };
+      const ctx = { now: Date.now(), activity, panelOpen, focusActive: busy, reducedMotion, canWalk: true, gags: gagsOn() };
       const result = decide(state.current, ctx, Math.random);
       state.current = result.state;
       setAsleep(result.state.sleeping);

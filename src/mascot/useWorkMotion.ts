@@ -1,14 +1,16 @@
 import { useEffect, useState } from "react";
-import { MOTIONS } from "./life/config";
+import { CLIP_MS, MOTIONS } from "./life/config";
 import { startWalk, stopWalk, walkFinished, type Direction } from "./life/walk";
 import { HEEL_STATES, type MotionId } from "./sheets";
 import { nextPaceLeg, PACE_DISTANCE_PX, PACE_PAUSE_MS, workVisual, type WorkContext, type WorkVisual } from "./work";
 
 const wait = (ms: number) => new Promise<void>((resolve) => window.setTimeout(resolve, ms));
 
-/** Short legs left and right until told to stop; between legs he stands and thinks. */
-function usePacing(active: boolean): Direction | null {
-  const [leg, setLeg] = useState<Direction | null>(null);
+type Leg = Direction | "turn" | null;
+
+/** Short legs left and right until told to stop. After a leg to the right he turns around (the authored turn faces right to left); after a leg to the left he just pauses and thinks. */
+function usePacing(active: boolean): Leg {
+  const [leg, setLeg] = useState<Leg>(null);
   useEffect(() => {
     if (!active) return;
     let alive = true;
@@ -21,6 +23,11 @@ function usePacing(active: boolean): Direction | null {
         if (started) {
           setLeg(started.direction);
           await walkFinished(started.duration_ms);
+          if (!alive) return;
+          if (started.direction === "right") {
+            setLeg("turn");
+            await wait(CLIP_MS.turnAround);
+          }
           setLeg(null);
         }
         await wait(PACE_PAUSE_MS);
@@ -43,6 +50,7 @@ function usePacing(active: boolean): Direction | null {
 export function useWorkMotion(context: WorkContext): WorkVisual & { motion: MotionId | null } {
   const visual = workVisual(context);
   const leg = usePacing(visual.move === "pace");
-  const motion = !context.working ? null : leg === "left" ? MOTIONS.runLeft : leg === "right" ? MOTIONS.runRight : HEEL_STATES.thinking;
+  const still = context.panelOpen ? HEEL_STATES.reviewing : HEEL_STATES.thinking;
+  const motion = !context.working ? null : leg === "left" ? MOTIONS.runLeft : leg === "right" ? MOTIONS.runRight : leg === "turn" ? MOTIONS.turnAround : still;
   return { ...visual, motion };
 }
