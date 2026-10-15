@@ -26,3 +26,6 @@ Captured: 2026-10-15. Why parked: needs a transparent Tauri window (macOS privat
 
 ## Chip shows a short label in the thread (not the full prompt)
 Captured: 2026-10-15. Why parked: Plan/Stuck send a long prompt that shows as the person's message. Honest but noisy. Cost: small.
+
+## Panel placement fallback: flip below Greg (or beside) when there is no room above
+Captured: 2026-10-15. Why parked: seen in the real window: with the panel open Greg can't be dragged into the upper part of the screen (the panel hits the menu bar and pulls Greg back). Fix = place the panel below/beside Greg when above doesn't fit. Cost: small-medium (placement.rs + tests).

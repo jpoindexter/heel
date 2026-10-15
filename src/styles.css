@@ -14,6 +14,8 @@
   --space-4: 16px;
   --radius: 8px;
   --target: 44px;
+  /* The 3px focus ring + 2px offset must fit inside clipped scroll regions. */
+  --ring-room: 6px;
 }
 
 /* A hidden tab must really be hidden, whatever display its class sets. */
@@ -306,6 +308,7 @@ body,
   flex-direction: column;
   min-height: 0;
   gap: var(--space-2);
+  padding: var(--ring-room);
 }
 
 .chat > * {
