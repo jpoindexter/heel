@@ -1,0 +1,2 @@
+- [2026-10-15 smooth-scroll-reads-as-scroll-up](2026-10-15-smooth-scroll-reads-as-scroll-up.md) — When auto-follow logic reads scroll position, scroll instantly for programmatic jumps that must leave the view in follow mode.
+- [2026-10-15 typecheck-both-projects](2026-10-15-typecheck-both-projects.md) — Before claiming typecheck passes, run the project's own `typecheck` script, not a bare `tsc`.
