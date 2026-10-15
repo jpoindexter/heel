@@ -49,3 +49,17 @@ Sentence case, verb-led buttons, plain words, no exclamation marks, no streaks, 
 
 ## Not yet decided
 Mascot art: Riff sheet is the placeholder; Greg sheet in progress elsewhere. Persona skins (day/night): parked to v2.
+
+## Settings tab (panel tabs: Today | Settings)
+Built per slice, not as one big slice: each feature ships its own setting. Defaults must work with zero settings touched.
+
+| Group | Controls | Ships with |
+|---|---|---|
+| Brain | Agent/provider: Claude (subscription CLI), Codex (subscription CLI), Local (Ollama), API key. Model picker filled from what the provider reports (Ollama list, API models list; CLI default otherwise). "Test connection" button. Shows signed-in / not installed / sign-in required per provider. | S4 (v0, minimal) |
+| Privacy | "What was sent" log, per-source toggles (Inbox on/off), Data location, Export, Delete all | S7 / v1 |
+| Quiet | Interrupt budget (default 3/day), quiet hours, sound (default off), Off mode | S8 |
+| Capacity | Normal / Low / Off, set by user only | v1 |
+| Mascot | Character (Riff now, Greg when ready), size, reset position, launch at login, hotkey | S1 follow-up |
+| Skills | List of vendored nd-skills, on/off each, read text. Transparency, not tuning | v1 |
+
+Rules: sentence-case labels, one setting per row with helper text, changes apply immediately with Undo (no Save button), every control keyboard-reachable, destructive items (Delete all data) grouped last with a named-consequence confirmation ("Delete all tasks and notes? This can't be undone. [Delete data] [Keep]"). Never list a model that the provider didn't report.
