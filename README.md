@@ -1,4 +1,4 @@
-# greg-agent
+# Heel
 
 Desktop AI companion for neurodivergent focus: a floating mascot that holds tasks, reads the inbox, catches rabbit holes, and acts as a small business coach.
 

@@ -1,4 +1,4 @@
-# PRD — ND desktop companion (working name: greg-agent)
+# PRD — Heel (ND desktop companion)
 
 **One-liner:** A floating desktop mascot that holds my tasks, reads my inbox, catches rabbit holes, and coaches my business, built for an autistic/ADHD brain.
 

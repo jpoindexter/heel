@@ -25,3 +25,9 @@ Reversible? Yes.
 ## 2026-10-15 — Interrupt policy
 Choice: silent by default, speaks at time-box end or when opened, budget 3/day, one-click Off. Nudges are timers/templates, not LLM calls.
 Reversible? Yes (budget number is a setting).
+
+## 2026-10-15 — Product name: Heel
+Choice: Heel (dog command: stay close by my side). Repo jpoindexter/heel (private).
+Alternatives: Fetch, Tether, Stay.
+Why: fits a quiet, close companion; nod to Greg the dog without reusing the Greg name (Greg stays the nutrition app for now). No collisions found on GitHub or a web search; this is not a trademark search.
+Reversible? Yes (repo rename is one command). Greg nutrition app rename: undecided, not touched.
