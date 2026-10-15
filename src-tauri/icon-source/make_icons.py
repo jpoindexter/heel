@@ -50,22 +50,27 @@ def app_icon(greg: Image.Image) -> Image.Image:
 
 
 def tray_icon(greg: Image.Image) -> Image.Image:
-    """Black sitting dog with the eyes and chest bib cut out: macOS recolours a template image to fit the menu bar."""
-    box = (290, 110, 1015, 1140)
+    """Black dog face for the menu bar: macOS recolours a template image to fit the bar.
+
+    A flat silhouette of Greg reads as a ghost at 22px (no ears, no muzzle), so the inner outline strokes and the bright
+    areas (muzzle, chest bib, eye highlights) are carved out of it: that is what makes ears, eyes and nose show.
+    """
+    box = (300, 80, 930, 700)  # head and shoulders, source coordinates
+    pad = 2
     body = greg.crop(box)
-    silhouette = body.getchannel("A").filter(ImageFilter.GaussianBlur(1.5)).point(lambda a: 255 if a > 110 else 0)
-    holes = Image.new("L", body.size, 0)
-    draw = ImageDraw.Draw(holes)
-    for cx in (497, 714):  # eyes, source coordinates
-        draw.ellipse((cx - box[0] - 26, 248 - box[1] - 26, cx - box[0] + 26, 248 - box[1] + 26), fill=255)
-    bib = [(560, 490), (640, 490), (655, 600), (640, 640), (655, 720), (610, 880), (600, 890), (585, 800), (550, 690), (590, 620), (575, 540)]
-    draw.polygon([(x - box[0], y - box[1]) for x, y in bib], fill=255)
-    silhouette = ImageChops.subtract(silhouette, holes)
-    side = max(silhouette.size)
+    silhouette = body.getchannel("A").filter(ImageFilter.GaussianBlur(1.0)).point(lambda a: 255 if a > 110 else 0)
+    luma = body.convert("L")
+    inner = silhouette.filter(ImageFilter.MinFilter(9))  # never carve the outer edge
+    carve = ImageChops.lighter(luma.point(lambda v: 255 if v > 175 else 0), luma.point(lambda v: 255 if v < 60 else 0))
+    carve = ImageChops.multiply(carve, inner).filter(ImageFilter.MaxFilter(3))
+    face = ImageChops.subtract(silhouette, carve)
+    side = max(face.size)
     square = Image.new("L", (side, side), 0)
-    square.paste(silhouette, ((side - silhouette.width) // 2, (side - silhouette.height) // 2))
+    square.paste(face, ((side - face.width) // 2, (side - face.height) // 2))
+    layer = Image.new("L", (TRAY_PX, TRAY_PX), 0)
+    layer.paste(square.resize((TRAY_PX - 2 * pad,) * 2, Image.LANCZOS), (pad, pad))
     icon = Image.new("RGBA", (TRAY_PX, TRAY_PX), (0, 0, 0, 0))
-    icon.putalpha(square.resize((TRAY_PX, TRAY_PX), Image.LANCZOS))
+    icon.putalpha(layer)
     return icon
 
 
