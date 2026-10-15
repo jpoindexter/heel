@@ -9,7 +9,7 @@ use tauri::{
     AppHandle, Emitter, Manager,
 };
 
-use crate::constants::{APP_SETTINGS_ID, OPEN_SETTINGS_EVENT, PANEL_LABEL, SETTINGS_VIEW, TRAY_ICON_PX, TRAY_ICON_RGBA, TRAY_SETTINGS_ID};
+use crate::constants::{APP_SETTINGS_ID, OPEN_SETTINGS_EVENT, PANEL_LABEL, SETTINGS_VIEW, TRAY_ICON_PX, TRAY_ICON_RGBA, TRAY_SETTINGS_ID, TRAY_SHOW_GREG_ID};
 use crate::panel_window::{reveal_panel, toggle_panel};
 
 /// A view the panel should open on next (set by the menu bar before the panel is shown or loaded).
@@ -50,15 +50,17 @@ pub(crate) fn build_app_menu(app: &AppHandle) -> tauri::Result<()> {
 
 pub(crate) fn build_tray(app: &AppHandle) -> tauri::Result<()> {
     let toggle = MenuItem::with_id(app, "toggle", "Show / hide panel", true, None::<&str>)?;
+    let show_greg = MenuItem::with_id(app, TRAY_SHOW_GREG_ID, "Show Greg", true, None::<&str>)?;
     let settings = MenuItem::with_id(app, TRAY_SETTINGS_ID, "Settings…", true, Some("CmdOrCtrl+,"))?;
     let quit = MenuItem::with_id(app, "quit", "Quit Heel", true, None::<&str>)?;
-    let menu = Menu::with_items(app, &[&toggle, &settings, &PredefinedMenuItem::separator(app)?, &quit])?;
+    let menu = Menu::with_items(app, &[&toggle, &show_greg, &settings, &PredefinedMenuItem::separator(app)?, &quit])?;
     TrayIconBuilder::new()
         .icon(Image::new(TRAY_ICON_RGBA, TRAY_ICON_PX, TRAY_ICON_PX))
         .icon_as_template(true)
         .menu(&menu)
         .on_menu_event(|app, event| match event.id.as_ref() {
             "toggle" => toggle_panel(app),
+            TRAY_SHOW_GREG_ID => crate::mascot_menu::show_mascot(app),
             TRAY_SETTINGS_ID => open_settings(app),
             "quit" => app.exit(0),
             _ => {}

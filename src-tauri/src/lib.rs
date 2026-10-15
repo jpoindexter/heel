@@ -3,16 +3,17 @@ mod commands;
 mod constants;
 mod dock;
 mod hit_region;
+mod mascot_menu;
 mod menus;
 mod panel_size;
 mod panel_window;
 mod placement;
 
 use commands::{sidecar_info, toggle_panel_command};
-use constants::APP_SETTINGS_ID;
 use dock::Dock;
 use hit_region::{set_mascot_hit_region, set_mascot_pressed, HitRegion};
-use menus::{open_settings, take_pending_view, PendingView};
+use mascot_menu::show_mascot_menu;
+use menus::{take_pending_view, PendingView};
 use panel_window::{panel_is_visible, reveal_panel, show_panel, toggle_panel};
 use tauri_plugin_global_shortcut::{Code, Modifiers, Shortcut, ShortcutState};
 
@@ -41,12 +42,8 @@ pub fn run() {
                 })
                 .build(),
         )
-        .on_menu_event(|app, event| {
-            if event.id().as_ref() == APP_SETTINGS_ID {
-                open_settings(app);
-            }
-        })
-        .invoke_handler(tauri::generate_handler![toggle_panel_command, sidecar_info, take_pending_view, set_mascot_hit_region, set_mascot_pressed])
+        .on_menu_event(|app, event| mascot_menu::on_menu_event(app, event.id().as_ref()))
+        .invoke_handler(tauri::generate_handler![toggle_panel_command, sidecar_info, take_pending_view, set_mascot_hit_region, set_mascot_pressed, show_mascot_menu])
         .setup(app_setup::setup)
         .build(tauri::generate_context!())
         .expect("error while building Heel")

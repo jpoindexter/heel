@@ -15,3 +15,9 @@ pub(crate) const TRAY_ICON_PX: u32 = 44;
 pub(crate) const MARGIN_LOGICAL_PX: f64 = 24.0;
 pub(crate) const PANEL_GAP_LOGICAL_PX: f64 = 8.0;
 pub(crate) const DOCK_CLEARANCE_MULTIPLIER: i32 = 3;
+/// Right-click menu on Greg, and the tray's "Show Greg". One id each.
+pub(crate) const MASCOT_MENU_TOGGLE_ID: &str = "mascot-toggle";
+pub(crate) const MASCOT_MENU_SETTINGS_ID: &str = "mascot-settings";
+pub(crate) const MASCOT_MENU_HIDE_ID: &str = "mascot-hide";
+pub(crate) const MASCOT_MENU_QUIT_ID: &str = "mascot-quit";
+pub(crate) const TRAY_SHOW_GREG_ID: &str = "tray-show-greg";
