@@ -11,13 +11,13 @@ Me (senior UX + solo dev, autism + ADHD + dyslexia + aphantasia). Second user la
 ## v0 done criteria
 - [ ] One full workday on my Mac using it
 - [ ] It held my tasks (add, complete, remove, survives restart)
-- [ ] Inbox digest: <=3 actions, literal one-line summaries, add as task in one click
+- [ ] Inbox digest: <=3 actions, literal one-line summaries, add as task in one click (Apple Mail on this Mac, no keys to paste)
 - [ ] One declared focus time-box ran with an end check-in ("where are you vs [goal verbatim]")
 - [ ] It never sent/deleted anything and never spoke past the interrupt budget
 - [x] Settings > Brain: choose provider and model, test connection (Claude, Codex and Ollama each ran a real turn; picker confirmed in the real window 2026-10-15)
 
 ## In scope (v0)
-Floating mascot (placeholder art), panel with tasks + ask box + <=3 chips, brain-dump capture, focus session, interrupt budget + Off, read-only Gmail digest, local SQLite.
+Floating mascot (placeholder art), panel with tasks + ask box + <=3 chips, brain-dump capture, focus session, interrupt budget + Off, mail digest from Apple Mail (read), open a message, reply or draft with a preview first, local SQLite.
 
 ## Out of scope (see PARKED.md / Trello v1, v2+)
 Passive drift detection, calendar, business-coach weekly review, autism layer, drafts/sync, skins, voice, Windows, local-first private mode polish.
@@ -25,7 +25,7 @@ Passive drift detection, calendar, business-coach weekly review, autism layer, d
 ## Constraints
 - macOS first, Tauri 2 shell, Hono sidecar, SQLite, React, TS strict, Zod at boundaries
 - Silent by default; no sound; reduced-motion respected
-- Autonomy: read-only + local writes auto; external drafts confirm; sends never
+- Autonomy: read-only + local writes auto; external drafts open in Mail unsent; a send happens only after the person presses Send on a preview in Heel (never by the AI on its own)
 - Model proposes, app disposes (typed actions validated before execution)
 
 ## Non-goals

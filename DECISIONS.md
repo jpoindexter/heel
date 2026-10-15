@@ -181,3 +181,11 @@ Alternatives tried in the prototype (9 rounds): a mode button (Add/Ask/Park) + c
 Why: "it should be one or two buttons, super simple, like the AI chat apps"; "four buttons, round, with icons, spread across the width". The Claude iOS composer was the named reference.
 Cost: Enter now waits for the AI (N6's instant add moved to ⌘↩ / + › Add task). Swap is one line in `src/today/bar-model.ts` if S9 shows the wait hurts.
 Evidence: docs/design/n2/README.md, prototype artifact 6uazHQ2GhAUqk7d32SkcKv. Reversible? Yes.
+
+## 2026-10-15 — N11: mail through Apple Mail on this Mac, nothing sent without a preview
+Choice: Heel reads unread mail, opens messages, replies and drafts through Apple Mail via macOS Automation (JXA over osascript), not through a Google OAuth client. Reading never changes anything. The AI may only *open* a draft (`draft_email`); a send happens only when the person presses Send on Heel's preview card (`POST /mail/reply/send`), which no other code path calls. "Open in Mail" leaves it unsent there.
+Alternatives: Vanta's companion API (needs Vanta running; the spike showed it writes without asking); driving Gmail in the browser (fragile). Jason chose Apple Mail (his Gmail is set up in it).
+Why: "we shouldn't have to give it Gmail code… just take control, open things, read things, write things if I want it, should show previews."
+PRD change: "sends never" → "sends only after the person presses Send on a preview". The S7 Gmail OAuth code stays as a fallback, unwired.
+Watch: in a real turn the model also completed an existing task while drafting. Receipts + Undo caught it; if it repeats, split "mail" turns from task writes in the prompt.
+Evidence: docs/N11-MAIL.md. Reversible? Yes (routes and one action; nothing stored).

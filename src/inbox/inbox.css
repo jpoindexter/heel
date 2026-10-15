@@ -25,10 +25,26 @@
 }
 
 .inbox-sent {
-  max-height: var(--drawer-reserved-height);
+  max-height: var(--reply-max-height);
   margin: var(--space-2) 0 0;
   overflow: auto;
   font-size: var(--font-size-1);
   white-space: pre-wrap;
   overflow-wrap: anywhere;
+}
+
+.inbox-thread {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.reply-ask,
+.reply-preview {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  padding: var(--space-2) var(--space-3);
+  background: var(--gray-a3);
+  border-radius: var(--radius-4);
 }

@@ -71,13 +71,13 @@ export function useInboxConnection(client: Client, active: boolean): InboxAction
 
 export type DigestState = { phase: "idle" } | { phase: "loading" } | { phase: "error"; message: string } | { phase: "ready"; digest: DigestDto; added: readonly string[] };
 
-/** "Check email": ask for the digest and add items as tasks, once each. */
+/** "Email": ask for the digest (Apple Mail on this Mac) and add items as tasks, once each. */
 export function useDigest(client: Client, onTaskAdded: () => void) {
   const [state, setState] = useState<DigestState>({ phase: "idle" });
 
   const check = useCallback(async () => {
     setState({ phase: "loading" });
-    const result = await client.post("/inbox/digest", DigestSchema);
+    const result = await client.post("/mail/digest", DigestSchema);
     setState(result.ok ? { phase: "ready", digest: result.data, added: [] } : { phase: "error", message: result.error.message });
   }, [client]);
 

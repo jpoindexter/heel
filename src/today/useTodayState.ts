@@ -1,6 +1,7 @@
 import { useEffect } from "react";
 import { client } from "../api/default-client";
-import { useDigest, useInboxConnection } from "../inbox/useInbox";
+import { useDigest } from "../inbox/useInbox";
+import { useMailStatus, useOpenMail, useReplyFlow } from "../inbox/useMail";
 import { nowCard } from "./today-model";
 import { useChatActions } from "./useChatActions";
 import { useTasks } from "./useTasks";
@@ -23,7 +24,9 @@ export function useTodayState(active: boolean, reloadKey: number) {
 
   const ready = tasks.state.phase === "ready" ? tasks.state : null;
   const focus = useTodayFocus(client, active, tasks, ready);
-  const inbox = useInboxConnection(client, active);
+  const mail = useMailStatus(client, active);
   const digest = useDigest(client, refresh);
-  return { tasks, thread, chat, ready, now: ready ? nowCard(ready.tasks) : null, focus, inbox, digest };
+  const reply = useReplyFlow(client, tasks.showNotice);
+  const openMail = useOpenMail(client, tasks.showNotice);
+  return { tasks, thread, chat, ready, now: ready ? nowCard(ready.tasks) : null, focus, mail, digest, reply, openMail };
 }

@@ -2,3 +2,4 @@
 - [2026-10-15 typecheck-both-projects](2026-10-15-typecheck-both-projects.md) — Before claiming typecheck passes, run the project's own `typecheck` script, not a bare `tsc`.
 - [2026-10-15 drive-real-tauri-window](2026-10-15-drive-real-tauri-window.md) — When synthetic input is blocked, drive a dev-served webview through the dev server's websocket and read window geometry from the OS window list; never commit the driver and restore user data afterwards.
 - [2026-10-15 flex-scroll-column-shrinks-rows](2026-10-15-flex-scroll-column-shrinks-rows.md) — In a scrolling flex column, give the children `flex: none`; an explicit `min-height` on them re-enables shrinking below their content.
+- [2026-10-15 patch-asserts-its-target](2026-10-15-patch-asserts-its-target.md) — A scripted text edit asserts its anchor exists before replacing; patch the file `rg` named, not where the symbol is defined.

@@ -7,6 +7,9 @@ import { runCommand } from "../agent/providers/process";
 import { macKeychain } from "../inbox/keychain";
 import { openUrl } from "../inbox/open-url";
 import { createInbox } from "../inbox/service";
+import { osascriptJxa } from "../mail/jxa";
+import { appleMail } from "../mail/source";
+import { mailAppExists } from "../mail/available";
 import { openStore } from "../store/store";
 import { createApp, DEV_ORIGIN, TAURI_ORIGINS } from "./app";
 import { findRunningHelper, removeConnectionFile, writeConnectionFile } from "./connection-file";
@@ -29,7 +32,8 @@ if (running) {
 const store = openStore({ path: join(dir, DB_FILE) });
 const token = randomBytes(TOKEN_BYTES).toString("hex");
 const inbox = createInbox({ fetch, secrets: macKeychain(runCommand), now: Date.now, openUrl });
-const app = createApp({ store, providers: createProviders(), inbox, token, allowedOrigins: [DEV_ORIGIN, ...TAURI_ORIGINS] });
+const mail = appleMail(osascriptJxa(runCommand), runCommand);
+const app = createApp({ store, providers: createProviders(), inbox, mail, mailAvailable: mailAppExists(), token, allowedOrigins: [DEV_ORIGIN, ...TAURI_ORIGINS] });
 
 // Port 0 = let the OS pick a free port; the panel finds it in the connection file.
 const server = serve({ fetch: app.fetch, hostname: HOST, port: 0 }, (info) => {

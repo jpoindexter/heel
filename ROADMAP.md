@@ -8,7 +8,7 @@ Done = one real workday, see PRD.md. Sequential, one end-to-end before the next.
 4. S2 Panel UI: tasks, ask box, <=3 fixed chips, accessible
 5. S5 Brain-dump capture -> tasks + one Now step; S6 Focus session + end check-in
 6. S8 Interrupt budget + Off mode + copy rules
-7. S7 Gmail digest, read-only (time-box 3h; park if blocked)
+7. ~~S7 Gmail digest, read-only~~ → N11 Mail on this Mac: digest, open, reply with preview, draft_email (2026-10-15)
 8. S9 Dogfood one workday
 
 ## v1 — After real use

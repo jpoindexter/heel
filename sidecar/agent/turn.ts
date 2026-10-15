@@ -1,4 +1,5 @@
 import type { HistoryMessage } from "../../shared/api";
+import type { MailSource } from "../mail/source";
 import type { Store } from "../store/store";
 import { parseAgentReply } from "./actions";
 import { executeActions, type ActionOutcome } from "./execute";
@@ -19,6 +20,8 @@ export type TurnDeps = {
   provider: Provider;
   model: string | null;
   loadSkill?: SkillLoader;
+  /** Apple Mail, for draft_email. Absent = that action fails with a sentence. */
+  mail?: Pick<MailSource, "draft">;
   /** When it aborts the turn stops and nothing is written. */
   signal?: AbortSignal;
 };
@@ -49,7 +52,7 @@ export async function runTurn(deps: TurnDeps, userText: string, history: readonl
 
     const parsed = parseAgentReply(response.value);
     if (parsed.ok) {
-      const applied = executeActions(deps.store, parsed.reply.actions, snapshot.refs);
+      const applied = await executeActions(deps.store, parsed.reply.actions, snapshot.refs, { mail: deps.mail });
       return { ok: true, say: parsed.reply.say, applied, skills, provider: deps.provider.id };
     }
     prompt = `${basePrompt}\n\nYour previous reply was rejected: ${parsed.error}. Reply again with ONLY the JSON object.`;

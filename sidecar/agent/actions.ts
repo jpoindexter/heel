@@ -6,8 +6,8 @@ export const MAX_SAY_CHARS = 1_200;
 const taskRef = z.string().regex(/^t\d+$/, 'task must be a ref like "t1" from the task list');
 
 /**
- * Everything the model may ask Heel to do. All of it is a local write the user can undo (autonomy L1).
- * Sending, deleting data and anything outside the app are deliberately absent. Focus sessions return with the focus slice (S6).
+ * Everything the model may ask Heel to do. Local writes the user can undo (autonomy L1), plus draft_email: it only OPENS a draft
+ * in Mail for the person to read and send themselves (autonomy L2: one-click confirm happens in Mail). Nothing here sends or deletes.
  */
 export const ActionSchema = z.discriminatedUnion("type", [
   z.object({ type: z.literal("add_task"), title: z.string(), now_step: z.string().optional() }),
@@ -15,6 +15,7 @@ export const ActionSchema = z.discriminatedUnion("type", [
   z.object({ type: z.literal("drop_task"), task: taskRef }),
   z.object({ type: z.literal("set_now_step"), task: taskRef, step: z.string().nullable() }),
   z.object({ type: z.literal("park_idea"), idea: z.string(), why: z.string().optional() }),
+  z.object({ type: z.literal("draft_email"), to: z.string().optional(), subject: z.string(), body: z.string().min(1) }),
 ]);
 
 export const AgentReplySchema = z.object({

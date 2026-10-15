@@ -6,7 +6,7 @@ import type { useTodayState } from "./useTodayState";
 
 /** The bar wired to what it does: the four buttons, Enter, ⌘↩, Esc, and when the card folds back. */
 export function useBarActions(state: ReturnType<typeof useTodayState>, onOpenSettings: () => void) {
-  const { chat, inbox, digest } = state;
+  const { chat, mail, digest } = state;
   const bar = useBar(chat.isDraftEmpty);
   const { closeTray, collapseSoon, openComposer, closeComposer } = bar;
 
@@ -23,9 +23,9 @@ export function useBarActions(state: ReturnType<typeof useTodayState>, onOpenSet
   }, [chat, collapseSoon]);
 
   const email = useCallback(() => {
-    if (inbox.status?.connected) void digest.check();
+    if (mail.available) void digest.check();
     else onOpenSettings();
-  }, [digest, inbox.status?.connected, onOpenSettings]);
+  }, [digest, mail.available, onOpenSettings]);
 
   /** Every button rolls the tray back first, then runs. */
   const onAction = useCallback(

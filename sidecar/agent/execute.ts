@@ -1,6 +1,10 @@
+import type { MailSource } from "../mail/source";
 import type { Store } from "../store/store";
 import type { Result } from "../store/result";
 import type { Action } from "./actions";
+
+/** What an action may touch outside the store. Mail is absent in tests and on a Mac without Mail. */
+export type SideEffects = { mail?: Pick<MailSource, "draft"> };
 
 /** How the panel can reverse a write: the route it calls and the id it calls it with. */
 export type Undo = { kind: "restore_task" | "drop_task" | "unpark"; id: string };
@@ -10,7 +14,7 @@ export type ActionOutcome = { type: Action["type"]; ok: boolean; message: string
 /** Short task refs (t1, t2) the model sees, mapped to real ids. The model never handles raw ids. */
 export type TaskRefs = ReadonlyMap<string, string>;
 
-type Handler<T extends Action["type"]> = (store: Store, action: Extract<Action, { type: T }>, refs: TaskRefs) => ActionOutcome;
+type Handler<T extends Action["type"]> = (store: Store, action: Extract<Action, { type: T }>, refs: TaskRefs, side: SideEffects) => ActionOutcome | Promise<ActionOutcome>;
 
 const failed = (type: Action["type"], message: string): ActionOutcome => ({ type, ok: false, message });
 
@@ -64,12 +68,23 @@ const HANDLERS: { [T in Action["type"]]: Handler<T> } = {
       () => `Parked "${a.idea.trim()}".`,
       (parked) => ({ kind: "unpark", id: parked.id }),
     ),
+
+  /** Opens a draft in Mail, addressed and filled in. The person reads it there and sends it themselves, or closes it. */
+  draft_email: async (_store, a, _refs, side) => {
+    if (!side.mail) return failed(a.type, "Mail isn't available here, so no draft was opened.");
+    const result = await side.mail.draft({ to: a.to ?? "", subject: a.subject, body: a.body });
+    if (!result.ok) return failed(a.type, result.error.message);
+    const who = a.to?.trim() ? ` to ${a.to.trim()}` : "";
+    return { type: a.type, ok: true, message: `Opened a draft${who} in Mail: "${a.subject.trim()}". Not sent.` };
+  },
 };
 
 /** Apply each action in order. A failed action never stops the rest and is always reported. */
-export function executeActions(store: Store, actions: readonly Action[], refs: TaskRefs): ActionOutcome[] {
-  return actions.map((action) => {
+export async function executeActions(store: Store, actions: readonly Action[], refs: TaskRefs, side: SideEffects = {}): Promise<ActionOutcome[]> {
+  const outcomes: ActionOutcome[] = [];
+  for (const action of actions) {
     const handler = HANDLERS[action.type] as Handler<typeof action.type>;
-    return handler(store, action, refs);
-  });
+    outcomes.push(await handler(store, action, refs, side));
+  }
+  return outcomes;
 }

@@ -193,6 +193,29 @@ export const DigestSchema = z.object({
 });
 export const AddInboxTaskInputSchema = z.object({ messageId: z.string(), title: z.string() });
 
+/* Mail on this Mac (Apple Mail through Automation): read, open, reply with a preview first */
+
+export const MailStatusSchema = z.object({
+  /** Apple Mail is on this Mac. The first real use asks macOS to allow Heel to talk to Mail (one prompt). */
+  available: z.boolean(),
+});
+export const OpenMailInputSchema = z.object({ messageId: z.string().min(1) });
+export const DraftReplyInputSchema = z.object({
+  messageId: z.string().min(1),
+  from: z.string(),
+  subject: z.string(),
+  summary: z.string(),
+  /** What the person wants to say, in their words. */
+  instruction: z.string().min(1).max(2000),
+});
+export const DraftReplySchema = z.object({ draft: z.string(), sentToModel: z.string() });
+/** The exact text to send. Only the preview's Send button calls the send route; the open route leaves it in Mail unsent. */
+export const SendReplyInputSchema = z.object({ messageId: z.string().min(1), body: z.string().min(1).max(20_000) });
+export const SendReplySchema = z.object({ sent: z.boolean() });
+
+export type MailStatusDto = z.output<typeof MailStatusSchema>;
+export type DraftReplyDto = z.output<typeof DraftReplySchema>;
+
 export type InboxStatusDto = z.output<typeof InboxStatusSchema>;
 export type DigestItemDto = z.output<typeof DigestItemSchema>;
 export type DigestDto = z.output<typeof DigestSchema>;

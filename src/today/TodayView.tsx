@@ -29,7 +29,7 @@ export function TodayView({ showing, onShow, summary, reloadKey, onOpenSettings 
   const { tasks, thread } = state;
   const bar = useBarActions(state, onOpenSettings);
   const focusSignal = useNewTaskFocus(onShow, bar.openComposer);
-  const emailReady = state.inbox.status?.connected ?? false;
+  const emailReady = state.mail.available;
 
   return (
     <div className="today" onPointerDownCapture={bar.onPointerOutside}>
@@ -49,7 +49,7 @@ export function TodayView({ showing, onShow, summary, reloadKey, onOpenSettings 
       />
       <div className="today-scroll">
         <TaskSection state={state} />
-        <InboxPanel digest={state.digest} />
+        <InboxPanel digest={state.digest} reply={state.reply} onOpen={(id) => void state.openMail(id)} />
       </div>
       {summary?.kind === "setup" && <FirstRun summary={summary} onOpenSettings={onOpenSettings} />}
       <div className="compose-zone"><Notifier notice={tasks.notice} onDismiss={tasks.dismissNotice} /></div>

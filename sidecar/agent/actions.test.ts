@@ -50,3 +50,11 @@ describe("parseAgentReply", () => {
     expect([start.ok, end.ok]).toEqual([false, false]);
   });
 });
+
+describe("draft_email", () => {
+  it("parses with or without an address and refuses an empty body", async () => {
+    const { parseAgentReply } = await import("./actions");
+    expect(parseAgentReply('{"say":"Opened a draft.","actions":[{"type":"draft_email","subject":"Hi","body":"Text"}]}')).toMatchObject({ ok: true });
+    expect(parseAgentReply('{"say":"x","actions":[{"type":"draft_email","to":"a@b.c","subject":"Hi","body":""}]}')).toMatchObject({ ok: false });
+  });
+});

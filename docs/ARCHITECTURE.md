@@ -24,6 +24,7 @@ docs/ DECISIONS.md PARKED.md ROADMAP.md PRD.md ERRORS.md learnings/
 | Settings | `src/settings/` | `SettingsView`, `brain-summary`, `useBrainSummary` are public |
 | Mascot | `src/mascot/` | sprite, atlas, hit region; `motion-events` is public |
 | Agent loop | `sidecar/agent/` | prompt, actions (Zod), executor, providers |
+| Mail on this Mac | `sidecar/mail/` | JXA scripts for Apple Mail (`scripts.ts`), `osascript` runner, `MailSource` (+ fake), AI reply drafter; routes in `server/mail-routes.ts` |
 | Persistence | `sidecar/store/` | SQLite behind `store.ts`; reversible migrations |
 | HTTP | `sidecar/server/` | token + Host + CORS guards, routes |
 
