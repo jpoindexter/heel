@@ -19,7 +19,7 @@ export function Message({ message, canRetry, onRetry, onOpenSettings, onUndo }: 
     return (
       <article className="msg msg-user">
         <h3 className="visually-hidden">You</h3>
-        <Paragraphs text={message.text} />
+        <Paragraphs text={message.label ?? message.text} />
       </article>
     );
   }

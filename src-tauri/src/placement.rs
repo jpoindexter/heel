@@ -33,6 +33,32 @@ pub fn panel_origin(mascot: Rect, panel_size: (i32, i32), monitor: Rect, gap: i3
     (x, y)
 }
 
+#[derive(Clone, Copy, Debug, PartialEq, Eq)]
+pub enum Side {
+    Above,
+    Below,
+}
+
+/// Which side of Greg the panel docks on: above whenever it can be at least `min_height` tall there,
+/// otherwise below, otherwise whichever side has more room (the panel is then at its minimum size).
+pub fn choose_side(space_above: f64, space_below: f64, min_height: f64) -> Side {
+    if space_above >= min_height {
+        Side::Above
+    } else if space_below >= min_height || space_below > space_above {
+        Side::Below
+    } else {
+        Side::Above
+    }
+}
+
+/// True when a window at `origin` with `size` lies entirely inside `area`.
+pub fn fits_inside(origin: Point, size: (i32, i32), area: Rect) -> bool {
+    origin.0 >= area.x
+        && origin.1 >= area.y
+        && origin.0 + size.0 <= area.x + area.width
+        && origin.1 + size.1 <= area.y + area.height
+}
+
 /// After one window moved, where the other must go so the pair keeps its docked offset
 /// (offset = panel position minus mascot position). None when it is already there, which is
 /// what stops the two move handlers from chasing each other.
@@ -90,6 +116,32 @@ mod tests {
         let (x, y) = panel_origin(m, PANEL, second, GAP);
         assert!(x >= second.x && x + PANEL.0 <= second.x + second.width);
         assert!(y >= second.y && y + PANEL.1 <= second.y + second.height);
+    }
+
+    #[test]
+    fn docks_above_when_the_minimum_height_fits_there() {
+        assert_eq!(choose_side(500.0, 100.0, 420.0), Side::Above);
+        assert_eq!(choose_side(420.0, 900.0, 420.0), Side::Above);
+    }
+
+    #[test]
+    fn flips_below_when_above_is_too_short_and_below_has_room() {
+        assert_eq!(choose_side(200.0, 600.0, 420.0), Side::Below);
+    }
+
+    #[test]
+    fn with_no_room_on_either_side_takes_the_roomier_one() {
+        assert_eq!(choose_side(100.0, 300.0, 420.0), Side::Below);
+        assert_eq!(choose_side(300.0, 100.0, 420.0), Side::Above);
+    }
+
+    #[test]
+    fn a_window_fits_only_when_fully_inside_the_area() {
+        let area = Rect { x: 0, y: 66, width: 3024, height: 1800 };
+        assert!(fits_inside((100, 66), (500, 500), area));
+        assert!(!fits_inside((100, 40), (500, 500), area), "under the menu bar");
+        assert!(!fits_inside((2800, 100), (500, 500), area), "off the right edge");
+        assert!(!fits_inside((100, 1500), (500, 500), area), "off the bottom");
     }
 
     #[test]

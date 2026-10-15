@@ -42,12 +42,12 @@ export function useThread(client: Client, { onChanged, notify }: Options) {
 
   /** Ask the AI. Returns true when it answered, so the caller can clear the ask box. */
   const send = useCallback(
-    async (text: string): Promise<boolean> => {
+    async (text: string, label?: string): Promise<boolean> => {
       const trimmed = text.trim();
       if (!trimmed || isBusy()) return false;
       const history = historyFor(latest.current);
       const pendingId = nextId.current + 1;
-      commit([...latest.current, { id: nextId.current, role: "user", text: trimmed }, { id: pendingId, role: "heel", status: "pending" }]);
+      commit([...latest.current, { id: nextId.current, role: "user", text: trimmed, label }, { id: pendingId, role: "heel", status: "pending" }]);
       nextId.current += 2;
       return ask(trimmed, history, pendingId);
     },

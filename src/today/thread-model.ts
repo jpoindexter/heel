@@ -4,7 +4,8 @@ import { MAX_HISTORY_MESSAGES, type ActionOutcomeDto, type HistoryMessage, type 
 export type Receipt = { ok: boolean; text: string; undo: UndoDto | null; undone: boolean };
 
 export type Message =
-  | { id: number; role: "user"; text: string }
+  /** `text` is what the model gets; `label` (a chip's name) is what the thread shows instead, when given. */
+  | { id: number; role: "user"; text: string; label?: string }
   | { id: number; role: "heel"; status: "pending" }
   | { id: number; role: "heel"; status: "said"; say: string; receipts: Receipt[] }
   | { id: number; role: "heel"; status: "failed"; message: string; offerSettings: boolean; retryText: string };

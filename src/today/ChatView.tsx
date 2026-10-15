@@ -18,9 +18,9 @@ export function ChatView({ active, summary, onOpenSettings }: Props) {
   const [draft, setDraft] = useState("");
   const { state, notice } = tasks;
 
-  const send = (text: string) => {
+  const send = (text: string, label?: string) => {
     if (!text.trim() || thread.busy) return;
-    void thread.send(text);
+    void thread.send(text, label);
   };
 
   const onSend = () => {
@@ -31,7 +31,7 @@ export function ChatView({ active, summary, onOpenSettings }: Props) {
   };
 
   const onChip = async (chip: Chip) => {
-    if (chip.prompt) return send(chip.prompt);
+    if (chip.prompt) return send(chip.prompt, chip.label);
     if (!draft.trim()) return tasks.showNotice(PARK_HINT);
     if (await tasks.park(draft)) setDraft("");
   };

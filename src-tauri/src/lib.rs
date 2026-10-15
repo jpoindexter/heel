@@ -5,10 +5,10 @@ use std::sync::Mutex;
 use std::time::{SystemTime, UNIX_EPOCH};
 
 use panel_size::{classify_panel_change, clamp_size, fit_height, parse_saved, should_save, PanelChange, SELF_RESIZE_QUIET_MS};
-use placement::{follow_target, panel_origin, Follower, Point, Rect};
+use placement::{choose_side, fits_inside, follow_target, panel_origin, Follower, Point, Rect, Side};
 use tauri::{
     image::Image,
-    menu::{Menu, MenuItem, PredefinedMenuItem},
+    menu::{Menu, MenuItem, MenuItemKind, PredefinedMenuItem},
     tray::TrayIconBuilder,
     AppHandle, Emitter, LogicalSize, Manager, PhysicalPosition, WebviewWindow, WindowEvent,
 };
@@ -20,6 +20,9 @@ const SIDECAR_FILE: &str = "sidecar.json";
 /// Tells the panel to show Settings. Must equal OPEN_SETTINGS_EVENT in src/events.ts (a test enforces it).
 const OPEN_SETTINGS_EVENT: &str = "heel:open-settings";
 const SETTINGS_VIEW: &str = "settings";
+/// Menu item ids. The app menu and the tray menu both have "Settings…"; separate ids so neither handler fires for the other.
+const APP_SETTINGS_ID: &str = "app-settings";
+const TRAY_SETTINGS_ID: &str = "settings";
 /// Menu-bar icon: 44x44 raw RGBA, a black silhouette that macOS recolours for light and dark menu bars.
 const TRAY_ICON_RGBA: &[u8] = include_bytes!("../icon-source/tray.rgba");
 const TRAY_ICON_PX: u32 = 44;
@@ -36,6 +39,8 @@ struct DockState {
     /// Ignore resize events (and don't save) until this time: Heel just resized the panel itself.
     ignore_resize_until: u64,
     last_saved: u64,
+    /// The size the person chose (logical px). Docking may shrink the panel to fit; it grows back to this when there is room.
+    desired: (f64, f64),
 }
 
 struct Dock(Mutex<DockState>);
@@ -63,22 +68,26 @@ fn docked_origin(mascot: &WebviewWindow, panel_size: (i32, i32)) -> Option<Point
     let monitor = mascot.current_monitor().ok()??;
     let gap = (PANEL_GAP_LOGICAL_PX * monitor.scale_factor()) as i32;
     let mascot_rect = Rect { x: pos.x, y: pos.y, width: size.width as i32, height: size.height as i32 };
-    let monitor_rect = Rect {
-        x: monitor.position().x,
-        y: monitor.position().y,
-        width: monitor.size().width as i32,
-        height: monitor.size().height as i32,
-    };
-    Some(panel_origin(mascot_rect, panel_size, monitor_rect, gap))
+    Some(panel_origin(mascot_rect, panel_size, work_rect(&monitor), gap))
 }
 
-/// Room above Greg inside his monitor, in logical px (the panel is shrunk to this on short screens).
-fn space_above_mascot(mascot: &WebviewWindow) -> Option<f64> {
+/// The part of the monitor windows may use: below the menu bar, above the Dock.
+fn work_rect(monitor: &tauri::Monitor) -> Rect {
+    let area = monitor.work_area();
+    Rect { x: area.position.x, y: area.position.y, width: area.size.width as i32, height: area.size.height as i32 }
+}
+
+/// Room above and below Greg inside the usable screen area, in logical px.
+fn spaces_around_mascot(mascot: &WebviewWindow) -> Option<(f64, f64)> {
     let pos = mascot.outer_position().ok()?;
+    let size = mascot.outer_size().ok()?;
     let monitor = mascot.current_monitor().ok()??;
     let scale = monitor.scale_factor();
+    let area = work_rect(&monitor);
     let gap = PANEL_GAP_LOGICAL_PX * scale;
-    Some(((pos.y - monitor.position().y) as f64 - gap) / scale)
+    let above = (pos.y - area.y) as f64 - gap;
+    let below = (area.y + area.height) as f64 - (pos.y + size.height as i32) as f64 - gap;
+    Some((above / scale, below / scale))
 }
 
 fn panel_logical_size(panel: &WebviewWindow) -> Option<(f64, f64)> {
@@ -111,6 +120,9 @@ fn restore_panel_size(app: &AppHandle) {
     };
     if let Some((width, height)) = std::fs::read_to_string(path).ok().and_then(|json| parse_saved(&json)) {
         let _ = panel.set_size(LogicalSize::new(width, height));
+        if let Ok(mut state) = app.state::<Dock>().0.lock() {
+            state.desired = (width, height);
+        }
     }
 }
 
@@ -145,16 +157,24 @@ fn show_panel(app: &AppHandle) {
 
 /// Fit the panel above Greg (shrinking its height on a short screen), place it, and learn the dock offset.
 fn dock_panel(app: &AppHandle, mascot: &WebviewWindow, panel: &WebviewWindow) {
-    let (Some((width, height)), Some(space), Ok(scale), Some(mascot_at)) = (
+    let (Some(current), Some((above, below)), Ok(scale), Some(mascot_at)) = (
         panel_logical_size(panel),
-        space_above_mascot(mascot),
+        spaces_around_mascot(mascot),
         panel.scale_factor(),
         window_point(mascot),
     ) else {
         return;
     };
+    let (width, height) = match app.state::<Dock>().0.lock() {
+        Ok(state) if state.desired.0 > 0.0 => state.desired,
+        _ => current,
+    };
+    let space = match choose_side(above, below, panel_size::MIN_SIZE.1) {
+        Side::Above => above,
+        Side::Below => below,
+    };
     let fitted = fit_height(height, space);
-    let resized_here = (fitted - height).abs() > 0.5;
+    let resized_here = (fitted - current.1).abs() > 0.5 || (width - current.0).abs() > 0.5;
     if resized_here {
         let _ = panel.set_size(LogicalSize::new(width, fitted));
     }
@@ -166,6 +186,9 @@ fn dock_panel(app: &AppHandle, mascot: &WebviewWindow, panel: &WebviewWindow) {
     if let Ok(mut state) = app.state::<Dock>().0.lock() {
         state.offset = (origin.0 - mascot_at.0, origin.1 - mascot_at.1);
         state.panel_size = (size_px.0 as u32, size_px.1 as u32);
+        if state.desired.0 <= 0.0 {
+            state.desired = (width, height);
+        }
         if resized_here {
             state.ignore_resize_until = now_ms() + SELF_RESIZE_QUIET_MS;
         }
@@ -203,6 +226,11 @@ fn on_panel_resized(app: &AppHandle) {
         Ok(mut state) => {
             state.panel_size = (size.width, size.height);
             state.offset = (panel_at.0 - mascot_at.0, panel_at.1 - mascot_at.1);
+            if now >= state.ignore_resize_until {
+                if let Some(logical) = panel_logical_size(&panel) {
+                    state.desired = clamp_size(logical);
+                }
+            }
             let save = should_save(now, state.last_saved, state.ignore_resize_until);
             if save {
                 state.last_saved = now;
@@ -247,6 +275,16 @@ fn keep_docked(app: &AppHandle, moved_label: &str) {
     let Ok(offset) = app.state::<Dock>().0.lock().map(|state| state.offset) else {
         return;
     };
+    // Greg was dragged somewhere the panel no longer fits on its current side: dock again (flip above/below, refit)
+    // instead of following with a stale offset, which would push the panel under the menu bar and Greg back.
+    if moved_label == MASCOT_LABEL {
+        if let (Ok(size), Ok(Some(monitor))) = (panel.outer_size(), mascot.current_monitor()) {
+            let target = (mascot_at.0 + offset.0, mascot_at.1 + offset.1);
+            if !fits_inside(target, (size.width as i32, size.height as i32), work_rect(&monitor)) {
+                return dock_panel(app, &mascot, &panel);
+            }
+        }
+    }
     match follow_target(moved_label == MASCOT_LABEL, mascot_at, panel_at, offset) {
         Some((Follower::Panel, (x, y))) => {
             let _ = panel.set_position(PhysicalPosition::new(x, y));
@@ -318,9 +356,21 @@ fn take_pending_view(app: AppHandle) -> Option<String> {
     app.state::<PendingView>().0.lock().ok().and_then(|mut pending| pending.take()).map(str::to_string)
 }
 
+/// The standard macOS app menu plus "Settings…" (Cmd+,), placed under "About" the way other Mac apps do.
+fn build_app_menu(app: &AppHandle) -> tauri::Result<()> {
+    let menu = Menu::default(app)?;
+    if let Some(MenuItemKind::Submenu(app_menu)) = menu.items()?.into_iter().next() {
+        let settings = MenuItem::with_id(app, APP_SETTINGS_ID, "Settings…", true, Some("CmdOrCtrl+,"))?;
+        app_menu.insert(&PredefinedMenuItem::separator(app)?, 1)?;
+        app_menu.insert(&settings, 2)?;
+    }
+    app.set_menu(menu)?;
+    Ok(())
+}
+
 fn build_tray(app: &AppHandle) -> tauri::Result<()> {
     let toggle = MenuItem::with_id(app, "toggle", "Show / hide panel", true, None::<&str>)?;
-    let settings = MenuItem::with_id(app, "settings", "Settings…", true, Some("CmdOrCtrl+,"))?;
+    let settings = MenuItem::with_id(app, TRAY_SETTINGS_ID, "Settings…", true, Some("CmdOrCtrl+,"))?;
     let quit = MenuItem::with_id(app, "quit", "Quit Heel", true, None::<&str>)?;
     let menu = Menu::with_items(app, &[&toggle, &settings, &PredefinedMenuItem::separator(app)?, &quit])?;
     TrayIconBuilder::new()
@@ -329,7 +379,7 @@ fn build_tray(app: &AppHandle) -> tauri::Result<()> {
         .menu(&menu)
         .on_menu_event(|app, event| match event.id.as_ref() {
             "toggle" => toggle_panel(app),
-            "settings" => open_settings(app),
+            TRAY_SETTINGS_ID => open_settings(app),
             "quit" => app.exit(0),
             _ => {}
         })
@@ -346,7 +396,7 @@ pub fn run() {
     let builder = builder.plugin(tauri_plugin_single_instance::init(|app, _args, _cwd| reveal_panel(app)));
 
     builder
-        .manage(Dock(Mutex::new(DockState { offset: (0, 0), panel_size: (0, 0), ignore_resize_until: 0, last_saved: 0 })))
+        .manage(Dock(Mutex::new(DockState { offset: (0, 0), panel_size: (0, 0), ignore_resize_until: 0, last_saved: 0, desired: (0.0, 0.0) })))
         .plugin(
             tauri_plugin_global_shortcut::Builder::new()
                 .with_handler(|app, shortcut, event| {
@@ -357,12 +407,18 @@ pub fn run() {
                 .build(),
         )
         .manage(PendingView(Mutex::new(None)))
+        .on_menu_event(|app, event| {
+            if event.id().as_ref() == APP_SETTINGS_ID {
+                open_settings(app);
+            }
+        })
         .invoke_handler(tauri::generate_handler![toggle_panel_command, sidecar_info, take_pending_view])
         .setup(|app| {
             let handle = app.handle();
             restore_panel_size(handle);
             place_mascot(handle);
             watch_moves(handle);
+            build_app_menu(handle)?;
             build_tray(handle)?;
             app.global_shortcut().register(hotkey())?;
             Ok(())

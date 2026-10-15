@@ -48,6 +48,11 @@ describe("historyFor", () => {
     ]);
   });
 
+  it("gives the model a chip's full prompt even though the thread shows only its label", () => {
+    const messages: Message[] = [{ id: 1, role: "user", text: "Help me plan what to do next.", label: "Plan" }];
+    expect(historyFor(messages)).toEqual([{ role: "user", text: "Help me plan what to do next." }]);
+  });
+
   it("keeps only the most recent messages the helper accepts", () => {
     const messages = Array.from({ length: 20 }, (_, i) => user(i, `m${i}`));
     const history = historyFor(messages);
