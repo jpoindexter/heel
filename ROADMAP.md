@@ -16,3 +16,6 @@ Full Settings tab (privacy, capacity, skills, mascot), passive drift detection +
 
 ## v2+ — Aspirational
 Local-only private mode, skins/voice/aura/rhythm, Windows port, first outside user.
+
+## Order of work (2026-10-15) — canonical order lives on the Trello list "UP NEXT"
+01 B1 mic/dictation bug · 02 M1 size limits · 03 M2 no hard-coded design · 04-10 D1-D7 Radix design system, light + dark · 11 M3 split lib.rs · 12 M4 structure + boundaries · 13 R1 right-click menu · 14-18 A4a-d + A3a mascot life (idle, walk, run off/on, sleep) · 19 F4 icon · 20 F6 Stop · 21 F9 a11y · 22 F8 frame · 23 V-AUDIT Vanta x Heel plan · then X1-X5 (Vanta spike, notifications, texts, routines, Vanta as brain). Blocked on Jason: F5 (Accessibility permission), F7 (schema + privacy choice), A3b (art).

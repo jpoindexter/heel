@@ -15,8 +15,11 @@
   },
   "dependencies": {
     "@hono/node-server": "^2.1.5",
+    "@radix-ui/react-icons": "1.3.2",
+    "@radix-ui/themes": "3.3.0",
     "@tauri-apps/api": "^2",
     "hono": "^4.13.13",
+    "radix-ui": "1.8.1",
     "react": "^19.1.0",
     "react-dom": "^19.1.0",
     "zod": "^4.6.7"
