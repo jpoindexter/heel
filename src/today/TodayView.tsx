@@ -10,6 +10,7 @@ import { FirstRun } from "./FirstRun";
 import { HistoryLayer } from "./HistoryLayer";
 import { Reply } from "./Reply";
 import { ReplyRow } from "./ReplyRow";
+import { SearchLayer } from "./SearchLayer";
 import { TaskSection } from "./TaskSection";
 import { BottomBar } from "./BottomBar";
 import { useBarActions } from "./useBarActions";
@@ -17,6 +18,7 @@ import { todayKey } from "./history-labels";
 import { useAttention } from "./useAttention";
 import { useHistoryLayer } from "./useHistoryLayer";
 import { useNewTaskFocus } from "./useNewTaskShortcut";
+import { useSearchLayer } from "./useSearchLayer";
 import { useTodayState } from "./useTodayState";
 
 type Props = {
@@ -71,6 +73,7 @@ export function TodayView({ showing, summary, reloadKey, settings }: Props) {
   const focusSignal = useNewTaskFocus(layers.home, bar.openComposer);
   useLayerFollows(state);
   const history = useHistoryLayer(tasks, layers);
+  const found = useSearchLayer({ state, layers, history });
   useAttention({ state, bar, layers });
 
   return (
@@ -86,7 +89,7 @@ export function TodayView({ showing, summary, reloadKey, settings }: Props) {
         base={
           <div className="today-scroll">
             <ReplyRow messages={thread.messages} onOpen={() => layers.push("reply")} />
-            <TaskSection state={state} />
+            <TaskSection state={state} foundId={found.foundId} />
             {state.ready && <DoneRow doneToday={state.ready.doneToday} onOpen={() => layers.push("history")} />}
           </div>
         }
@@ -100,6 +103,9 @@ export function TodayView({ showing, summary, reloadKey, settings }: Props) {
         </Layer>
         <Layer name="reply" label="Reply">
           <ReplyLayer thread={thread} onOpenSettings={openSettings} onClosed={layers.back} />
+        </Layer>
+        <Layer name="search" label="Search">
+          <SearchLayer search={found.search} active={layers.top === "search"} onPick={(hit) => void found.onPick(hit)} onAsk={found.onAsk} />
         </Layer>
       </LayerHost>
       {summary?.kind === "setup" && <FirstRun summary={summary} onOpenSettings={openSettings} />}

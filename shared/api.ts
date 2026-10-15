@@ -248,3 +248,11 @@ export type DigestDto = z.output<typeof DigestSchema>;
 /* Quick add (no AI) */
 
 export const AddTaskInputSchema = z.object({ title: z.string(), nowStep: z.string().nullable().optional() });
+
+/** Search (N22): one box over open tasks, parked ideas, what was finished and what was said; ranked, newest first within a rank. */
+export const SEARCH_KINDS = ["task", "parked", "done", "said"] as const;
+export type SearchKind = (typeof SEARCH_KINDS)[number];
+export const SearchHitSchema = z.object({ kind: z.enum(SEARCH_KINDS), id: z.string(), text: z.string(), detail: z.string().nullable(), at: z.number() });
+export const SearchResultSchema = z.object({ query: z.string(), hits: z.array(SearchHitSchema) });
+export type SearchHitDto = z.output<typeof SearchHitSchema>;
+export type SearchResultDto = z.output<typeof SearchResultSchema>;

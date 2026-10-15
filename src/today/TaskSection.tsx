@@ -27,7 +27,7 @@ function useLeavingRow(run: (task: TaskDto, action: "complete" | "remove") => vo
 }
 
 /** Now, the rest, and the parked ideas. Starting a time-box opens its small form right under the Now row. */
-export function TaskSection({ state }: { state: ReturnType<typeof useTodayState> }) {
+export function TaskSection({ state, foundId = null }: { state: ReturnType<typeof useTodayState>; foundId?: string | null }) {
   const { tasks, ready, now, focus, pomodoro, thread } = state;
   const [starting, setStarting] = useState(false);
   const rows = useLeavingRow((task, action) => void (action === "complete" ? tasks.complete(task) : tasks.remove(task)));
@@ -40,6 +40,7 @@ export function TaskSection({ state }: { state: ReturnType<typeof useTodayState>
       <NowRow
         now={now}
         leavingId={rows.leavingId}
+        foundId={foundId}
         canTimebox={!focus.session && !pomodoro.view?.state && !starting}
         onStartBox={() => (method.timer === "pomodoro" && now ? void pomodoro.start(now.text, now.task.id) : setStarting(true))}
         onComplete={rows.complete}
@@ -54,7 +55,7 @@ export function TaskSection({ state }: { state: ReturnType<typeof useTodayState>
           onStart={(goal, realisticMin) => void focus.start({ goal, taskId: now.task.id, realisticMin }).then((started) => started && setStarting(false))}
         />
       )}
-      <LaterList tasks={ready ? ready.tasks.slice(1) : []} leavingId={rows.leavingId} onComplete={rows.complete} onRemove={rows.remove} {...marks} />
+      <LaterList tasks={ready ? ready.tasks.slice(1) : []} leavingId={rows.leavingId} foundId={foundId} onComplete={rows.complete} onRemove={rows.remove} {...marks} />
       {ready && ready.tasks.length === 0 && <Text size="2" color="gray" className="tasks-empty in">Nothing on your list. Tell Heel, or + › Add task.</Text>}
       <ParkedList parked={ready?.parked ?? []} onPromote={(idea) => void tasks.promote(idea)} />
     </>

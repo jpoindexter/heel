@@ -13,3 +13,4 @@
 - [2026-10-15 explicit-request-vs-surprise-guard](2026-10-15-explicit-request-vs-surprise-guard.md) — Give an explicit request its own entry point past the surprise guards and remember it was asked for; settings still apply.
 - [2026-10-15 know-your-own-move-by-its-target](2026-10-15-know-your-own-move-by-its-target.md) — Tell your own window move from the person's drag by the exact target you sent it to; async Moved events defeat flags and "current position" checks.
 - [2026-10-15 live-input-fights-synthetic-tests](2026-10-15-live-input-fights-synthetic-tests.md) — Count what the hook sees, send synthetic input only in a quiet window, and treat the person's real input near the target as the better evidence.
+- [2026-10-16 hover-sets-the-active-row](2026-10-16-hover-sets-the-active-row.md) — A resting pointer moves a hover-selected row; test by clicking the row you mean, and expect Enter to follow the pointer.

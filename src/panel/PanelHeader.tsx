@@ -1,4 +1,4 @@
-import { ArrowLeftIcon, ChevronRightIcon, Cross2Icon, DrawingPinIcon, GearIcon } from "@radix-ui/react-icons";
+import { ArrowLeftIcon, ChevronRightIcon, Cross2Icon, DrawingPinIcon, GearIcon, MagnifyingGlassIcon } from "@radix-ui/react-icons";
 import { Button, Heading, IconButton, Text, Tooltip } from "@radix-ui/themes";
 import { invoke } from "@tauri-apps/api/core";
 import { TITLES } from "../ui/layers-model";
@@ -25,6 +25,9 @@ export function PanelHeader({ onClose, parked }: { onClose: () => void; parked: 
       ) : (
         <>
           <Text size="1" weight="medium" color="gray" data-tauri-drag-region className="panel-title grow">Heel</Text>
+          <IconButton variant="ghost" color="gray" aria-label="Find anything (⌘K)" onClick={() => layers.push("search")}>
+            <MagnifyingGlassIcon aria-hidden="true" />
+          </IconButton>
           <IconButton variant="ghost" color="gray" aria-label="Settings" onClick={() => layers.push("settings")}>
             <GearIcon aria-hidden="true" />
           </IconButton>

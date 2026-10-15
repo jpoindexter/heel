@@ -8,6 +8,7 @@ import { listParked, parkIdea, promoteParked, unparkIdea } from "./parked";
 import { foldAttention, getAttentionDay, getAttentionSettings, setAttentionSettings } from "./attention";
 import { movePomodoro, readPomodoro, setPomodoroConfig, startCycle } from "./pomodoro";
 import type { FocusOutcome, TaskStatus } from "./schema";
+import { search } from "./search";
 import { getBrain, getMethod, getMethodNumbers, setBrain, setMethod, setMethodNumbers } from "./settings";
 import { addTask, completeTask, dropTask, getTask, listTasks, patchTask, restoreTask, setNowStep, startTask } from "./tasks";
 
@@ -54,6 +55,7 @@ export function todayRepositories(ctx: Ctx) {
       day: () => getAttentionDay(ctx),
       fold: (sample: Parameters<typeof foldAttention>[1], context: Parameters<typeof foldAttention>[2]) => foldAttention(ctx, sample, context),
     },
+    search: (query: string) => search(ctx, query),
     now: ctx.now,
   };
 }

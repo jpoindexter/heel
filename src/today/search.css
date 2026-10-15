@@ -1,0 +1,52 @@
+/* Search (N22): the box, then the groups; one row is active for the keyboard. */
+.search {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  gap: var(--space-2);
+  min-height: 0;
+  padding: var(--ring-room);
+}
+
+.search-results {
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+}
+
+.search-group {
+  display: grid;
+  gap: var(--space-1);
+}
+
+.search-hit {
+  display: grid;
+  width: 100%;
+  gap: 0;
+  padding: var(--space-2) var(--space-3);
+  text-align: start;
+  background: transparent;
+  border: 0;
+  border-radius: var(--radius-3);
+  color: inherit;
+  font: inherit;
+  cursor: pointer;
+}
+
+.search-hit[data-active],
+.search-hit:hover {
+  background: var(--gray-a3);
+}
+
+.search-hit:focus-visible {
+  outline: var(--focus-ring-width) solid var(--focus-8);
+  outline-offset: 0;
+}
+
+.search-hint {
+  padding: var(--space-2) var(--space-3);
+}
+
+.search-ask {
+  align-self: flex-start;
+}

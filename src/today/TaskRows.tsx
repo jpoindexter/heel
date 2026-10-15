@@ -10,6 +10,8 @@ import type { NowCard } from "./today-model";
 type Common = {
   /** The row fading out before it goes. */
   leavingId: string | null;
+  /** The row search just led to, tinted for a moment. */
+  foundId?: string | null;
   onComplete: (task: TaskDto) => void;
   onRemove: (task: TaskDto) => void;
   method: Method;
@@ -28,12 +30,12 @@ function RemoveButton({ task, onRemove }: { task: TaskDto; onRemove: (task: Task
 type NowProps = Common & { now: NowCard | null; /** No box is running, so one can start. */ canTimebox: boolean; onStartBox: () => void };
 
 /** The one thing to do now: a quiet tinted row. Its clock starts a time-box on it. */
-export function NowRow({ now, leavingId, canTimebox, onStartBox, onComplete, onRemove, method, onPatch, onSplit }: NowProps) {
+export function NowRow({ now, leavingId, foundId, canTimebox, onStartBox, onComplete, onRemove, method, onPatch, onSplit }: NowProps) {
   if (!now) return null;
   const { task } = now;
   const leaving = leavingId === task.id;
   return (
-    <section aria-label="Now" className="task-row" data-now data-leaving={leaving || undefined}>
+    <section aria-label="Now" className="task-row" data-now data-leaving={leaving || undefined} data-found={foundId === task.id || undefined}>
       <Checkbox size="2" checked={leaving} aria-label={`Complete: ${task.title}`} onCheckedChange={() => onComplete(task)} />
       <div className="grow">
         <Text size="2" weight="medium" as="p" className="task-text clamp-2">{now.text}</Text>
@@ -51,7 +53,7 @@ export function NowRow({ now, leavingId, canTimebox, onStartBox, onComplete, onR
 }
 
 /** The rest of the open tasks, one line each: tick it off; the cross appears on hover or keyboard focus. With a structure on, in its groups. */
-export function LaterList({ tasks, leavingId, onComplete, onRemove, method, onPatch, onSplit }: Common & { tasks: readonly TaskDto[] }) {
+export function LaterList({ tasks, leavingId, foundId, onComplete, onRemove, method, onPatch, onSplit }: Common & { tasks: readonly TaskDto[] }) {
   if (tasks.length === 0) return null;
   return (
     <>
@@ -60,7 +62,7 @@ export function LaterList({ tasks, leavingId, onComplete, onRemove, method, onPa
           {group.label && <Text size="1" weight="medium" color="gray" className="section-label">{group.label}</Text>}
           <ul className="rows" aria-label={group.label || "Open tasks"}>
             {group.tasks.map((task) => (
-              <li key={task.id} className="task-row" data-leaving={leavingId === task.id || undefined}>
+              <li key={task.id} className="task-row" data-leaving={leavingId === task.id || undefined} data-found={foundId === task.id || undefined}>
                 <Checkbox size="2" checked={leavingId === task.id} aria-label={`Complete: ${task.title}`} onCheckedChange={() => onComplete(task)} />
                 <div className="grow">
                   <Text size="2" as="p" className="task-text clamp-2">{task.title}</Text>

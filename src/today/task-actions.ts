@@ -25,6 +25,17 @@ function makeCheer(doneToday: () => number): (title: string) => string {
 
 export type TaskPatch = { size?: TaskDto["size"]; bucket?: string | null };
 
+/** A parked idea becomes a task. Returns the new task's id, so a caller (search) can point at it. */
+function makePromote(client: Client, refresh: () => Promise<void>, fail: (message: string) => void, notify: (notice: Notice) => void) {
+  return async (idea: ParkedIdeaDto): Promise<string | null> => {
+    const result = await client.post(`/parked/${idea.id}/promote`, TaskResultSchema);
+    if (!result.ok) return fail(result.error.message), null;
+    notify({ message: `Now a task: ${idea.idea}`, tone: "info" });
+    await refresh();
+    return result.data.task.id;
+  };
+}
+
 /** A size or bucket tap: written at once, no toast (a tap is its own undo: tap again). */
 function makePatch(client: Client, refresh: () => Promise<void>, fail: (message: string) => void) {
   return async (task: TaskDto, change: TaskPatch) => {
@@ -75,13 +86,7 @@ export function createTaskActions({ client, refresh, dropLocally, notify, doneTo
     return true;
   };
 
-  const promote = async (idea: ParkedIdeaDto) => {
-    const result = await client.post(`/parked/${idea.id}/promote`, TaskResultSchema);
-    if (!result.ok) return fail(result.error.message);
-    notify({ message: `Now a task: ${idea.idea}`, tone: "info" });
-    await refresh();
-  };
-
+  const promote = makePromote(client, refresh, fail, notify);
   const patch = makePatch(client, refresh, fail);
   return { complete: (task: TaskDto) => settle(task, "complete"), remove: (task: TaskDto) => settle(task, "drop"), add, park, promote, patch };
 }

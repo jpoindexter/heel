@@ -16,7 +16,7 @@ import { LayersProvider, useLayers, type Layers } from "../ui/layers";
 import { AttentionProvider } from "../ui/attention";
 import { MethodProvider } from "../ui/method";
 import { useSwipe } from "../ui/useSwipe";
-import { shouldCloseOnKey } from "./escape";
+import { opensSearch, shouldCloseOnKey } from "./escape";
 import { PanelHeader } from "./PanelHeader";
 import { usePanelAnchor } from "./usePanelAnchor";
 import { SettingsView } from "../settings/SettingsView";
@@ -42,12 +42,16 @@ function useOpenSettingsRequests(open: () => void): void {
   }, [open]);
 }
 
-/** Esc goes back one layer; at the root it closes the panel. A control that used Esc itself (a menu, the chat card) keeps it. */
+/** Esc goes back one layer; at the root it closes the panel. A control that used Esc itself (a menu, the chat card) keeps it. ⌘K / ⌘F open search from anywhere. */
 function useEscape(layers: Layers): void {
   const latest = useRef(layers);
   latest.current = layers;
   useEffect(() => {
     const onKey = (event: KeyboardEvent) => {
+      if (opensSearch(event)) {
+        event.preventDefault();
+        return latest.current.push("search");
+      }
       if (!shouldCloseOnKey(event)) return;
       if (latest.current.top === "today") void invoke("toggle_panel_command");
       else latest.current.back();
