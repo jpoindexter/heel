@@ -1,12 +1,14 @@
 import { useCallback } from "react";
+import { useLayers } from "../ui/layers";
 import type { TrayAction } from "./bar-model";
 import { useBar } from "./useBar";
 import { usePointerOutside } from "./usePointerOutside";
 import type { useTodayState } from "./useTodayState";
 
 /** The bar wired to what it does: the four buttons, Enter, ⌘↩, Esc, and when the card folds back. */
-export function useBarActions(state: ReturnType<typeof useTodayState>, onOpenSettings: () => void) {
+export function useBarActions(state: ReturnType<typeof useTodayState>) {
   const { chat, mail, digest } = state;
+  const { push } = useLayers();
   const bar = useBar(chat.isDraftEmpty);
   const { closeTray, collapseSoon, openComposer, closeComposer } = bar;
 
@@ -22,10 +24,12 @@ export function useBarActions(state: ReturnType<typeof useTodayState>, onOpenSet
     void chat.parkTyped().then((done) => done && collapseSoon("added"));
   }, [chat, collapseSoon]);
 
+  /** Email opens its layer over the tasks and reads the inbox; without Apple Mail it opens Settings instead. */
   const email = useCallback(() => {
-    if (mail.available) void digest.check();
-    else onOpenSettings();
-  }, [digest, mail.available, onOpenSettings]);
+    if (!mail.available) return push("settings");
+    push("email");
+    void digest.check();
+  }, [digest, mail.available, push]);
 
   /** Every button rolls the tray back first, then runs. */
   const onAction = useCallback(

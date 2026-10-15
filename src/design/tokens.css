@@ -29,6 +29,14 @@
   --rise-distance: 6px;
   --roll-distance: 14px;
   --drop-distance: 12px;
+  --slide-side: 24px; /* a layer from the right (Settings) travels this far */
+  --slide-top: 16px; /* a layer from the top (Email, a reply) */
+  --layer-push: 8px; /* the base slips back under a side layer, like an iOS push */
+  --layer-back-scale: 0.985;
+  --layer-dim: 0.45;
+  --top-layer-max: 64%; /* a top layer sits over the tasks, never over the whole list */
+  --motion-layer: 260ms; /* a layer arriving: slower than a row, it is a whole surface */
+  --motion-layer-exit: 180ms;
   --sway-distance: 4px; /* Greg sways in place while Heel works and the panel is docked to him */ /* a toast or Greg's bubble drops in from above */
   --bar-height: 36px;
   --list-fade: 18px; /* the task list fades out at its bottom edge instead of cutting */
@@ -50,6 +58,12 @@
     --rise-distance: 0px;
     --roll-distance: 0px;
     --drop-distance: 0px;
+    --slide-side: 0px;
+    --slide-top: 0px;
+    --layer-push: 0px;
+    --layer-back-scale: 1;
+    --motion-layer: 150ms; /* layers cross-fade instead of travelling */
+    --motion-layer-exit: 150ms;
     --sway-distance: 0px;
   }
 }

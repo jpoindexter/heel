@@ -12,7 +12,12 @@
   flex: none;
 }
 
-.today > .today-scroll {
+/* The layer host takes the room between the header and the bar; the task column fills the base inside it. */
+.today > .layer-host {
+  flex: 1;
+}
+
+.today-scroll {
   display: flex;
   flex: 1;
   flex-direction: column;
@@ -137,6 +142,40 @@
 .task-row:hover .row-action,
 .task-row:focus-within .row-action {
   opacity: 1;
+}
+
+/* The way back to the last exchange once its layer is closed. */
+.reply-row {
+  display: flex;
+  gap: var(--space-2);
+  align-items: center;
+  width: 100%;
+  min-width: 0;
+  min-height: var(--hit-target);
+  padding: var(--space-1) var(--space-2) var(--space-1) var(--space-3);
+  color: inherit;
+  text-align: left;
+  background: transparent;
+  border: 0;
+  border-radius: var(--radius-4);
+  animation: rise var(--motion-base) var(--ease-out) both;
+}
+
+.reply-row:hover {
+  background: var(--gray-a2);
+}
+
+.reply-row-label {
+  flex: none;
+}
+
+/* Inside its layer the reply fills what the layer gives it. */
+.layer .reply {
+  flex: 1;
+  max-height: none;
+  min-height: 0;
+  padding-right: var(--ring-room);
+  padding-bottom: var(--space-2);
 }
 
 /* The reply, shaped like an iOS chat: what was asked as a bubble on the right, Heel's answer on the left, a speaker's gap between them. Each bubble arrives from its author's side. */

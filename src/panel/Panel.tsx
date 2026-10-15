@@ -1,19 +1,21 @@
-import { useCallback, useEffect, useState, type CSSProperties } from "react";
+import { useEffect, useRef, type CSSProperties } from "react";
 import { invoke } from "@tauri-apps/api/core";
 import { listen } from "@tauri-apps/api/event";
-import { ArrowLeftIcon, Cross2Icon, GearIcon } from "@radix-ui/react-icons";
-import { Button, Heading, IconButton, Text, Theme } from "@radix-ui/themes";
+import { Theme } from "@radix-ui/themes";
 import "@radix-ui/themes/styles.css";
 import "../design/tokens.css";
 import "./panel.css";
 import { client } from "../api/default-client";
 import { HelperNotice } from "../helper/HelperNotice";
+import { useHelperStatus } from "../helper/useHelperStatus";
 import { useActivity } from "../mascot/life/useActivity";
+import { OPEN_SETTINGS_EVENT } from "../events";
 import { Notifier } from "../ui/Notifier";
 import { NoticesProvider, useNotices } from "../ui/notices";
-import { useHelperStatus } from "../helper/useHelperStatus";
-import { OPEN_SETTINGS_EVENT } from "../events";
+import { LayersProvider, useLayers, type Layers } from "../ui/layers";
+import { useSwipe } from "../ui/useSwipe";
 import { shouldCloseOnKey } from "./escape";
+import { PanelHeader } from "./PanelHeader";
 import { usePanelAnchor } from "./usePanelAnchor";
 import { SettingsView } from "../settings/SettingsView";
 import { useBrainSummary } from "../settings/useBrainSummary";
@@ -21,8 +23,6 @@ import { SCALING } from "../theme/density";
 import { useDensity } from "../theme/useDensity";
 import { useAppearance } from "../theme/useAppearance";
 import { TodayView } from "../today/TodayView";
-
-type View = "today" | "settings";
 
 /** "Settings…" in the menu bar: ask once at start (the panel may have loaded after the click) and again on each event. */
 function useOpenSettingsRequests(open: () => void): void {
@@ -40,10 +40,15 @@ function useOpenSettingsRequests(open: () => void): void {
   }, [open]);
 }
 
-function useEscapeToClose(): void {
+/** Esc goes back one layer; at the root it closes the panel. A control that used Esc itself (a menu, the chat card) keeps it. */
+function useEscape(layers: Layers): void {
+  const latest = useRef(layers);
+  latest.current = layers;
   useEffect(() => {
     const onKey = (event: KeyboardEvent) => {
-      if (shouldCloseOnKey(event)) void invoke("toggle_panel_command");
+      if (!shouldCloseOnKey(event)) return;
+      if (latest.current.top === "today") void invoke("toggle_panel_command");
+      else latest.current.back();
     };
     window.addEventListener("keydown", onKey);
     return () => window.removeEventListener("keydown", onKey);
@@ -52,14 +57,6 @@ function useEscapeToClose(): void {
 
 const closePanel = () => void invoke("toggle_panel_command");
 
-/** Which screen is showing: Today (everything) or Settings behind the gear. */
-function usePanelView() {
-  const [view, setView] = useState<View>("today");
-  const openSettings = useCallback(() => setView("settings"), []);
-  const showToday = useCallback(() => setView("today"), []);
-  return { view, openSettings, showToday };
-}
-
 /** How the panel looks: light or dark, and how big. */
 function usePanelLook() {
   const { preference, appearance, setPreference } = useAppearance();
@@ -67,71 +64,45 @@ function usePanelLook() {
   return { preference, appearance, setPreference, density, setDensity };
 }
 
-function TodayHeader({ onSettings }: { onSettings: () => void }) {
-  return (
-    <>
-      <Text size="1" weight="medium" color="gray" data-tauri-drag-region className="panel-title grow">Heel</Text>
-      <IconButton variant="ghost" color="gray" aria-label="Settings" onClick={onSettings}>
-        <GearIcon aria-hidden="true" />
-      </IconButton>
-    </>
-  );
-}
-
-function SettingsHeader({ onBack }: { onBack: () => void }) {
-  return (
-    <>
-      <Button variant="ghost" color="gray" size="1" onClick={onBack}>
-        <ArrowLeftIcon aria-hidden="true" /> Back
-      </Button>
-      <Heading as="h1" size="2" data-tauri-drag-region className="grow">Settings</Heading>
-    </>
-  );
-}
-
-/** The toast lives at the panel level: every screen's notices drop in from the same top edge. */
+/** The toast lives at the panel level: every layer's notices drop in from the same top edge. */
 function PanelToast() {
   const notices = useNotices();
   return <Notifier notice={notices.notice} onDismiss={notices.dismiss} onHold={notices.hold} onRelease={notices.release} />;
 }
 
 function PanelBody({ look }: { look: ReturnType<typeof usePanelLook> }) {
-  const { view, openSettings, showToday } = usePanelView();
-  const { summary, refresh: refreshSummary } = useBrainSummary(client, view === "settings" ? "settings" : "chat");
+  const layers = useLayers();
+  const inSettings = layers.top === "settings";
+  const { summary, refresh: refreshSummary } = useBrainSummary(client, inSettings ? "settings" : "chat");
   const notices = useNotices();
   const helper = useHelperStatus((from) => {
     void refreshSummary();
     if (from !== "starting") notices.show({ message: "Heel's helper is back", tone: "info" });
   });
-  useEscapeToClose();
-  useOpenSettingsRequests(openSettings);
+  useEscape(layers);
+  useOpenSettingsRequests(() => layers.push("settings"));
+  const onWheel = useSwipe();
 
   return (
-    <main className="panel">
+    <main className="panel" onWheel={onWheel}>
       <span className="panel-tail" aria-hidden="true" />
-      <header data-tauri-drag-region className="panel-header">
-        {view === "settings" ? <SettingsHeader onBack={showToday} /> : <TodayHeader onSettings={openSettings} />}
-        <IconButton variant="ghost" color="gray" aria-label="Close panel" onClick={closePanel}>
-          <Cross2Icon aria-hidden="true" />
-        </IconButton>
-      </header>
-
+      <PanelHeader onClose={closePanel} />
       <HelperNotice status={helper.status} error={helper.error} onRestart={() => void helper.restart()} />
-
-      {/* Both screens stay mounted and are only hidden, so a draft, the reply and a half-typed task survive a trip to Settings. */}
-      <div className="view" data-fill hidden={view === "settings"}>
-        <TodayView showing={view === "today"} onShow={showToday} summary={summary} reloadKey={helper.recoveries} onOpenSettings={openSettings} />
-      </div>
-      <div className="view" hidden={view !== "settings"}>
-        <SettingsView
-          active={view === "settings"}
-          onSaved={() => void refreshSummary()}
-          preference={look.preference}
-          onPreference={look.setPreference}
-          density={look.density}
-          onDensity={look.setDensity}
-        />
-      </div>
+      <TodayView
+        showing={layers.top === "today"}
+        summary={summary}
+        reloadKey={helper.recoveries}
+        settings={
+          <SettingsView
+            active={inSettings}
+            onSaved={() => void refreshSummary()}
+            preference={look.preference}
+            onPreference={look.setPreference}
+            density={look.density}
+            onDensity={look.setDensity}
+          />
+        }
+      />
       <PanelToast />
     </main>
   );
@@ -156,7 +127,9 @@ export function Panel() {
       style={{ "--tail-x": `${anchor.offset}px` } as CSSProperties}
     >
       <NoticesProvider quiet={activity === "off"}>
-        <PanelBody look={look} />
+        <LayersProvider>
+          <PanelBody look={look} />
+        </LayersProvider>
       </NoticesProvider>
     </Theme>
   );

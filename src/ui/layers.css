@@ -1,0 +1,86 @@
+/* The layer stack (N14): the base under everything, side layers from the right, top layers from the top. Transform and opacity only; the distances and times are tokens, and under Reduce Motion they become a cross-fade. */
+.layer-host {
+  position: relative;
+  flex: 1;
+  min-height: 0;
+}
+
+.layer-base {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  transition: transform var(--motion-layer) var(--ease-out), opacity var(--motion-layer) var(--ease-out);
+}
+
+.layer-base[data-state="pushed"] {
+  pointer-events: none;
+  opacity: var(--layer-dim);
+  transform: translateX(calc(-1 * var(--layer-push))) scale(var(--layer-back-scale));
+}
+
+.layer-base[data-state="dim"] {
+  pointer-events: none;
+  opacity: var(--layer-dim);
+}
+
+.layer {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+  background: var(--color-panel-solid);
+  animation: layer-in-right var(--motion-layer) var(--ease-out) both;
+}
+
+.layer[data-side="top"] {
+  inset: 0 0 auto 0;
+  max-height: var(--top-layer-max);
+  padding-bottom: var(--space-2);
+  border-end-start-radius: var(--radius-4);
+  border-end-end-radius: var(--radius-4);
+  /* A soft shadow only: Radix's shadow tokens start with a 1px ring, which drew a box around the layer. */
+  filter: drop-shadow(0 var(--space-2) var(--space-4) var(--black-a5));
+  animation-name: layer-in-top;
+}
+
+.layer[data-leaving] {
+  pointer-events: none;
+  animation: layer-out-right var(--motion-layer-exit) var(--ease-in) both;
+}
+
+.layer[data-side="top"][data-leaving] {
+  animation-name: layer-out-top;
+}
+
+.layer-scroll {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  gap: var(--space-1);
+  min-height: 0;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+}
+
+.layer-scroll > * {
+  flex: none;
+}
+
+@keyframes layer-in-right {
+  from { opacity: 0; transform: translateX(var(--slide-side)); }
+  to { opacity: 1; transform: none; }
+}
+
+@keyframes layer-out-right {
+  to { opacity: 0; transform: translateX(var(--slide-side)); }
+}
+
+@keyframes layer-in-top {
+  from { opacity: 0; transform: translateY(calc(-1 * var(--slide-top))); }
+  to { opacity: 1; transform: none; }
+}
+
+@keyframes layer-out-top {
+  to { opacity: 0; transform: translateY(calc(-1 * var(--slide-top))); }
+}
