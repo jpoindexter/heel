@@ -1,8 +1,9 @@
-import { useCallback } from "react";
+import { useCallback, type MutableRefObject } from "react";
 import { TurnResultSchema, type HistoryMessage } from "../../shared/api";
 import type { Client } from "../api/client";
 import { celebrate, settle, stumble, thinking } from "../mascot/motion-events";
-import { answerFrom, historyFor } from "./thread-model";
+import type { Notice } from "../ui/notice-model";
+import { answerFrom, answerNotice, historyFor, type Message } from "./thread-model";
 import { useClearConversation } from "./useClearConversation";
 import { useReceiptUndo } from "./useReceiptUndo";
 import { useStoppable } from "./useStoppable";
@@ -14,10 +15,30 @@ type Options = {
   notify: (message: string) => void;
   /** The conversation was cleared: show it, with a way to bring it back. */
   onCleared: (undo: () => void) => void;
+  /** An answer landed: what Heel did first (with Undo), for when the panel is closed and nobody saw it. */
+  onAnswered: (notice: Notice) => void;
 };
 
+type Ask = (text: string, history: HistoryMessage[], pendingId: number) => Promise<boolean>;
+type RetryDeps = { ask: Ask; commit: (next: Message[]) => void; isBusy: () => boolean; latest: MutableRefObject<Message[]> };
+
+/** Ask again for a failed turn, in place: the person's words are already in the thread. */
+function useRetry({ ask, commit, isBusy, latest }: RetryDeps) {
+  return useCallback(
+    (id: number) => {
+      const index = latest.current.findIndex((m) => m.id === id);
+      const failed = latest.current[index];
+      if (!failed || failed.role !== "heel" || failed.status !== "failed" || isBusy()) return;
+      const history = historyFor(latest.current.slice(0, Math.max(0, index - 1)));
+      commit(latest.current.map((m) => (m.id === id ? { id, role: "heel", status: "pending" } : m)));
+      void ask(failed.retryText, history, id);
+    },
+    [ask, commit, isBusy, latest],
+  );
+}
+
 /** The conversation: what was said, what Heel did about it, and how to take it back. Lives as long as the panel window. */
-export function useThread(client: Client, { onChanged, notify, onCleared }: Options) {
+export function useThread(client: Client, { onChanged, notify, onCleared, onAnswered }: Options) {
   const { messages, latest, nextId, commit, isBusy, persist } = useThreadState(client);
   const undoReceipt = useReceiptUndo({ client, latest, commit, notify, onChanged, persist });
   const { begin, end, stop } = useStoppable();
@@ -26,13 +47,15 @@ export function useThread(client: Client, { onChanged, notify, onCleared }: Opti
       void thinking();
       const result = await client.post("/turn", TurnResultSchema, { text, history }, begin());
       end();
-      commit(latest.current.map((m) => (m.id === pendingId ? answerFrom(result, pendingId, text) : m)));
+      const answer = answerFrom(result, pendingId, text);
+      commit(latest.current.map((m) => (m.id === pendingId ? answer : m)));
       persist(pendingId);
       void (result.ok ? celebrate() : result.error.code === "aborted" ? settle() : stumble());
+      if (result.ok || result.error.code !== "aborted") onAnswered(answerNotice(answer, (index) => void undoReceipt(pendingId, index)));
       await onChanged();
       return result.ok;
     },
-    [begin, client, commit, end, latest, onChanged, persist],
+    [begin, client, commit, end, latest, onAnswered, onChanged, persist, undoReceipt],
   );
 
   /** Ask the AI. Returns true when it answered, so the caller can clear the ask box. */
@@ -50,19 +73,7 @@ export function useThread(client: Client, { onChanged, notify, onCleared }: Opti
     [ask, commit, isBusy, latest, nextId, persist],
   );
 
-  /** Ask again for a failed turn, in place: the person's words are already in the thread. */
-  const retry = useCallback(
-    (id: number) => {
-      const index = latest.current.findIndex((m) => m.id === id);
-      const failed = latest.current[index];
-      if (!failed || failed.role !== "heel" || failed.status !== "failed" || isBusy()) return;
-      const history = historyFor(latest.current.slice(0, Math.max(0, index - 1)));
-      commit(latest.current.map((m) => (m.id === id ? { id, role: "heel", status: "pending" } : m)));
-      void ask(failed.retryText, history, id);
-    },
-    [ask, commit, isBusy, latest],
-  );
-
+  const retry = useRetry({ ask, commit, isBusy, latest });
   const clear = useClearConversation({ client, commit, isBusy, latest, notify, onCleared });
 
   return { messages, clear, busy: messages.some((m) => m.role === "heel" && m.status === "pending"), send, retry, stop, undoReceipt };

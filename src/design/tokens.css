@@ -27,6 +27,7 @@
   --press-scale: 0.96;
   --rise-distance: 6px;
   --roll-distance: 14px;
+  --drop-distance: 12px; /* a toast or Greg's bubble drops in from above */
   --bar-height: 36px;
   --list-fade: 18px; /* the task list fades out at its bottom edge instead of cutting */
   --label-tracking: 0.08em;
@@ -46,6 +47,7 @@
     --stagger: 0ms;
     --rise-distance: 0px;
     --roll-distance: 0px;
+    --drop-distance: 0px;
   }
 }
 

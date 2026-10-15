@@ -62,3 +62,7 @@ pub(crate) const HEALTH_INTERVAL_MS: u64 = 3_000;
 pub(crate) const STARTUP_GRACE_MS: u64 = 10_000;
 pub(crate) const HEALTHY_RESET_MS: u64 = 60_000;
 pub(crate) const TRAY_RESTART_HELPER_ID: &str = "tray-restart-helper";
+/// Greg's notice bubble (N12): its window, the event that fills it (must equal NOTICE_EVENT in src/events.ts; a test enforces it), and its gap above his head.
+pub(crate) const NOTICE_LABEL: &str = "notice";
+pub(crate) const NOTICE_EVENT: &str = "heel:notice";
+pub(crate) const NOTICE_GAP_LOGICAL_PX: f64 = 4.0;

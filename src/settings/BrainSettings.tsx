@@ -1,6 +1,5 @@
 import { Button, Callout, Flex, Heading, Text } from "@radix-ui/themes";
 import { client } from "../api/default-client";
-import { Notifier } from "../ui/Notifier";
 import { modelControl } from "./brain-model";
 import { ModelField } from "./ModelField";
 import { ProviderCards } from "./ProviderCards";
@@ -10,7 +9,7 @@ type Props = { active: boolean; onSaved?: () => void };
 
 export function BrainSettings({ active, onSaved }: Props) {
   const brain = useBrain(client, active, onSaved);
-  const { view, notice, test } = brain;
+  const { view, test } = brain;
   const ready = view.phase === "ready" ? view : null;
   const control = ready ? modelControl(ready.state.settings.provider, ready.models, ready.state.settings.model) : null;
 
@@ -42,9 +41,6 @@ export function BrainSettings({ active, onSaved }: Props) {
           </Text>
         </>
       )}
-      <div className="toast-anchor">
-        <Notifier notice={notice} onDismiss={brain.dismissNotice} />
-      </div>
     </section>
   );
 }

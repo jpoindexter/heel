@@ -8,6 +8,9 @@ import "../design/tokens.css";
 import "./panel.css";
 import { client } from "../api/default-client";
 import { HelperNotice } from "../helper/HelperNotice";
+import { useActivity } from "../mascot/life/useActivity";
+import { Notifier } from "../ui/Notifier";
+import { NoticesProvider, useNotices } from "../ui/notices";
 import { useHelperStatus } from "../helper/useHelperStatus";
 import { OPEN_SETTINGS_EVENT } from "../events";
 import { shouldCloseOnKey } from "./escape";
@@ -86,13 +89,58 @@ function SettingsHeader({ onBack }: { onBack: () => void }) {
   );
 }
 
-export function Panel() {
+/** The toast lives at the panel level: every screen's notices drop in from the same top edge. */
+function PanelToast() {
+  const notices = useNotices();
+  return <Notifier notice={notices.notice} onDismiss={notices.dismiss} />;
+}
+
+function PanelBody({ look }: { look: ReturnType<typeof usePanelLook> }) {
   const { view, openSettings, showToday } = usePanelView();
   const { summary, refresh: refreshSummary } = useBrainSummary(client, view === "settings" ? "settings" : "chat");
-  const look = usePanelLook();
-  const [anchor, helper] = [usePanelAnchor(), useHelperStatus(() => void refreshSummary())];
+  const notices = useNotices();
+  const helper = useHelperStatus(() => {
+    void refreshSummary();
+    notices.show({ message: "Heel's helper is back", tone: "info" });
+  });
   useEscapeToClose();
   useOpenSettingsRequests(openSettings);
+
+  return (
+    <main className="panel">
+      <span className="panel-tail" aria-hidden="true" />
+      <header data-tauri-drag-region className="panel-header">
+        {view === "settings" ? <SettingsHeader onBack={showToday} /> : <TodayHeader onSettings={openSettings} />}
+        <IconButton variant="ghost" color="gray" aria-label="Close panel" onClick={closePanel}>
+          <Cross2Icon aria-hidden="true" />
+        </IconButton>
+      </header>
+
+      <HelperNotice status={helper.status} error={helper.error} onRestart={() => void helper.restart()} />
+
+      {/* Both screens stay mounted and are only hidden, so a draft, the reply and a half-typed task survive a trip to Settings. */}
+      <div className="view" data-fill hidden={view === "settings"}>
+        <TodayView showing={view === "today"} onShow={showToday} summary={summary} reloadKey={helper.recoveries} onOpenSettings={openSettings} />
+      </div>
+      <div className="view" hidden={view !== "settings"}>
+        <SettingsView
+          active={view === "settings"}
+          onSaved={() => void refreshSummary()}
+          preference={look.preference}
+          onPreference={look.setPreference}
+          density={look.density}
+          onDensity={look.setDensity}
+        />
+      </div>
+      <PanelToast />
+    </main>
+  );
+}
+
+export function Panel() {
+  const look = usePanelLook();
+  const [activity] = useActivity();
+  const anchor = usePanelAnchor();
 
   return (
     <Theme
@@ -107,32 +155,9 @@ export function Panel() {
       data-tail={anchor.edge}
       style={{ "--tail-x": `${anchor.offset}px` } as CSSProperties}
     >
-      <main className="panel">
-        <span className="panel-tail" aria-hidden="true" />
-        <header data-tauri-drag-region className="panel-header">
-          {view === "settings" ? <SettingsHeader onBack={showToday} /> : <TodayHeader onSettings={openSettings} />}
-          <IconButton variant="ghost" color="gray" aria-label="Close panel" onClick={closePanel}>
-            <Cross2Icon aria-hidden="true" />
-          </IconButton>
-        </header>
-
-        <HelperNotice status={helper.status} error={helper.error} onRestart={() => void helper.restart()} />
-
-        {/* Both screens stay mounted and are only hidden, so a draft, the reply and a half-typed task survive a trip to Settings. */}
-        <div className="view" data-fill hidden={view === "settings"}>
-          <TodayView showing={view === "today"} onShow={showToday} summary={summary} reloadKey={helper.recoveries} onOpenSettings={openSettings} />
-        </div>
-        <div className="view" hidden={view !== "settings"}>
-          <SettingsView
-            active={view === "settings"}
-            onSaved={() => void refreshSummary()}
-            preference={look.preference}
-            onPreference={look.setPreference}
-            density={look.density}
-            onDensity={look.setDensity}
-          />
-        </div>
-      </main>
+      <NoticesProvider quiet={activity === "off"}>
+        <PanelBody look={look} />
+      </NoticesProvider>
     </Theme>
   );
 }

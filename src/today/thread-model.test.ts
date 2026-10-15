@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 import { MAX_HISTORY_MESSAGES } from "../../shared/api";
-import { answerFrom, historyFor, latestExchange, receiptSummary, toReceipts, withReceiptUndone, type Message } from "./thread-model";
+import { answerFrom, answerNotice, historyFor, latestExchange, receiptSummary, toReceipts, withReceiptUndone, type Message, type Receipt } from "./thread-model";
 
 describe("toReceipts", () => {
   it("keeps success text, prefixes failures, and carries the undo", () => {
@@ -121,5 +121,30 @@ describe("latestExchange", () => {
   it("shows a pending answer too, so Thinking… has a place", () => {
     const pending: Message = { id: 2, role: "heel", status: "pending" };
     expect(latestExchange([{ id: 1, role: "user", text: "hi" }, pending])).toEqual({ asked: "hi", heel: pending });
+  });
+});
+
+describe("answerNotice", () => {
+  const said = (receipts: Receipt[]): Message => ({ id: 2, role: "heel", status: "said", say: "ok", receipts });
+  it("names the first thing Heel did and undoes that one", () => {
+    const undone: number[] = [];
+    const notice = answerNotice(
+      said([
+        { ok: false, text: "Couldn't: x", undo: null, undone: false },
+        { ok: true, text: "Completed: Call the vet", undo: { kind: "restore_task", id: "t1" }, undone: false },
+      ]),
+      (index) => undone.push(index),
+    );
+    expect(notice).toMatchObject({ message: "Completed: Call the vet", tone: "info" });
+    notice.undo?.();
+    expect(undone).toEqual([1]);
+  });
+  it("has no Undo when the thing done cannot be undone, and just says he answered when nothing was done", () => {
+    expect(answerNotice(said([{ ok: true, text: "Opened a draft in Mail", undo: null, undone: false }]), () => undefined).undo).toBeUndefined();
+    expect(answerNotice(said([]), () => undefined)).toEqual({ message: "Heel answered", tone: "info" });
+  });
+  it("says so when the turn failed", () => {
+    const failed: Message = { id: 2, role: "heel", status: "failed", message: "no key", offerSettings: true, retryText: "hi" };
+    expect(answerNotice(failed, () => undefined).tone).toBe("error");
   });
 });

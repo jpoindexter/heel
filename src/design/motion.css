@@ -1,0 +1,9 @@
+/* Shared entrances and exits for things that float (toasts, Greg's bubble). Distances and durations are tokens: zero under reduced motion. */
+@keyframes drop-in {
+  from { opacity: 0; transform: translateY(calc(-1 * var(--drop-distance))); }
+  to { opacity: 1; transform: none; }
+}
+
+@keyframes fade-out {
+  to { opacity: 0; transform: translateY(calc(-1 * var(--drop-distance))); }
+}

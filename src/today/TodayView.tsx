@@ -2,7 +2,6 @@ import { Button, Callout } from "@radix-ui/themes";
 import { FocusStatus } from "../focus/FocusStatus";
 import { InboxPanel } from "../inbox/InboxPanel";
 import type { BrainSummary } from "../settings/brain-summary";
-import { Notifier } from "../ui/Notifier";
 import "./chat.css";
 import { FirstRun } from "./FirstRun";
 import { Reply } from "./Reply";
@@ -52,7 +51,6 @@ export function TodayView({ showing, onShow, summary, reloadKey, onOpenSettings 
         <InboxPanel digest={state.digest} reply={state.reply} onOpen={(id) => void state.openMail(id)} />
       </div>
       {summary?.kind === "setup" && <FirstRun summary={summary} onOpenSettings={onOpenSettings} />}
-      <div className="compose-zone"><Notifier notice={tasks.notice} onDismiss={tasks.dismissNotice} /></div>
       <BottomBar state={state} bar={bar} showing={showing} focusSignal={focusSignal} emailReady={emailReady} />
     </div>
   );

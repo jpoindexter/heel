@@ -1,0 +1,40 @@
+/* The toast drops in from the panel's top edge and fades out. Radix waits for the exit animation before removing it. */
+.toast-viewport {
+  position: absolute;
+  top: var(--toast-gap);
+  right: var(--space-3);
+  left: var(--space-3);
+  z-index: var(--z-toast);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.toast {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: var(--space-2) var(--space-3);
+  background: var(--color-panel-solid);
+  border: var(--border-width) solid var(--hairline);
+  border-radius: var(--radius-4);
+  box-shadow: var(--shadow-4);
+}
+
+.toast-text {
+  flex: 1;
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+
+.toast[data-state="open"] {
+  animation: drop-in var(--motion-base) var(--ease-out) both;
+}
+
+.toast[data-state="closed"] {
+  animation: fade-out var(--motion-exit) var(--ease-in) both;
+}
+
+.toast[data-tone="error"] {
+  border-color: var(--amber-9);
+}

@@ -2,7 +2,7 @@ import { useCallback, useState } from "react";
 import { BrainSettingsSchema, TestResultSchema, type BrainSettingsDto } from "../../shared/api";
 import type { ProviderId } from "../../shared/providers";
 import type { Client } from "../api/client";
-import type { Notice } from "../ui/Notifier";
+import { useNotices } from "../ui/notices";
 import { useFocusRefresh } from "../ui/useFocusRefresh";
 import { changeMessage } from "./brain-model";
 import { useBrainView } from "./useBrainView";
@@ -12,9 +12,9 @@ export type TestState = { phase: "idle" } | { phase: "running" } | { phase: "don
 
 /** `onSaved` runs after a change is stored, so other views (the header chip) can reload without waiting for a focus event. */
 export function useBrain(client: Client, active: boolean, onSaved?: () => void) {
-  const [notice, setNotice] = useState<Notice | null>(null);
+  const { show: notify } = useNotices();
   const [test, setTest] = useState<TestState>({ phase: "idle" });
-  const { view, ready, show, fetchModels, load } = useBrainView(client, setNotice);
+  const { view, ready, show, fetchModels, load } = useBrainView(client, notify);
   useFocusRefresh(load, active);
 
   const save = useCallback(
@@ -22,15 +22,15 @@ export function useBrain(client: Client, active: boolean, onSaved?: () => void) 
       const current = ready.current;
       if (!current) return;
       const result = await client.put("/brain", BrainSettingsSchema, next);
-      if (!result.ok) return setNotice({ message: result.error.message, tone: "error" });
+      if (!result.ok) return notify({ message: result.error.message, tone: "error" });
       const previous = current.state.settings;
       const models = result.data.provider ? await fetchModels(result.data.provider) : null;
       show({ phase: "ready", state: { ...current.state, settings: result.data }, models });
       onSaved?.();
       setTest({ phase: "idle" });
-      setNotice({ message: changeMessage(current.state, result.data), tone: "info", undo: withUndo ? () => void save(previous, false) : undefined });
+      notify({ message: changeMessage(current.state, result.data), tone: "info", undo: withUndo ? () => void save(previous, false) : undefined });
     },
-    [client, fetchModels, onSaved, ready, show],
+    [client, fetchModels, notify, onSaved, ready, show],
   );
 
   const runTest = useCallback(async () => {
@@ -41,11 +41,9 @@ export function useBrain(client: Client, active: boolean, onSaved?: () => void) 
 
   return {
     view,
-    notice,
     test,
     refresh: load,
     runTest,
-    dismissNotice: () => setNotice(null),
     choose: (provider: ProviderId) => save({ provider, model: null }),
     setModel: (model: string | null) => {
       const provider = ready.current?.state.settings.provider ?? null;

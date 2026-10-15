@@ -2,7 +2,7 @@ import { useCallback, useRef, useState } from "react";
 import { BrainStateSchema, ModelsSchema, type BrainStateDto } from "../../shared/api";
 import type { ProviderId } from "../../shared/providers";
 import type { Client } from "../api/client";
-import type { Notice } from "../ui/Notifier";
+import type { Notice } from "../ui/notice-model";
 
 export type BrainView =
   | { phase: "loading" }

@@ -55,9 +55,9 @@ pub(crate) fn toggle_panel(app: &AppHandle) {
     }
 }
 
-/// Greg needs to know whether the panel is open: he stays still while it is.
+/// Every window hears whether the panel is open: Greg stays still while it is; the panel routes its notices by it.
 pub(crate) fn announce_panel(app: &AppHandle, visible: bool) {
-    let _ = app.emit_to(MASCOT_LABEL, PANEL_VISIBLE_EVENT, visible);
+    let _ = app.emit(PANEL_VISIBLE_EVENT, visible);
 }
 
 pub(crate) fn show_panel(app: &AppHandle) {
@@ -65,6 +65,7 @@ pub(crate) fn show_panel(app: &AppHandle) {
         return;
     };
     crate::appear::reveal_mascot(app);
+    crate::notice_window::hide(app);
     if let Some(mascot) = app.get_webview_window(MASCOT_LABEL) {
         dock_panel(app, &mascot, &panel);
     }

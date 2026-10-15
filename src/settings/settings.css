@@ -17,14 +17,3 @@
   display: grid;
   gap: var(--space-1);
 }
-
-/* The toast sits at the bottom of the visible Settings area, however far the page is scrolled. */
-.toast-anchor {
-  position: sticky;
-  bottom: 0;
-  height: 0;
-}
-
-.toast-anchor .toast-viewport {
-  bottom: 0;
-}

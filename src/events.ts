@@ -15,3 +15,7 @@ export const FADE_EVENT = "heel:fade";
 export const PANEL_ANCHOR_EVENT = "heel:panel-anchor";
 /** Sent to the panel when the helper's state changes (running, starting, restarting, stopped). Must equal HELPER_STATUS_EVENT in src-tauri/src/constants.rs. */
 export const HELPER_STATUS_EVENT = "heel:helper-status";
+/** Sent to the notice window with what to show next to Greg (id, message, tone, undoable). Must equal NOTICE_EVENT in src-tauri/src/constants.rs. */
+export const NOTICE_EVENT = "heel:notice";
+/** Sent by the notice window when its Undo is pressed (payload: the notice id). Webview to webview only. */
+export const NOTICE_UNDO_EVENT = "heel:notice-undo";

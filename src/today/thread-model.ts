@@ -1,4 +1,5 @@
 import { MAX_HISTORY_MESSAGES, type ActionOutcomeDto, type ApiResult, type HistoryMessage, type ReceiptDto, type StoredMessage, type TurnResultDto } from "../../shared/api";
+import type { Notice } from "../ui/notice-model";
 import { replyError } from "./today-model";
 
 /** One line of "what Heel did". `undo` is how to reverse it; `undone` once the person has. */
@@ -52,4 +53,14 @@ export function withReceiptUndone(messages: readonly Message[], id: number, inde
   return messages.map((m) =>
     m.id === id && m.role === "heel" && m.status === "said" ? { ...m, receipts: m.receipts.map((r, i) => (i === index ? { ...r, undone } : r)) } : m,
   );
+}
+
+/** For Greg's bubble when an answer lands with the panel closed: the first thing Heel did (with Undo), or just that he answered. */
+export function answerNotice(message: Message, undoAt: (index: number) => void): Notice {
+  if (message.role !== "heel" || message.status === "pending") return { message: "Heel answered", tone: "info" };
+  if (message.status === "failed") return { message: "Heel couldn't answer. Open the panel to try again.", tone: "error" };
+  const index = message.receipts.findIndex((r) => r.ok);
+  const first = message.receipts[index];
+  if (!first) return { message: "Heel answered", tone: "info" };
+  return { message: first.text, tone: "info", undo: first.undo ? () => undoAt(index) : undefined };
 }

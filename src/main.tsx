@@ -3,8 +3,10 @@ import ReactDOM from "react-dom/client";
 import { getCurrentWindow } from "@tauri-apps/api/window";
 import { shouldBlockContextMenu } from "./context-menu";
 import { Mascot } from "./mascot/Mascot";
+import { NoticeBubble } from "./notice/NoticeBubble";
 import { Panel } from "./panel/Panel";
 import "./design/base.css";
+import "./design/motion.css";
 
 /** Which window this is. In `npm run dev` a plain browser can preview the panel with ?window=panel. */
 function windowLabel(): string {
@@ -22,5 +24,5 @@ window.addEventListener("contextmenu", (event) => {
 });
 
 ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
-  <React.StrictMode>{label === "panel" ? <Panel /> : <Mascot />}</React.StrictMode>,
+  <React.StrictMode>{label === "panel" ? <Panel /> : label === "notice" ? <NoticeBubble /> : <Mascot />}</React.StrictMode>,
 );

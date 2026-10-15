@@ -33,6 +33,22 @@ pub fn panel_origin(mascot: Rect, panel_size: (i32, i32), monitor: Rect, gap: i3
     (x, y)
 }
 
+/// Top-left for Greg's notice bubble: centred over him, above when there is room, otherwise below,
+/// and always fully inside the usable screen.
+pub fn bubble_origin(mascot: Rect, size: (i32, i32), monitor: Rect, gap: i32) -> Point {
+    let (w, h) = size;
+    let max_x = (monitor.x + monitor.width - w).max(monitor.x);
+    let x = (mascot.x + mascot.width / 2 - w / 2).clamp(monitor.x, max_x);
+    let above = mascot.y - h - gap;
+    let y = if above >= monitor.y {
+        above
+    } else {
+        let max_y = (monitor.y + monitor.height - h).max(monitor.y);
+        (mascot.y + mascot.height + gap).min(max_y)
+    };
+    (x, y)
+}
+
 #[derive(Clone, Copy, Debug, PartialEq, Eq)]
 pub enum Side {
     Above,
@@ -135,6 +151,30 @@ mod tests {
         let (x, y) = panel_origin(m, PANEL, second, GAP);
         assert!(x >= second.x && x + PANEL.0 <= second.x + second.width);
         assert!(y >= second.y && y + PANEL.1 <= second.y + second.height);
+    }
+
+    #[test]
+    fn bubble_sits_centred_over_greg_with_the_gap() {
+        let greg = mascot(1000, 1000);
+        let (x, y) = bubble_origin(greg, (480, 128), monitor(), 8);
+        assert_eq!(x, 1000 + 192 - 240);
+        assert_eq!(y, 1000 - 128 - 8);
+    }
+
+    #[test]
+    fn bubble_stays_inside_the_screen_edges() {
+        let (x, _) = bubble_origin(mascot(0, 1000), (480, 128), monitor(), 8);
+        assert_eq!(x, 0);
+        let (x, _) = bubble_origin(mascot(3024 - 384, 1000), (480, 128), monitor(), 8);
+        assert_eq!(x, 3024 - 480);
+    }
+
+    #[test]
+    fn bubble_drops_below_greg_when_he_is_against_the_top() {
+        let greg = mascot(1000, 66);
+        let area = Rect { x: 0, y: 66, width: 3024, height: 1800 };
+        let (_, y) = bubble_origin(greg, (480, 128), area, 8);
+        assert_eq!(y, 66 + 416 + 8);
     }
 
     #[test]

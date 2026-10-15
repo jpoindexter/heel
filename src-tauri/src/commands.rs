@@ -3,11 +3,17 @@
 use tauri::{AppHandle, Manager};
 
 use crate::constants::SIDECAR_FILE;
-use crate::panel_window::toggle_panel;
+use crate::panel_window::{panel_is_visible, toggle_panel};
 
 #[tauri::command]
 pub(crate) fn toggle_panel_command(app: AppHandle) {
     toggle_panel(&app);
+}
+
+/// The panel asks at load whether it is on screen (the visibility event may have fired before it was listening).
+#[tauri::command]
+pub(crate) fn panel_visible(app: AppHandle) -> bool {
+    panel_is_visible(&app)
 }
 
 /// Port and token of the local helper, written by the sidecar into the app data dir.

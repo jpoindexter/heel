@@ -155,39 +155,3 @@
   color: var(--gray-a9);
   background: var(--gray-a3);
 }
-
-/* The toast pops in above the bar and sinks out. Radix waits for the exit animation before removing it. */
-.toast-viewport {
-  position: absolute;
-  right: 0;
-  bottom: 100%;
-  left: 0;
-  z-index: var(--z-toast);
-  margin: 0 0 var(--toast-gap);
-  padding: 0;
-  list-style: none;
-}
-
-.toast {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: var(--space-2);
-  padding: var(--space-2) var(--space-3);
-  background: var(--color-panel-solid);
-  border: var(--border-width) solid var(--hairline);
-  border-radius: var(--radius-4);
-  box-shadow: var(--shadow-4);
-}
-
-.toast[data-state="open"] {
-  animation: rise var(--motion-base) var(--ease-out) both;
-}
-
-.toast[data-state="closed"] {
-  animation: sink var(--motion-exit) var(--ease-in) both;
-}
-
-.toast[data-tone="error"] {
-  border-color: var(--amber-9);
-}

@@ -45,6 +45,23 @@
         "minHeight": 320,
         "maxWidth": 640,
         "maxHeight": 900
+      },
+      {
+        "label": "notice",
+        "title": "Heel notice",
+        "width": 240,
+        "height": 64,
+        "visible": false,
+        "decorations": false,
+        "transparent": true,
+        "shadow": false,
+        "alwaysOnTop": true,
+        "skipTaskbar": true,
+        "resizable": false,
+        "focus": false,
+        "focusable": false,
+        "visibleOnAllWorkspaces": true,
+        "acceptFirstMouse": true
       }
     ],
     "security": {

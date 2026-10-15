@@ -4,3 +4,4 @@
 - [2026-10-15 flex-scroll-column-shrinks-rows](2026-10-15-flex-scroll-column-shrinks-rows.md) — In a scrolling flex column, give the children `flex: none`; an explicit `min-height` on them re-enables shrinking below their content.
 - [2026-10-15 patch-asserts-its-target](2026-10-15-patch-asserts-its-target.md) — A scripted text edit asserts its anchor exists before replacing; patch the file `rg` named, not where the symbol is defined.
 - [2026-10-15 line-clamp-clips-in-padding](2026-10-15-line-clamp-clips-in-padding.md) — Put `-webkit-line-clamp` on an unpadded inner text element, never on the padded box; or don't clamp text the person wrote.
+- [2026-10-15 act-on-timed-ui-in-the-same-step](2026-10-15-act-on-timed-ui-in-the-same-step.md) — When verifying anything that disappears on a timer, detect and act in one step; a driven unfocused window needs a `focus` event before a Radix toast fades.
