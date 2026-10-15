@@ -49,3 +49,9 @@ Reversible? Yes.
 
 ## 2026-10-15 — S4 verification update: Claude CLI now live-verified
 Update to the S4 entry above: after `claude auth login`, a full turn through the Claude CLI (max subscription) ran in 5.7s, added a task with a first step, and returned a plain, short reply. All three providers have now run a real turn: Claude 5.7s, Codex 7.1s, Ollama qwen2.5:14b 70.5s (cold).
+
+## 2026-10-15 — S4b: local helper server (Hono) with per-launch token; Settings > Brain
+Choice: `sidecar/server` (Hono + @hono/node-server, MIT) binds 127.0.0.1 on a random port, requires an `x-heel-token` header, rejects non-loopback Host headers, and only grants CORS to the panel's origins. It writes `{port, token}` to `sidecar.json` (mode 0600, in the app data dir `~/Library/Application Support/studio.theft.heel/`) and deletes it on exit. The panel gets that file through the Rust command `sidecar_info`, so a web page can never read the token. Wire types live in `shared/api.ts` and both sides validate with them.
+Dev flow: `npm run tauri dev` runs `npm run dev:all` (concurrently: vite + sidecar). New deps: hono 4.13, @hono/node-server 2.1, concurrently 10 (dev). All MIT.
+Not done: shipping a built app (the sidecar must be bundled and started/stopped by the app) -> Trello V1-10. `heel.db` is 0644 inside a 0700 folder.
+Reversible? Yes.

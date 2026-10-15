@@ -1,35 +1,68 @@
-import { emit } from "@tauri-apps/api/event";
+import { useEffect, useRef, useState, type KeyboardEvent } from "react";
 import { invoke } from "@tauri-apps/api/core";
-import { HEEL_STATES, type HeelState } from "../mascot/atlas";
-import { MOTION_EVENT } from "../events";
+import { BrainSettings } from "../settings/BrainSettings";
+import { TodayTab } from "./TodayTab";
 
-const STATE_LABELS: Record<HeelState, string> = {
-  idle: "Idle",
-  listening: "Listening",
-  thinking: "Thinking",
-  greeting: "Greeting",
-  done: "Done",
-  error: "Error",
-};
+const TABS = [
+  { id: "today", label: "Today" },
+  { id: "settings", label: "Settings" },
+] as const;
 
-// Spike-only panel: proves the panel opens, takes focus, and can drive the mascot across windows.
-// The real task list + ask box is slice S2.
+type TabId = (typeof TABS)[number]["id"];
+
 export function Panel() {
+  const [tab, setTab] = useState<TabId>("today");
+  const tabRefs = useRef<Record<TabId, HTMLButtonElement | null>>({ today: null, settings: null });
+
+  useEffect(() => {
+    const onKey = (event: globalThis.KeyboardEvent) => {
+      if (event.key === "Escape") void invoke("toggle_panel_command");
+    };
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, []);
+
+  // Roving tabindex: the tab list is one Tab stop; arrows move within it.
+  const onTabKey = (event: KeyboardEvent, index: number) => {
+    const step = event.key === "ArrowRight" ? 1 : event.key === "ArrowLeft" ? -1 : 0;
+    if (!step) return;
+    event.preventDefault();
+    const next = TABS[(index + step + TABS.length) % TABS.length]!.id;
+    setTab(next);
+    tabRefs.current[next]?.focus();
+  };
+
   return (
     <main className="panel">
       <header data-tauri-drag-region>
         <h1 data-tauri-drag-region>Heel</h1>
-        <button type="button" onClick={() => void invoke("toggle_panel_command")} aria-label="Close panel">
+        <button type="button" className="button" onClick={() => void invoke("toggle_panel_command")} aria-label="Close panel">
           Close
         </button>
       </header>
-      <p>Spike check: choose a mascot state.</p>
-      <div className="states" role="group" aria-label="Mascot state">
-        {(Object.keys(HEEL_STATES) as HeelState[]).map((state) => (
-          <button key={state} type="button" onClick={() => void emit(MOTION_EVENT, HEEL_STATES[state])}>
-            {STATE_LABELS[state]}
+
+      <div role="tablist" aria-label="Heel sections" className="tabs">
+        {TABS.map((item, index) => (
+          <button
+            key={item.id}
+            ref={(node) => { tabRefs.current[item.id] = node; }}
+            role="tab"
+            id={`tab-${item.id}`}
+            type="button"
+            className="tab"
+            aria-selected={tab === item.id}
+            aria-controls={`tabpanel-${item.id}`}
+            tabIndex={tab === item.id ? 0 : -1}
+            onClick={() => setTab(item.id)}
+            onKeyDown={(event) => onTabKey(event, index)}
+          >
+            {item.label}
           </button>
         ))}
+      </div>
+
+      <div role="tabpanel" id={`tabpanel-${tab}`} aria-labelledby={`tab-${tab}`} className="scroll">
+        {tab === "today" ? <TodayTab /> : <BrainSettings />}
       </div>
     </main>
   );

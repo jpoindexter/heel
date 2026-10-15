@@ -6,7 +6,16 @@ import { Mascot } from "./mascot/Mascot";
 import { Panel } from "./panel/Panel";
 import "./styles.css";
 
-const label = getCurrentWindow().label;
+/** Which window this is. In `npm run dev` a plain browser can preview the panel with ?window=panel. */
+function windowLabel(): string {
+  if (import.meta.env.DEV) {
+    const preview = new URLSearchParams(window.location.search).get("window");
+    if (preview) return preview;
+  }
+  return getCurrentWindow().label;
+}
+
+const label = windowLabel();
 
 window.addEventListener("contextmenu", (event) => {
   if (shouldBlockContextMenu(event.target as HTMLElement | null)) event.preventDefault();

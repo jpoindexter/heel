@@ -1,10 +1,10 @@
 import { z } from "zod";
+import { PROVIDER_IDS, type ProviderId } from "../../shared/providers";
 import type { Ctx } from "./context";
 import { fail, ok, type Result } from "./result";
 import { firstIssue } from "./schema";
 
-export const PROVIDER_IDS = ["claude", "codex", "ollama"] as const;
-export type ProviderId = (typeof PROVIDER_IDS)[number];
+export { PROVIDER_IDS, type ProviderId };
 
 const BRAIN_KEY = "brain";
 const MAX_MODEL_LENGTH = 200;

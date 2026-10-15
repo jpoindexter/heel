@@ -9,10 +9,14 @@
     "preview": "vite preview",
     "tauri": "tauri",
     "test": "vitest run",
-    "typecheck": "tsc --noEmit && tsc --noEmit -p sidecar"
+    "typecheck": "tsc --noEmit && tsc --noEmit -p sidecar",
+    "sidecar": "tsx sidecar/server/main.ts",
+    "dev:all": "concurrently -k -n vite,sidecar \"npm:dev\" \"npm:sidecar\""
   },
   "dependencies": {
+    "@hono/node-server": "^2.1.5",
     "@tauri-apps/api": "^2",
+    "hono": "^4.13.13",
     "react": "^19.1.0",
     "react-dom": "^19.1.0",
     "zod": "^4.6.7"
@@ -23,6 +27,7 @@
     "@types/react": "^19.1.8",
     "@types/react-dom": "^19.1.6",
     "@vitejs/plugin-react": "^6.0.2",
+    "concurrently": "^10.0.6",
     "tsx": "^4.23.15",
     "typescript": "~6.0.3",
     "vite": "^8.0.16",

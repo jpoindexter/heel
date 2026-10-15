@@ -2,9 +2,18 @@
   color-scheme: light dark;
   font-family: system-ui, sans-serif;
   --panel-bg: #1f2223;
+  --panel-raised: #2a2e30;
   --panel-ink: #f2f0ea;
-  --panel-line: #4a5052;
+  --panel-muted: #bcc1bf;
+  --panel-line: #7b8386; /* >= 3:1 against --panel-bg, for control borders */
   --accent: #7fb59f;
+  --warn: #e0b252;
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --radius: 8px;
+  --target: 44px;
 }
 
 html,
@@ -18,17 +27,20 @@ body,
 
 .panel {
   box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
   height: 100vh;
-  padding: 16px;
+  padding: var(--space-4);
+  gap: var(--space-3);
   color: var(--panel-ink);
   background: var(--panel-bg);
 }
 
 .panel header {
-  cursor: grab;
   display: flex;
   align-items: center;
   justify-content: space-between;
+  cursor: grab;
 }
 
 .panel h1 {
@@ -36,28 +48,231 @@ body,
   font-size: 18px;
 }
 
-.panel p {
+.panel h2 {
+  margin: 0 0 var(--space-2);
+  font-size: 16px;
+}
+
+.helper {
+  margin: 0 0 var(--space-3);
+  color: var(--panel-muted);
+  font-size: 13px;
   line-height: 1.5;
+}
+
+/* Tabs */
+.tabs {
+  display: flex;
+  gap: var(--space-2);
+}
+
+.tab {
+  flex: 1;
+  min-height: var(--target);
+  font: inherit;
+  color: var(--panel-muted);
+  background: transparent;
+  border: 0;
+  border-bottom: 3px solid transparent;
+  cursor: pointer;
+}
+
+.tab[aria-selected="true"] {
+  color: var(--panel-ink);
+  border-bottom-color: var(--accent);
+}
+
+.scroll {
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+  user-select: text;
+}
+
+.section {
+  display: grid;
+  gap: var(--space-2);
+  padding-bottom: var(--space-4);
+}
+
+/* Room for the sticky toast so it never covers the last controls */
+.section[data-notice] {
+  padding-bottom: 72px;
+}
+
+/* Buttons and fields */
+.button,
+.field select,
+.field input[type="text"] {
+  box-sizing: border-box;
+  min-height: var(--target);
+  padding: var(--space-2) var(--space-3);
+  font: inherit;
+  color: inherit;
+  background: transparent;
+  border: 1px solid var(--panel-line);
+  border-radius: var(--radius);
+}
+
+.button {
+  cursor: pointer;
+}
+
+.button:disabled {
+  color: var(--panel-muted);
+  cursor: progress;
+}
+
+.button-quiet {
+  border-color: transparent;
+  text-decoration: underline;
+}
+
+.panel :focus-visible {
+  outline: 3px solid var(--accent);
+  outline-offset: 2px;
+}
+
+.field {
+  display: grid;
+  gap: var(--space-1);
+}
+
+.field label {
+  font-size: 14px;
+}
+
+.field select,
+.field input[type="text"] {
+  width: 100%;
+  background: var(--panel-raised);
+}
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+}
+
+/* Provider choices */
+.choices {
+  display: grid;
+  gap: var(--space-2);
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+
+.choices legend {
+  margin-bottom: var(--space-2);
+  padding: 0;
+  font-size: 14px;
+}
+
+.choice {
+  display: flex;
+  gap: var(--space-3);
+  align-items: flex-start;
+  min-height: var(--target);
+  padding: var(--space-3);
+  background: var(--panel-raised);
+  border: 1px solid var(--panel-line);
+  border-radius: var(--radius);
+  cursor: pointer;
+}
+
+.choice:has(input:checked) {
+  border-color: var(--accent);
+}
+
+.choice[data-disabled] {
+  cursor: not-allowed;
+}
+
+.choice[data-disabled] .choice-name {
+  color: var(--panel-muted);
+}
+
+.choice input {
+  flex: none;
+  width: 20px;
+  height: 20px;
+  margin: 2px 0 0;
+  accent-color: var(--accent);
+}
+
+.choice-main {
+  display: grid;
+  gap: var(--space-1);
+}
+
+.choice-name {
+  font-size: 14px;
+}
+
+.choice-detail {
+  color: var(--panel-muted);
+  font-size: 13px;
+  line-height: 1.4;
+}
+
+.mark {
+  display: inline-grid;
+  place-items: center;
+  width: 16px;
+  height: 16px;
+  margin-right: var(--space-1);
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--panel-bg);
+  border-radius: 50%;
+  background: var(--warn);
+}
+
+.mark[data-ready="true"] {
+  background: var(--accent);
+}
+
+.test-result {
+  min-height: 1.4em;
+  margin: 0;
+  font-size: 13px;
+}
+
+/* Messages */
+.callout {
+  display: grid;
+  gap: var(--space-2);
+  padding: var(--space-3);
+  background: var(--panel-raised);
+  border: 1px solid var(--warn);
+  border-radius: var(--radius);
+}
+
+.callout p {
+  margin: 0;
+}
+
+.toast {
+  position: sticky;
+  bottom: 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-2);
+  padding: var(--space-2) var(--space-3);
+  font-size: 13px;
+  background: var(--panel-raised);
+  border: 1px solid var(--panel-line);
+  border-radius: var(--radius);
+}
+
+.toast[data-tone="error"] {
+  border-color: var(--warn);
 }
 
 .states {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 8px;
-}
-
-.panel button {
-  min-height: 44px;
-  padding: 8px 12px;
-  font: inherit;
-  color: inherit;
-  background: transparent;
-  border: 1px solid var(--panel-line);
-  border-radius: 8px;
-  cursor: pointer;
-}
-
-.panel button:focus-visible {
-  outline: 3px solid var(--accent);
-  outline-offset: 2px;
+  gap: var(--space-2);
 }

@@ -12,6 +12,7 @@ use tauri_plugin_global_shortcut::{Code, GlobalShortcutExt, Modifiers, Shortcut,
 
 const MASCOT_LABEL: &str = "main";
 const PANEL_LABEL: &str = "panel";
+const SIDECAR_FILE: &str = "sidecar.json";
 const MARGIN_LOGICAL_PX: f64 = 24.0;
 const PANEL_GAP_LOGICAL_PX: f64 = 8.0;
 const DOCK_CLEARANCE_MULTIPLIER: i32 = 3;
@@ -141,6 +142,15 @@ fn toggle_panel_command(app: AppHandle) {
     toggle_panel(&app);
 }
 
+/// Port and token of the local helper, written by the sidecar into the app data dir.
+/// The panel reads it through here so a web page can never learn the token.
+#[tauri::command]
+fn sidecar_info(app: AppHandle) -> Result<String, String> {
+    let dir = app.path().app_data_dir().map_err(|error| error.to_string())?;
+    std::fs::read_to_string(dir.join(SIDECAR_FILE))
+        .map_err(|_| "Heel's helper isn't running. Restart Heel.".to_string())
+}
+
 fn build_tray(app: &AppHandle) -> tauri::Result<()> {
     let toggle = MenuItem::with_id(app, "toggle", "Show / hide panel", true, None::<&str>)?;
     let quit = MenuItem::with_id(app, "quit", "Quit Heel", true, None::<&str>)?;
@@ -172,7 +182,7 @@ pub fn run() {
                 })
                 .build(),
         )
-        .invoke_handler(tauri::generate_handler![toggle_panel_command])
+        .invoke_handler(tauri::generate_handler![toggle_panel_command, sidecar_info])
         .setup(|app| {
             let handle = app.handle();
             place_mascot(handle);
