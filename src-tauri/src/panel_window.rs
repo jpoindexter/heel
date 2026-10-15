@@ -4,6 +4,7 @@ use tauri::{AppHandle, Emitter, LogicalSize, Manager};
 
 use crate::constants::{MASCOT_LABEL, PANEL_LABEL, PANEL_VISIBLE_EVENT};
 use crate::dock::{dock_panel, panel_logical_size, Dock};
+use crate::undock::{save_place, show_parked};
 use crate::panel_size::{self, clamp_size, parse_saved};
 
 fn size_file(app: &AppHandle) -> Option<std::path::PathBuf> {
@@ -42,10 +43,11 @@ pub(crate) fn panel_is_visible(app: &AppHandle) -> bool {
         .unwrap_or(false)
 }
 
-/// Show the panel docked to the mascot, or hide it if already visible.
+/// Show the panel next to Greg, or where it was parked, or hide it if already visible.
 pub(crate) fn toggle_panel(app: &AppHandle) {
     if panel_is_visible(app) {
         save_panel_size(app);
+        save_place(app);
         if let Some(panel) = app.get_webview_window(PANEL_LABEL) {
             let _ = panel.hide();
         }
@@ -67,7 +69,12 @@ pub(crate) fn show_panel(app: &AppHandle) {
     crate::appear::reveal_mascot(app);
     crate::notice_window::hide(app);
     if let Some(mascot) = app.get_webview_window(MASCOT_LABEL) {
-        dock_panel(app, &mascot, &panel);
+        let docked = app.state::<Dock>().0.lock().map(|state| state.docked).unwrap_or(true);
+        if docked {
+            dock_panel(app, &mascot, &panel);
+        } else {
+            show_parked(app, &mascot, &panel);
+        }
     }
     let _ = panel.show();
     let _ = panel.set_focus();

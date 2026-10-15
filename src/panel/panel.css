@@ -47,6 +47,11 @@
   border-bottom: var(--tail-size) solid var(--hairline);
 }
 
+/* Parked away from Greg: no tail, no room kept for one. */
+[data-tail="none"] .panel-tail {
+  display: none;
+}
+
 .panel-header {
   display: flex;
   align-items: center;

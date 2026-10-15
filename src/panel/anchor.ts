@@ -1,6 +1,7 @@
 import { z } from "zod";
 
-const AnchorSchema = z.object({ edge: z.enum(["top", "bottom"]), offset: z.number().finite() });
+/** `none`: the panel is parked away from Greg (B5) and has no tail. */
+const AnchorSchema = z.object({ edge: z.enum(["top", "bottom", "none"]), offset: z.number().finite() });
 
 export type Anchor = z.output<typeof AnchorSchema>;
 

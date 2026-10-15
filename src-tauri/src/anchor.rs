@@ -28,9 +28,21 @@ pub(crate) fn payload(anchor: Anchor, scale: f64) -> AnchorPayload {
     AnchorPayload { edge, offset: anchor.offset as f64 / scale }
 }
 
+/// A parked panel (B5) has no tail: its edge is "none".
+pub(crate) fn announce_parked(app: &AppHandle) {
+    let next = AnchorPayload { edge: "none", offset: 0.0 };
+    if let Ok(mut state) = app.state::<Dock>().0.lock() {
+        state.anchor = next.clone();
+    }
+    let _ = app.emit_to(PANEL_LABEL, PANEL_ANCHOR_EVENT, next);
+}
+
 /// Work out the anchor for a panel at `panel_origin` (physical px), remember it, and tell the panel.
 /// The origin is passed in, not read back: a window moved a moment ago can still report its old position.
 pub(crate) fn announce(app: &AppHandle, mascot: &WebviewWindow, panel_origin: Point, scale: f64) {
+    if !app.state::<Dock>().0.lock().map(|state| state.docked).unwrap_or(true) {
+        return announce_parked(app);
+    }
     let (Ok(pos), Ok(size)) = (mascot.outer_position(), mascot.outer_size()) else {
         return;
     };

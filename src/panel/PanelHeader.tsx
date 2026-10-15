@@ -1,10 +1,16 @@
-import { ArrowLeftIcon, ChevronRightIcon, Cross2Icon, GearIcon } from "@radix-ui/react-icons";
-import { Button, Heading, IconButton, Text } from "@radix-ui/themes";
+import { ArrowLeftIcon, ChevronRightIcon, Cross2Icon, DrawingPinIcon, GearIcon } from "@radix-ui/react-icons";
+import { Button, Heading, IconButton, Text, Tooltip } from "@radix-ui/themes";
+import { invoke } from "@tauri-apps/api/core";
 import { TITLES } from "../ui/layers-model";
 import { useLayers } from "../ui/layers";
 
-/** At the root: the name and the gear. In a layer: Back, where you are in a word, and Forward when there is somewhere to go. */
-export function PanelHeader({ onClose }: { onClose: () => void }) {
+const backToGreg = () => void invoke("dock_panel_command").catch(() => undefined);
+
+/**
+ * At the root: the name and the gear. In a layer: Back, where you are in a word, and Forward when there is somewhere to go.
+ * Dragging the bar moves the panel on its own (B5); once parked, a pin brings it back to Greg.
+ */
+export function PanelHeader({ onClose, parked }: { onClose: () => void; parked: boolean }) {
   const layers = useLayers();
   const inLayer = layers.top !== "today";
   return (
@@ -28,6 +34,13 @@ export function PanelHeader({ onClose }: { onClose: () => void }) {
         <IconButton variant="ghost" color="gray" aria-label={`Forward to ${TITLES[layers.stack.forward[layers.stack.forward.length - 1] ?? "today"]}`} onClick={layers.forward}>
           <ChevronRightIcon aria-hidden="true" />
         </IconButton>
+      )}
+      {parked && (
+        <Tooltip content="Back to Greg">
+          <IconButton variant="ghost" color="gray" aria-label="Back to Greg" onClick={backToGreg}>
+            <DrawingPinIcon aria-hidden="true" />
+          </IconButton>
+        </Tooltip>
       )}
       <IconButton variant="ghost" color="gray" aria-label="Close panel" onClick={onClose}>
         <Cross2Icon aria-hidden="true" />

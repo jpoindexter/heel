@@ -5,6 +5,7 @@ describe("anchorFromPayload", () => {
   it("accepts an edge and an offset", () => {
     expect(anchorFromPayload({ edge: "bottom", offset: 280 })).toEqual({ edge: "bottom", offset: 280 });
     expect(anchorFromPayload({ edge: "top", offset: -12 })).toEqual({ edge: "top", offset: -12 });
+    expect(anchorFromPayload({ edge: "none", offset: 0 })).toEqual({ edge: "none", offset: 0 });
   });
 
   it("ignores anything else, so a bad message can never break the layout", () => {

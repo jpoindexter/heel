@@ -72,7 +72,7 @@ function PanelToast() {
   return <Notifier notice={notices.notice} onDismiss={notices.dismiss} onHold={notices.hold} onRelease={notices.release} />;
 }
 
-function PanelBody({ look }: { look: ReturnType<typeof usePanelLook> }) {
+function PanelBody({ look, parked }: { look: ReturnType<typeof usePanelLook>; parked: boolean }) {
   const layers = useLayers();
   const inSettings = layers.top === "settings";
   const { summary, refresh: refreshSummary } = useBrainSummary(client, inSettings ? "settings" : "chat");
@@ -88,7 +88,7 @@ function PanelBody({ look }: { look: ReturnType<typeof usePanelLook> }) {
   return (
     <main className="panel" onWheel={onWheel}>
       <span className="panel-tail" aria-hidden="true" />
-      <PanelHeader onClose={closePanel} />
+      <PanelHeader onClose={closePanel} parked={parked} />
       <HelperNotice status={helper.status} error={helper.error} onRestart={() => void helper.restart()} />
       <TodayView
         showing={layers.top === "today"}
@@ -132,7 +132,7 @@ export function Panel() {
         <LayersProvider>
           <MethodProvider client={client}>
             <AttentionProvider client={client}>
-              <PanelBody look={look} />
+              <PanelBody look={look} parked={anchor.edge === "none"} />
             </AttentionProvider>
           </MethodProvider>
         </LayersProvider>

@@ -15,7 +15,9 @@ mod notice_window;
 mod panel_size;
 mod panel_window;
 mod placement;
+mod panel_place;
 mod sidecar_process;
+mod undock;
 mod walk;
 
 use anchor::panel_anchor;
@@ -31,6 +33,7 @@ use walk::{start_walk, stop_walk, Walker};
 use panel_window::{panel_is_visible, reveal_panel, show_panel, toggle_panel};
 use helper_watch::{helper_status, restart_helper};
 use sidecar_process::SidecarProc;
+use undock::dock_panel_command;
 use tauri_plugin_global_shortcut::{Code, Modifiers, Shortcut, ShortcutState};
 
 fn hotkey() -> Shortcut {
@@ -67,24 +70,27 @@ pub fn run() {
                 .build(),
         )
         .on_menu_event(|app, event| mascot_menu::on_menu_event(app, event.id().as_ref()))
-        .invoke_handler(tauri::generate_handler![toggle_panel_command, sidecar_info, take_pending_view, set_mascot_hit_region, set_mascot_pressed, show_mascot_menu, set_life_flags, start_walk, stop_walk, hide_greg, show_greg, panel_anchor, helper_status, restart_helper, panel_visible, show_notice, hide_notice, set_attention_enabled])
+        .invoke_handler(tauri::generate_handler![toggle_panel_command, sidecar_info, take_pending_view, set_mascot_hit_region, set_mascot_pressed, show_mascot_menu, set_life_flags, start_walk, stop_walk, hide_greg, show_greg, panel_anchor, helper_status, restart_helper, panel_visible, show_notice, hide_notice, set_attention_enabled, dock_panel_command])
         .setup(app_setup::setup)
         .build(tauri::generate_context!())
         .expect("error while building Heel")
-        .run(|app, event| {
-            // The packaged app's own helper ends with the app.
-            if let tauri::RunEvent::Exit = event {
-                sidecar_process::stop(app);
-            }
-            // Clicking the Dock icon opens the panel if it is hidden.
-            #[cfg(target_os = "macos")]
-            if let tauri::RunEvent::Reopen { .. } = event {
-                helper_watch::revive_if_stopped(app);
-                if !panel_is_visible(app) {
-                    show_panel(app);
-                }
-            }
-            #[cfg(not(target_os = "macos"))]
-            let _ = (app, event);
-        });
+        .run(on_run_event);
+}
+
+fn on_run_event(app: &tauri::AppHandle, event: tauri::RunEvent) {
+    // The packaged app's own helper ends with the app; a parked panel's place is written one last time.
+    if let tauri::RunEvent::Exit = event {
+        undock::save_place(app);
+        sidecar_process::stop(app);
+    }
+    // Clicking the Dock icon opens the panel if it is hidden.
+    #[cfg(target_os = "macos")]
+    if let tauri::RunEvent::Reopen { .. } = event {
+        helper_watch::revive_if_stopped(app);
+        if !panel_is_visible(app) {
+            show_panel(app);
+        }
+    }
+    #[cfg(not(target_os = "macos"))]
+    let _ = (app, event);
 }
