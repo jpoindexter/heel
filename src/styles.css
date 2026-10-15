@@ -1,0 +1,62 @@
+:root {
+  color-scheme: light dark;
+  font-family: system-ui, sans-serif;
+  --panel-bg: #1f2223;
+  --panel-ink: #f2f0ea;
+  --panel-line: #4a5052;
+  --accent: #7fb59f;
+}
+
+html,
+body,
+#root {
+  margin: 0;
+  background: transparent;
+  overflow: hidden;
+  user-select: none;
+}
+
+.panel {
+  box-sizing: border-box;
+  height: 100vh;
+  padding: 16px;
+  color: var(--panel-ink);
+  background: var(--panel-bg);
+}
+
+.panel header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.panel h1 {
+  margin: 0;
+  font-size: 18px;
+}
+
+.panel p {
+  line-height: 1.5;
+}
+
+.states {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 8px;
+}
+
+.panel button {
+  min-height: 44px;
+  padding: 8px 12px;
+  font: inherit;
+  color: inherit;
+  background: transparent;
+  border: 1px solid var(--panel-line);
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.panel button:focus-visible {
+  outline: 3px solid var(--accent);
+  outline-offset: 2px;
+}
