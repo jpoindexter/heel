@@ -1,7 +1,8 @@
 import { z } from "zod";
 import type { Ctx } from "./context";
 import { fail, ok, type Result } from "./result";
-import { NewTaskInput, TASK_SOURCES, TASK_STATUSES, firstIssue, type Task, type TaskStatus } from "./schema";
+import { NewTaskInput, TASK_SOURCES, TASK_STATUSES, TaskPatchInput, firstIssue, type Task, type TaskStatus } from "./schema";
+import { SIZES } from "../../shared/method";
 
 const TaskRow = z.object({
   id: z.string(),
@@ -14,6 +15,9 @@ const TaskRow = z.object({
   created_at: z.number(),
   updated_at: z.number(),
   completed_at: z.number().nullable(),
+  size: z.enum(SIZES).nullable(),
+  bucket: z.string().nullable(),
+  estimate_min: z.number().nullable(),
 });
 
 const ACTIVE: readonly TaskStatus[] = ["todo", "doing"];
@@ -31,6 +35,9 @@ export function toTask(row: unknown): Task {
     createdAt: r.created_at,
     updatedAt: r.updated_at,
     completedAt: r.completed_at,
+    size: r.size,
+    bucket: r.bucket,
+    estimateMin: r.estimate_min,
   };
 }
 
@@ -42,15 +49,28 @@ export function getTask(ctx: Ctx, id: string): Result<Task> {
 export function addTask(ctx: Ctx, input: unknown): Result<Task> {
   const parsed = NewTaskInput.safeParse(input);
   if (!parsed.success) return fail("invalid", firstIssue(parsed.error));
-  const { title, source, sourceRef, nowStep } = parsed.data;
+  const { title, source, sourceRef, nowStep, size, bucket } = parsed.data;
   const now = ctx.now();
   const id = ctx.newId();
   ctx.db
     .prepare(
-      `INSERT INTO tasks (id, title, status, now_step, source, source_ref, position, created_at, updated_at)
-       VALUES (?, ?, 'todo', ?, ?, ?, (SELECT COALESCE(MAX(position), 0) + 1 FROM tasks), ?, ?)`,
+      `INSERT INTO tasks (id, title, status, now_step, source, source_ref, position, created_at, updated_at, size, bucket)
+       VALUES (?, ?, 'todo', ?, ?, ?, (SELECT COALESCE(MAX(position), 0) + 1 FROM tasks), ?, ?, ?, ?)`,
     )
-    .run(id, title, nowStep, source, sourceRef, now, now);
+    .run(id, title, nowStep, source, sourceRef, now, now, size, bucket);
+  return getTask(ctx, id);
+}
+
+/** Change a task's size, bucket or estimate; a field left out stays as it is. */
+export function patchTask(ctx: Ctx, id: string, input: unknown): Result<Task> {
+  const parsed = TaskPatchInput.safeParse(input);
+  if (!parsed.success) return fail("invalid", firstIssue(parsed.error));
+  const current = getTask(ctx, id);
+  if (!current.ok) return current;
+  const next = { ...current.value, ...parsed.data };
+  ctx.db
+    .prepare("UPDATE tasks SET size = ?, bucket = ?, estimate_min = ?, updated_at = ? WHERE id = ?")
+    .run(next.size, next.bucket, next.estimateMin, ctx.now(), id);
   return getTask(ctx, id);
 }
 

@@ -36,7 +36,7 @@ const HANDLERS: { [T in Action["type"]]: Handler<T> } = {
   add_task: (store, a) =>
     fromResult(
       a.type,
-      store.tasks.add({ title: a.title, nowStep: a.now_step ?? null, source: "capture" }),
+      store.tasks.add({ title: a.title, nowStep: a.now_step ?? null, source: "capture", size: a.size ?? null, bucket: a.bucket ?? null }),
       () => `Added "${a.title.trim()}".`,
       (task) => ({ kind: "drop_task", id: task.id }),
     ),

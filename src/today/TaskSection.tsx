@@ -6,6 +6,7 @@ import { LEAVE_MS } from "./bar-model";
 import { ParkedList } from "./ParkedList";
 import { LaterList, NowRow } from "./TaskRows";
 import type { useTodayState } from "./useTodayState";
+import { useMethod } from "../ui/method";
 
 /** A ticked or removed row fades out first, then the write happens (it is the write that shows Undo). */
 function useLeavingRow(run: (task: TaskDto, action: "complete" | "remove") => void) {
@@ -28,9 +29,11 @@ export function TaskSection({ state }: { state: ReturnType<typeof useTodayState>
   const { tasks, ready, now, focus } = state;
   const [starting, setStarting] = useState(false);
   const rows = useLeavingRow((task, action) => void (action === "complete" ? tasks.complete(task) : tasks.remove(task)));
+  const { method } = useMethod();
+  const marks = { method, onPatch: (task: TaskDto, change: Parameters<typeof tasks.patch>[1]) => void tasks.patch(task, change) };
   return (
     <>
-      <NowRow now={now} leavingId={rows.leavingId} canTimebox={!focus.session && !starting} onStartBox={() => setStarting(true)} onComplete={rows.complete} onRemove={rows.remove} />
+      <NowRow now={now} leavingId={rows.leavingId} canTimebox={!focus.session && !starting} onStartBox={() => setStarting(true)} onComplete={rows.complete} onRemove={rows.remove} {...marks} />
       {starting && now && !focus.session && (
         <FocusForm
           initialGoal={now.text}
@@ -38,7 +41,7 @@ export function TaskSection({ state }: { state: ReturnType<typeof useTodayState>
           onStart={(goal, realisticMin) => void focus.start({ goal, taskId: now.task.id, realisticMin }).then((started) => started && setStarting(false))}
         />
       )}
-      <LaterList tasks={ready ? ready.tasks.slice(1) : []} leavingId={rows.leavingId} onComplete={rows.complete} onRemove={rows.remove} />
+      <LaterList tasks={ready ? ready.tasks.slice(1) : []} leavingId={rows.leavingId} onComplete={rows.complete} onRemove={rows.remove} {...marks} />
       {ready && ready.tasks.length === 0 && <Text size="2" color="gray" className="tasks-empty in">Nothing on your list. Tell Heel, or + › Add task.</Text>}
       <ParkedList parked={ready?.parked ?? []} onPromote={(idea) => void tasks.promote(idea)} />
     </>

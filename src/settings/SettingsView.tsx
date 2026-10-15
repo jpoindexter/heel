@@ -7,6 +7,7 @@ import { ActivitySettings } from "./ActivitySettings";
 import { AppearanceSettings } from "./AppearanceSettings";
 import { BrainSettings } from "./BrainSettings";
 import { DensitySettings } from "./DensitySettings";
+import { MethodSettings } from "./MethodSettings";
 import "./settings.css";
 
 type Props = {
@@ -26,6 +27,8 @@ export function SettingsView({ active, onSaved, preference, onPreference, densit
       <DensitySettings density={density} onDensity={onDensity} />
       <Separator size="4" />
       <ActivitySettings />
+      <Separator size="4" />
+      <MethodSettings />
       <Separator size="4" />
       <BrainSettings active={active} onSaved={onSaved} />
       <Separator size="4" />

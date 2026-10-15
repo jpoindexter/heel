@@ -6,8 +6,8 @@ import { getLedger, upsertLedger } from "./ledger";
 import { clearMessages, listMessages, restoreMessages, saveMessage } from "./messages";
 import { listParked, parkIdea, promoteParked, unparkIdea } from "./parked";
 import type { FocusOutcome, TaskStatus } from "./schema";
-import { getBrain, setBrain } from "./settings";
-import { addTask, completeTask, dropTask, getTask, listTasks, restoreTask, setNowStep, startTask } from "./tasks";
+import { getBrain, getMethod, setBrain, setMethod } from "./settings";
+import { addTask, completeTask, dropTask, getTask, listTasks, patchTask, restoreTask, setNowStep, startTask } from "./tasks";
 
 /** The Today side of the store: tasks, parked ideas, focus time-boxes and the working-memory ledger. */
 export function todayRepositories(ctx: Ctx) {
@@ -21,6 +21,7 @@ export function todayRepositories(ctx: Ctx) {
       drop: (id: string) => dropTask(ctx, id),
       restore: (id: string) => restoreTask(ctx, id),
       setNowStep: (id: string, step: string | null) => setNowStep(ctx, id, step),
+      patch: (id: string, input: unknown) => patchTask(ctx, id, input),
     },
     parked: {
       park: (input: unknown) => parkIdea(ctx, input),
@@ -60,6 +61,8 @@ export function systemRepositories(ctx: Ctx) {
     settings: {
       getBrain: () => getBrain(ctx),
       setBrain: (input: unknown) => setBrain(ctx, input),
+      getMethod: () => getMethod(ctx),
+      setMethod: (input: unknown) => setMethod(ctx, input),
     },
   };
 }

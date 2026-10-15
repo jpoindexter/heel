@@ -13,6 +13,7 @@ import { OPEN_SETTINGS_EVENT } from "../events";
 import { Notifier } from "../ui/Notifier";
 import { NoticesProvider, useNotices } from "../ui/notices";
 import { LayersProvider, useLayers, type Layers } from "../ui/layers";
+import { MethodProvider } from "../ui/method";
 import { useSwipe } from "../ui/useSwipe";
 import { shouldCloseOnKey } from "./escape";
 import { PanelHeader } from "./PanelHeader";
@@ -128,7 +129,9 @@ export function Panel() {
     >
       <NoticesProvider quiet={activity === "off"}>
         <LayersProvider>
-          <PanelBody look={look} />
+          <MethodProvider client={client}>
+            <PanelBody look={look} />
+          </MethodProvider>
         </LayersProvider>
       </NoticesProvider>
     </Theme>

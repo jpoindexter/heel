@@ -9,6 +9,7 @@ import { applyGuards } from "./guards";
 import { registerFocusRoutes } from "./focus-routes";
 import { registerInboxRoutes } from "./inbox-routes";
 import { registerMailRoutes } from "./mail-routes";
+import { registerMethodRoutes } from "./method-routes";
 import { registerMessagesRoutes } from "./messages-routes";
 import { registerTodayRoutes, registerTurnRoute } from "./today-routes";
 
@@ -39,5 +40,6 @@ export function createApp(deps: AppDeps) {
   registerMessagesRoutes(app, deps);
   registerInboxRoutes(app, deps);
   registerMailRoutes(app, deps);
+  registerMethodRoutes(app, deps);
   return app;
 }

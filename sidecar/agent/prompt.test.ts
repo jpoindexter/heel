@@ -74,6 +74,17 @@ describe("buildSnapshot", () => {
     expect(snapshot.text).not.toContain(a.ok ? a.value.id : "x");
   });
 
+  it("tells the model the ways of working and each task's marks, once a method is chosen", () => {
+    const store = testStore();
+    store.settings.setMethod({ timer: "timebox", structure: "pickle-jar", sizing: "tshirt" });
+    store.tasks.add({ title: "Invoice", bucket: "rock", size: "m" });
+    const text = buildSnapshot(store).text;
+    expect(text).toContain("Ways of working: Pickle jar");
+    expect(text).toContain('set "bucket" on add_task');
+    expect(text).toContain("t1 [todo] [rock, M] Invoice");
+    expect(buildSnapshot(testStore()).text).not.toContain("Ways of working");
+  });
+
   it("caps the task list and says none when empty", () => {
     const store = testStore();
     expect(buildSnapshot(store).text).toContain("Open tasks:\nnone");

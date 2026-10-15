@@ -27,7 +27,7 @@ export function applyGuards(app: Hono, { token, allowedOrigins }: Guard): void {
     cors({
       origin: (origin) => (allowedOrigins.includes(origin) ? origin : null),
       allowHeaders: ["content-type", TOKEN_HEADER],
-      allowMethods: ["GET", "PUT", "POST", "OPTIONS"],
+      allowMethods: ["GET", "PUT", "POST", "PATCH", "OPTIONS"],
     }),
   );
 

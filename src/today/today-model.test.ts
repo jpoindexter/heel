@@ -12,7 +12,7 @@ const task = (title: string, nowStep: string | null = null): TaskDto => ({
   position: 1,
   createdAt: 1,
   updatedAt: 1,
-  completedAt: null,
+  completedAt: null, size: null, bucket: null, estimateMin: null,
 });
 
 describe("nowCard", () => {

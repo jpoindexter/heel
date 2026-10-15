@@ -1,3 +1,4 @@
+import { BUCKETS, type Method } from "../../shared/method";
 import { readFileSync } from "node:fs";
 import type { HistoryMessage } from "../../shared/api";
 import type { Store } from "../store/store";
@@ -77,13 +78,23 @@ export function buildSystemPrompt(skillIds: readonly string[], load: SkillLoader
 
 export type Snapshot = { text: string; refs: TaskRefs };
 
+/** The chosen ways of working, as one line the model can act on (set `bucket` / `size` on add_task). */
+export function methodLine(method: Method): string | null {
+  const parts: string[] = [];
+  if (method.structure === "pickle-jar") parts.push("Pickle jar: rocks (must do, big) first, then pebbles, then sand (small filler); set \"bucket\" on add_task to rock, pebble or sand");
+  else if (method.structure !== "none") parts.push(`Structure: ${method.structure}; set \"bucket\" to one of ${BUCKETS[method.structure].join(", ")}`);
+  if (method.sizing === "tshirt") parts.push("T-shirt sizes: set \"size\" on add_task to xs, s, m, l or xl (xs = minutes, xl = half a day)");
+  return parts.length ? `Ways of working: ${parts.join(". ")}.` : null;
+}
+
 /** What the model is allowed to know about the current state, with short refs instead of ids. */
 export function buildSnapshot(store: Store): Snapshot {
   const tasks = store.tasks.list().slice(0, MAX_TASKS_IN_PROMPT);
   const refs = new Map(tasks.map((task, index) => [`t${index + 1}`, task.id]));
   const lines = tasks.map((task, index) => {
     const step = task.nowStep ? ` (next step: ${task.nowStep})` : "";
-    return `t${index + 1} [${task.status}] ${task.title}${step}`;
+    const marks = [task.bucket, task.size ? task.size.toUpperCase() : null].filter(Boolean);
+    return `t${index + 1} [${task.status}]${marks.length ? ` [${marks.join(", ")}]` : ""} ${task.title}${step}`;
   });
   const focus = store.focus.active();
   const global = store.ledger.get(null);
@@ -91,6 +102,7 @@ export function buildSnapshot(store: Store): Snapshot {
     `Open tasks:\n${lines.length ? lines.join("\n") : "none"}`,
     `Focus session: ${focus ? `running, goal "${focus.goal}"` : "none"}`,
     `Finished today: ${store.history.doneToday()}`,
+    methodLine(store.settings.getMethod()),
     global?.outcome ? `Current outcome: ${global.outcome}` : null,
   ].filter((part): part is string => part !== null);
   return { text: parts.join("\n\n"), refs };

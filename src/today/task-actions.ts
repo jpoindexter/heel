@@ -23,6 +23,17 @@ function makeCheer(doneToday: () => number): (title: string) => string {
   };
 }
 
+export type TaskPatch = { size?: TaskDto["size"]; bucket?: string | null };
+
+/** A size or bucket tap: written at once, no toast (a tap is its own undo: tap again). */
+function makePatch(client: Client, refresh: () => Promise<void>, fail: (message: string) => void) {
+  return async (task: TaskDto, change: TaskPatch) => {
+    const result = await client.patch(`/tasks/${task.id}`, TaskResultSchema, change);
+    if (!result.ok) return fail(result.error.message);
+    await refresh();
+  };
+}
+
 /** What the person can do to tasks and parked ideas from the drawer, the Now strip and the Park chip. Each write offers Undo. */
 export function createTaskActions({ client, refresh, dropLocally, notify, doneToday }: Deps) {
   const fail = (message: string) => notify({ message, tone: "error" });
@@ -71,5 +82,6 @@ export function createTaskActions({ client, refresh, dropLocally, notify, doneTo
     await refresh();
   };
 
-  return { complete: (task: TaskDto) => settle(task, "complete"), remove: (task: TaskDto) => settle(task, "drop"), add, park, promote };
+  const patch = makePatch(client, refresh, fail);
+  return { complete: (task: TaskDto) => settle(task, "complete"), remove: (task: TaskDto) => settle(task, "drop"), add, park, promote, patch };
 }

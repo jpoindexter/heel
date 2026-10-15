@@ -8,7 +8,7 @@ function recorder() {
     readInfo: async () => ({ port: 4000, token: "0123456789abcdefTOKEN" }),
     fetch: async (url) => {
       urls.push(String(url).replace("http://127.0.0.1:4000", ""));
-      const task = { id: "a", title: "t", status: "todo", nowStep: null, source: "manual", sourceRef: null, position: 1, createdAt: 1, updatedAt: 1, completedAt: null };
+      const task = { id: "a", title: "t", status: "todo", nowStep: null, source: "manual", sourceRef: null, position: 1, createdAt: 1, updatedAt: 1, completedAt: null, size: null, bucket: null, estimateMin: null };
       return new Response(JSON.stringify({ ok: true, data: String(url).includes("unpark") ? { id: "a" } : { task } }));
     },
   });

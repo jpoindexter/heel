@@ -1,5 +1,6 @@
 import { z } from "zod";
 import { FOCUS_OUTCOMES, type FocusOutcome } from "../../shared/focus";
+import { ALL_BUCKETS, SIZES, type Size } from "../../shared/method";
 
 export { FOCUS_OUTCOMES, type FocusOutcome };
 
@@ -18,12 +19,30 @@ const text = (label: string, max = MAX_TEXT) =>
     .min(1, `${label} can't be empty.`)
     .max(max, `${label} must be ${max} characters or fewer.`);
 
+const sizeField = z.enum(SIZES, { error: `Size must be one of: ${SIZES.join(", ")}.` }).nullable();
+const bucketField = z
+  .string()
+  .refine((b) => ALL_BUCKETS.includes(b), { message: `Bucket must be one of: ${ALL_BUCKETS.join(", ")}.` })
+  .nullable();
+
 export const NewTaskInput = z.object({
   title: text("Task title"),
   source: z.enum(TASK_SOURCES).default("manual"),
   sourceRef: z.string().max(MAX_TEXT).nullable().default(null),
   nowStep: text("Next step").nullable().default(null),
+  size: sizeField.default(null),
+  bucket: bucketField.default(null),
 });
+
+/** What a person (or the model) may change on a task later: its size, bucket and estimate. */
+export const TaskPatchInput = z
+  .object({
+    size: sizeField,
+    bucket: bucketField,
+    estimateMin: z.number().int("Estimate must be whole minutes.").positive("Estimate must be more than 0 minutes.").nullable(),
+  })
+  .partial()
+  .refine((p) => Object.keys(p).length > 0, { message: "Send at least one of size, bucket, estimateMin." });
 
 export const NewParkedInput = z.object({
   idea: text("Idea", MAX_IDEA),
@@ -70,6 +89,9 @@ export type Task = {
   createdAt: number;
   updatedAt: number;
   completedAt: number | null;
+  size: Size | null;
+  bucket: string | null;
+  estimateMin: number | null;
 };
 
 export type ParkedIdea = {

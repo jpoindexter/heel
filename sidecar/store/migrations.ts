@@ -94,6 +94,22 @@ export const MIGRATIONS: readonly Migration[] = [
     `,
     down: `DROP TABLE messages;`,
   },
+  {
+    id: 4,
+    name: "ways-of-working",
+    // N17: a task may carry a size (xs–xl), a bucket of the chosen structure, and an estimate. Values are checked in code,
+    // not by CHECK constraints, so the columns can be dropped again.
+    up: `
+      ALTER TABLE tasks ADD COLUMN size TEXT;
+      ALTER TABLE tasks ADD COLUMN bucket TEXT;
+      ALTER TABLE tasks ADD COLUMN estimate_min INTEGER;
+    `,
+    down: `
+      ALTER TABLE tasks DROP COLUMN estimate_min;
+      ALTER TABLE tasks DROP COLUMN bucket;
+      ALTER TABLE tasks DROP COLUMN size;
+    `,
+  },
 ];
 
 const ENSURE_TABLE = `

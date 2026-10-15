@@ -48,5 +48,6 @@ export function setup(overrides: Partial<Record<ProviderId, Provider>> = {}, inb
     json,
     put: (body: unknown) => send("PUT", "/brain", body),
     post: (path: string, body: unknown = {}) => send("POST", path, body),
+    send,
   };
 }

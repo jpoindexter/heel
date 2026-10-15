@@ -22,20 +22,20 @@ describe("migrations", () => {
   it("applies up, rolls all the way back down, and applies again", () => {
     const db = new DatabaseSync(":memory:");
     const now = () => 1;
-    expect(migrateUp(db, now)).toBe(3);
+    expect(migrateUp(db, now)).toBe(4);
     expect(tableNames(db)).toEqual(["focus_sessions", "ledger", "messages", "parked", "schema_migrations", "settings", "tasks"]);
     expect(migrateDown(db, 0)).toBe(0);
     expect(tableNames(db)).toEqual(["schema_migrations"]);
-    expect(migrateUp(db, now)).toBe(3);
-    expect(currentVersion(db)).toBe(3);
+    expect(migrateUp(db, now)).toBe(4);
+    expect(currentVersion(db)).toBe(4);
   });
 
   it("is idempotent: running up twice does not re-apply", () => {
     const db = new DatabaseSync(":memory:");
     migrateUp(db, () => 1);
-    expect(migrateUp(db, () => 2)).toBe(3);
+    expect(migrateUp(db, () => 2)).toBe(4);
     const row = db.prepare("SELECT COUNT(*) AS n FROM schema_migrations").get();
-    expect(Number(row?.n)).toBe(3);
+    expect(Number(row?.n)).toBe(4);
   });
 
   it("rolls back only the newest migration and keeps earlier data tables", () => {
@@ -70,7 +70,7 @@ describe("persistence", () => {
 
     const second = openStore({ path });
     expect(second.tasks.list().map((t) => t.title)).toEqual(["Survive a restart"]);
-    expect(second.schemaVersion()).toBe(3);
+    expect(second.schemaVersion()).toBe(4);
     second.close();
   });
 });
