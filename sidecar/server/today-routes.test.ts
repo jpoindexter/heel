@@ -1,9 +1,11 @@
 import { describe, expect, it } from "vitest";
-import { TasksStateSchema, TurnResultSchema, envelope } from "../../shared/api";
+import { MAX_HISTORY_MESSAGES, ParkedListSchema, ParkedResultSchema, TasksStateSchema, TurnResultSchema, envelope } from "../../shared/api";
 import { fakeProvider, setup } from "./test-app";
 
 const tasksState = envelope(TasksStateSchema);
 const turnResult = envelope(TurnResultSchema);
+const parkedList = envelope(ParkedListSchema);
+const parkedResult = envelope(ParkedResultSchema);
 
 describe("GET /tasks", () => {
   it("is empty at first", async () => {
@@ -66,6 +68,31 @@ describe("POST /parked", () => {
   });
 });
 
+describe("parked ideas", () => {
+  it("lists parked ideas, promotes one to a task, and unparks one (undo)", async () => {
+    const { post, json } = setup();
+    const first = parkedResult.parse(await post("/parked", { text: "Skins" }));
+    const second = parkedResult.parse(await post("/parked", { text: "Dark mode" }));
+    if (!first.ok || !second.ok) throw new Error("setup");
+    const listed = parkedList.parse(await json("/parked"));
+    if (!listed.ok) throw new Error(listed.error.message);
+    expect(listed.data.parked.map((p) => p.idea)).toEqual(["Dark mode", "Skins"]);
+
+    expect(await post(`/parked/${first.data.id}/promote`)).toMatchObject({ ok: true, data: { task: { title: "Skins" } } });
+    expect(await post(`/parked/${second.data.id}/unpark`)).toMatchObject({ ok: true, data: { id: second.data.id } });
+    expect(parkedList.parse(await json("/parked"))).toEqual({ ok: true, data: { parked: [] } });
+  });
+
+  it("explains an unknown idea and a double promotion", async () => {
+    const { post } = setup();
+    expect(await post("/parked/nope/unpark")).toMatchObject({ ok: false, error: { code: "not_found" } });
+    const parked = parkedResult.parse(await post("/parked", { text: "Skins" }));
+    if (!parked.ok) throw new Error("setup");
+    await post(`/parked/${parked.data.id}/promote`);
+    expect(await post(`/parked/${parked.data.id}/promote`)).toMatchObject({ ok: false, error: { code: "conflict" } });
+  });
+});
+
 describe("POST /turn", () => {
   const reply = {
     say: "Added it. Start with the subject line.",
@@ -86,7 +113,7 @@ describe("POST /turn", () => {
     const result = turnResult.parse(await post("/turn", { text: "I'm stuck on the newsletter" }));
     if (!result.ok) throw new Error(result.error.message);
     expect(result.data).toMatchObject({ say: reply.say, provider: "claude" });
-    expect(result.data.applied).toEqual([{ type: "add_task", ok: true, message: 'Added "Newsletter".' }]);
+    expect(result.data.applied).toMatchObject([{ type: "add_task", ok: true, message: 'Added "Newsletter".', undo: { kind: "drop_task" } }]);
     expect(store.tasks.list()[0]).toMatchObject({ title: "Newsletter", nowStep: "Write the subject line" });
   });
 
@@ -103,6 +130,15 @@ describe("POST /turn", () => {
     const { put, post } = setup({ claude });
     await put({ provider: "claude", model: null });
     expect(await post("/turn", { text: "hello" })).toEqual({ ok: false, error: { code: "timeout", message: "Claude took too long." } });
+  });
+
+  it("accepts earlier messages as context but only a bounded number", async () => {
+    const claude = fakeProvider("claude", {}, { ok: true, value: [] }, { ok: true, value: JSON.stringify({ say: "ok" }) });
+    const { put, post } = setup({ claude });
+    await put({ provider: "claude", model: null });
+    const history = Array.from({ length: MAX_HISTORY_MESSAGES }, (_, i) => ({ role: i % 2 ? "heel" : "user", text: `m${i}` }));
+    expect(await post("/turn", { text: "yes", history })).toMatchObject({ ok: true });
+    expect(await post("/turn", { text: "yes", history: [...history, history[0]] })).toMatchObject({ ok: false, error: { code: "invalid" } });
   });
 
   it("rejects a body without text", async () => {

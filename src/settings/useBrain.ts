@@ -14,7 +14,8 @@ export type TestState = { phase: "idle" } | { phase: "running" } | { phase: "don
 
 const NOTICE_MS = 8_000;
 
-export function useBrain(client: Client, active: boolean) {
+/** `onSaved` runs after a change is stored, so other views (the header chip) can reload without waiting for a focus event. */
+export function useBrain(client: Client, active: boolean, onSaved?: () => void) {
   const [view, setView] = useState<BrainView>({ phase: "loading" });
   const [notice, setNotice] = useState<Notice | null>(null);
   const [test, setTest] = useState<TestState>({ phase: "idle" });
@@ -55,6 +56,7 @@ export function useBrain(client: Client, active: boolean) {
       const previous = current.state.settings;
       const models = result.data.provider ? await fetchModels(result.data.provider) : null;
       show({ phase: "ready", state: { ...current.state, settings: result.data }, models });
+      onSaved?.();
       setTest({ phase: "idle" });
       setNotice({
         message: changeMessage(current.state, result.data),
@@ -62,7 +64,7 @@ export function useBrain(client: Client, active: boolean) {
         undo: withUndo ? () => void save(previous, false) : undefined,
       });
     },
-    [client, fetchModels, show],
+    [client, fetchModels, onSaved, show],
   );
 
   const runTest = useCallback(async () => {

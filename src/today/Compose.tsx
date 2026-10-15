@@ -3,7 +3,7 @@ import { shouldFocusAskBox } from "./focus-rules";
 import { CHIPS, type Chip } from "./today-model";
 
 type Props = {
-  /** This tab is the one showing. */
+  /** This view is the one showing. */
   active: boolean;
   draft: string;
   busy: boolean;
@@ -12,12 +12,12 @@ type Props = {
   onChip: (chip: Chip) => void;
 };
 
-/** Three fixed chips (same place, same order, always) and the ask box with a real, visible label. */
+/** Three fixed chips (same place, same order, always) and the ask box (real label, hidden visually; the placeholder is only a hint). */
 export function Compose({ active, draft, busy, onDraft, onSend, onChip }: Props) {
   const box = useRef<HTMLTextAreaElement>(null);
   const empty = draft.trim().length === 0;
 
-  // Ready to type: when this tab shows, and whenever the window regains focus (hotkey, click on Greg).
+  // Ready to type: when this view shows, and whenever the window regains focus (hotkey, click on Greg).
   useEffect(() => {
     const focusBox = () => {
       if (shouldFocusAskBox(active, document.activeElement?.tagName ?? null)) box.current?.focus();
@@ -58,23 +58,20 @@ export function Compose({ active, draft, busy, onDraft, onSend, onChip }: Props)
         ))}
       </div>
       <form onSubmit={submit} className="ask">
-        <label htmlFor="ask">Ask Heel</label>
+        <label htmlFor="ask" className="visually-hidden">Ask Heel</label>
         <textarea
           id="ask"
           ref={box}
           rows={2}
           maxLength={4000}
+          placeholder="What's on your mind?"
           value={draft}
           aria-describedby="ask-help"
           onChange={(event) => onDraft(event.target.value)}
           onKeyDown={onKey}
         />
-        <div className="ask-row">
-          <p id="ask-help" className="helper">Enter to send. Shift+Enter for a new line.</p>
-          <button type="submit" className="button button-primary" aria-busy={busy} disabled={busy || empty}>
-            {busy ? "Thinking…" : "Send"}
-          </button>
-        </div>
+        <p id="ask-help" className="visually-hidden">Enter to send. Shift+Enter for a new line.</p>
+        <button type="submit" className="button button-primary" aria-busy={busy} disabled={busy || empty}>Send</button>
       </form>
     </div>
   );

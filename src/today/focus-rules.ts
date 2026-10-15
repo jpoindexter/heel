@@ -8,7 +8,7 @@ export function shouldFocusAskBox(tabActive: boolean, focusedTag: string | null)
   return focusedTag === null || focusedTag === "BODY" || focusedTag === "TEXTAREA";
 }
 
-/** What part of the reply to bring into view: the start of an answer, or just the "Thinking…" line. */
-export function revealBlock(replyReady: boolean): ScrollLogicalPosition {
-  return replyReady ? "start" : "nearest";
+/** Where a new answer lands in the thread: its first line if it is taller than the view (so reading starts at the top), else its end. */
+export function replyAlignment(replyHeight: number, viewHeight: number): "start" | "end" {
+  return replyHeight > viewHeight ? "start" : "end";
 }

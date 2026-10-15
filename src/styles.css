@@ -44,8 +44,41 @@ body,
 .panel header {
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  gap: var(--space-2);
   cursor: grab;
+}
+
+.panel header h1 {
+  flex: 1;
+  min-width: 0;
+}
+
+.model-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1);
+  min-width: 0;
+  max-width: 55%;
+  min-height: var(--target);
+  padding: 0 var(--space-3);
+  font: inherit;
+  font-size: 13px;
+  color: var(--panel-ink);
+  background: var(--panel-raised);
+  border: 1px solid var(--panel-line);
+  border-radius: 999px;
+  cursor: pointer;
+}
+
+.model-chip[data-setup] {
+  border-color: var(--warn);
+}
+
+.model-chip-label {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .panel h1 {
@@ -63,28 +96,6 @@ body,
   color: var(--panel-muted);
   font-size: 13px;
   line-height: 1.5;
-}
-
-/* Tabs */
-.tabs {
-  display: flex;
-  gap: var(--space-2);
-}
-
-.tab {
-  flex: 1;
-  min-height: var(--target);
-  font: inherit;
-  color: var(--panel-muted);
-  background: transparent;
-  border: 0;
-  border-bottom: 3px solid transparent;
-  cursor: pointer;
-}
-
-.tab[aria-selected="true"] {
-  color: var(--panel-ink);
-  border-bottom-color: var(--accent);
 }
 
 .scroll {
@@ -282,62 +293,62 @@ body,
   gap: var(--space-2);
 }
 
-/* Today tab */
+/* Chat view */
 .scroll[data-fill] {
   display: flex;
   flex-direction: column;
   overflow: hidden;
 }
 
-.today {
+.chat {
   display: flex;
   flex: 1;
   flex-direction: column;
   min-height: 0;
-  gap: var(--space-3);
+  gap: var(--space-2);
 }
 
-.today-body {
-  display: grid;
+.chat > * {
+  flex: none;
+}
+
+.chat > .thread-wrap {
   flex: 1;
-  align-content: start;
-  gap: var(--space-4);
-  min-height: 0;
-  padding-bottom: 28px;
-  overflow-y: auto;
-  /* Fade the bottom edge so cut-off text reads as "scroll for more", not as a bug. */
-  mask-image: linear-gradient(to bottom, #000 calc(100% - 28px), transparent);
 }
 
-.today-body > section,
-.today-body > .reply {
-  min-width: 0;
-}
-
-.now {
-  padding: var(--space-3) var(--space-4);
+.now-strip {
+  display: flex;
+  align-items: center;
+  min-height: var(--target);
   background: var(--panel-raised);
   border-left: 4px solid var(--accent);
   border-radius: var(--radius);
 }
 
-.now h2 {
-  margin: 0 0 var(--space-1);
+.now-line {
+  display: -webkit-box;
+  flex: 1;
+  min-width: 0;
+  margin: 0;
+  padding-right: var(--space-3);
+  line-height: 1.4;
+  overflow: hidden;
+  overflow-wrap: anywhere;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+}
+
+.now-label {
+  margin-right: var(--space-1);
   color: var(--panel-muted);
   font-size: 12px;
   letter-spacing: 0.08em;
   text-transform: uppercase;
 }
 
-.now-text {
-  margin: 0 0 var(--space-1);
-  font-size: 17px;
-  line-height: 1.4;
-  overflow-wrap: anywhere;
-}
-
-.now .helper {
-  margin: 0;
+.now-for {
+  color: var(--panel-muted);
+  font-size: 13px;
 }
 
 .visually-hidden {
@@ -347,6 +358,176 @@ body,
   overflow: hidden;
   clip: rect(0 0 0 0);
   white-space: nowrap;
+}
+
+/* Thread */
+.thread-wrap {
+  position: relative;
+  min-height: 96px;
+}
+
+.thread {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  box-sizing: border-box;
+  height: 100%;
+  padding: var(--space-1) var(--space-1) var(--space-3);
+  overflow-y: auto;
+  overscroll-behavior: contain;
+}
+
+.thread-empty {
+  margin: auto 0;
+  text-align: center;
+}
+
+.msg {
+  box-sizing: border-box;
+  max-width: 92%;
+  padding: var(--space-2) var(--space-3);
+  border-radius: var(--radius);
+  overflow-wrap: anywhere;
+}
+
+.msg p {
+  margin: 0 0 var(--space-2);
+  line-height: 1.5;
+}
+
+.msg > :last-child {
+  margin-bottom: 0;
+}
+
+.msg-user {
+  align-self: flex-end;
+  background: var(--panel-raised);
+}
+
+.msg-heel {
+  align-self: flex-start;
+  padding-left: 0;
+}
+
+.jump {
+  position: absolute;
+  bottom: var(--space-2);
+  left: 50%;
+  transform: translateX(-50%);
+  background: var(--panel-raised);
+}
+
+/* Receipts */
+.receipts {
+  margin-top: var(--space-2);
+  color: var(--panel-muted);
+  font-size: 13px;
+}
+
+.receipts summary {
+  display: flex;
+  align-items: center;
+  min-height: 32px;
+  cursor: pointer;
+}
+
+.receipts ul {
+  display: grid;
+  gap: var(--space-1);
+  margin: 0;
+  padding: 0 0 0 var(--space-4);
+  list-style: none;
+}
+
+.receipts li {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-2);
+}
+
+.receipts li[data-undone] > span:first-child {
+  text-decoration: line-through;
+}
+
+.receipts .button {
+  min-height: 32px;
+  padding: 0 var(--space-2);
+}
+
+/* First run */
+.first-run h2 {
+  margin-bottom: var(--space-3);
+}
+
+.first-run ol {
+  display: grid;
+  gap: var(--space-4);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.first-run li {
+  display: flex;
+  gap: var(--space-3);
+  align-items: flex-start;
+}
+
+.first-run .mark {
+  flex: none;
+  margin-top: 2px;
+}
+
+.first-run-step {
+  margin: 0 0 var(--space-1);
+}
+
+.first-run .helper {
+  margin-bottom: var(--space-2);
+}
+
+/* Task drawer */
+.drawer-toggle {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  box-sizing: border-box;
+  width: 100%;
+  min-height: var(--target);
+  padding: 0 var(--space-3);
+  font: inherit;
+  font-size: 14px;
+  color: var(--panel-ink);
+  background: transparent;
+  border: 1px solid var(--panel-line);
+  border-radius: var(--radius);
+  cursor: pointer;
+}
+
+.chevron {
+  display: inline-block;
+  font-size: 18px;
+  transition-property: transform;
+  transition-duration: 150ms;
+}
+
+.chevron[data-open] {
+  transform: rotate(90deg);
+}
+
+.drawer-body {
+  max-height: max(96px, calc(100vh - 440px));
+  margin-top: var(--space-1);
+  overflow-y: auto;
+}
+
+.drawer-heading {
+  margin: var(--space-3) 0 var(--space-1);
+  color: var(--panel-muted);
+  font-size: 12px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
 }
 
 .tasks {
@@ -363,6 +544,11 @@ body,
   align-items: center;
   min-height: var(--target);
   border-bottom: 1px solid var(--panel-raised);
+}
+
+.task.parked {
+  grid-template-columns: 1fr auto;
+  padding-left: var(--space-2);
 }
 
 .task-title {
@@ -390,33 +576,14 @@ body,
   width: 22px;
   height: 22px;
   border: 2px solid var(--panel-line);
-  border-radius: 6px;
+  border-radius: 50%;
 }
 
 .icon-button:hover .check {
   border-color: var(--accent);
 }
 
-.reply[data-empty] {
-  display: none;
-}
-
-.reply p {
-  margin: 0 0 var(--space-2);
-  line-height: 1.5;
-  overflow-wrap: anywhere;
-}
-
-.applied {
-  display: grid;
-  gap: var(--space-1);
-  margin: 0;
-  padding: 0;
-  list-style: none;
-  color: var(--panel-muted);
-  font-size: 13px;
-}
-
+/* Composer */
 .compose {
   display: grid;
   flex: none;
@@ -431,11 +598,9 @@ body,
 
 .ask {
   display: grid;
-  gap: var(--space-1);
-}
-
-.ask label {
-  font-size: 14px;
+  grid-template-columns: 1fr auto;
+  align-items: end;
+  gap: var(--space-2);
 }
 
 .ask textarea {
@@ -451,17 +616,6 @@ body,
   user-select: text;
 }
 
-.ask-row {
-  display: flex;
-  gap: var(--space-3);
-  align-items: center;
-  justify-content: space-between;
-}
-
-.ask-row .helper {
-  margin: 0;
-}
-
 .button-primary {
   color: var(--panel-bg);
   background: var(--accent);
@@ -475,7 +629,23 @@ body,
   border-color: var(--panel-line);
 }
 
-.today .toast {
-  position: static;
-  flex: none;
+/* The toast floats just above the composer, so it appearing and going never moves anything. */
+.compose-zone {
+  position: relative;
+}
+
+.compose-zone .toast {
+  position: absolute;
+  right: 0;
+  bottom: 100%;
+  left: 0;
+  z-index: 1;
+  margin-bottom: var(--space-2);
+  box-shadow: 0 4px 16px rgb(0 0 0 / 40%);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .chevron {
+    transition: none;
+  }
 }

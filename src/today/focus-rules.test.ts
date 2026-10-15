@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { revealBlock, shouldFocusAskBox } from "./focus-rules";
+import { replyAlignment, shouldFocusAskBox } from "./focus-rules";
 
 describe("shouldFocusAskBox", () => {
   it("focuses the box when the Today tab is showing and nothing else has focus", () => {
@@ -17,9 +17,10 @@ describe("shouldFocusAskBox", () => {
   });
 });
 
-describe("revealBlock", () => {
-  it("shows the start of a finished answer, and just keeps the thinking line in view", () => {
-    expect(revealBlock(true)).toBe("start");
-    expect(revealBlock(false)).toBe("nearest");
+describe("replyAlignment", () => {
+  it("starts a long answer at its first line and ends a short one at the bottom", () => {
+    expect(replyAlignment(900, 400)).toBe("start");
+    expect(replyAlignment(120, 400)).toBe("end");
+    expect(replyAlignment(400, 400)).toBe("end");
   });
 });

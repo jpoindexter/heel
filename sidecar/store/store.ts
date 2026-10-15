@@ -4,7 +4,7 @@ import type { Ctx } from "./context";
 import { activeFocus, endFocus, startFocus } from "./focus";
 import { getLedger, upsertLedger } from "./ledger";
 import { currentVersion, migrateDown, migrateUp } from "./migrations";
-import { listParked, parkIdea, promoteParked } from "./parked";
+import { listParked, parkIdea, promoteParked, unparkIdea } from "./parked";
 import type { FocusOutcome, TaskStatus } from "./schema";
 import { getBrain, setBrain } from "./settings";
 import { addTask, completeTask, dropTask, getTask, listTasks, restoreTask, setNowStep, startTask } from "./tasks";
@@ -42,6 +42,7 @@ export function openStore(options: StoreOptions = {}) {
       park: (input: unknown) => parkIdea(ctx, input),
       list: (includePromoted?: boolean) => listParked(ctx, includePromoted),
       promote: (id: string) => promoteParked(ctx, id),
+      unpark: (id: string) => unparkIdea(ctx, id),
     },
     focus: {
       start: (input: unknown) => startFocus(ctx, input),

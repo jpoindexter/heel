@@ -44,8 +44,9 @@ describe("parseAgentReply", () => {
     expect(result.ok).toBe(false);
   });
 
-  it("rejects an unknown focus outcome", () => {
-    const result = parseAgentReply('{"say":"x","actions":[{"type":"end_focus","outcome":"nailed it"}]}');
-    expect(result.ok).toBe(false);
+  it("does not offer focus sessions until the focus slice ships", () => {
+    const start = parseAgentReply('{"say":"x","actions":[{"type":"start_focus","goal":"g","best_min":1,"realistic_min":2,"worst_min":3}]}');
+    const end = parseAgentReply('{"say":"x","actions":[{"type":"end_focus","outcome":"done"}]}');
+    expect([start.ok, end.ok]).toEqual([false, false]);
   });
 });

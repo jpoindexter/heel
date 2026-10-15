@@ -94,3 +94,20 @@ describe("ledger", () => {
     expect(testStore().ledger.upsert(null, { outcome: 42 }).ok).toBe(false);
   });
 });
+
+describe("unparking", () => {
+  it("forgets a parked idea (undo for park)", () => {
+    const store = testStore();
+    const parked = must(store.parked.park({ idea: "Build skins" }));
+    must(store.parked.unpark(parked.id));
+    expect(store.parked.list(true)).toEqual([]);
+  });
+
+  it("refuses to forget an idea that already became a task, and reports an unknown id", () => {
+    const store = testStore();
+    const parked = must(store.parked.park({ idea: "Build skins" }));
+    must(store.parked.promote(parked.id));
+    expect(store.parked.unpark(parked.id)).toMatchObject({ ok: false, error: { code: "conflict" } });
+    expect(store.parked.unpark("nope")).toMatchObject({ ok: false, error: { code: "not_found" } });
+  });
+});

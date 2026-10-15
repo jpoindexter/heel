@@ -15,7 +15,7 @@ describe("executeActions", () => {
   it("adds a task from the capture source with its first step", () => {
     const { store, refs } = setup();
     const [outcome] = executeActions(store, [{ type: "add_task", title: " Email Aoi ", now_step: "Open Gmail" }], refs);
-    expect(outcome).toEqual({ type: "add_task", ok: true, message: 'Added "Email Aoi".' });
+    expect(outcome).toMatchObject({ type: "add_task", ok: true, message: 'Added "Email Aoi".', undo: { kind: "drop_task" } });
     expect(store.tasks.list().at(-1)).toMatchObject({ title: "Email Aoi", source: "capture", nowStep: "Open Gmail" });
   });
 
@@ -44,24 +44,19 @@ describe("executeActions", () => {
     expect(store.parked.list()).toHaveLength(1);
   });
 
-  it("starts and ends a focus session, and refuses to end one that isn't running", () => {
+  it("names tasks by title in receipts, never by ref", () => {
     const { store, refs } = setup();
-    const noneRunning = executeActions(store, [{ type: "end_focus", outcome: "done" }], refs);
-    expect(noneRunning[0]).toMatchObject({ ok: false, message: "No focus session is running." });
-
-    const started = executeActions(store, [{ type: "start_focus", goal: "Write plan", best_min: 20, realistic_min: 40, worst_min: 90, task: "t1" }], refs);
-    expect(started[0]!.ok).toBe(true);
-    expect(store.focus.active()?.goal).toBe("Write plan");
-
-    const ended = executeActions(store, [{ type: "end_focus", outcome: "parked_and_returned" }], refs);
-    expect(ended[0]!.ok).toBe(true);
-    expect(store.focus.active()).toBeNull();
+    const outcomes = executeActions(store, [{ type: "complete_task", task: "t1" }], refs);
+    expect(outcomes[0]!.message).toBe('Completed "First".');
+    expect(outcomes[0]!.message).not.toContain("t1");
   });
 
-  it("rejects a focus session tied to an unknown task ref", () => {
-    const { store, refs } = setup();
-    const [outcome] = executeActions(store, [{ type: "start_focus", goal: "g", best_min: 1, realistic_min: 2, worst_min: 3, task: "t7" }], refs);
-    expect(outcome!.ok).toBe(false);
-    expect(store.focus.active()).toBeNull();
+  it("says how each write can be reversed", () => {
+    const { store, refs, firstId } = setup();
+    const [complete, park] = executeActions(store, [{ type: "complete_task", task: "t1" }, { type: "park_idea", idea: "Skins" }], refs);
+    expect(complete!.undo).toEqual({ kind: "restore_task", id: firstId });
+    expect(park!.undo).toEqual({ kind: "unpark", id: store.parked.list()[0]!.id });
+    const [stepOnly] = executeActions(store, [{ type: "set_now_step", task: "t1", step: "x" }], refs);
+    expect(stepOnly!.undo).toBeUndefined();
   });
 });

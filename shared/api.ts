@@ -71,7 +71,21 @@ export const TaskResultSchema = z.object({ task: TaskSchema });
 export const ParkedResultSchema = z.object({ id: z.string() });
 export const TextInputSchema = z.object({ text: z.string() });
 
-export const ActionOutcomeSchema = z.object({ type: z.string(), ok: z.boolean(), message: z.string() });
+export const UndoSchema = z.object({ kind: z.enum(["restore_task", "drop_task", "unpark"]), id: z.string() });
+
+export const ActionOutcomeSchema = z.object({ type: z.string(), ok: z.boolean(), message: z.string(), undo: UndoSchema.optional() });
+
+export const ParkedIdeaSchema = z.object({ id: z.string(), idea: z.string(), createdAt: z.number() });
+export const ParkedListSchema = z.object({ parked: z.array(ParkedIdeaSchema) });
+export const UnparkResultSchema = z.object({ id: z.string() });
+
+/** Earlier messages the panel replays so the model can follow a conversation. Bounded; the model's own words are plain text. */
+export const MAX_HISTORY_MESSAGES = 6;
+export const HistoryMessageSchema = z.object({ role: z.enum(["user", "heel"]), text: z.string() });
+export const TurnInputSchema = z.object({
+  text: z.string(),
+  history: z.array(HistoryMessageSchema).max(MAX_HISTORY_MESSAGES).default([]),
+});
 
 export const TurnResultSchema = z.object({
   say: z.string(),
@@ -80,6 +94,9 @@ export const TurnResultSchema = z.object({
   provider: z.enum(PROVIDER_IDS),
 });
 
+export type UndoDto = z.output<typeof UndoSchema>;
+export type ParkedIdeaDto = z.output<typeof ParkedIdeaSchema>;
+export type HistoryMessage = z.output<typeof HistoryMessageSchema>;
 export type TaskDto = z.output<typeof TaskSchema>;
 export type TasksStateDto = z.output<typeof TasksStateSchema>;
 export type TurnResultDto = z.output<typeof TurnResultSchema>;

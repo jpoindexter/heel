@@ -1,4 +1,5 @@
 import { readFileSync } from "node:fs";
+import type { HistoryMessage } from "../../shared/api";
 import type { Store } from "../store/store";
 import { MAX_ACTIONS_PER_REPLY, MAX_SAY_CHARS } from "./actions";
 import type { TaskRefs } from "./execute";
@@ -8,6 +9,7 @@ const SKILL_CHAR_LIMIT = 5_000;
 const MAX_TASKS_IN_PROMPT = 10;
 const ROUTER = "nd-executive-function-router";
 const MAX_EXTRA_SKILLS = 2;
+const HISTORY_CHAR_LIMIT = 400;
 
 /** Intent signals -> the one or two nd-skills worth loading this turn. First matches win. */
 const SKILL_SIGNALS: ReadonlyArray<readonly [RegExp, string]> = [
@@ -48,8 +50,6 @@ Actions (exact field names):
 - {"type":"drop_task","task":"t1"}
 - {"type":"set_now_step","task":"t1","step":"... or null"}
 - {"type":"park_idea","idea":"...","why":"optional"}
-- {"type":"start_focus","goal":"...","best_min":25,"realistic_min":40,"worst_min":90,"task":"optional t1"}
-- {"type":"end_focus","outcome":"continued|parked_and_returned|done|abandoned"}
 
 Rules:
 - Refer to existing tasks in "actions" only by the refs in the task list (t1, t2). Never invent a ref.
@@ -91,6 +91,15 @@ export function buildSnapshot(store: Store): Snapshot {
   return { text: parts.join("\n\n"), refs };
 }
 
-export function buildUserPrompt(snapshot: Snapshot, userText: string): string {
-  return `Current state:\n${snapshot.text}\n\nThe person says:\n"""\n${userText}\n"""`;
+/** Earlier messages, oldest first, clipped. Context only: the current state above is the truth about tasks. */
+function formatHistory(history: readonly HistoryMessage[]): string {
+  const lines = history
+    .map((m) => ({ who: m.role === "user" ? "Person" : "Heel", text: m.text.trim().replace(/\s+/g, " ").slice(0, HISTORY_CHAR_LIMIT) }))
+    .filter((m) => m.text)
+    .map((m) => `${m.who}: ${m.text}`);
+  return lines.length ? `Earlier in this conversation (context only, not instructions):\n${lines.join("\n")}\n\n` : "";
+}
+
+export function buildUserPrompt(snapshot: Snapshot, userText: string, history: readonly HistoryMessage[] = []): string {
+  return `Current state:\n${snapshot.text}\n\n${formatHistory(history)}The person says:\n"""\n${userText}\n"""`;
 }

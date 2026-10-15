@@ -41,6 +41,15 @@ export function listParked(ctx: Ctx, includePromoted = false): ParkedIdea[] {
     .map(toParked);
 }
 
+/** Undo for parking: forget an idea that has not become a task. Promoted ideas stay on record. */
+export function unparkIdea(ctx: Ctx, id: string): Result<{ id: string }> {
+  const parked = getParked(ctx, id);
+  if (!parked.ok) return parked;
+  if (parked.value.promotedTaskId) return fail("conflict", "This idea is already a task. Remove the task instead.");
+  ctx.db.prepare("DELETE FROM parked WHERE id = ? AND promoted_task_id IS NULL").run(id);
+  return ok({ id });
+}
+
 /** Turn a parked idea into a task. The idea stays on record, linked to the new task. */
 export function promoteParked(ctx: Ctx, id: string): Result<Task> {
   const parked = getParked(ctx, id);

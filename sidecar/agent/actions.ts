@@ -1,5 +1,4 @@
 import { z } from "zod";
-import { FOCUS_OUTCOMES } from "../store/schema";
 
 export const MAX_ACTIONS_PER_REPLY = 8;
 export const MAX_SAY_CHARS = 1_200;
@@ -8,7 +7,7 @@ const taskRef = z.string().regex(/^t\d+$/, 'task must be a ref like "t1" from th
 
 /**
  * Everything the model may ask Heel to do. All of it is a local write the user can undo (autonomy L1).
- * Sending, deleting data and anything outside the app are deliberately absent.
+ * Sending, deleting data and anything outside the app are deliberately absent. Focus sessions return with the focus slice (S6).
  */
 export const ActionSchema = z.discriminatedUnion("type", [
   z.object({ type: z.literal("add_task"), title: z.string(), now_step: z.string().optional() }),
@@ -16,15 +15,6 @@ export const ActionSchema = z.discriminatedUnion("type", [
   z.object({ type: z.literal("drop_task"), task: taskRef }),
   z.object({ type: z.literal("set_now_step"), task: taskRef, step: z.string().nullable() }),
   z.object({ type: z.literal("park_idea"), idea: z.string(), why: z.string().optional() }),
-  z.object({
-    type: z.literal("start_focus"),
-    goal: z.string(),
-    best_min: z.number(),
-    realistic_min: z.number(),
-    worst_min: z.number(),
-    task: taskRef.optional(),
-  }),
-  z.object({ type: z.literal("end_focus"), outcome: z.enum(FOCUS_OUTCOMES) }),
 ]);
 
 export const AgentReplySchema = z.object({

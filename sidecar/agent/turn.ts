@@ -1,3 +1,4 @@
+import type { HistoryMessage } from "../../shared/api";
 import type { Store } from "../store/store";
 import { parseAgentReply } from "./actions";
 import { executeActions, type ActionOutcome } from "./execute";
@@ -26,7 +27,7 @@ const turnError = (code: TurnError["code"], message: string): TurnResult => ({ o
  * One conversational turn: build state + nd-skills prompt, ask the provider, validate the reply,
  * then apply only validated actions. Model proposes, app disposes: nothing is written before parsing succeeds.
  */
-export async function runTurn(deps: TurnDeps, userText: string): Promise<TurnResult> {
+export async function runTurn(deps: TurnDeps, userText: string, history: readonly HistoryMessage[] = []): Promise<TurnResult> {
   const text = userText.trim();
   if (!text) return turnError("empty_input", "Type what's on your mind first.");
   if (text.length > MAX_USER_CHARS) {
@@ -36,7 +37,7 @@ export async function runTurn(deps: TurnDeps, userText: string): Promise<TurnRes
   const skills = selectSkills(text);
   const system = buildSystemPrompt(skills, deps.loadSkill ?? loadSkill);
   const snapshot = buildSnapshot(deps.store);
-  const basePrompt = buildUserPrompt(snapshot, text);
+  const basePrompt = buildUserPrompt(snapshot, text, history);
 
   let prompt = basePrompt;
   for (let attempt = 1; attempt <= MAX_ATTEMPTS; attempt += 1) {
