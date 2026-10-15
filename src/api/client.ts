@@ -62,7 +62,8 @@ export function createClient(deps: ClientDeps = {}) {
   return {
     get: <T extends z.ZodType>(path: string, schema: T) => send(path, schema, { method: "GET" }),
     put: <T extends z.ZodType>(path: string, schema: T, body: unknown) => send(path, schema, { method: "PUT", body: JSON.stringify(body) }),
-    post: <T extends z.ZodType>(path: string, schema: T) => send(path, schema, { method: "POST" }),
+    post: <T extends z.ZodType>(path: string, schema: T, body?: unknown) =>
+      send(path, schema, { method: "POST", body: body === undefined ? undefined : JSON.stringify(body) }),
   };
 }
 

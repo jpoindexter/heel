@@ -1,13 +1,15 @@
 import { timingSafeEqual } from "node:crypto";
-import { Hono, type Context } from "hono";
+import { Hono } from "hono";
 import { cors } from "hono/cors";
 import { z } from "zod";
 import { PROVIDER_IDS } from "../../shared/providers";
-import { TOKEN_HEADER, type ApiError } from "../../shared/api";
+import { TOKEN_HEADER } from "../../shared/api";
 import { detectAll } from "../agent/providers/registry";
 import type { Provider, ProviderId } from "../agent/providers/types";
 import { BrainSettingsInput } from "../store/settings";
 import type { Store } from "../store/store";
+import { fail, ok, readJson } from "./respond";
+import { registerTodayRoutes } from "./today-routes";
 
 export type AppDeps = {
   store: Store;
@@ -24,9 +26,6 @@ export const DEV_ORIGIN = "http://localhost:1420";
 export const TAURI_ORIGINS = ["tauri://localhost", "http://tauri.localhost"] as const;
 
 const ProviderQuery = z.enum(PROVIDER_IDS);
-
-const ok = <T>(c: Context, data: T) => c.json({ ok: true as const, data });
-const fail = (c: Context, code: string, message: string) => c.json({ ok: false as const, error: { code, message } satisfies ApiError });
 
 function tokenMatches(given: string | undefined, expected: string): boolean {
   if (!given) return false;
@@ -69,7 +68,7 @@ export function createApp(deps: AppDeps) {
   });
 
   app.put("/brain", async (c) => {
-    const body = BrainSettingsInput.safeParse(await c.req.json().catch(() => null));
+    const body = BrainSettingsInput.safeParse(await readJson(c));
     if (!body.success) return fail(c, "invalid", body.error.issues[0]?.message ?? "Settings are not valid.");
     if (body.data.provider) {
       const status = await deps.providers[body.data.provider].status();
@@ -87,6 +86,8 @@ export function createApp(deps: AppDeps) {
     if (provider === "ollama" && !model) return fail(c, "not_ready", "Choose a local model first.");
     return ok(c, { detail: `${status.label} is ready: ${status.detail}.` });
   });
+
+  registerTodayRoutes(app, deps);
 
   return app;
 }

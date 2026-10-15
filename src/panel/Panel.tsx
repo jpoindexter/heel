@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState, type KeyboardEvent } from "react";
 import { invoke } from "@tauri-apps/api/core";
 import { BrainSettings } from "../settings/BrainSettings";
-import { TodayTab } from "./TodayTab";
+import { TodayTab } from "../today/TodayTab";
 
 const TABS = [
   { id: "today", label: "Today" },
@@ -61,8 +61,8 @@ export function Panel() {
         ))}
       </div>
 
-      <div role="tabpanel" id={`tabpanel-${tab}`} aria-labelledby={`tab-${tab}`} className="scroll">
-        {tab === "today" ? <TodayTab /> : <BrainSettings />}
+      <div role="tabpanel" id={`tabpanel-${tab}`} aria-labelledby={`tab-${tab}`} className="scroll" data-fill={tab === "today" ? "" : undefined}>
+        {tab === "today" ? <TodayTab onOpenSettings={() => setTab("settings")} /> : <BrainSettings />}
       </div>
     </main>
   );

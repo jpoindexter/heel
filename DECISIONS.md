@@ -60,3 +60,9 @@ Reversible? Yes.
 Choice: `tauri-plugin-single-instance` 2.5.4 (Apache-2.0 OR MIT, official tauri-apps) registered first; a second launch exits at once and the running Heel brings its panel forward. The helper adds its own guard: it will not start if the recorded port already answers /health with the recorded token, and it deletes the connection file only if the token inside is its own.
 Why: a failed second launch deleted the first helper's connection file, and two Heel windows ended up open.
 Verified 2026-10-15: a second launch exited with code 0 in 0.1s and one process kept running. Not observed: the panel actually appearing on that second launch.
+
+## 2026-10-15 — S2: Today tab wired to the agent (one turn at a time, what-was-done is always shown)
+Choice: new helper routes `GET /tasks`, `POST /tasks/:id/(complete|drop|restore)`, `POST /parked`, `POST /turn` (uses the saved provider/model). Panel shows a Now card (first task's next step), up to 3 tasks (+ "N more"), a reply area that lists every action Heel actually took (✓ added / ! couldn't), three fixed chips (Plan, Stuck, Park it) and a labeled ask box. Park it needs no AI: it saves the typed text directly. Complete/remove apply at once with an 8s Undo (no confirm dialogs). One turn at a time; chips that call the AI are disabled while one runs.
+Prompt rule added after a live run: the model said "parked" for something it had added. Wording must match the action (add_task = added, park_idea = parked). The ✓ lines remain the source of truth.
+Verified 2026-10-15 in a browser against the real helper and a real Claude turn: Stuck chip, typed request + Enter, complete + Undo, Park it (empty and with text), no-provider error + Open Settings. NOT verified: inside the real Tauri window (panel 380x620), mascot thinking/done/error reactions, keyboard-only flow, screen reader.
+Reversible? Yes.

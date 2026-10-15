@@ -21,6 +21,20 @@ describe("api client", () => {
     expect(seen).toEqual([{ url: "http://127.0.0.1:4000/x", token: INFO.token }]);
   });
 
+  it("sends a JSON body with POST when given one, and none otherwise", async () => {
+    const bodies: (BodyInit | null | undefined)[] = [];
+    const client = createClient({
+      readInfo: async () => INFO,
+      fetch: async (_url, init) => {
+        bodies.push(init?.body);
+        return reply({ ok: true, data: { hello: "x" } });
+      },
+    });
+    await client.post("/turn", Hello, { text: "hi" });
+    await client.post("/tasks/1/complete", Hello);
+    expect(bodies).toEqual(['{"text":"hi"}', undefined]);
+  });
+
   it("passes a server-side failure through as a value", async () => {
     const client = createClient({
       readInfo: async () => INFO,

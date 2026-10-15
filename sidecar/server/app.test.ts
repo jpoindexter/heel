@@ -1,37 +1,8 @@
 import { describe, expect, it } from "vitest";
 import { BrainStateSchema, envelope } from "../../shared/api";
-import type { Provider, ProviderId, ProviderResult, ProviderStatus } from "../agent/providers/types";
-import { testStore } from "../store/test-helpers";
-import { createApp, DEV_ORIGIN } from "./app";
-
-const TOKEN = "test-token-0123456789abcdef";
-const HOST = "127.0.0.1:5555";
-
-function fakeProvider(id: ProviderId, status: Partial<ProviderStatus> = {}, models: ProviderResult<string[]> = { ok: true, value: [] }): Provider {
-  return {
-    id,
-    label: `Label ${id}`,
-    status: async () => ({ id, label: `Label ${id}`, installed: true, ready: true, detail: `${id} detail`, ...status }),
-    models: async () => models,
-    complete: async () => ({ ok: true, value: "" }),
-  };
-}
-
-function setup(overrides: Partial<Record<ProviderId, Provider>> = {}) {
-  const store = testStore();
-  const providers: Record<ProviderId, Provider> = {
-    claude: fakeProvider("claude"),
-    codex: fakeProvider("codex", { ready: false, detail: "Not signed in. Run codex login in a terminal." }),
-    ollama: fakeProvider("ollama", {}, { ok: true, value: ["qwen2.5:14b"] }),
-    ...overrides,
-  };
-  const app = createApp({ store, providers, token: TOKEN, allowedOrigins: [DEV_ORIGIN] });
-  const call = (path: string, init: RequestInit & { headers?: Record<string, string> } = {}) =>
-    app.request(path, { ...init, headers: { host: HOST, "x-heel-token": TOKEN, ...init.headers } });
-  const json = async (path: string, init?: RequestInit & { headers?: Record<string, string> }) => (await call(path, init)).json();
-  const put = (body: unknown) => json("/brain", { method: "PUT", headers: { "content-type": "application/json" }, body: JSON.stringify(body) });
-  return { store, call, json, put, app };
-}
+import type { Provider } from "../agent/providers/types";
+import { DEV_ORIGIN } from "./app";
+import { HOST, fakeProvider, setup } from "./test-app";
 
 describe("guards", () => {
   it("rejects a request without the token", async () => {

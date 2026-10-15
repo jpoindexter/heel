@@ -276,3 +276,201 @@ body,
   grid-template-columns: repeat(3, 1fr);
   gap: var(--space-2);
 }
+
+/* Today tab */
+.scroll[data-fill] {
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.today {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  min-height: 0;
+  gap: var(--space-3);
+}
+
+.today-body {
+  display: grid;
+  flex: 1;
+  align-content: start;
+  gap: var(--space-4);
+  min-height: 0;
+  padding-bottom: 28px;
+  overflow-y: auto;
+  /* Fade the bottom edge so cut-off text reads as "scroll for more", not as a bug. */
+  mask-image: linear-gradient(to bottom, #000 calc(100% - 28px), transparent);
+}
+
+.today-body > section,
+.today-body > .reply {
+  min-width: 0;
+}
+
+.now {
+  padding: var(--space-3) var(--space-4);
+  background: var(--panel-raised);
+  border-left: 4px solid var(--accent);
+  border-radius: var(--radius);
+}
+
+.now h2 {
+  margin: 0 0 var(--space-1);
+  color: var(--panel-muted);
+  font-size: 12px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.now-text {
+  margin: 0 0 var(--space-1);
+  font-size: 17px;
+  line-height: 1.4;
+  overflow-wrap: anywhere;
+}
+
+.now .helper {
+  margin: 0;
+}
+
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}
+
+.tasks {
+  display: grid;
+  gap: var(--space-1);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.task {
+  display: grid;
+  grid-template-columns: var(--target) 1fr var(--target);
+  align-items: center;
+  min-height: var(--target);
+  border-bottom: 1px solid var(--panel-raised);
+}
+
+.task-title {
+  min-width: 0;
+  line-height: 1.4;
+  overflow-wrap: anywhere;
+}
+
+.icon-button {
+  display: grid;
+  place-items: center;
+  width: var(--target);
+  height: var(--target);
+  padding: 0;
+  font: inherit;
+  font-size: 20px;
+  color: var(--panel-muted);
+  background: transparent;
+  border: 0;
+  cursor: pointer;
+}
+
+.check {
+  box-sizing: border-box;
+  width: 22px;
+  height: 22px;
+  border: 2px solid var(--panel-line);
+  border-radius: 6px;
+}
+
+.icon-button:hover .check {
+  border-color: var(--accent);
+}
+
+.reply[data-empty] {
+  display: none;
+}
+
+.reply p {
+  margin: 0 0 var(--space-2);
+  line-height: 1.5;
+  overflow-wrap: anywhere;
+}
+
+.applied {
+  display: grid;
+  gap: var(--space-1);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  color: var(--panel-muted);
+  font-size: 13px;
+}
+
+.compose {
+  display: grid;
+  flex: none;
+  gap: var(--space-2);
+}
+
+.chips {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--space-2);
+}
+
+.ask {
+  display: grid;
+  gap: var(--space-1);
+}
+
+.ask label {
+  font-size: 14px;
+}
+
+.ask textarea {
+  box-sizing: border-box;
+  width: 100%;
+  padding: var(--space-2) var(--space-3);
+  font: inherit;
+  color: inherit;
+  background: var(--panel-raised);
+  border: 1px solid var(--panel-line);
+  border-radius: var(--radius);
+  resize: none;
+  user-select: text;
+}
+
+.ask-row {
+  display: flex;
+  gap: var(--space-3);
+  align-items: center;
+  justify-content: space-between;
+}
+
+.ask-row .helper {
+  margin: 0;
+}
+
+.button-primary {
+  color: var(--panel-bg);
+  background: var(--accent);
+  border-color: var(--accent);
+  font-weight: 600;
+}
+
+.button-primary:disabled {
+  color: var(--panel-muted);
+  background: transparent;
+  border-color: var(--panel-line);
+}
+
+.today .toast {
+  position: static;
+  flex: none;
+}
