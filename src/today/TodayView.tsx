@@ -5,12 +5,16 @@ import { InboxPanel } from "../inbox/InboxPanel";
 import type { BrainSummary } from "../settings/brain-summary";
 import { Layer, LayerHost, useLayers } from "../ui/layers";
 import "./chat.css";
+import { DoneRow } from "./DoneRow";
 import { FirstRun } from "./FirstRun";
+import { HistoryLayer } from "./HistoryLayer";
 import { Reply } from "./Reply";
 import { ReplyRow } from "./ReplyRow";
 import { TaskSection } from "./TaskSection";
 import { BottomBar } from "./BottomBar";
 import { useBarActions } from "./useBarActions";
+import { todayKey } from "./history-labels";
+import { useHistoryLayer } from "./useHistoryLayer";
 import { useNewTaskFocus } from "./useNewTaskShortcut";
 import { useTodayState } from "./useTodayState";
 
@@ -38,6 +42,24 @@ function useLayerFollows(state: State) {
   }, [digest.state.phase, top, back]);
 }
 
+type ReplyLayerProps = { thread: State["thread"]; onOpenSettings: () => void; onClosed: () => void };
+
+/** The latest exchange in its layer; closing it clears the conversation (with Undo) and pops the layer. */
+function ReplyLayer({ thread, onOpenSettings, onClosed }: ReplyLayerProps) {
+  return (
+    <Reply
+      messages={thread.messages}
+      onRetry={thread.retry}
+      onOpenSettings={onOpenSettings}
+      onUndo={(id, index) => void thread.undoReceipt(id, index)}
+      onDismiss={() => {
+        void thread.clear();
+        onClosed();
+      }}
+    />
+  );
+}
+
 /** The whole panel body: the tasks as the base, Settings / Email / the reply as layers over them, and the one bar at the bottom. */
 export function TodayView({ showing, summary, reloadKey, settings }: Props) {
   const layers = useLayers();
@@ -47,6 +69,7 @@ export function TodayView({ showing, summary, reloadKey, settings }: Props) {
   const bar = useBarActions(state);
   const focusSignal = useNewTaskFocus(layers.home, bar.openComposer);
   useLayerFollows(state);
+  const history = useHistoryLayer(tasks, layers);
 
   return (
     <div className="today" onPointerDownCapture={bar.onPointerOutside}>
@@ -62,24 +85,19 @@ export function TodayView({ showing, summary, reloadKey, settings }: Props) {
           <div className="today-scroll">
             <ReplyRow messages={thread.messages} onOpen={() => layers.push("reply")} />
             <TaskSection state={state} />
+            {state.ready && <DoneRow doneToday={state.ready.doneToday} onOpen={() => layers.push("history")} />}
           </div>
         }
       >
         <Layer name="settings" label="Settings">{settings}</Layer>
+        <Layer name="history" label="History">
+          <HistoryLayer history={history} today={todayKey()} />
+        </Layer>
         <Layer name="email" label="Email">
           <InboxPanel digest={state.digest} reply={state.reply} onOpen={(id) => void state.openMail(id)} />
         </Layer>
         <Layer name="reply" label="Reply">
-          <Reply
-            messages={thread.messages}
-            onRetry={thread.retry}
-            onOpenSettings={openSettings}
-            onUndo={(id, index) => void thread.undoReceipt(id, index)}
-            onDismiss={() => {
-              void thread.clear();
-              layers.back();
-            }}
-          />
+          <ReplyLayer thread={thread} onOpenSettings={openSettings} onClosed={layers.back} />
         </Layer>
       </LayerHost>
       {summary?.kind === "setup" && <FirstRun summary={summary} onOpenSettings={openSettings} />}

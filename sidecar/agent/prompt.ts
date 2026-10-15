@@ -90,6 +90,7 @@ export function buildSnapshot(store: Store): Snapshot {
   const parts = [
     `Open tasks:\n${lines.length ? lines.join("\n") : "none"}`,
     `Focus session: ${focus ? `running, goal "${focus.goal}"` : "none"}`,
+    `Finished today: ${store.history.doneToday()}`,
     global?.outcome ? `Current outcome: ${global.outcome}` : null,
   ].filter((part): part is string => part !== null);
   return { text: parts.join("\n\n"), refs };

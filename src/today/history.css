@@ -1,0 +1,64 @@
+/* History: a seven-day strip of plain counts, then the days. Quiet, no colour for "good" or "bad" days. */
+.history {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+  padding: var(--ring-room);
+}
+
+.week-strip {
+  display: grid;
+  grid-template-columns: repeat(7, minmax(0, 1fr));
+  gap: var(--space-1);
+  margin: 0 0 var(--space-2);
+  padding: 0;
+  list-style: none;
+}
+
+.week-day {
+  display: grid;
+  gap: 0;
+  justify-items: center;
+  padding: var(--space-1) 0;
+  border-radius: var(--radius-3);
+}
+
+.week-day[data-today] {
+  background: var(--gray-a3);
+}
+
+.history-day {
+  display: grid;
+  gap: var(--space-1);
+}
+
+.history-row .row-action {
+  opacity: 1;
+}
+
+.history-empty {
+  display: grid;
+  gap: var(--space-2);
+  padding: var(--space-3);
+}
+
+/* The way into History from the end of the list: a count, and a chevron. */
+.done-row {
+  display: flex;
+  gap: var(--space-2);
+  align-items: center;
+  width: 100%;
+  min-height: var(--hit-target);
+  margin-top: var(--space-2);
+  padding: var(--space-1) var(--space-2) var(--space-1) var(--space-3);
+  color: var(--gray-11);
+  text-align: left;
+  background: transparent;
+  border: 0;
+  border-radius: var(--radius-4);
+}
+
+.done-row:hover {
+  color: var(--gray-12);
+  background: var(--gray-a2);
+}

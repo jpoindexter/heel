@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { MAX_HISTORY_MESSAGES, ParkedListSchema, ParkedResultSchema, TasksStateSchema, TurnResultSchema, envelope } from "../../shared/api";
+import { HistorySchema, MAX_HISTORY_MESSAGES, ParkedListSchema, ParkedResultSchema, TasksStateSchema, TurnResultSchema, envelope } from "../../shared/api";
 import { fakeProvider, setup } from "./test-app";
 
 const tasksState = envelope(TasksStateSchema);
@@ -9,7 +9,7 @@ const parkedResult = envelope(ParkedResultSchema);
 
 describe("GET /tasks", () => {
   it("is empty at first", async () => {
-    expect(tasksState.parse(await setup().json("/tasks"))).toEqual({ ok: true, data: { tasks: [], parkedCount: 0 } });
+    expect(tasksState.parse(await setup().json("/tasks"))).toEqual({ ok: true, data: { tasks: [], parkedCount: 0, doneToday: 0 } });
   });
 
   it("lists open tasks in order and counts parked ideas", async () => {
@@ -170,5 +170,28 @@ describe("POST /tasks (quick add, no AI)", () => {
     await send("/tasks", { title: "Second" });
     const state = tasksState.parse(await json("/tasks"));
     expect(state.ok && state.data.tasks.map((t) => t.title)).toEqual(["First", "Second"]);
+  });
+});
+
+describe("GET /history", () => {
+  it("lists what was finished by day with the week's counts, and /tasks counts today's", async () => {
+    const { store, json } = setup();
+    const a = store.tasks.add({ title: "Done one" });
+    const b = store.tasks.add({ title: "Done two" });
+    if (!a.ok || !b.ok) throw new Error("add failed");
+    store.tasks.complete(a.value.id);
+    store.tasks.complete(b.value.id);
+    const history = envelope(HistorySchema).parse(await json("/history?days=7"));
+    if (!history.ok) throw new Error(history.error.message);
+    expect(history.data.days).toHaveLength(1);
+    expect(history.data.days[0]?.tasks.map((t) => t.title)).toEqual(["Done two", "Done one"]);
+    expect(history.data.week).toHaveLength(7);
+    expect(history.data.week.at(-1)?.count).toBe(2);
+    expect(tasksState.parse(await json("/tasks"))).toMatchObject({ data: { doneToday: 2 } });
+  });
+
+  it("clamps a silly days value instead of failing", async () => {
+    const history = envelope(HistorySchema).parse(await setup().json("/history?days=9999"));
+    expect(history.ok).toBe(true);
   });
 });

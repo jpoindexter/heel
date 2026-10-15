@@ -67,7 +67,11 @@ export const TaskSchema = z.object({
   completedAt: z.number().nullable(),
 });
 
-export const TasksStateSchema = z.object({ tasks: z.array(TaskSchema), parkedCount: z.number().int() });
+export const TasksStateSchema = z.object({ tasks: z.array(TaskSchema), parkedCount: z.number().int(), doneToday: z.number().int() });
+/** What was finished: by local day (YYYY-MM-DD), newest first, and the last seven days' counts, oldest first. */
+export const HistoryDaySchema = z.object({ date: z.string(), count: z.number().int(), tasks: z.array(TaskSchema) });
+export const HistorySchema = z.object({ days: z.array(HistoryDaySchema), week: z.array(z.object({ date: z.string(), count: z.number().int() })) });
+export type HistoryDto = z.output<typeof HistorySchema>;
 export const TaskResultSchema = z.object({ task: TaskSchema });
 export const ParkedResultSchema = z.object({ id: z.string() });
 export const TextInputSchema = z.object({ text: z.string() });

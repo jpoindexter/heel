@@ -6,14 +6,26 @@ import type { AppDeps } from "./app";
 import { fail, ok, readJson } from "./respond";
 
 const TEXT_HINT = "Send {\"text\": \"...\"}.";
+const HISTORY_DEFAULT_DAYS = 30;
+const HISTORY_MAX_DAYS = 90;
 
 type Transition = "complete" | "drop" | "restore";
+
+/** What was finished, by day, with the week's counts. `days` is how far back the list goes (1–90, default 30). */
+function registerHistoryRoute(app: Hono, { store }: AppDeps): void {
+  app.get("/history", (c) => {
+    const asked = Number(c.req.query("days") ?? HISTORY_DEFAULT_DAYS);
+    const days = Number.isInteger(asked) ? Math.min(HISTORY_MAX_DAYS, Math.max(1, asked)) : HISTORY_DEFAULT_DAYS;
+    return ok(c, store.history.list(days));
+  });
+}
 
 /** Tasks and parked ideas: what the drawer and the Now strip call. */
 export function registerTodayRoutes(app: Hono, deps: AppDeps): void {
   const { store } = deps;
 
-  app.get("/tasks", (c) => ok(c, { tasks: store.tasks.list(), parkedCount: store.parked.list().length }));
+  app.get("/tasks", (c) => ok(c, { tasks: store.tasks.list(), parkedCount: store.parked.list().length, doneToday: store.history.doneToday() }));
+  registerHistoryRoute(app, deps);
 
   /** Add a task by hand: no AI, so it is instant and costs nothing. */
   app.post("/tasks", async (c) => {

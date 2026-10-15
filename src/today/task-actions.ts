@@ -1,6 +1,7 @@
 import { ParkedResultSchema, TaskResultSchema, UnparkResultSchema, type ParkedIdeaDto, type TaskDto } from "../../shared/api";
 import type { Client } from "../api/client";
 import type { Notice } from "../ui/Notifier";
+import { encouragement, lineOf } from "./encouragement";
 
 type Deps = {
   client: Client;
@@ -8,11 +9,24 @@ type Deps = {
   /** Take a task off the screen at once (before the helper answers). */
   dropLocally: (id: string) => void;
   notify: (notice: Notice) => void;
+  /** How many were finished today before this one. */
+  doneToday: () => number;
 };
 
+/** One line that says the task and, quietly, that things are getting done; never the same line twice in a row. */
+function makeCheer(doneToday: () => number): (title: string) => string {
+  let lastLine: string | null = null;
+  return (title) => {
+    const message = encouragement({ title, doneToday: doneToday() + 1, last: lastLine, rng: Math.random });
+    lastLine = lineOf(message);
+    return message;
+  };
+}
+
 /** What the person can do to tasks and parked ideas from the drawer, the Now strip and the Park chip. Each write offers Undo. */
-export function createTaskActions({ client, refresh, dropLocally, notify }: Deps) {
+export function createTaskActions({ client, refresh, dropLocally, notify, doneToday }: Deps) {
   const fail = (message: string) => notify({ message, tone: "error" });
+  const cheer = makeCheer(doneToday);
   const undoWith = (run: () => Promise<unknown>) => () =>
     void run().then(refresh);
 
@@ -24,8 +38,11 @@ export function createTaskActions({ client, refresh, dropLocally, notify }: Deps
       return refresh();
     }
     const undo = undoWith(() => client.post(`/tasks/${task.id}/restore`, TaskResultSchema));
-    notify({ message: `${action === "complete" ? "Completed" : "Removed"}: ${task.title}`, tone: "info", undo });
+    notify({ message: action === "drop" ? `Removed: ${task.title}` : cheer(task.title), tone: "info", undo });
+    // The row is already gone; this brings the day's count up to date.
+    await refresh();
   };
+
 
   /** Add a task by hand (no AI). Undo drops it again. */
   const add = async (title: string): Promise<boolean> => {

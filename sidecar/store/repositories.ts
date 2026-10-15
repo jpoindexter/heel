@@ -1,6 +1,7 @@
 import type { Ctx } from "./context";
 import { activeFocus, endFocus, startFocus } from "./focus";
 import { interruptState, spendInterrupt } from "./interrupts";
+import { doneToday, history } from "./history";
 import { getLedger, upsertLedger } from "./ledger";
 import { clearMessages, listMessages, restoreMessages, saveMessage } from "./messages";
 import { listParked, parkIdea, promoteParked, unparkIdea } from "./parked";
@@ -35,6 +36,10 @@ export function todayRepositories(ctx: Ctx) {
     ledger: {
       get: (taskId: string | null) => getLedger(ctx, taskId),
       upsert: (taskId: string | null, patch: unknown) => upsertLedger(ctx, taskId, patch),
+    },
+    history: {
+      list: (days: number) => history(ctx, days),
+      doneToday: () => doneToday(ctx),
     },
   };
 }
