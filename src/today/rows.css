@@ -1,4 +1,4 @@
-/* Task rows: one line each; Now is the only tinted one. The remove cross shows on hover or keyboard focus. */
+/* Task rows: one line each, each on its task's tint; Now sits on the stronger gray. The remove cross shows on hover or keyboard focus. */
 .rows {
   display: grid;
   gap: var(--space-1);
@@ -13,7 +13,7 @@
   gap: var(--space-2);
   min-height: var(--hit-target);
   padding: var(--space-1) var(--space-2) var(--space-1) var(--space-3);
-  background: var(--gray-a2);
+  background: var(--row-tint);
   border-radius: var(--radius-4);
   animation: rise var(--motion-base) var(--ease-out) both;
 }

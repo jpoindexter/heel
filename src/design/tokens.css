@@ -44,6 +44,9 @@
   --tail-size: 10px; /* the panel's tail pointing at Greg */
   --tail-room: 28px; /* keeps the tail off the rounded corners */
 
+  /* A task's colour (B7): a tinted ground, nothing more. Step 3 of a Radix scale, light and dark; text 12 stays far above 4.5:1 on it. */
+  --row-tint: var(--gray-a2);
+
   /* Lines are hairlines by default (Radix's soft grays). Only what you must find to use it gets a stronger edge, below. */
   --focus-8: var(--gray-a9); /* a quiet gray ring for keyboard focus (3:1 on the panel), never the green */
   --hairline: var(--gray-a5); /* the panel frame, its tail and other decoration */
@@ -73,3 +76,14 @@
   --gray-a7: var(--gray-a9);
   --gray-a8: var(--gray-a10);
 }
+
+/* One hue per task, named for the Radix scale it comes from; the rows read the token above, never a scale. */
+.radix-themes [data-hue="blue"] { --row-tint: var(--blue-a3); }
+.radix-themes [data-hue="teal"] { --row-tint: var(--teal-a3); }
+.radix-themes [data-hue="grass"] { --row-tint: var(--grass-a3); }
+.radix-themes [data-hue="amber"] { --row-tint: var(--amber-a3); }
+.radix-themes [data-hue="orange"] { --row-tint: var(--orange-a3); }
+.radix-themes [data-hue="tomato"] { --row-tint: var(--tomato-a3); }
+.radix-themes [data-hue="plum"] { --row-tint: var(--plum-a3); }
+.radix-themes [data-hue="violet"] { --row-tint: var(--violet-a3); }
+.radix-themes [data-hue="brown"] { --row-tint: var(--brown-a3); }

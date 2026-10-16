@@ -48,6 +48,7 @@ export function TaskSection({ state, foundId = null }: { state: ReturnType<typeo
       <JarMeter tasks={ready?.tasks ?? []} method={method} numbers={numbers} onAsk={ask} />
       <NowRow
         now={now}
+        nowParent={now?.task.parentId ? ready?.tasks.find((task) => task.id === now.task.parentId) ?? null : null}
         leavingId={rows.leavingId}
         foundId={foundId}
         canTimebox={!focus.session && !pomodoro.view?.state && !starting}

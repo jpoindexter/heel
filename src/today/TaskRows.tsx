@@ -5,6 +5,7 @@ import type { TaskDto } from "../../shared/api";
 import "./rows.css";
 import type { Method } from "../../shared/method";
 import { groupTasks } from "./method-model";
+import { hueFor } from "./colour-model";
 import { nest, progressLabel } from "./split-model";
 import { TaskBadges, type Patch } from "./TaskBadges";
 import type { NowCard } from "./today-model";
@@ -41,16 +42,17 @@ function SplitButton({ task, onSplit }: { task: TaskDto; onSplit: (task: TaskDto
   );
 }
 
-type NowProps = Common & { now: NowCard | null; /** No box is running, so one can start. */ canTimebox: boolean; onStartBox: () => void };
+type NowProps = Common & { now: NowCard | null; /** The task the Now step belongs to, when it is a step. */ nowParent?: TaskDto | null; /** No box is running, so one can start. */ canTimebox: boolean; onStartBox: () => void };
 
 /** The one thing to do now: a quiet tinted row. Its clock starts a time-box on it. */
-export function NowRow({ now, leavingId, foundId, canTimebox, onStartBox, onComplete, onRemove, method, onPatch, onSplit, after }: NowProps) {
+export function NowRow({ now, nowParent, leavingId, foundId, canTimebox, onStartBox, onComplete, onRemove, method, onPatch, onSplit, after }: NowProps) {
   if (!now) return null;
   const { task } = now;
   const leaving = leavingId === task.id;
+  const hue = hueFor(task, { structure: method.structure, parent: nowParent });
   return (
     <>
-      <section aria-label="Now" className="task-row" data-now data-leaving={leaving || undefined} data-found={foundId === task.id || undefined}>
+      <section aria-label="Now" className="task-row" data-now data-hue={hue} data-leaving={leaving || undefined} data-found={foundId === task.id || undefined}>
         <Checkbox size="2" checked={leaving} aria-label={`Complete: ${task.title}`} onCheckedChange={() => onComplete(task)} />
         <div className="grow">
           <Text size="2" weight="medium" as="p" className="task-text clamp-2">{now.text}</Text>
@@ -70,13 +72,15 @@ export function NowRow({ now, leavingId, foundId, canTimebox, onStartBox, onComp
   );
 }
 
-type RowProps = Common & { task: TaskDto; /** Open steps under this task, for "2 of 5". */ openSteps: number; step?: boolean };
+type RowProps = Common & { task: TaskDto; /** Open steps under this task, for "2 of 5". */ openSteps: number; /** The task this row is a step of. */ parent?: TaskDto };
 
-/** One open task (or one step of a task, indented): tick it off; the cross and the scissors appear on hover or keyboard focus. */
-function TaskRow({ task, openSteps, step, leavingId, foundId, onComplete, onRemove, method, onPatch, onSplit }: RowProps) {
+/** One open task (or one step of a task, indented, in its task's colour): tick it off; the cross and the scissors appear on hover or keyboard focus. */
+function TaskRow({ task, openSteps, parent, leavingId, foundId, onComplete, onRemove, method, onPatch, onSplit }: RowProps) {
+  const step = parent !== undefined;
   const progress = step ? null : progressLabel(task, openSteps);
+  const hue = hueFor(task, { structure: method.structure, parent });
   return (
-    <li className="task-row" data-step={step || undefined} data-leaving={leavingId === task.id || undefined} data-found={foundId === task.id || undefined}>
+    <li className="task-row" data-hue={hue} data-step={step || undefined} data-leaving={leavingId === task.id || undefined} data-found={foundId === task.id || undefined}>
       <Checkbox size="2" checked={leavingId === task.id} aria-label={`Complete: ${task.title}`} onCheckedChange={() => onComplete(task)} />
       <div className="grow">
         <Text size="2" as="p" className="task-text clamp-2">
@@ -107,7 +111,7 @@ export function LaterList({ tasks, ...common }: Common & { tasks: readonly TaskD
               return [
                 <TaskRow key={task.id} task={task} openSteps={steps.length} {...common} />,
                 ...(common.after?.(task) ? [<li key={`${task.id}-after`}>{common.after(task)}</li>] : []),
-                ...steps.map((child) => <TaskRow key={child.id} task={child} openSteps={0} step {...common} />),
+                ...steps.map((child) => <TaskRow key={child.id} task={child} openSteps={0} parent={task} {...common} />),
               ];
             })}
           </ul>
