@@ -193,3 +193,25 @@ describe("the rest of a dog's day (N25)", () => {
     for (const plan of [greetPlan(), stretchPlan(), come]) for (const step of plan.steps) expect(isMotionId(step.motion) && step.ms > 0).toBe(true);
   });
 });
+
+describe("time of day (N25)", () => {
+  it("keeps grass for the afternoon and rests sooner late at night", async () => {
+    const { isAfternoon, isLate, sleepAfterFor, weightsFor } = await import("./engine");
+    expect(weightsFor("calm", 15).nature).toBeGreaterThan(0);
+    expect(weightsFor("calm", 9).nature).toBe(0);
+    expect(weightsFor("calm").nature).toBeGreaterThan(0);
+    expect(isAfternoon(12) && isAfternoon(18) && !isAfternoon(19)).toBe(true);
+    expect(isLate(23) && isLate(2) && !isLate(21)).toBe(true);
+    expect(sleepAfterFor("calm", 23)).toBe(SLEEP_AFTER_MS.calm / 2);
+    expect(sleepAfterFor("calm", 15)).toBe(SLEEP_AFTER_MS.calm);
+  });
+
+  it("plays: the ball then a held offer; a throw bows, runs off and comes back", async () => {
+    const { playPlan, throwPlan } = await import("./engine");
+    expect(playPlan().steps.map((s) => s.motion)).toEqual(["puppy:ball-play", "puppy:fetch-offer"]);
+    expect(playPlan().steps[1]!.ms).toBeGreaterThan(5_000);
+    const thrown = throwPlan("left");
+    expect(thrown.steps.map((s) => s.motion)).toEqual(["puppy:play-bow"]);
+    expect(thrown.walk).toEqual({ direction: "left", distancePx: 420, andBack: true });
+  });
+});

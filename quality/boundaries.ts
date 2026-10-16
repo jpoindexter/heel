@@ -6,7 +6,7 @@ const ROOT = join(import.meta.dirname, "..");
 
 /** Folders under src/ and what other folders may import from them (a feature's public entry points). */
 export const PUBLIC_ENTRY_POINTS: Readonly<Record<string, readonly string[]>> = {
-  mascot: ["src/mascot/motion-events.ts", "src/mascot/life/activity.ts", "src/mascot/life/useActivity.ts", "src/mascot/life/config.ts"],
+  mascot: ["src/mascot/motion-events.ts", "src/mascot/life/activity.ts", "src/mascot/life/useActivity.ts", "src/mascot/life/useGags.ts", "src/mascot/life/config.ts"],
   settings: ["src/settings/SettingsView.tsx", "src/settings/brain-summary.ts", "src/settings/useBrainSummary.ts"],
   today: ["src/today/TodayView.tsx"],
   panel: [],

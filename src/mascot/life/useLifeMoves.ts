@@ -2,6 +2,7 @@ import { useCallback, useRef } from "react";
 import { COME_COOLDOWN_MS, LEAD_IN_MS, MOTIONS } from "./config";
 import type { Activity } from "./config";
 import { comePlan, greetPlan, stretchPlan, type Plan } from "./engine";
+import { usePlay } from "./usePlay";
 import type { Direction } from "./walk";
 
 type Options = {
@@ -45,5 +46,17 @@ export function useLifeMoves({ activity, panelOpen, busy, reducedMotion, play, s
     void play(greetPlan());
   }, [activity, play, reducedMotion]);
 
-  return { walk, come, stretch, greet };
+  const { playBall, throwBall, isOffering } = usePlay({ activity, busy, reducedMotion, play, sleeping });
+
+  /** The parked panel opened a stride away (or closed again): he trots over, or wanders home. The panel being open is the point here, not a guard. */
+  const follow = useCallback(
+    (direction: Direction, distancePx: number) => {
+      if (busy || reducedMotion || activity === "off" || sleeping()) return false;
+      void play(comePlan(direction, distancePx));
+      return true;
+    },
+    [activity, busy, play, reducedMotion, sleeping],
+  );
+
+  return { walk, come, stretch, greet, playBall, throwBall, isOffering, follow };
 }

@@ -120,3 +120,21 @@ pub(crate) fn snap_after_resize(app: &AppHandle) {
         });
     });
 }
+
+/// How far the parked panel's middle is from Greg's, in logical px (positive = to his right); None while docked or hidden.
+#[tauri::command]
+pub(crate) fn panel_offset(app: AppHandle) -> Option<f64> {
+    let (Some(mascot), Some(panel)) = (app.get_webview_window(MASCOT_LABEL), app.get_webview_window(PANEL_LABEL)) else {
+        return None;
+    };
+    let docked = app.state::<Dock>().0.lock().map(|state| state.docked).unwrap_or(true);
+    if docked || !panel.is_visible().unwrap_or(false) {
+        return None;
+    }
+    let (Ok(m), Ok(ms), Ok(p), Ok(ps), Ok(scale)) = (mascot.outer_position(), mascot.outer_size(), panel.outer_position(), panel.outer_size(), mascot.scale_factor()) else {
+        return None;
+    };
+    let mascot_mid = m.x as f64 + ms.width as f64 / 2.0;
+    let panel_mid = p.x as f64 + ps.width as f64 / 2.0;
+    Some((panel_mid - mascot_mid) / scale)
+}

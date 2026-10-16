@@ -18,3 +18,4 @@
 - [2026-10-16 storage-events-and-segmented-labels-again](2026-10-16-storage-events-and-segmented-labels-again.md) — Read a preference before touching it, change it through the UI, put the read value back; re-scan INDEX before driving a UI.
 - [2026-10-16 tool-access-per-turn-not-per-provider](2026-10-16-tool-access-per-turn-not-per-provider.md) — Decide a tool per request from the person's words; the provider maps the flag; the model never picks its tools.
 - [2026-10-16 compile-the-native-helper-once](2026-10-16-compile-the-native-helper-once.md) — A tiny Swift program shipped as a string and compiled once with swiftc bridges Node to WebKit (PDF) at ~1 s per call.
+- [2026-10-16 reload-to-retest-once-a-day-rules](2026-10-16-reload-to-retest-once-a-day-rules.md) — Reload the window to retest a once-a-day rule; match the exact window row when tracing positions.

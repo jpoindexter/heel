@@ -1,9 +1,9 @@
 import type { MotionId } from "../sheets";
-import { CARRY_MS, CHEW_MS, CLIP_MS, FIRST_GAP_MS, GAG_WEIGHT, GAP_MS, GLANCES, GLANCE_MS, LEAD_IN_MS, LIE_DOWN_MS, MOTIONS, PAW_MS, RECHECK_MS, SETTLE_MS, SLEEP_AFTER_MS, SNIFF_MS, TRAIL_MS, WAVE_MS, WEIGHTS, type Activity, type Behavior } from "./config";
+import { AFTERNOON_HOURS, CARRY_MS, CHEW_MS, CLIP_MS, FIRST_GAP_MS, GAG_WEIGHT, GAP_MS, GLANCES, GLANCE_MS, LATE_HOUR, LATE_SLEEP_FACTOR, LEAD_IN_MS, LIE_DOWN_MS, MORNING_HOURS, MOTIONS, OFFER_HOLD_MS, PAW_MS, RECHECK_MS, SETTLE_MS, SLEEP_AFTER_MS, SNIFF_MS, THROW_DISTANCE_PX, TRAIL_MS, WAVE_MS, WEIGHTS, type Activity, type Behavior } from "./config";
 
 /** One thing Greg does for a while. `ms: Infinity` holds until the person interrupts (sleeping). */
 export type Step = { motion: MotionId; ms: number };
-export type Plan = { behavior: Behavior; steps: Step[]; walk?: { direction: "left" | "right"; distancePx?: number } };
+export type Plan = { behavior: Behavior; steps: Step[]; walk?: { direction: "left" | "right"; distancePx?: number; /** Come straight back the same way (a throw, a trip to the panel's side and home). */ andBack?: boolean } };
 
 export type LifeState = {
   /** When the person last touched Greg or the panel. */
@@ -29,6 +29,8 @@ export type Context = {
   gags?: boolean;
   /** Late in the day (local): one yawn, then nothing more of it. */
   evening?: boolean;
+  /** The local hour, for what belongs to the time of day. */
+  hour?: number;
 };
 
 export type Rng = () => number;
@@ -123,7 +125,7 @@ export function decide(state: LifeState, ctx: Context, rng: Rng): { state: LifeS
   }
   if (state.sleeping || ctx.now < state.nextAt) return { state, plan: null };
 
-  if (ctx.now - state.lastActiveAt >= SLEEP_AFTER_MS[activity]) {
+  if (ctx.now - state.lastActiveAt >= sleepAfterFor(activity, ctx.hour)) {
     const plan = planFor("sleep", rng);
     return { state: { ...state, sleeping: true, nextAt: Infinity, lastBehavior: "sleep" }, plan };
   }
@@ -133,7 +135,7 @@ export function decide(state: LifeState, ctx: Context, rng: Rng): { state: LifeS
   }
   if (!ctx.evening && state.eveningYawned) state = { ...state, eveningYawned: false };
 
-  const weights: Record<string, number> = { ...WEIGHTS[activity], gag: ctx.gags ? GAG_WEIGHT : 0 };
+  const weights: Record<string, number> = { ...weightsFor(activity, ctx.hour), gag: ctx.gags ? GAG_WEIGHT : 0 };
   if (!ctx.canWalk) delete weights.walk;
   if (state.lastBehavior) delete weights[state.lastBehavior];
   const plan = planFor(pickWeighted(weights, rng) as Behavior, rng);
@@ -162,3 +164,22 @@ export const greetPlan = (): Plan => ({ behavior: "wave", steps: [step(MOTIONS.w
 export const stretchPlan = (): Plan => ({ behavior: "groom", steps: [step(MOTIONS.stretch, CLIP_MS.stretch), step(MOTIONS.yawn, CLIP_MS.yawn)] });
 /** Coming over to where the pointer rests (Lively): a lead-in, then the walk, stopping short. */
 export const comePlan = (direction: "left" | "right", distancePx: number): Plan => ({ behavior: "walk", steps: [step(MOTIONS.listening, LEAD_IN_MS)], walk: { direction, distancePx } });
+
+export const isAfternoon = (hour: number): boolean => hour >= AFTERNOON_HOURS[0] && hour < AFTERNOON_HOURS[1];
+export const isMorning = (hour: number): boolean => hour >= MORNING_HOURS[0] && hour < MORNING_HOURS[1];
+export const isLate = (hour: number): boolean => hour >= LATE_HOUR || hour < MORNING_HOURS[0];
+
+/** Grass and trails are an afternoon thing; the rest of his day is the same at any hour. */
+export function weightsFor(activity: Exclude<Activity, "off">, hour?: number): Record<string, number> {
+  const weights: Record<string, number> = { ...WEIGHTS[activity] };
+  if (hour !== undefined && !isAfternoon(hour)) weights.nature = 0;
+  return weights;
+}
+
+/** Late at night he rests sooner: half the usual idle before he lies down. */
+export const sleepAfterFor = (activity: Exclude<Activity, "off">, hour?: number): number => SLEEP_AFTER_MS[activity] * (hour !== undefined && isLate(hour) ? LATE_SLEEP_FACTOR : 1);
+
+/** Play on ask: the ball, then the offer, held a while for a click. */
+export const playPlan = (): Plan => ({ behavior: "play", steps: [step(MOTIONS.ball, CLIP_MS.ball), step(MOTIONS.offerBall, CLIP_MS.offerBall + OFFER_HOLD_MS)] });
+/** The throw: a bow, then he runs off that way and brings it back. */
+export const throwPlan = (direction: "left" | "right"): Plan => ({ behavior: "play", steps: [step(MOTIONS.bow, CLIP_MS.bow)], walk: { direction, distancePx: THROW_DISTANCE_PX, andBack: true } });

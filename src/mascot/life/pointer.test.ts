@@ -75,3 +75,14 @@ describe("coming over", () => {
     expect(returnedAfterIdle(0, LONG_IDLE_MS - 1)).toBe(false);
   });
 });
+
+describe("the morning", () => {
+  it("earns one stretch at first sight, between five and eleven, once a day", async () => {
+    const { morningFirstSight } = await import("./pointer");
+    expect(morningFirstSight(8, "Thu", null)).toBe(true);
+    expect(morningFirstSight(8, "Thu", "Thu")).toBe(false);
+    expect(morningFirstSight(8, "Fri", "Thu")).toBe(true);
+    expect(morningFirstSight(14, "Thu", null)).toBe(false);
+    expect(morningFirstSight(4, "Thu", null)).toBe(false);
+  });
+});

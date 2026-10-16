@@ -1,6 +1,6 @@
 import { z } from "zod";
 import type { MotionId } from "../sheets";
-import { COME_BOTTOM_PX, COME_MAX_PX, COME_MIN_PX, COME_STOP_SHORT_PX, GAZE_EYE, GAZE_RANGE_PX, GLANCE_HOLD_MS, GLANCE_REST_MS, LONG_IDLE_MS, LOOK_STEPS, REST_JITTER_PX, REST_MS, WALK_DISTANCE_PX, type Activity } from "./config";
+import { COME_BOTTOM_PX, COME_MAX_PX, COME_MIN_PX, COME_STOP_SHORT_PX, GAZE_EYE, GAZE_RANGE_PX, GLANCE_HOLD_MS, GLANCE_REST_MS, LONG_IDLE_MS, LOOK_STEPS, MORNING_HOURS, REST_JITTER_PX, REST_MS, WALK_DISTANCE_PX, type Activity } from "./config";
 import type { Direction } from "./walk";
 
 /** The shell's pointer sample: logical px from Greg's window's top-left; `bottom` is the usable screen's bottom edge in the same frame. */
@@ -64,3 +64,8 @@ export function comeTarget(sample: PointerSample): { direction: Direction; dista
 
 /** The first move after a long quiet stretch: worth a stretch and a yawn. */
 export const returnedAfterIdle = (lastMoveAt: number, now: number): boolean => now - lastMoveAt >= LONG_IDLE_MS;
+
+/** The first move of the morning (once a day): a stretch at first sight. `lastMorning` is the day it last happened. */
+export function morningFirstSight(hour: number, today: string, lastMorning: string | null): boolean {
+  return hour >= MORNING_HOURS[0] && hour < MORNING_HOURS[1] && lastMorning !== today;
+}

@@ -69,7 +69,8 @@ export function useIdleLife({ activity, panelOpen, busy, setLifeMotion }: Option
 
   useEffect(() => {
     const timer = window.setInterval(() => {
-      const ctx = { now: Date.now(), activity, panelOpen, focusActive: busy, reducedMotion, canWalk: true, gags: gagsOn(), evening: new Date().getHours() >= EVENING_HOUR };
+      const hour = new Date().getHours();
+      const ctx = { now: Date.now(), activity, panelOpen, focusActive: busy, reducedMotion, canWalk: true, gags: gagsOn(), evening: hour >= EVENING_HOUR, hour };
       const result = decide(state.current, ctx, Math.random);
       state.current = result.state;
       setAsleep(result.state.sleeping);

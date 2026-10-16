@@ -8,7 +8,7 @@ use tauri::{
 };
 
 use crate::constants::{
-    LIFE_COMMAND_EVENT, MASCOT_LABEL, MASCOT_MENU_HIDE_ID, MASCOT_MENU_NAP_ID, MASCOT_MENU_QUIET_ID, MASCOT_MENU_QUIT_ID, MASCOT_MENU_WALK_ID, MASCOT_MENU_SETTINGS_ID,
+    LIFE_COMMAND_EVENT, MASCOT_LABEL, MASCOT_MENU_HIDE_ID, MASCOT_MENU_NAP_ID, MASCOT_MENU_PLAY_ID, MASCOT_MENU_QUIET_ID, MASCOT_MENU_QUIT_ID, MASCOT_MENU_WALK_ID, MASCOT_MENU_SETTINGS_ID,
     MASCOT_MENU_TOGGLE_ID, TRAY_SHOW_GREG_ID,
 };
 use crate::appear::{goodbye, hide_mascot, show_mascot};
@@ -49,6 +49,7 @@ pub(crate) fn entries(panel_open: bool, flags: Flags) -> Vec<Entry> {
         item(MASCOT_MENU_SETTINGS_ID, "Settings…"),
         Entry::Separator,
         item(MASCOT_MENU_WALK_ID, "Take a walk"),
+        item(MASCOT_MENU_PLAY_ID, "Play"),
         item(MASCOT_MENU_NAP_ID, if flags.asleep { "Wake up" } else { "Take a nap" }),
         Entry::Check { id: MASCOT_MENU_QUIET_ID, label: "Quiet mode".to_string(), checked: flags.quiet },
         item(MASCOT_MENU_HIDE_ID, "Hide Greg"),
@@ -97,6 +98,7 @@ pub(crate) fn on_menu_event(app: &AppHandle, id: &str) {
             life_command(app, if asleep { "wake" } else { "nap" });
         }
         MASCOT_MENU_WALK_ID => life_command(app, "walk"),
+        MASCOT_MENU_PLAY_ID => life_command(app, "play"),
         MASCOT_MENU_QUIET_ID => life_command(app, "toggle-quiet"),
         TRAY_SHOW_GREG_ID => show_mascot(app),
         MASCOT_MENU_QUIT_ID => goodbye(app),
@@ -131,7 +133,7 @@ mod tests {
     fn always_offers_settings_nap_quiet_hide_and_quit() {
         for open in [false, true] {
             let found = ids(&entries(open, AWAKE));
-            for needed in [MASCOT_MENU_SETTINGS_ID, MASCOT_MENU_WALK_ID, MASCOT_MENU_NAP_ID, MASCOT_MENU_QUIET_ID, MASCOT_MENU_HIDE_ID, MASCOT_MENU_QUIT_ID] {
+            for needed in [MASCOT_MENU_SETTINGS_ID, MASCOT_MENU_WALK_ID, MASCOT_MENU_PLAY_ID, MASCOT_MENU_NAP_ID, MASCOT_MENU_QUIET_ID, MASCOT_MENU_HIDE_ID, MASCOT_MENU_QUIT_ID] {
                 assert!(found.contains(&needed), "missing {needed} (panel open = {open})");
             }
         }

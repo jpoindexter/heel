@@ -33,6 +33,7 @@ pub(crate) const LIFE_COMMAND_EVENT: &str = "heel:life-command";
 pub(crate) const MASCOT_MENU_NAP_ID: &str = "mascot-nap";
 pub(crate) const MASCOT_MENU_QUIET_ID: &str = "mascot-quiet";
 pub(crate) const MASCOT_MENU_WALK_ID: &str = "mascot-walk";
+pub(crate) const MASCOT_MENU_PLAY_ID: &str = "mascot-play";
 /// Greg walking (A4b). Must equal WALK_FINISHED_EVENT in src/events.ts (a test enforces it).
 pub(crate) const WALK_FINISHED_EVENT: &str = "heel:walk-finished";
 /// How fast he walks (logical px per second), the longest a walk may take, and how often the window is nudged.

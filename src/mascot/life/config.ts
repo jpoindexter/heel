@@ -132,3 +132,16 @@ export const COME_COOLDOWN_MS = 10 * MINUTE;
 export const LONG_IDLE_MS = 10 * MINUTE;
 /** From this hour (local) he yawns once for the evening. */
 export const EVENING_HOUR = 21;
+
+/** Time of day (N25): grass only in the afternoon, rest sooner late at night, a stretch at first sight in the morning. */
+export const AFTERNOON_HOURS: readonly [number, number] = [12, 19];
+export const LATE_HOUR = 22;
+export const LATE_SLEEP_FACTOR = 0.5;
+export const MORNING_HOURS: readonly [number, number] = [5, 11];
+/** The offered ball waits this long for a click before he gives up. */
+export const OFFER_HOLD_MS = 5 * SECOND;
+/** A throw: he runs this far and back. */
+export const THROW_DISTANCE_PX = 420;
+/** Following the parked panel (N25): only when it is at least this far, stopping short of it. */
+export const FOLLOW_MIN_PX = 200;
+export const FOLLOW_STOP_PX = 160;

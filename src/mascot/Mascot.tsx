@@ -9,6 +9,7 @@ import { useFocusPresence } from "../focus/useFocusPresence";
 import { useAppearance } from "../theme/useAppearance";
 import { useActivity } from "./life/useActivity";
 import { MOTIONS } from "./life/config";
+import { useFollowPanel } from "./life/useFollowPanel";
 import { useIdleLife } from "./life/useIdleLife";
 import { useLifeCommands } from "./life/useLifeCommands";
 import { usePointerLife } from "./life/usePointerLife";
@@ -59,7 +60,8 @@ function Greg() {
   const busy = working || oneShot !== null || base !== HEEL_STATES.idle;
   const life = useIdleLife({ activity, panelOpen, busy, setLifeMotion });
   const running = useRunEvents(life.touch, life.greet);
-  useLifeCommands(activity, life.asleep, { nap: life.nap, wake: life.wake, walk: life.walk, setActivity });
+  useLifeCommands(activity, life.asleep, { nap: life.nap, wake: life.wake, walk: life.walk, play: life.playBall, setActivity });
+  useFollowPanel({ panelOpen, follow: life.follow });
   useEffect(() => {
     if (panelOpen) life.touch();
   }, [panelOpen, life.touch]);
@@ -69,6 +71,7 @@ function Greg() {
   const typing = useTyping();
 
   const gestures = usePointerGestures(() => {
+    if (life.throwBall()) return;
     life.wake();
     setOneShot(HEEL_STATES.greeting);
     void invoke("toggle_panel_command");

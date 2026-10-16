@@ -1,7 +1,8 @@
-import { Heading, SegmentedControl, Text } from "@radix-ui/themes";
+import { Heading, SegmentedControl, Switch, Text } from "@radix-ui/themes";
 import { ACTIVITIES, type Activity } from "../mascot/life/config";
 import { isActivity } from "../mascot/life/activity";
 import { useActivity } from "../mascot/life/useActivity";
+import { useGags } from "../mascot/life/useGags";
 
 const LABELS: Record<Activity, string> = { off: "Off", calm: "Calm", lively: "Lively" };
 const HELP: Record<Activity, string> = {
@@ -13,6 +14,7 @@ const HELP: Record<Activity, string> = {
 /** How much Greg does on his own. He is always still while the panel is open or when reduced motion is on. */
 export function ActivitySettings() {
   const [activity, setActivity] = useActivity();
+  const [gags, setGags] = useGags();
   return (
     <section aria-labelledby="activity-heading" className="settings-section">
       <Heading as="h2" id="activity-heading" size="2">Greg's activity</Heading>
@@ -22,6 +24,10 @@ export function ActivitySettings() {
         ))}
       </SegmentedControl.Root>
       <Text as="p" size="1" color="gray">{HELP[activity]}</Text>
+      <Text as="label" size="2" className="attention-switch">
+        <Switch size="1" checked={gags} onCheckedChange={setGags} /> Bathroom humour
+      </Text>
+      <Text as="p" size="1" color="gray">Rare, and never while Off. Nobody's default.</Text>
     </section>
   );
 }

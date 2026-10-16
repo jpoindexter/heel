@@ -3,7 +3,7 @@ import { listen } from "@tauri-apps/api/event";
 import { POINTER_EVENT } from "../../events";
 import type { MotionId } from "../sheets";
 import { GAZE_TICK_MS, type Activity } from "./config";
-import { GLANCE_START, comeTarget, gazeMotion, glance, pointerFromPayload, rest, returnedAfterIdle, type PointerSample, type RestState } from "./pointer";
+import { GLANCE_START, comeTarget, gazeMotion, glance, morningFirstSight, pointerFromPayload, rest, returnedAfterIdle, type PointerSample, type RestState } from "./pointer";
 import type { Direction } from "./walk";
 
 type Options = {
@@ -15,7 +15,7 @@ type Options = {
   stretch: () => void;
 };
 
-type Memory = { sample: PointerSample | null; glance: typeof GLANCE_START; rest: RestState | null; lastMoveAt: number };
+type Memory = { sample: PointerSample | null; glance: typeof GLANCE_START; rest: RestState | null; lastMoveAt: number; lastMorning: string | null };
 
 /**
  * What the pointer does to Greg (N25): his gaze follows it while it is near (a glance when Calm, a steady look when
@@ -26,7 +26,7 @@ export function usePointerLife({ activity, free, reducedMotion, come, stretch }:
   const [gaze, setGaze] = useState<MotionId | null>(null);
   const latest = useRef({ activity, free, reducedMotion, come, stretch });
   latest.current = { activity, free, reducedMotion, come, stretch };
-  const memory = useRef<Memory>({ sample: null, glance: GLANCE_START, rest: null, lastMoveAt: Date.now() });
+  const memory = useRef<Memory>({ sample: null, glance: GLANCE_START, rest: null, lastMoveAt: Date.now(), lastMorning: null });
 
   const look = useCallback(() => {
     const m = memory.current;
@@ -43,7 +43,10 @@ export function usePointerLife({ activity, free, reducedMotion, come, stretch }:
       const now = Date.now();
       const m = memory.current;
       const { activity: mode, free: isFree, reducedMotion: reduced, come: comeOver, stretch: stretchNow } = latest.current;
-      if (returnedAfterIdle(m.lastMoveAt, now)) stretchNow();
+      const when = new Date(now);
+      const today = when.toDateString();
+      if (morningFirstSight(when.getHours(), today, m.lastMorning)) (m.lastMorning = today), stretchNow();
+      else if (returnedAfterIdle(m.lastMoveAt, now)) stretchNow();
       m.lastMoveAt = now;
       m.sample = sample;
       look();
