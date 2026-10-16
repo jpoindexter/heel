@@ -38,7 +38,7 @@ export const MAIL_USED = "mail-inbox";
 async function readUnread(mail: Pick<MailSource, "candidates">): Promise<{ ok: true; items: MailLine[] } | { ok: false; message: string }> {
   const found = await mail.candidates();
   if (!found.ok) return { ok: false, message: found.error.message };
-  return { ok: true, items: found.value.map((m) => ({ from: m.from, subject: m.subject, date: m.date, snippet: m.snippet })) };
+  return { ok: true, items: found.value.map((m) => ({ id: m.id, from: m.from, subject: m.subject, date: m.date, snippet: m.snippet })) };
 }
 
 const turnError = (code: TurnError["code"], message: string): TurnResult => ({ ok: false, error: { code, message } });
@@ -58,6 +58,7 @@ export async function runTurn(deps: TurnDeps, userText: string, history: readonl
   const system = buildSystemPrompt(skills, deps.loadSkill ?? deps.skills?.load ?? loadSkill);
   const mailRead = wantsMail(text) && deps.mail ? await readUnread(deps.mail) : null;
   const snapshot = buildSnapshot(deps.store, mailRead ? [mailSection(mailRead)] : []);
+  const mailRefs = mailRead?.ok ? new Map(mailRead.items.map((m, i) => [`m${i + 1}`, { id: m.id, from: m.from, subject: m.subject }])) : undefined;
   if (mailRead) skills.push(MAIL_USED);
   const basePrompt = buildUserPrompt(snapshot, text, history);
 
@@ -69,7 +70,7 @@ export async function runTurn(deps: TurnDeps, userText: string, history: readonl
 
     const parsed = parseAgentReply(response.value);
     if (parsed.ok) {
-      const applied = await executeActions(deps.store, parsed.reply.actions, snapshot.refs, { mail: deps.mail, makePdf: deps.makePdf });
+      const applied = await executeActions(deps.store, parsed.reply.actions, snapshot.refs, { mail: deps.mail, makePdf: deps.makePdf, mailRefs });
       return { ok: true, say: parsed.reply.say, applied, skills, provider: deps.provider.id };
     }
     prompt = `${basePrompt}\n\nYour previous reply was rejected: ${parsed.error}. Reply again with ONLY the JSON object.`;

@@ -19,6 +19,7 @@ export const ActionSchema = z.discriminatedUnion("type", [
   z.object({ type: z.literal("draft_email"), to: z.string().optional(), subject: z.string(), body: z.string().min(1) }),
   z.object({ type: z.literal("write_document"), title: z.string().min(1), body: z.string().min(1) }),
   z.object({ type: z.literal("make_pdf"), title: z.string().optional() }),
+  z.object({ type: z.literal("show_mail"), mail: z.string().regex(/^m\d+$/, 'mail must be a ref like "m1" from the unread mail list') }),
 ]);
 
 export const AgentReplySchema = z.object({

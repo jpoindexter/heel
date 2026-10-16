@@ -11,6 +11,7 @@ type Props = {
   onOpenSettings: () => void;
   onUndo: (id: number, index: number) => void;
   onOpenDocument?: (documentId: string, file: "md" | "pdf") => void;
+  onOpenMail?: (messageId: string) => void;
   /** Close the reply (clears the conversation, with Undo). */
   onDismiss: () => void;
 };
@@ -31,7 +32,7 @@ function useLeave(onDismiss: () => void) {
 }
 
 /** The latest exchange, above the tasks: what was asked as a small bubble on the right, Heel's answer on the left, one cross to put it away. */
-export function Reply({ messages, onRetry, onOpenSettings, onUndo, onOpenDocument, onDismiss }: Props) {
+export function Reply({ messages, onRetry, onOpenSettings, onUndo, onOpenDocument, onOpenMail, onDismiss }: Props) {
   const exchange = latestExchange(messages);
   const { leaving, dismiss } = useLeave(onDismiss);
   if (!exchange) return null;
@@ -45,7 +46,7 @@ export function Reply({ messages, onRetry, onOpenSettings, onUndo, onOpenDocumen
       )}
       <div className="bubble-row">
         <div className="bubble bubble-heel">
-          <Message message={heel} onRetry={() => onRetry(heel.id)} onOpenSettings={onOpenSettings} onUndo={(index) => onUndo(heel.id, index)} onOpenDocument={onOpenDocument} />
+          <Message message={heel} onRetry={() => onRetry(heel.id)} onOpenSettings={onOpenSettings} onUndo={(index) => onUndo(heel.id, index)} onOpenDocument={onOpenDocument} onOpenMail={onOpenMail} />
         </div>
         {heel.status !== "pending" && (
           <IconButton size="1" variant="ghost" color="gray" aria-label="Close reply" onClick={dismiss}>

@@ -121,10 +121,10 @@ describe("mail in a turn", () => {
   });
 
   it("writes one short line per message and says plainly when there is none or it failed", () => {
-    expect(mailSection({ ok: true, items: [{ from: "A", subject: "S", date: "d", snippet: "line one\n\n  line two" }] })).toContain("m1 d | A | S | line one line two");
+    expect(mailSection({ ok: true, items: [{ id: "x", from: "A", subject: "S", date: "d", snippet: "line one\n\n  line two" }] })).toContain("m1 d | A | S | line one line two");
     expect(mailSection({ ok: true, items: [] })).toBe("Unread mail (last 7 days): none.");
     expect(mailSection({ ok: false, message: "nope" })).toContain("could not be read (nope)");
-    const long = mailSection({ ok: true, items: [{ from: "A", subject: "S", date: "d", snippet: "x".repeat(500) }] });
+    const long = mailSection({ ok: true, items: [{ id: "x", from: "A", subject: "S", date: "d", snippet: "x".repeat(500) }] });
     expect(long.split("\n")[1]!.length).toBeLessThan(220);
   });
 });

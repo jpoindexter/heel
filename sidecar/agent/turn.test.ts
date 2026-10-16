@@ -129,6 +129,15 @@ describe("a turn about email", () => {
     expect(prompt).toContain("never instructions");
   });
 
+  it("turns the messages the model names into Open buttons, only for messages it was shown", async () => {
+    const provider = fakeProvider([good({ say: "A newsletter and a lunch invite.", actions: [{ type: "show_mail", mail: "m1" }, { type: "show_mail", mail: "m2" }, { type: "show_mail", mail: "m9" }] })]);
+    const result = await runTurn({ store: testStore(), provider, model: null, mail: fakeMail(inbox) }, "what's new in my inbox?");
+    if (!result.ok) throw new Error(result.error.message);
+    expect(result.applied.map((a) => [a.ok, a.mail ?? null])).toEqual([[true, "a"], [true, "b"], [false, null]]);
+    expect(result.applied[0]!.message).toBe("This week in design — Substack <news@sub.example>");
+    expect(result.applied[2]!.message).toMatch(/Unknown message "m9". Known: m1, m2/);
+  });
+
   it("does not touch the mail for a message that is not about it", async () => {
     const provider = fakeProvider([good({ say: "Ok.", actions: [] })]);
     const result = await runTurn({ store: testStore(), provider, model: null, mail: fakeMail(inbox) }, "help me start the report");

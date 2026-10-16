@@ -111,7 +111,8 @@ export const DocumentsListSchema = z.object({ documents: z.array(DocumentSchema)
 export const DocumentResultSchema = z.object({ document: DocumentSchema });
 export const OpenedSchema = z.object({ opened: z.boolean() });
 
-export const ActionOutcomeSchema = z.object({ type: z.string(), ok: z.boolean(), message: z.string(), undo: UndoSchema.optional(), document: z.string().optional(), file: z.enum(DOCUMENT_FILES).optional() });
+/** `mail` is a message id the person can open in Mail from the receipt (N26). */
+export const ActionOutcomeSchema = z.object({ type: z.string(), ok: z.boolean(), message: z.string(), undo: UndoSchema.optional(), document: z.string().optional(), file: z.enum(DOCUMENT_FILES).optional(), mail: z.string().optional() });
 
 export const ParkedIdeaSchema = z.object({ id: z.string(), idea: z.string(), createdAt: z.number() });
 export const ParkedListSchema = z.object({ parked: z.array(ParkedIdeaSchema) });
@@ -174,7 +175,7 @@ export type SpendResultDto = z.output<typeof SpendResultSchema>;
 
 /* Conversation history (survives a restart) */
 
-export const ReceiptSchema = z.object({ ok: z.boolean(), text: z.string(), undo: UndoSchema.nullable(), undone: z.boolean(), document: z.string().optional(), file: z.enum(DOCUMENT_FILES).optional() });
+export const ReceiptSchema = z.object({ ok: z.boolean(), text: z.string(), undo: UndoSchema.nullable(), undone: z.boolean(), document: z.string().optional(), file: z.enum(DOCUMENT_FILES).optional(), mail: z.string().optional() });
 
 /** A message the panel keeps. A turn still waiting for the AI ("pending") is never stored. */
 export const StoredMessageSchema = z.discriminatedUnion("role", [
@@ -278,23 +279,4 @@ export const SplitInputSchema = z.object({ titles: z.array(z.string().trim().min
 export const SplitResultSchema = z.object({ parent: TaskSchema, children: z.array(TaskSchema) });
 export type SplitResultDto = z.output<typeof SplitResultSchema>;
 export const UnsplitResultSchema = z.object({ count: z.number().int() });
-
-/** Skills (N3): plain instructions the agent reads. Bundled ones can be turned off; yours can also be edited and deleted. */
-export const SKILL_FILE_MAX_CHARS = 8_000;
-export const SkillInfoSchema = z.object({
-  id: z.string(),
-  name: z.string(),
-  source: z.enum(["bundled", "yours"]),
-  description: z.string(),
-  triggers: z.array(z.string()),
-  enabled: z.boolean(),
-  /** The router always runs: it can be read, never switched off. */
-  locked: z.boolean(),
-  chars: z.number().int(),
-});
-export type SkillInfoDto = z.output<typeof SkillInfoSchema>;
-export const SkillsListSchema = z.object({ skills: z.array(SkillInfoSchema) });
-export const SkillTextSchema = z.object({ id: z.string(), text: z.string(), editable: z.boolean() });
-export const SkillResultSchema = z.object({ skill: SkillInfoSchema });
-export const SkillInputSchema = z.object({ text: z.string().max(SKILL_FILE_MAX_CHARS * 2) });
-export const SkillEnabledInputSchema = z.object({ enabled: z.boolean() });
+export * from "./skills";

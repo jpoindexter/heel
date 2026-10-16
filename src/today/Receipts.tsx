@@ -2,10 +2,10 @@ import { CheckIcon, ExclamationTriangleIcon } from "@radix-ui/react-icons";
 import { Button, Text } from "@radix-ui/themes";
 import type { Receipt } from "./thread-model";
 
-type Props = { receipts: readonly Receipt[]; onUndo: (index: number) => void; /** A saved document (or its PDF) can be opened from its line (N15). */ onOpen?: (documentId: string, file: "md" | "pdf") => void };
+type Props = { receipts: readonly Receipt[]; onUndo: (index: number) => void; /** A saved document (or its PDF) can be opened from its line (N15). */ onOpen?: (documentId: string, file: "md" | "pdf") => void; /** A message Heel named opens in Mail from its line (N26). */ onOpenMail?: (messageId: string) => void };
 
 /** What Heel did, one quiet line each, always visible. Each undoable write has its own Undo; a failure is named, never hidden. */
-export function Receipts({ receipts, onUndo, onOpen }: Props) {
+export function Receipts({ receipts, onUndo, onOpen, onOpenMail }: Props) {
   if (receipts.length === 0) return null;
   return (
     <ul className="receipt-list" aria-label="What Heel did">
@@ -18,6 +18,7 @@ export function Receipts({ receipts, onUndo, onOpen }: Props) {
           ) : (
             <>
               {receipt.document && onOpen && <Button size="1" variant="ghost" onClick={() => onOpen(receipt.document!, receipt.file ?? "md")}>Open</Button>}
+              {receipt.mail && onOpenMail && <Button size="1" variant="ghost" aria-label={`Open in Mail: ${receipt.text}`} onClick={() => onOpenMail(receipt.mail!)}>Open in Mail</Button>}
               {receipt.undo && <Button size="1" variant="ghost" onClick={() => onUndo(index)}>Undo</Button>}
             </>
           )}

@@ -10,6 +10,7 @@ type Props = {
   onOpenSettings: () => void;
   onUndo: (index: number) => void;
   onOpenDocument?: (documentId: string, file: "md" | "pdf") => void;
+  onOpenMail?: (messageId: string) => void;
 };
 
 function Paragraphs({ text }: { text: string }) {
@@ -19,7 +20,7 @@ function Paragraphs({ text }: { text: string }) {
 }
 
 /** Heel's answer: thinking, said (with what it did, and Undo), or failed (with the way to try again). */
-export function Message({ message, onRetry, onOpenSettings, onUndo, onOpenDocument }: Props) {
+export function Message({ message, onRetry, onOpenSettings, onUndo, onOpenDocument, onOpenMail }: Props) {
   return (
     <article className="msg" aria-busy={message.status === "pending"}>
       <h3 className="visually-hidden">Heel</h3>
@@ -27,7 +28,7 @@ export function Message({ message, onRetry, onOpenSettings, onUndo, onOpenDocume
       {message.status === "said" && (
         <>
           <Paragraphs text={message.say} />
-          <Receipts receipts={message.receipts} onUndo={onUndo} onOpen={onOpenDocument} />
+          <Receipts receipts={message.receipts} onUndo={onUndo} onOpen={onOpenDocument} onOpenMail={onOpenMail} />
           {usedLine(message.skills) && <Text as="p" size="1" color="gray" className="used-line">{usedLine(message.skills)}</Text>}
         </>
       )}

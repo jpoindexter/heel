@@ -47,16 +47,17 @@ function useLayerFollows(state: State) {
   }, [digest.state.phase, top, back]);
 }
 
-type ReplyLayerProps = { thread: State["thread"]; onOpenSettings: () => void; onOpenDocument: (id: string, file: "md" | "pdf") => void; onClosed: () => void };
+type ReplyLayerProps = { thread: State["thread"]; onOpenSettings: () => void; onOpenDocument: (id: string, file: "md" | "pdf") => void; onOpenMail: (messageId: string) => void; onClosed: () => void };
 
 /** The latest exchange in its layer; closing it clears the conversation (with Undo) and pops the layer. */
-function ReplyLayer({ thread, onOpenSettings, onOpenDocument, onClosed }: ReplyLayerProps) {
+function ReplyLayer({ thread, onOpenSettings, onOpenDocument, onOpenMail, onClosed }: ReplyLayerProps) {
   return (
     <Reply
       messages={thread.messages}
       onRetry={thread.retry}
       onOpenSettings={onOpenSettings}
       onOpenDocument={onOpenDocument}
+      onOpenMail={onOpenMail}
       onUndo={(id, index) => void thread.undoReceipt(id, index)}
       onDismiss={() => {
         void thread.clear();
@@ -106,7 +107,7 @@ export function TodayView({ showing, summary, reloadKey, settings }: Props) {
           <InboxPanel digest={state.digest} reply={state.reply} onOpen={(id) => void state.openMail(id)} />
         </Layer>
         <Layer name="reply" label="Reply" fill>
-          <ReplyLayer thread={thread} onOpenSettings={openSettings} onOpenDocument={(id, file) => void documents.open(id, { file })} onClosed={layers.back} />
+          <ReplyLayer thread={thread} onOpenSettings={openSettings} onOpenDocument={(id, file) => void documents.open(id, { file })} onOpenMail={(id) => void state.openMail(id)} onClosed={layers.back} />
         </Layer>
         <Layer name="search" label="Search">
           <SearchLayer search={found.search} active={layers.top === "search"} onPick={(hit) => void found.onPick(hit)} onAsk={found.onAsk} />
