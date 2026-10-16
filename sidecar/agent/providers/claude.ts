@@ -48,7 +48,7 @@ export function claudeProvider(deps: ProviderDeps): Provider {
         "-p",
         "--safe-mode",
         "--tools",
-        "",
+        request.web ? "WebSearch" : "",
         "--no-session-persistence",
         "--output-format",
         "text",

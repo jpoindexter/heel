@@ -19,6 +19,8 @@ import { useAttention } from "./useAttention";
 import { useHistoryLayer } from "./useHistoryLayer";
 import { useNewTaskFocus } from "./useNewTaskShortcut";
 import { useSearchLayer } from "./useSearchLayer";
+import { useDocuments } from "./useDocuments";
+import { client } from "../api/default-client";
 import { useTodayState } from "./useTodayState";
 
 type Props = {
@@ -45,15 +47,16 @@ function useLayerFollows(state: State) {
   }, [digest.state.phase, top, back]);
 }
 
-type ReplyLayerProps = { thread: State["thread"]; onOpenSettings: () => void; onClosed: () => void };
+type ReplyLayerProps = { thread: State["thread"]; onOpenSettings: () => void; onOpenDocument: (id: string) => void; onClosed: () => void };
 
 /** The latest exchange in its layer; closing it clears the conversation (with Undo) and pops the layer. */
-function ReplyLayer({ thread, onOpenSettings, onClosed }: ReplyLayerProps) {
+function ReplyLayer({ thread, onOpenSettings, onOpenDocument, onClosed }: ReplyLayerProps) {
   return (
     <Reply
       messages={thread.messages}
       onRetry={thread.retry}
       onOpenSettings={onOpenSettings}
+      onOpenDocument={onOpenDocument}
       onUndo={(id, index) => void thread.undoReceipt(id, index)}
       onDismiss={() => {
         void thread.clear();
@@ -73,7 +76,8 @@ export function TodayView({ showing, summary, reloadKey, settings }: Props) {
   const focusSignal = useNewTaskFocus(layers.home, bar.openComposer);
   useLayerFollows(state);
   const history = useHistoryLayer(tasks, layers);
-  const found = useSearchLayer({ state, layers, history });
+  const documents = useDocuments(client, { active: layers.top === "history", notify: tasks.showNotice });
+  const found = useSearchLayer({ state, layers, history, openDocument: documents.open });
   useAttention({ state, bar, layers });
 
   return (
@@ -96,13 +100,13 @@ export function TodayView({ showing, summary, reloadKey, settings }: Props) {
       >
         <Layer name="settings" label="Settings">{settings}</Layer>
         <Layer name="history" label="History">
-          <HistoryLayer history={history} today={todayKey()} />
+          <HistoryLayer history={history} documents={documents} today={todayKey()} />
         </Layer>
         <Layer name="email" label="Email">
           <InboxPanel digest={state.digest} reply={state.reply} onOpen={(id) => void state.openMail(id)} />
         </Layer>
         <Layer name="reply" label="Reply">
-          <ReplyLayer thread={thread} onOpenSettings={openSettings} onClosed={layers.back} />
+          <ReplyLayer thread={thread} onOpenSettings={openSettings} onOpenDocument={(id) => void documents.open(id)} onClosed={layers.back} />
         </Layer>
         <Layer name="search" label="Search">
           <SearchLayer search={found.search} active={layers.top === "search"} onPick={(hit) => void found.onPick(hit)} onAsk={found.onAsk} />

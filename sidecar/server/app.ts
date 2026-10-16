@@ -13,6 +13,7 @@ import { registerMailRoutes } from "./mail-routes";
 import { registerMethodRoutes } from "./method-routes";
 import { registerPomodoroRoutes } from "./pomodoro-routes";
 import { registerMessagesRoutes } from "./messages-routes";
+import { registerDocumentsRoutes } from "./documents-routes";
 import { registerSearchRoutes } from "./search-routes";
 import { registerSplitRoutes } from "./split-routes";
 import { registerTodayRoutes, registerTurnRoute } from "./today-routes";
@@ -28,6 +29,8 @@ export type AppDeps = {
   token: string;
   /** Browser origins allowed to call the server (the panel's webview). */
   allowedOrigins: readonly string[];
+  /** Open a file in its app, or reveal it in Finder (N15). Resolves false when the Mac refused. */
+  openFile: (path: string, reveal: boolean) => Promise<boolean>;
 };
 
 export const DEV_ORIGIN = "http://localhost:1420";
@@ -50,5 +53,6 @@ export function createApp(deps: AppDeps) {
   registerPomodoroRoutes(app, deps);
   registerAttentionRoutes(app, deps);
   registerSearchRoutes(app, deps);
+  registerDocumentsRoutes(app, deps);
   return app;
 }

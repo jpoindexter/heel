@@ -7,9 +7,9 @@ import type { Action } from "./actions";
 export type SideEffects = { mail?: Pick<MailSource, "draft"> };
 
 /** How the panel can reverse a write: the route it calls and the id it calls it with. */
-export type Undo = { kind: "restore_task" | "drop_task" | "unpark"; id: string };
+export type Undo = { kind: "restore_task" | "drop_task" | "unpark" | "delete_document"; id: string };
 
-export type ActionOutcome = { type: Action["type"]; ok: boolean; message: string; undo?: Undo };
+export type ActionOutcome = { type: Action["type"]; ok: boolean; message: string; undo?: Undo; /** A document the person can open (N15). */ document?: string };
 
 /** Short task refs (t1, t2) the model sees, mapped to real ids. The model never handles raw ids. */
 export type TaskRefs = ReadonlyMap<string, string>;
@@ -76,6 +76,13 @@ const HANDLERS: { [T in Action["type"]]: Handler<T> } = {
     if (!result.ok) return failed(a.type, result.error.message);
     const who = a.to?.trim() ? ` to ${a.to.trim()}` : "";
     return { type: a.type, ok: true, message: `Opened a draft${who} in Mail: "${a.subject.trim()}". Not sent.` };
+  },
+
+  /** Saves what Heel wrote as a Markdown file in the app's documents folder. Nothing leaves this Mac. */
+  write_document: (store, a) => {
+    const result = store.documents.create({ title: a.title, body: a.body });
+    if (!result.ok) return failed(a.type, result.error.message);
+    return { type: a.type, ok: true, message: `Saved "${result.value.title}" as a document.`, undo: { kind: "delete_document", id: result.value.id }, document: result.value.id };
   },
 };
 

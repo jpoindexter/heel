@@ -6,8 +6,8 @@ export const SEARCH_MIN_CHARS = 2;
 /** How long a row found from search stays tinted on the list. */
 export const FOUND_MS = 2_000;
 
-export const GROUP_LABELS: Readonly<Record<SearchKind, string>> = { task: "Tasks", parked: "Parked", done: "Done", said: "Said" };
-const ORDER: readonly SearchKind[] = ["task", "parked", "done", "said"];
+export const GROUP_LABELS: Readonly<Record<SearchKind, string>> = { task: "Tasks", parked: "Parked", document: "Documents", done: "Done", said: "Said" };
+const ORDER: readonly SearchKind[] = ["task", "parked", "document", "done", "said"];
 
 export type Group = { kind: SearchKind; label: string; hits: SearchHitDto[] };
 

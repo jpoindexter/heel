@@ -25,6 +25,8 @@ export type CompleteRequest = {
   /** null = let the provider choose its default model. */
   model: string | null;
   timeoutMs?: number;
+  /** The turn may search the web (research). Providers without a search tool ignore it. */
+  web?: boolean;
   /** Aborting it stops the work (kills the CLI, drops the HTTP request) and the result is an "aborted" error. */
   signal?: AbortSignal;
 };

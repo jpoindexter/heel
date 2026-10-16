@@ -100,9 +100,16 @@ export const TaskResultSchema = z.object({ task: TaskSchema });
 export const ParkedResultSchema = z.object({ id: z.string() });
 export const TextInputSchema = z.object({ text: z.string() });
 
-export const UndoSchema = z.object({ kind: z.enum(["restore_task", "drop_task", "unpark"]), id: z.string() });
+export const UndoSchema = z.object({ kind: z.enum(["restore_task", "drop_task", "unpark", "delete_document"]), id: z.string() });
 
-export const ActionOutcomeSchema = z.object({ type: z.string(), ok: z.boolean(), message: z.string(), undo: UndoSchema.optional() });
+/** A document Heel wrote (N15): the row, with the file's path when one was written. */
+export const DocumentSchema = z.object({ id: z.string(), title: z.string(), path: z.string().nullable(), createdAt: z.number() });
+export type DocumentDto = z.output<typeof DocumentSchema>;
+export const DocumentsListSchema = z.object({ documents: z.array(DocumentSchema) });
+export const DocumentResultSchema = z.object({ document: DocumentSchema });
+export const OpenedSchema = z.object({ opened: z.boolean() });
+
+export const ActionOutcomeSchema = z.object({ type: z.string(), ok: z.boolean(), message: z.string(), undo: UndoSchema.optional(), document: z.string().optional() });
 
 export const ParkedIdeaSchema = z.object({ id: z.string(), idea: z.string(), createdAt: z.number() });
 export const ParkedListSchema = z.object({ parked: z.array(ParkedIdeaSchema) });
@@ -165,7 +172,7 @@ export type SpendResultDto = z.output<typeof SpendResultSchema>;
 
 /* Conversation history (survives a restart) */
 
-export const ReceiptSchema = z.object({ ok: z.boolean(), text: z.string(), undo: UndoSchema.nullable(), undone: z.boolean() });
+export const ReceiptSchema = z.object({ ok: z.boolean(), text: z.string(), undo: UndoSchema.nullable(), undone: z.boolean(), document: z.string().optional() });
 
 /** A message the panel keeps. A turn still waiting for the AI ("pending") is never stored. */
 export const StoredMessageSchema = z.discriminatedUnion("role", [
@@ -253,7 +260,7 @@ export type DigestDto = z.output<typeof DigestSchema>;
 export const AddTaskInputSchema = z.object({ title: z.string(), nowStep: z.string().nullable().optional() });
 
 /** Search (N22): one box over open tasks, parked ideas, what was finished and what was said; ranked, newest first within a rank. */
-export const SEARCH_KINDS = ["task", "parked", "done", "said"] as const;
+export const SEARCH_KINDS = ["task", "parked", "done", "said", "document"] as const;
 export type SearchKind = (typeof SEARCH_KINDS)[number];
 export const SearchHitSchema = z.object({ kind: z.enum(SEARCH_KINDS), id: z.string(), text: z.string(), detail: z.string().nullable(), at: z.number() });
 export const SearchResultSchema = z.object({ query: z.string(), hits: z.array(SearchHitSchema) });

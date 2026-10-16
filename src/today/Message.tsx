@@ -8,6 +8,7 @@ type Props = {
   onRetry: () => void;
   onOpenSettings: () => void;
   onUndo: (index: number) => void;
+  onOpenDocument?: (documentId: string) => void;
 };
 
 function Paragraphs({ text }: { text: string }) {
@@ -17,7 +18,7 @@ function Paragraphs({ text }: { text: string }) {
 }
 
 /** Heel's answer: thinking, said (with what it did, and Undo), or failed (with the way to try again). */
-export function Message({ message, onRetry, onOpenSettings, onUndo }: Props) {
+export function Message({ message, onRetry, onOpenSettings, onUndo, onOpenDocument }: Props) {
   return (
     <article className="msg" aria-busy={message.status === "pending"}>
       <h3 className="visually-hidden">Heel</h3>
@@ -25,7 +26,7 @@ export function Message({ message, onRetry, onOpenSettings, onUndo }: Props) {
       {message.status === "said" && (
         <>
           <Paragraphs text={message.say} />
-          <Receipts receipts={message.receipts} onUndo={onUndo} />
+          <Receipts receipts={message.receipts} onUndo={onUndo} onOpen={onOpenDocument} />
         </>
       )}
       {message.status === "failed" && (

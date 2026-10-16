@@ -5,6 +5,8 @@ import { useEffect } from "react";
 import { useAttentionSettings } from "../ui/attention";
 import { dayLabel, weekdayLetter } from "./history-labels";
 import { hoursText } from "./jar-model";
+import { DocumentsList } from "./DocumentsList";
+import type { useDocuments } from "./useDocuments";
 import type { useHistory } from "./useHistory";
 
 /** Where the day went, as plain minutes per app, only while attention sense is on and has seen something. */
@@ -29,7 +31,7 @@ function DayWent() {
   );
 }
 
-type Props = { history: ReturnType<typeof useHistory>; today: string };
+type Props = { history: ReturnType<typeof useHistory>; documents: ReturnType<typeof useDocuments>; today: string };
 
 /** Seven plain counts, oldest to newest. A count, not a streak: an empty day is just a dot. */
 function WeekStrip({ week }: { week: HistoryDto["week"] }) {
@@ -46,7 +48,7 @@ function WeekStrip({ week }: { week: HistoryDto["week"] }) {
 }
 
 /** What was finished, by day, newest first, each row with a way back to the list. */
-export function HistoryLayer({ history, today }: Props) {
+export function HistoryLayer({ history, documents, today }: Props) {
   const { state, restore, load } = history;
   if (state.phase === "loading") return <Text size="2" color="gray" role="status" className="pulse">Looking back…</Text>;
   if (state.phase === "error") {
@@ -61,6 +63,7 @@ export function HistoryLayer({ history, today }: Props) {
   return (
     <div className="history">
       <WeekStrip week={week} />
+      <DocumentsList documents={documents} />
       <DayWent />
       {days.length === 0 && <Text size="2" color="gray" className="history-empty">Nothing finished in the last month. The list is where it starts.</Text>}
       {days.map((day) => (

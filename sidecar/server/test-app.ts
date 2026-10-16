@@ -26,7 +26,7 @@ export function fakeProvider(
 }
 
 /** A real app on an in-memory store, with fake providers, called through app.request(). */
-export function setup(overrides: Partial<Record<ProviderId, Provider>> = {}, inboxDeps: Partial<InboxDeps> = {}, mail: MailSource = fakeMail(), store = testStore()) {
+export function setup(overrides: Partial<Record<ProviderId, Provider>> = {}, inboxDeps: Partial<InboxDeps> = {}, mail: MailSource = fakeMail(), store = testStore(), extra: { openFile?: (path: string, reveal: boolean) => Promise<boolean> } = {}) {
   const providers: Record<ProviderId, Provider> = {
     claude: fakeProvider("claude"),
     codex: fakeProvider("codex", { ready: false, detail: "Not signed in. Run codex login in a terminal." }),
@@ -34,7 +34,7 @@ export function setup(overrides: Partial<Record<ProviderId, Provider>> = {}, inb
     ...overrides,
   };
   const inbox = createInbox({ fetch: (async () => new Response("{}", { status: 500 })) as typeof fetch, secrets: memorySecrets(), now: () => 1_000_000, openUrl: async () => undefined, ...inboxDeps });
-  const app = createApp({ store, providers, inbox, mail, mailAvailable: true, token: TOKEN, allowedOrigins: [DEV_ORIGIN] });
+  const app = createApp({ store, providers, inbox, mail, mailAvailable: true, token: TOKEN, allowedOrigins: [DEV_ORIGIN], openFile: extra.openFile ?? (async () => true) });
   const call = (path: string, init: Init = {}) =>
     app.request(path, { ...init, headers: { host: HOST, "x-heel-token": TOKEN, ...init.headers } });
   const json = async (path: string, init?: Init) => (await call(path, init)).json();

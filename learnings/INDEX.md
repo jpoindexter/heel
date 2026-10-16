@@ -16,3 +16,4 @@
 - [2026-10-16 hover-sets-the-active-row](2026-10-16-hover-sets-the-active-row.md) — A resting pointer moves a hover-selected row; test by clicking the row you mean, and expect Enter to follow the pointer.
 - [2026-10-16 propose-and-apply-are-two-calls](2026-10-16-propose-and-apply-are-two-calls.md) — Give an AI proposal its own write-free endpoint and let the UI own the pause; register specific routes before parametric ones.
 - [2026-10-16 storage-events-and-segmented-labels-again](2026-10-16-storage-events-and-segmented-labels-again.md) — Read a preference before touching it, change it through the UI, put the read value back; re-scan INDEX before driving a UI.
+- [2026-10-16 tool-access-per-turn-not-per-provider](2026-10-16-tool-access-per-turn-not-per-provider.md) — Decide a tool per request from the person's words; the provider maps the flag; the model never picks its tools.

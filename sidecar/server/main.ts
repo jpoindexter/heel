@@ -29,11 +29,15 @@ if (running) {
   process.exit(0);
 }
 
-const store = openStore({ path: join(dir, DB_FILE) });
+const DOCUMENTS_DIR = "documents";
+const store = openStore({ path: join(dir, DB_FILE), documentsDir: join(dir, DOCUMENTS_DIR) });
+/** macOS `open`: the file in its default app, or revealed in Finder. */
+const OPEN_TIMEOUT_MS = 10_000;
+const openFile = async (path: string, reveal: boolean): Promise<boolean> => (await runCommand("open", reveal ? ["-R", path] : [path], { timeoutMs: OPEN_TIMEOUT_MS })).ok;
 const token = randomBytes(TOKEN_BYTES).toString("hex");
 const inbox = createInbox({ fetch, secrets: macKeychain(runCommand), now: Date.now, openUrl });
 const mail = appleMail(osascriptJxa(runCommand), runCommand);
-const app = createApp({ store, providers: createProviders(), inbox, mail, mailAvailable: mailAppExists(), token, allowedOrigins: [DEV_ORIGIN, ...TAURI_ORIGINS] });
+const app = createApp({ store, providers: createProviders(), inbox, mail, mailAvailable: mailAppExists(), token, allowedOrigins: [DEV_ORIGIN, ...TAURI_ORIGINS], openFile });
 
 // Port 0 = let the OS pick a free port; the panel finds it in the connection file.
 const server = serve({ fetch: app.fetch, hostname: HOST, port: 0 }, (info) => {

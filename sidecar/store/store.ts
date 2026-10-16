@@ -2,6 +2,7 @@ import { randomUUID } from "node:crypto";
 import { DatabaseSync } from "node:sqlite";
 import type { Ctx } from "./context";
 import { currentVersion, migrateDown, migrateUp } from "./migrations";
+import { documentsRepository } from "./documents";
 import { systemRepositories, todayRepositories } from "./repositories";
 
 export type StoreOptions = {
@@ -9,6 +10,8 @@ export type StoreOptions = {
   path?: string;
   now?: () => number;
   newId?: () => string;
+  /** Where documents are written as files (N15). Absent = rows only (tests, a read-only profile). */
+  documentsDir?: string;
 };
 
 /**
@@ -24,6 +27,7 @@ export function openStore(options: StoreOptions = {}) {
 
   return {
     ...todayRepositories(ctx),
+    documents: documentsRepository(ctx, options.documentsDir ?? null),
     ...systemRepositories(ctx),
     schemaVersion: () => currentVersion(db),
     rollbackTo: (version: number) => migrateDown(db, version),

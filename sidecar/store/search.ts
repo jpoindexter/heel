@@ -19,7 +19,7 @@ export function matchScore(query: string, text: string | null): number {
 }
 
 /** Open things before finished ones, finished before what was said. */
-export const KIND_ORDER: Readonly<Record<SearchKind, number>> = { task: 0, parked: 1, done: 2, said: 3 };
+export const KIND_ORDER: Readonly<Record<SearchKind, number>> = { task: 0, parked: 1, document: 2, done: 3, said: 4 };
 
 /** The title's match counts far more than the body's; then open beats finished; then newer beats older. */
 export function rank(query: string, candidates: readonly Hit[]): Hit[] {
@@ -66,10 +66,15 @@ function saidHits(ctx: Ctx, pattern: string): Hit[] {
   });
 }
 
+function documentHits(ctx: Ctx, pattern: string): Hit[] {
+  const rows = ctx.db.prepare("SELECT id, title, body, created_at FROM documents WHERE deleted_at IS NULL AND (title LIKE ? ESCAPE '\\' OR body LIKE ? ESCAPE '\\')").all(pattern, pattern) as Row[];
+  return rows.map((r): Hit => ({ kind: "document", id: String(r.id), text: String(r.title), detail: String(r.body).split("\n").find((line) => line.trim() && !line.startsWith("#"))?.trim() ?? null, at: num(r.created_at) }));
+}
+
 /** Everything that holds the query, ranked. Case does not matter; `%` and `_` in the query are plain letters. */
 export function search(ctx: Ctx, query: string): Hit[] {
   const q = query.trim();
   if (q.length < SEARCH_MIN_CHARS) return [];
   const pattern = like(q);
-  return rank(q, [...taskHits(ctx, pattern), ...parkedHits(ctx, pattern), ...saidHits(ctx, pattern)]);
+  return rank(q, [...taskHits(ctx, pattern), ...parkedHits(ctx, pattern), ...documentHits(ctx, pattern), ...saidHits(ctx, pattern)]);
 }

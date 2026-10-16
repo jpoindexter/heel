@@ -117,6 +117,22 @@ export const MIGRATIONS: readonly Migration[] = [
     up: `ALTER TABLE tasks ADD COLUMN parent_id TEXT REFERENCES tasks (id);`,
     down: `ALTER TABLE tasks DROP COLUMN parent_id;`,
   },
+  {
+    id: 6,
+    name: "documents",
+    // N15: what Heel wrote for the person. The body is kept here for search and Undo; the file in documents/ is the handover copy.
+    up: `
+      CREATE TABLE documents (
+        id TEXT PRIMARY KEY,
+        title TEXT NOT NULL CHECK (length(title) BETWEEN 1 AND 200),
+        body TEXT NOT NULL,
+        path TEXT,
+        created_at INTEGER NOT NULL,
+        deleted_at INTEGER
+      );
+    `,
+    down: `DROP TABLE documents;`,
+  },
 ];
 
 const ENSURE_TABLE = `

@@ -21,7 +21,11 @@ const SKILL_SIGNALS: ReadonlyArray<readonly [RegExp, string]> = [
   [/rabbit|tangent|distract|sidetrack|park/i, "nd-hyperfocus-guard"],
   [/how long|estimate|deadline|minutes|hours|time ?box/i, "nd-time-blindness"],
   [/plan|break (this |it )?down|huge|big project|schedule|today|week/i, "nd-task-decomposition"],
+  [/look into|research|find out|write(-| )?up|write (me )?(a|an|the) |brief|summar|report|notes? on/i, "writer"],
 ];
+
+/** A turn that asks for research may use the web (Claude's CLI has WebSearch; Ollama has nothing and says so). */
+export const wantsWeb = (userText: string): boolean => /look into|research|find out|what('s| is) the latest|sources|compare/i.test(userText);
 const FALLBACK_SKILL = "nd-task-initiation";
 
 export function selectSkills(userText: string): string[] {
@@ -53,6 +57,7 @@ Actions (exact field names):
 - {"type":"set_now_step","task":"t1","step":"... or null"}
 - {"type":"park_idea","idea":"...","why":"optional"}
 - {"type":"draft_email","to":"address if known, else omit","subject":"...","body":"..."} — opens a filled-in draft in the person's Mail app. It is NOT sent; they read it there and send it themselves.
+- {"type":"write_document","title":"...","body":"Markdown"} — saves a document on the person's Mac (research notes, a brief, a write-up). The full text goes in "body"; "say" stays a two-line summary.
 
 Rules:
 - Refer to existing tasks in "actions" only by the refs in the task list (t1, t2). Never invent a ref.
@@ -60,6 +65,7 @@ Rules:
 - Only claim you did something if it is in "actions". Never say you sent, emailed, or deleted anything; you can't send. draft_email = "opened a draft in Mail", nothing more.
 - When the person asks for an email, letter or message to someone, use draft_email with the full text in "body" (plain, their voice, no placeholders like [name] unless you truly lack it). Leave "to" out if you don't know the address.
 - Drafting or opening an email never completes a task. Only use complete_task when the person says the thing is done.
+- When the person asks you to look into, research, write up or draft a document about something, put the whole thing in write_document (headings, short paragraphs, a "Sources" list with the URLs you actually used; if you could not search, say so in the body). Never paste a long text into "say".
 - "say" is at most ${MAX_SAY_CHARS} characters and at most ${MAX_ACTIONS_PER_REPLY} actions. Plain words, short sentences, one idea per paragraph.
 - Propose ONE smallest next step. Do not ask "what do you want to do?". Ask at most one question, and only if you can't act without it.
 - Tasks go in the list. Ideas that are not tasks go to park_idea.

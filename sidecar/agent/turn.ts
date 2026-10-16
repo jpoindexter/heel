@@ -3,7 +3,7 @@ import type { MailSource } from "../mail/source";
 import type { Store } from "../store/store";
 import { parseAgentReply } from "./actions";
 import { executeActions, type ActionOutcome } from "./execute";
-import { buildSnapshot, buildSystemPrompt, buildUserPrompt, loadSkill, selectSkills, type SkillLoader } from "./prompt";
+import { buildSnapshot, buildSystemPrompt, buildUserPrompt, loadSkill, selectSkills, wantsWeb, type SkillLoader } from "./prompt";
 import type { Provider, ProviderErrorCode, ProviderId } from "./providers/types";
 
 export const MAX_USER_CHARS = 4_000;
@@ -46,7 +46,7 @@ export async function runTurn(deps: TurnDeps, userText: string, history: readonl
 
   let prompt = basePrompt;
   for (let attempt = 1; attempt <= MAX_ATTEMPTS; attempt += 1) {
-    const response = await deps.provider.complete({ system, prompt, model: deps.model, signal: deps.signal });
+    const response = await deps.provider.complete({ system, prompt, model: deps.model, web: wantsWeb(text), signal: deps.signal });
     if (!response.ok) return { ok: false, error: response.error };
     if (deps.signal?.aborted) return turnError("aborted", "Stopped.");
 

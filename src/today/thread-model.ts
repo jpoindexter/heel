@@ -12,7 +12,7 @@ export type Receipt = ReceiptDto;
 export type Message = StoredMessage | { id: number; role: "heel"; status: "pending" };
 
 export function toReceipts(applied: readonly ActionOutcomeDto[]): Receipt[] {
-  return applied.map((o) => ({ ok: o.ok, text: o.ok ? o.message : `Couldn't: ${o.message}`, undo: o.undo ?? null, undone: false }));
+  return applied.map((o) => ({ ok: o.ok, text: o.ok ? o.message : `Couldn't: ${o.message}`, undo: o.undo ?? null, undone: false, ...(o.document ? { document: o.document } : {}) }));
 }
 
 /** Collapsed receipt label: counts, in words, with failures never hidden. */
