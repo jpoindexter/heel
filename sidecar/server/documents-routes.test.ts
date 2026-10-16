@@ -44,3 +44,36 @@ describe("documents", () => {
     expect(opened.parse(await post("/documents/nope/open", {}))).toMatchObject({ ok: false, error: { code: "not_found" } });
   });
 });
+
+describe("PDF", () => {
+  it("makes the PDF next to the .md and opens it, open?file=pdf finds it, and a turn's make_pdf picks the newest document", async () => {
+    const dir = mkdtempSync(join(tmpdir(), "heel-docs-"));
+    dirs.push(dir);
+    const calls: string[] = [];
+    const claude = fakeProvider("claude", {}, { ok: true, value: [] }, { ok: true, value: '{"say":"Done.","actions":[{"type":"make_pdf"}]}' });
+    const { store, json, post } = setup({ claude }, {}, undefined, testStore({ documentsDir: dir }), { openFile: async (path) => (calls.push(path), true) });
+    store.settings.setBrain({ provider: "claude", model: null });
+    const doc = store.documents.create({ title: "Notes", body: "## Answer\nx" });
+    if (!doc.ok) throw new Error(doc.error.message);
+    expect(opened.parse(await post(`/documents/${doc.value.id}/open?file=pdf`, {}))).toMatchObject({ ok: false, error: { code: "not_ready" } });
+    const made = one.parse(await post(`/documents/${doc.value.id}/pdf`, {}));
+    if (!made.ok) throw new Error(made.error.message);
+    expect(made.data.document.pdfPath).toBe(doc.value.path!.replace(/\.md$/, ".pdf"));
+    expect(calls).toEqual([made.data.document.pdfPath]);
+    calls.length = 0;
+    expect(list.parse(await json("/documents"))).toMatchObject({ data: { documents: [{ pdfPath: made.data.document.pdfPath }] } });
+    expect(opened.parse(await post(`/documents/${doc.value.id}/open?file=pdf`, {}))).toEqual({ ok: true, data: { opened: true } });
+    calls.length = 0;
+    const answered = turn.parse(await post("/turn", { text: "make that a PDF" }));
+    expect(answered.ok && answered.data.applied[0]).toMatchObject({ ok: true, message: 'Made a PDF of "Notes".', document: doc.value.id, file: "pdf" });
+    expect(calls).toEqual([made.data.document.pdfPath]);
+  });
+
+  it("says so when there is nothing to print", async () => {
+    const claude = fakeProvider("claude", {}, { ok: true, value: [] }, { ok: true, value: '{"say":"Done.","actions":[{"type":"make_pdf"}]}' });
+    const { store, post } = setup({ claude });
+    store.settings.setBrain({ provider: "claude", model: null });
+    const answered = turn.parse(await post("/turn", { text: "make that a PDF" }));
+    expect(answered.ok && answered.data.applied[0]).toMatchObject({ ok: false, message: "There is no document to make a PDF of yet." });
+  });
+});

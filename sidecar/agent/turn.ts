@@ -2,7 +2,7 @@ import type { HistoryMessage } from "../../shared/api";
 import type { MailSource } from "../mail/source";
 import type { Store } from "../store/store";
 import { parseAgentReply } from "./actions";
-import { executeActions, type ActionOutcome } from "./execute";
+import { executeActions, type ActionOutcome, type SideEffects } from "./execute";
 import { buildSnapshot, buildSystemPrompt, buildUserPrompt, loadSkill, selectSkills, wantsWeb, type SkillLoader } from "./prompt";
 import type { Provider, ProviderErrorCode, ProviderId } from "./providers/types";
 
@@ -22,6 +22,8 @@ export type TurnDeps = {
   loadSkill?: SkillLoader;
   /** Apple Mail, for draft_email. Absent = that action fails with a sentence. */
   mail?: Pick<MailSource, "draft">;
+  /** The PDF printer, for make_pdf. Absent = that action fails with a sentence. */
+  makePdf?: SideEffects["makePdf"];
   /** When it aborts the turn stops and nothing is written. */
   signal?: AbortSignal;
 };
@@ -52,7 +54,7 @@ export async function runTurn(deps: TurnDeps, userText: string, history: readonl
 
     const parsed = parseAgentReply(response.value);
     if (parsed.ok) {
-      const applied = await executeActions(deps.store, parsed.reply.actions, snapshot.refs, { mail: deps.mail });
+      const applied = await executeActions(deps.store, parsed.reply.actions, snapshot.refs, { mail: deps.mail, makePdf: deps.makePdf });
       return { ok: true, say: parsed.reply.say, applied, skills, provider: deps.provider.id };
     }
     prompt = `${basePrompt}\n\nYour previous reply was rejected: ${parsed.error}. Reply again with ONLY the JSON object.`;

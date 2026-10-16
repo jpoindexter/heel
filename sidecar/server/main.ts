@@ -10,6 +10,7 @@ import { createInbox } from "../inbox/service";
 import { osascriptJxa } from "../mail/jxa";
 import { appleMail } from "../mail/source";
 import { mailAppExists } from "../mail/available";
+import { createPdfRenderer } from "../pdf/renderer";
 import { openStore } from "../store/store";
 import { createApp, DEV_ORIGIN, TAURI_ORIGINS } from "./app";
 import { findRunningHelper, removeConnectionFile, writeConnectionFile } from "./connection-file";
@@ -37,7 +38,8 @@ const openFile = async (path: string, reveal: boolean): Promise<boolean> => (awa
 const token = randomBytes(TOKEN_BYTES).toString("hex");
 const inbox = createInbox({ fetch, secrets: macKeychain(runCommand), now: Date.now, openUrl });
 const mail = appleMail(osascriptJxa(runCommand), runCommand);
-const app = createApp({ store, providers: createProviders(), inbox, mail, mailAvailable: mailAppExists(), token, allowedOrigins: [DEV_ORIGIN, ...TAURI_ORIGINS], openFile });
+const pdf = createPdfRenderer({ run: runCommand, dir: join(dir, "pdf") });
+const app = createApp({ store, providers: createProviders(), inbox, mail, mailAvailable: mailAppExists(), token, allowedOrigins: [DEV_ORIGIN, ...TAURI_ORIGINS], openFile, renderPdf: pdf.render });
 
 // Port 0 = let the OS pick a free port; the panel finds it in the connection file.
 const server = serve({ fetch: app.fetch, hostname: HOST, port: 0 }, (info) => {

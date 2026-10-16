@@ -103,13 +103,15 @@ export const TextInputSchema = z.object({ text: z.string() });
 export const UndoSchema = z.object({ kind: z.enum(["restore_task", "drop_task", "unpark", "delete_document"]), id: z.string() });
 
 /** A document Heel wrote (N15): the row, with the file's path when one was written. */
-export const DocumentSchema = z.object({ id: z.string(), title: z.string(), path: z.string().nullable(), createdAt: z.number() });
+export const DocumentSchema = z.object({ id: z.string(), title: z.string(), path: z.string().nullable(), pdfPath: z.string().nullable().default(null), createdAt: z.number() });
+export const DOCUMENT_FILES = ["md", "pdf"] as const;
+export type DocumentFile = (typeof DOCUMENT_FILES)[number];
 export type DocumentDto = z.output<typeof DocumentSchema>;
 export const DocumentsListSchema = z.object({ documents: z.array(DocumentSchema) });
 export const DocumentResultSchema = z.object({ document: DocumentSchema });
 export const OpenedSchema = z.object({ opened: z.boolean() });
 
-export const ActionOutcomeSchema = z.object({ type: z.string(), ok: z.boolean(), message: z.string(), undo: UndoSchema.optional(), document: z.string().optional() });
+export const ActionOutcomeSchema = z.object({ type: z.string(), ok: z.boolean(), message: z.string(), undo: UndoSchema.optional(), document: z.string().optional(), file: z.enum(DOCUMENT_FILES).optional() });
 
 export const ParkedIdeaSchema = z.object({ id: z.string(), idea: z.string(), createdAt: z.number() });
 export const ParkedListSchema = z.object({ parked: z.array(ParkedIdeaSchema) });
@@ -172,7 +174,7 @@ export type SpendResultDto = z.output<typeof SpendResultSchema>;
 
 /* Conversation history (survives a restart) */
 
-export const ReceiptSchema = z.object({ ok: z.boolean(), text: z.string(), undo: UndoSchema.nullable(), undone: z.boolean(), document: z.string().optional() });
+export const ReceiptSchema = z.object({ ok: z.boolean(), text: z.string(), undo: UndoSchema.nullable(), undone: z.boolean(), document: z.string().optional(), file: z.enum(DOCUMENT_FILES).optional() });
 
 /** A message the panel keeps. A turn still waiting for the AI ("pending") is never stored. */
 export const StoredMessageSchema = z.discriminatedUnion("role", [

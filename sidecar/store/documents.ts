@@ -1,4 +1,4 @@
-import { mkdirSync, writeFileSync } from "node:fs";
+import { existsSync, mkdirSync, writeFileSync } from "node:fs";
 import { join } from "node:path";
 import { z } from "zod";
 import type { DocumentDto } from "../../shared/api";
@@ -14,9 +14,13 @@ const ID_IN_NAME = 8;
 export const NewDocumentInput = z.object({ title: z.string().trim().min(1).max(MAX_TITLE), body: z.string().trim().min(1).max(MAX_BODY) });
 
 const Row = z.object({ id: z.string(), title: z.string(), path: z.string().nullable(), created_at: z.number(), deleted_at: z.number().nullable() });
+/** The PDF sits next to the .md with the same name. */
+export const pdfPathFor = (path: string): string => path.replace(/\.md$/, "") + ".pdf";
+
 const toDocument = (row: unknown): DocumentDto => {
   const r = Row.parse(row);
-  return { id: r.id, title: r.title, path: r.path, createdAt: r.created_at };
+  const pdf = r.path ? pdfPathFor(r.path) : null;
+  return { id: r.id, title: r.title, path: r.path, pdfPath: pdf && existsSync(pdf) ? pdf : null, createdAt: r.created_at };
 };
 
 /** A file name a person can read in Finder: the title's words, then a piece of the id so two "Notes" never collide. */
@@ -70,5 +74,11 @@ export function documentsRepository(ctx: Ctx, dir: string | null) {
     const row = ctx.db.prepare("SELECT body FROM documents WHERE id = ?").get(id);
     return row ? String(row.body) : null;
   };
-  return { create, list, get: (id: string) => getDocument(ctx, id), remove, restore, body };
+  /** The newest document whose title holds `hint`, or the newest at all. */
+  const latest = (hint?: string | null): DocumentDto | null => {
+    const docs = list();
+    const wanted = hint?.trim().toLowerCase();
+    return (wanted ? docs.find((d) => d.title.toLowerCase().includes(wanted)) : undefined) ?? docs[0] ?? null;
+  };
+  return { create, list, get: (id: string) => getDocument(ctx, id), remove, restore, body, latest };
 }

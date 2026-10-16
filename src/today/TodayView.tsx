@@ -47,7 +47,7 @@ function useLayerFollows(state: State) {
   }, [digest.state.phase, top, back]);
 }
 
-type ReplyLayerProps = { thread: State["thread"]; onOpenSettings: () => void; onOpenDocument: (id: string) => void; onClosed: () => void };
+type ReplyLayerProps = { thread: State["thread"]; onOpenSettings: () => void; onOpenDocument: (id: string, file: "md" | "pdf") => void; onClosed: () => void };
 
 /** The latest exchange in its layer; closing it clears the conversation (with Undo) and pops the layer. */
 function ReplyLayer({ thread, onOpenSettings, onOpenDocument, onClosed }: ReplyLayerProps) {
@@ -106,7 +106,7 @@ export function TodayView({ showing, summary, reloadKey, settings }: Props) {
           <InboxPanel digest={state.digest} reply={state.reply} onOpen={(id) => void state.openMail(id)} />
         </Layer>
         <Layer name="reply" label="Reply">
-          <ReplyLayer thread={thread} onOpenSettings={openSettings} onOpenDocument={(id) => void documents.open(id)} onClosed={layers.back} />
+          <ReplyLayer thread={thread} onOpenSettings={openSettings} onOpenDocument={(id, file) => void documents.open(id, { file })} onClosed={layers.back} />
         </Layer>
         <Layer name="search" label="Search">
           <SearchLayer search={found.search} active={layers.top === "search"} onPick={(hit) => void found.onPick(hit)} onAsk={found.onAsk} />

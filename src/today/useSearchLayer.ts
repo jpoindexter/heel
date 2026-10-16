@@ -7,7 +7,7 @@ import type { useHistory } from "./useHistory";
 import { useSearch } from "./useSearch";
 import type { useTodayState } from "./useTodayState";
 
-type Deps = { state: ReturnType<typeof useTodayState>; layers: Layers; history: ReturnType<typeof useHistory>; openDocument: (id: string) => Promise<void> };
+type Deps = { state: ReturnType<typeof useTodayState>; layers: Layers; history: ReturnType<typeof useHistory>; openDocument: (id: string, how: { reveal?: boolean; file?: "md" | "pdf" }) => Promise<void> };
 
 /** A row the search led to stays tinted for a moment, then the tint goes. */
 function useFound() {
@@ -34,7 +34,7 @@ export function useSearchLayer({ state, layers, history, openDocument }: Deps) {
   const onPick = useCallback(
     async (hit: SearchHitDto) => {
       if (hit.kind === "said") return layers.push("reply");
-      if (hit.kind === "document") return openDocument(hit.id);
+      if (hit.kind === "document") return openDocument(hit.id, {});
       let target: string | null = hit.id;
       if (hit.kind === "parked") target = await tasks.promote({ id: hit.id, idea: hit.text, createdAt: hit.at });
       else if (hit.kind === "done") await history.restore(hit.id, hit.text);

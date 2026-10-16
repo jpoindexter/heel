@@ -1,6 +1,7 @@
 import type { Hono } from "hono";
 import { AddTaskInputSchema, TextInputSchema, TurnInputSchema } from "../../shared/api";
 import { runTurn } from "../agent/turn";
+import { makePdf } from "../pdf/make-pdf";
 import type { Result } from "../store/result";
 import type { AppDeps } from "./app";
 import { fail, ok, readJson } from "./respond";
@@ -87,7 +88,13 @@ export function registerTurnRoute(app: Hono, deps: AppDeps): void {
     if (!body.success) return fail(c, "invalid", TEXT_HINT);
     const { provider, model } = store.settings.getBrain();
     if (!provider) return fail(c, "not_ready", "Choose an AI provider in Settings first.");
-    const result = await runTurn({ store, provider: deps.providers[provider], model, mail: deps.mail, signal: c.req.raw.signal }, body.data.text, body.data.history);
+    // "Make that a PDF" opens it too, as the PDF route does: the person asked to see it.
+    const makeAndOpenPdf = async (id: string) => {
+      const made = await makePdf(store, deps.renderPdf, id);
+      if (made.ok && made.value.pdfPath) await deps.openFile(made.value.pdfPath, false);
+      return made;
+    };
+    const result = await runTurn({ store, provider: deps.providers[provider], model, mail: deps.mail, makePdf: makeAndOpenPdf, signal: c.req.raw.signal }, body.data.text, body.data.history);
     if (!result.ok) return fail(c, result.error.code, result.error.message);
     return ok(c, { say: result.say, applied: result.applied, skills: result.skills, provider: result.provider });
   });

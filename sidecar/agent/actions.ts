@@ -18,6 +18,7 @@ export const ActionSchema = z.discriminatedUnion("type", [
   z.object({ type: z.literal("park_idea"), idea: z.string(), why: z.string().optional() }),
   z.object({ type: z.literal("draft_email"), to: z.string().optional(), subject: z.string(), body: z.string().min(1) }),
   z.object({ type: z.literal("write_document"), title: z.string().min(1), body: z.string().min(1) }),
+  z.object({ type: z.literal("make_pdf"), title: z.string().optional() }),
 ]);
 
 export const AgentReplySchema = z.object({

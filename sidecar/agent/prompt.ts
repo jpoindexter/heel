@@ -11,6 +11,7 @@ const SKILL_CHAR_LIMIT = 5_000;
 const MAX_TASKS_IN_PROMPT = 10;
 const ROUTER = "nd-executive-function-router";
 const MAX_EXTRA_SKILLS = 2;
+const MAX_DOCUMENTS_IN_PROMPT = 3;
 const HISTORY_CHAR_LIMIT = 400;
 
 /** Intent signals -> the one or two nd-skills worth loading this turn. First matches win. */
@@ -58,6 +59,7 @@ Actions (exact field names):
 - {"type":"park_idea","idea":"...","why":"optional"}
 - {"type":"draft_email","to":"address if known, else omit","subject":"...","body":"..."} — opens a filled-in draft in the person's Mail app. It is NOT sent; they read it there and send it themselves.
 - {"type":"write_document","title":"...","body":"Markdown"} — saves a document on the person's Mac (research notes, a brief, a write-up). The full text goes in "body"; "say" stays a two-line summary.
+- {"type":"make_pdf","title":"optional words from the document's title"} — turns a saved document into a PDF next to it and opens it. Leave "title" out for the newest document ("make that a PDF").
 
 Rules:
 - Refer to existing tasks in "actions" only by the refs in the task list (t1, t2). Never invent a ref.
@@ -105,9 +107,11 @@ export function buildSnapshot(store: Store): Snapshot {
   });
   const focus = store.focus.active();
   const global = store.ledger.get(null);
+  const documents = store.documents.list().slice(0, MAX_DOCUMENTS_IN_PROMPT);
   const parts = [
     `Open tasks:\n${lines.length ? lines.join("\n") : "none"}`,
     `Focus session: ${focus ? `running, goal "${focus.goal}"` : "none"}`,
+    documents.length ? `Saved documents, newest first: ${documents.map((d) => `"${d.title}"`).join(", ")}` : null,
     `Finished today: ${store.history.doneToday()}`,
     methodLine(store.settings.getMethod()),
     global?.outcome ? `Current outcome: ${global.outcome}` : null,

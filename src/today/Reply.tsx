@@ -10,7 +10,7 @@ type Props = {
   onRetry: (id: number) => void;
   onOpenSettings: () => void;
   onUndo: (id: number, index: number) => void;
-  onOpenDocument?: (documentId: string) => void;
+  onOpenDocument?: (documentId: string, file: "md" | "pdf") => void;
   /** Close the reply (clears the conversation, with Undo). */
   onDismiss: () => void;
 };

@@ -8,7 +8,7 @@ type Props = {
   onRetry: () => void;
   onOpenSettings: () => void;
   onUndo: (index: number) => void;
-  onOpenDocument?: (documentId: string) => void;
+  onOpenDocument?: (documentId: string, file: "md" | "pdf") => void;
 };
 
 function Paragraphs({ text }: { text: string }) {

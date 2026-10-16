@@ -13,6 +13,7 @@ import { registerMailRoutes } from "./mail-routes";
 import { registerMethodRoutes } from "./method-routes";
 import { registerPomodoroRoutes } from "./pomodoro-routes";
 import { registerMessagesRoutes } from "./messages-routes";
+import type { RenderPdf } from "../pdf/make-pdf";
 import { registerDocumentsRoutes } from "./documents-routes";
 import { registerSearchRoutes } from "./search-routes";
 import { registerSplitRoutes } from "./split-routes";
@@ -31,6 +32,8 @@ export type AppDeps = {
   allowedOrigins: readonly string[];
   /** Open a file in its app, or reveal it in Finder (N15). Resolves false when the Mac refused. */
   openFile: (path: string, reveal: boolean) => Promise<boolean>;
+  /** Render a page of HTML to a PDF file on this Mac (N15). */
+  renderPdf: RenderPdf;
 };
 
 export const DEV_ORIGIN = "http://localhost:1420";

@@ -2,14 +2,15 @@ import type { MailSource } from "../mail/source";
 import type { Store } from "../store/store";
 import type { Result } from "../store/result";
 import type { Action } from "./actions";
+import type { DocumentDto } from "../../shared/api";
 
-/** What an action may touch outside the store. Mail is absent in tests and on a Mac without Mail. */
-export type SideEffects = { mail?: Pick<MailSource, "draft"> };
+/** What an action may touch outside the store. Mail is absent in tests and on a Mac without Mail; the PDF printer needs this Mac. */
+export type SideEffects = { mail?: Pick<MailSource, "draft">; makePdf?: (id: string) => Promise<Result<DocumentDto>> };
 
 /** How the panel can reverse a write: the route it calls and the id it calls it with. */
 export type Undo = { kind: "restore_task" | "drop_task" | "unpark" | "delete_document"; id: string };
 
-export type ActionOutcome = { type: Action["type"]; ok: boolean; message: string; undo?: Undo; /** A document the person can open (N15). */ document?: string };
+export type ActionOutcome = { type: Action["type"]; ok: boolean; message: string; undo?: Undo; /** A document the person can open (N15), and which of its files. */ document?: string; file?: "md" | "pdf" };
 
 /** Short task refs (t1, t2) the model sees, mapped to real ids. The model never handles raw ids. */
 export type TaskRefs = ReadonlyMap<string, string>;
@@ -82,7 +83,17 @@ const HANDLERS: { [T in Action["type"]]: Handler<T> } = {
   write_document: (store, a) => {
     const result = store.documents.create({ title: a.title, body: a.body });
     if (!result.ok) return failed(a.type, result.error.message);
-    return { type: a.type, ok: true, message: `Saved "${result.value.title}" as a document.`, undo: { kind: "delete_document", id: result.value.id }, document: result.value.id };
+    return { type: a.type, ok: true, message: `Saved "${result.value.title}" as a document.`, undo: { kind: "delete_document", id: result.value.id }, document: result.value.id, file: "md" };
+  },
+
+  /** "Make that a PDF": the newest document (or the one whose title the model names) rendered next to its .md, on this Mac. */
+  make_pdf: async (store, a, _refs, side) => {
+    const doc = store.documents.latest(a.title);
+    if (!doc) return failed(a.type, "There is no document to make a PDF of yet.");
+    if (!side.makePdf) return failed(a.type, "Making PDFs isn't available here.");
+    const made = await side.makePdf(doc.id);
+    if (!made.ok) return failed(a.type, made.error.message);
+    return { type: a.type, ok: true, message: `Made a PDF of "${doc.title}".`, document: doc.id, file: "pdf" };
   },
 };
 

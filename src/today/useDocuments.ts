@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useState } from "react";
-import { DocumentResultSchema, DocumentsListSchema, OpenedSchema, type DocumentDto } from "../../shared/api";
+import { DocumentResultSchema, DocumentsListSchema, OpenedSchema, type DocumentDto, type DocumentFile } from "../../shared/api";
 import type { Client } from "../api/client";
 
 type Options = { active: boolean; notify: (message: string, tone?: "info" | "error", undo?: () => void) => void };
@@ -18,11 +18,22 @@ export function useDocuments(client: Client, { active, notify }: Options) {
   }, [active, load]);
 
   const open = useCallback(
-    async (id: string, reveal = false) => {
-      const result = await client.post(`/documents/${id}/${reveal ? "reveal" : "open"}`, OpenedSchema, {});
+    async (id: string, { reveal = false, file = "md" }: { reveal?: boolean; file?: DocumentFile } = {}) => {
+      const result = await client.post(`/documents/${id}/${reveal ? "reveal" : "open"}?file=${file}`, OpenedSchema, {});
       if (!result.ok) notify(result.error.message, "error");
     },
     [client, notify],
+  );
+
+  /** Make the PDF (or remake it) and open it; the list then shows it has one. */
+  const pdf = useCallback(
+    async (doc: DocumentDto) => {
+      notify(`Making a PDF of “${doc.title}”…`);
+      const result = await client.post(`/documents/${doc.id}/pdf`, DocumentResultSchema, {});
+      if (!result.ok) return notify(result.error.message, "error");
+      await load();
+    },
+    [client, load, notify],
   );
 
   const remove = useCallback(
@@ -35,5 +46,5 @@ export function useDocuments(client: Client, { active, notify }: Options) {
     [client, load, notify],
   );
 
-  return { documents, load, open, remove };
+  return { documents, load, open, pdf, remove };
 }
