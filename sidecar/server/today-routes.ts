@@ -20,11 +20,20 @@ function registerHistoryRoute(app: Hono, { store }: AppDeps): void {
   });
 }
 
+/** The open list, each split task carrying how many of its steps are finished (N23). */
+function registerTasksRoute(app: Hono, { store }: AppDeps): void {
+  app.get("/tasks", (c) => {
+    const done = store.split.doneCounts();
+    const tasks = store.tasks.list().map((task) => (done[task.id] ? { ...task, stepsDone: done[task.id] } : task));
+    return ok(c, { tasks, parkedCount: store.parked.list().length, doneToday: store.history.doneToday() });
+  });
+}
+
 /** Tasks and parked ideas: what the drawer and the Now strip call. */
 export function registerTodayRoutes(app: Hono, deps: AppDeps): void {
   const { store } = deps;
 
-  app.get("/tasks", (c) => ok(c, { tasks: store.tasks.list(), parkedCount: store.parked.list().length, doneToday: store.history.doneToday() }));
+  registerTasksRoute(app, deps);
   registerHistoryRoute(app, deps);
 
   /** Add a task by hand: no AI, so it is instant and costs nothing. */

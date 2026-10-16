@@ -16,7 +16,7 @@ const task = (title: string, bucket: string | null = null): TaskDto => ({
   completedAt: null,
   size: null,
   bucket,
-  estimateMin: null,
+  estimateMin: null, parentId: null,
 });
 
 describe("groupTasks", () => {

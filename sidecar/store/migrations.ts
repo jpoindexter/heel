@@ -110,6 +110,13 @@ export const MIGRATIONS: readonly Migration[] = [
       ALTER TABLE tasks DROP COLUMN size;
     `,
   },
+  {
+    id: 5,
+    name: "split-tasks",
+    // N23: a task may be one step of a bigger one. Nullable, no constraint beyond the reference, so it can be dropped again.
+    up: `ALTER TABLE tasks ADD COLUMN parent_id TEXT REFERENCES tasks (id);`,
+    down: `ALTER TABLE tasks DROP COLUMN parent_id;`,
+  },
 ];
 
 const ENSURE_TABLE = `

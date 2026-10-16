@@ -30,7 +30,7 @@ export type AgentReply = z.output<typeof AgentReplySchema>;
 export type ParseResult = { ok: true; reply: AgentReply } | { ok: false; error: string };
 
 /** Pull the JSON object out of a model reply that may be wrapped in a code fence or prose. */
-function extractJson(text: string): unknown {
+export function extractJson(text: string): unknown {
   const unfenced = text.replace(/```(?:json)?/gi, "").trim();
   const start = unfenced.indexOf("{");
   const end = unfenced.lastIndexOf("}");

@@ -1,9 +1,13 @@
 import type { TaskDto } from "../../shared/api";
+import { firstStep } from "./split-model";
 
 /** The Now strip: the first open task's next step (or its title). One thing, not a list. */
 export type NowCard = { text: string; taskTitle: string | null; task: TaskDto };
 
+/** The first task's next step, or the first task; a split task's first open step counts as its next step (N23). */
 export function nowCard(tasks: readonly TaskDto[]): NowCard | null {
+  const split = firstStep(tasks);
+  if (split) return { text: split.step.nowStep ?? split.step.title, taskTitle: split.parent.title, task: split.step };
   const first = tasks[0];
   if (!first) return null;
   return first.nowStep ? { text: first.nowStep, taskTitle: first.title, task: first } : { text: first.title, taskTitle: null, task: first };

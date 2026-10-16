@@ -16,7 +16,7 @@ const task = (bucket: string | null, size: TaskDto["size"] = null): TaskDto => (
   completedAt: null,
   size,
   bucket,
-  estimateMin: null,
+  estimateMin: null, parentId: null,
 });
 
 describe("hoursText", () => {

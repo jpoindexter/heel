@@ -3,7 +3,7 @@ import type { TaskDto } from "../../shared/api";
 import { DEFAULT_METHOD_NUMBERS } from "../../shared/method";
 import { dayTotal, minutesForSize, splitPrompt, splitSuggested } from "./size-model";
 
-const task = (size: TaskDto["size"]): TaskDto => ({ id: String(Math.random()), title: "t", status: "todo", nowStep: null, source: "manual", sourceRef: null, position: 0, createdAt: 0, updatedAt: 0, completedAt: null, size, bucket: null, estimateMin: null });
+const task = (size: TaskDto["size"]): TaskDto => ({ id: String(Math.random()), title: "t", status: "todo", nowStep: null, source: "manual", sourceRef: null, position: 0, createdAt: 0, updatedAt: 0, completedAt: null, size, bucket: null, estimateMin: null, parentId: null });
 
 describe("sizes to minutes", () => {
   it("maps a size through the numbers and says nothing for none", () => {

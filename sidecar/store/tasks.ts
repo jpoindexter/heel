@@ -18,6 +18,7 @@ const TaskRow = z.object({
   size: z.enum(SIZES).nullable(),
   bucket: z.string().nullable(),
   estimate_min: z.number().nullable(),
+  parent_id: z.string().nullable(),
 });
 
 const ACTIVE: readonly TaskStatus[] = ["todo", "doing"];
@@ -38,6 +39,7 @@ export function toTask(row: unknown): Task {
     size: r.size,
     bucket: r.bucket,
     estimateMin: r.estimate_min,
+    parentId: r.parent_id,
   };
 }
 
@@ -78,7 +80,7 @@ export function patchTask(ctx: Ctx, id: string, input: unknown): Result<Task> {
 export function listTasks(ctx: Ctx, statuses: readonly TaskStatus[] = ACTIVE): Task[] {
   const marks = statuses.map(() => "?").join(", ");
   return ctx.db
-    .prepare(`SELECT * FROM tasks WHERE status IN (${marks}) ORDER BY position`)
+    .prepare(`SELECT * FROM tasks WHERE status IN (${marks}) ORDER BY position, rowid`)
     .all(...statuses)
     .map(toTask);
 }

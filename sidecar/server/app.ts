@@ -14,6 +14,7 @@ import { registerMethodRoutes } from "./method-routes";
 import { registerPomodoroRoutes } from "./pomodoro-routes";
 import { registerMessagesRoutes } from "./messages-routes";
 import { registerSearchRoutes } from "./search-routes";
+import { registerSplitRoutes } from "./split-routes";
 import { registerTodayRoutes, registerTurnRoute } from "./today-routes";
 
 export type AppDeps = {
@@ -37,6 +38,8 @@ export function createApp(deps: AppDeps) {
   applyGuards(app, { token: deps.token, allowedOrigins: deps.allowedOrigins });
   app.get("/health", (c) => ok(c, { status: "ok" }));
   registerBrainRoutes(app, deps);
+  // Before the today routes: their `/tasks/:id/:action` would otherwise swallow `/tasks/:id/split` and `/unsplit`.
+  registerSplitRoutes(app, deps);
   registerTodayRoutes(app, deps);
   registerTurnRoute(app, deps);
   registerFocusRoutes(app, deps);

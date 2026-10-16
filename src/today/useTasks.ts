@@ -35,6 +35,7 @@ export function useTasks(client: Client, active: boolean) {
         dropLocally: (id) => setState((s) => (s.phase === "ready" ? { ...s, tasks: s.tasks.filter((t) => t.id !== id) } : s)),
         notify: notices.show,
         doneToday: () => (latest.current.phase === "ready" ? latest.current.doneToday : 0),
+        openTasks: () => (latest.current.phase === "ready" ? latest.current.tasks : []),
       }),
     [client, refresh, notices],
   );

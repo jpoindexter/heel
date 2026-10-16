@@ -12,7 +12,7 @@ const task = (title: string, nowStep: string | null = null): TaskDto => ({
   position: 1,
   createdAt: 1,
   updatedAt: 1,
-  completedAt: null, size: null, bucket: null, estimateMin: null,
+  completedAt: null, size: null, bucket: null, estimateMin: null, parentId: null,
 });
 
 describe("nowCard", () => {
@@ -23,6 +23,12 @@ describe("nowCard", () => {
   it("makes the first task's next step the card, with the task title underneath", () => {
     const first = task("Newsletter", "Write the subject line");
     expect(nowCard([first, task("Email Aoi")])).toEqual({ text: "Write the subject line", taskTitle: "Newsletter", task: first });
+  });
+
+  it("makes the first open step of a split task the card, with the big task underneath", () => {
+    const big = task("Move the studio");
+    const step = { ...task("Book the van"), parentId: big.id };
+    expect(nowCard([big, step, task("Email Aoi")])).toEqual({ text: "Book the van", taskTitle: "Move the studio", task: step });
   });
 
   it("falls back to the title when the first task has no next step", () => {

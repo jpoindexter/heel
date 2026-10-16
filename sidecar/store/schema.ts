@@ -92,6 +92,8 @@ export type Task = {
   size: Size | null;
   bucket: string | null;
   estimateMin: number | null;
+  /** The bigger task this one is a step of (N23), or null. */
+  parentId: string | null;
 };
 
 export type ParkedIdea = {

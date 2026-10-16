@@ -70,6 +70,9 @@ export const TaskSchema = z.object({
   size: z.enum(SIZES).nullable(),
   bucket: z.string().nullable(),
   estimateMin: z.number().nullable(),
+  parentId: z.string().nullable().default(null),
+  /** For a task with steps: how many are finished (the open ones are in the list). */
+  stepsDone: z.number().int().optional(),
 });
 export const TaskPatchSchema = z.object({ size: z.enum(SIZES).nullable(), bucket: z.string().nullable(), estimateMin: z.number().int().positive().nullable() }).partial();
 export { MethodNumbersSchema, MethodSchema, type Method, type MethodNumbers } from "./method";
@@ -256,3 +259,13 @@ export const SearchHitSchema = z.object({ kind: z.enum(SEARCH_KINDS), id: z.stri
 export const SearchResultSchema = z.object({ query: z.string(), hits: z.array(SearchHitSchema) });
 export type SearchHitDto = z.output<typeof SearchHitSchema>;
 export type SearchResultDto = z.output<typeof SearchResultSchema>;
+
+/** Splitting a task (N23): Heel proposes steps, nothing is written until the person says "Add these". */
+export const SPLIT_MAX_STEPS = 7;
+export const SPLIT_MIN_STEPS = 2;
+export const SplitProposalSchema = z.object({ steps: z.array(z.string().trim().min(1).max(500)).min(SPLIT_MIN_STEPS).max(SPLIT_MAX_STEPS) });
+export type SplitProposalDto = z.output<typeof SplitProposalSchema>;
+export const SplitInputSchema = z.object({ titles: z.array(z.string().trim().min(1).max(500)).min(1).max(SPLIT_MAX_STEPS) });
+export const SplitResultSchema = z.object({ parent: TaskSchema, children: z.array(TaskSchema) });
+export type SplitResultDto = z.output<typeof SplitResultSchema>;
+export const UnsplitResultSchema = z.object({ count: z.number().int() });

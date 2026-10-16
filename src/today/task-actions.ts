@@ -11,6 +11,8 @@ type Deps = {
   notify: (notice: Notice) => void;
   /** How many were finished today before this one. */
   doneToday: () => number;
+  /** The open tasks as the panel has them now (after a refresh), for the last-step offer. */
+  openTasks: () => readonly TaskDto[];
 };
 
 /** One line that says the task and, quietly, that things are getting done; never the same line twice in a row. */
@@ -24,6 +26,14 @@ function makeCheer(doneToday: () => number): (title: string) => string {
 }
 
 export type TaskPatch = { size?: TaskDto["size"]; bucket?: string | null };
+
+/** The task a just-finished step belonged to, when no open step of it is left: worth an offer to finish it too. */
+export function lastStepParent(step: TaskDto, open: readonly TaskDto[]): TaskDto | null {
+  if (!step.parentId) return null;
+  const parent = open.find((task) => task.id === step.parentId);
+  if (!parent || open.some((task) => task.parentId === parent.id && task.id !== step.id)) return null;
+  return parent;
+}
 
 /** A parked idea becomes a task. Returns the new task's id, so a caller (search) can point at it. */
 function makePromote(client: Client, refresh: () => Promise<void>, fail: (message: string) => void, notify: (notice: Notice) => void) {
@@ -46,7 +56,7 @@ function makePatch(client: Client, refresh: () => Promise<void>, fail: (message:
 }
 
 /** What the person can do to tasks and parked ideas from the drawer, the Now strip and the Park chip. Each write offers Undo. */
-export function createTaskActions({ client, refresh, dropLocally, notify, doneToday }: Deps) {
+export function createTaskActions({ client, refresh, dropLocally, notify, doneToday, openTasks }: Deps) {
   const fail = (message: string) => notify({ message, tone: "error" });
   const cheer = makeCheer(doneToday);
   const undoWith = (run: () => Promise<unknown>) => () =>
@@ -63,6 +73,8 @@ export function createTaskActions({ client, refresh, dropLocally, notify, doneTo
     notify({ message: action === "drop" ? `Removed: ${task.title}` : cheer(task.title), tone: "info", undo });
     // The row is already gone; this brings the day's count up to date.
     await refresh();
+    const parent = action === "complete" ? lastStepParent(task, openTasks()) : null;
+    if (parent) notify({ message: `Last step done. Finish “${parent.title}” too?`, tone: "info", choices: [{ label: "Finish it", run: () => void settle(parent, "complete") }, { label: "Undo", run: undo }] });
   };
 
 

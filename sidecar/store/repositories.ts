@@ -9,8 +9,19 @@ import { foldAttention, getAttentionDay, getAttentionSettings, setAttentionSetti
 import { movePomodoro, readPomodoro, setPomodoroConfig, startCycle } from "./pomodoro";
 import type { FocusOutcome, TaskStatus } from "./schema";
 import { search } from "./search";
+import { childrenOf, doneStepCounts, splitTask, unsplitTask } from "./split";
 import { getBrain, getMethod, getMethodNumbers, setBrain, setMethod, setMethodNumbers } from "./settings";
 import { addTask, completeTask, dropTask, getTask, listTasks, patchTask, restoreTask, setNowStep, startTask } from "./tasks";
+
+/** Steps under a task (N23). */
+function splitRepository(ctx: Ctx) {
+  return {
+    apply: (parentId: string, input: unknown) => splitTask(ctx, parentId, input),
+    undo: (parentId: string) => unsplitTask(ctx, parentId),
+    children: (parentId: string) => childrenOf(ctx, parentId),
+    doneCounts: () => doneStepCounts(ctx),
+  };
+}
 
 /** The Today side of the store: tasks, parked ideas, focus time-boxes and the working-memory ledger. */
 export function todayRepositories(ctx: Ctx) {
@@ -55,6 +66,7 @@ export function todayRepositories(ctx: Ctx) {
       day: () => getAttentionDay(ctx),
       fold: (sample: Parameters<typeof foldAttention>[1], context: Parameters<typeof foldAttention>[2]) => foldAttention(ctx, sample, context),
     },
+    split: splitRepository(ctx),
     search: (query: string) => search(ctx, query),
     now: ctx.now,
   };

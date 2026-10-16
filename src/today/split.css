@@ -1,0 +1,41 @@
+/* Steps (N23): the proposal card under its task, and steps indented under their task on the list. */
+.split-card {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+  margin: var(--space-1) 0 var(--space-2);
+  padding: var(--space-2);
+  background: var(--gray-a2);
+  border-radius: var(--radius-3);
+  animation: rise var(--motion-base) var(--ease-out) both;
+}
+
+.split-card .section-label {
+  margin: 0 var(--space-2);
+}
+
+.split-note {
+  padding: 0 var(--space-2);
+}
+
+.split-steps {
+  padding: 0;
+  list-style: none;
+}
+
+.split-actions {
+  display: flex;
+  gap: var(--space-2);
+  align-items: center;
+  padding: 0 var(--space-2);
+}
+
+/* A step keeps its tick in the same column as every other row; only its words step in. */
+.task-row[data-step] .grow {
+  padding-inline-start: var(--space-4);
+}
+
+.task-progress {
+  margin-inline-start: var(--space-2);
+  font-variant-numeric: tabular-nums;
+}
