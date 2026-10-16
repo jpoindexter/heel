@@ -44,7 +44,7 @@ export function Reply({ messages, onRetry, onOpenSettings, onUndo, onOpenDocumen
         </div>
       )}
       <div className="bubble-row">
-        <div className="bubble bubble-heel grow">
+        <div className="bubble bubble-heel">
           <Message message={heel} onRetry={() => onRetry(heel.id)} onOpenSettings={onOpenSettings} onUndo={(index) => onUndo(heel.id, index)} onOpenDocument={onOpenDocument} />
         </div>
         {heel.status !== "pending" && (

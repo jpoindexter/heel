@@ -44,6 +44,15 @@
   animation-name: layer-in-top;
 }
 
+/* A conversation is not a drop-down: it fills the room under the header and scrolls inside itself, like the layers from the right. */
+.layer[data-side="top"][data-fill] {
+  inset: 0;
+  max-height: none;
+  padding-bottom: 0;
+  border-radius: 0;
+  filter: none;
+}
+
 .layer[data-leaving] {
   pointer-events: none;
   animation: layer-out-right var(--motion-layer-exit) var(--ease-in) both;

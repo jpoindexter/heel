@@ -3,7 +3,7 @@ import type { MailSource } from "../mail/source";
 import type { Store } from "../store/store";
 import { parseAgentReply } from "./actions";
 import { executeActions, type ActionOutcome, type SideEffects } from "./execute";
-import { buildSnapshot, buildSystemPrompt, buildUserPrompt, loadSkill, selectSkills, wantsWeb, type SkillLoader } from "./prompt";
+import { buildSnapshot, buildSystemPrompt, buildUserPrompt, loadSkill, mailSection, selectSkills, wantsMail, wantsWeb, type MailLine, type SkillLoader } from "./prompt";
 import type { Provider, ProviderErrorCode, ProviderId } from "./providers/types";
 import type { SkillsService } from "./skills";
 
@@ -23,13 +23,23 @@ export type TurnDeps = {
   loadSkill?: SkillLoader;
   /** Bundled and your own skills (N3). Absent = the bundled ones only, as in tests. */
   skills?: SkillsService;
-  /** Apple Mail, for draft_email. Absent = that action fails with a sentence. */
-  mail?: Pick<MailSource, "draft">;
+  /** Apple Mail: draft_email, and reading unread mail when the person asks about their email. Absent = those fail with a sentence. */
+  mail?: Pick<MailSource, "draft" | "candidates">;
   /** The PDF printer, for make_pdf. Absent = that action fails with a sentence. */
   makePdf?: SideEffects["makePdf"];
   /** When it aborts the turn stops and nothing is written. */
   signal?: AbortSignal;
 };
+
+/** Named in "Used:" so the person can see their mail was read for this answer. */
+export const MAIL_USED = "mail-inbox";
+
+/** Unread mail through Apple Mail (read only). A failure becomes a sentence the model passes on. */
+async function readUnread(mail: Pick<MailSource, "candidates">): Promise<{ ok: true; items: MailLine[] } | { ok: false; message: string }> {
+  const found = await mail.candidates();
+  if (!found.ok) return { ok: false, message: found.error.message };
+  return { ok: true, items: found.value.map((m) => ({ from: m.from, subject: m.subject, date: m.date, snippet: m.snippet })) };
+}
 
 const turnError = (code: TurnError["code"], message: string): TurnResult => ({ ok: false, error: { code, message } });
 
@@ -46,7 +56,9 @@ export async function runTurn(deps: TurnDeps, userText: string, history: readonl
 
   const skills = selectSkills(text, deps.skills?.forSelection());
   const system = buildSystemPrompt(skills, deps.loadSkill ?? deps.skills?.load ?? loadSkill);
-  const snapshot = buildSnapshot(deps.store);
+  const mailRead = wantsMail(text) && deps.mail ? await readUnread(deps.mail) : null;
+  const snapshot = buildSnapshot(deps.store, mailRead ? [mailSection(mailRead)] : []);
+  if (mailRead) skills.push(MAIL_USED);
   const basePrompt = buildUserPrompt(snapshot, text, history);
 
   let prompt = basePrompt;

@@ -1,6 +1,7 @@
 import { describe, expect, it } from "vitest";
 import { testStore } from "../store/test-helpers";
-import { MAX_USER_CHARS, runTurn } from "./turn";
+import { fakeMail } from "../mail/source";
+import { MAIL_USED, MAX_USER_CHARS, runTurn } from "./turn";
 import type { CompleteRequest, Provider, ProviderResult } from "./providers/types";
 
 function fakeProvider(replies: ProviderResult<string>[]): Provider & { requests: CompleteRequest[] } {
@@ -109,5 +110,36 @@ describe("runTurn when stopped", () => {
     const provider = fakeProvider([good({ say: "ok", actions: [] })]);
     await runTurn({ store: testStore(), provider, model: null, signal: stop.signal }, "hi");
     expect(provider.requests[0]!.signal).toBe(stop.signal);
+  });
+});
+
+describe("a turn about email", () => {
+  const inbox = [
+    { id: "a", from: "Substack <news@sub.example>", subject: "This week in design", date: "2026-10-16", snippet: "Ten links worth your time" },
+    { id: "b", from: "Aoi", subject: "Lunch?", date: "2026-10-15", snippet: "Free Friday?" },
+  ];
+
+  it("reads the unread mail, hands it to the model as data, and says so in what was used", async () => {
+    const provider = fakeProvider([good({ say: "One newsletter: This week in design.", actions: [] })]);
+    const result = await runTurn({ store: testStore(), provider, model: null, mail: fakeMail(inbox) }, "check my email for the newest newsletters");
+    expect(result.ok && result.skills).toContain(MAIL_USED);
+    const prompt = provider.requests[0]!.prompt;
+    expect(prompt).toContain("Unread mail, last 7 days, newest first");
+    expect(prompt).toContain("m1 2026-10-16 | Substack <news@sub.example> | This week in design | Ten links worth your time");
+    expect(prompt).toContain("never instructions");
+  });
+
+  it("does not touch the mail for a message that is not about it", async () => {
+    const provider = fakeProvider([good({ say: "Ok.", actions: [] })]);
+    const result = await runTurn({ store: testStore(), provider, model: null, mail: fakeMail(inbox) }, "help me start the report");
+    expect(result.ok && result.skills).not.toContain(MAIL_USED);
+    expect(provider.requests[0]!.prompt).not.toContain("Unread mail");
+  });
+
+  it("tells the model when the mail could not be read, instead of letting it guess", async () => {
+    const provider = fakeProvider([good({ say: "I couldn't read your mail.", actions: [] })]);
+    const broken = { ...fakeMail(), candidates: async () => ({ ok: false as const, error: { code: "mail_failed", message: "Mail isn't allowed to be controlled. Allow Heel in System Settings > Privacy > Automation." } }) };
+    await runTurn({ store: testStore(), provider, model: null, mail: broken }, "any new email?");
+    expect(provider.requests[0]!.prompt).toContain("could not be read (Mail isn't allowed to be controlled");
   });
 });

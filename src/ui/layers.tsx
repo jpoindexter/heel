@@ -81,14 +81,14 @@ export function LayerHost({ base, children }: { base: ReactNode; children: React
 }
 
 /** One surface. Drawn while open or leaving; it arrives from its side and leaves the same way (a cross-fade under Reduce Motion). */
-export function Layer({ name, label, children }: { name: Layer; label: string; children: ReactNode }) {
+export function Layer({ name, label, fill = false, children }: { name: Layer; label: string; /** Take the whole room under the header (the conversation needs it), still arriving from its side. */ fill?: boolean; children: ReactNode }) {
   const { stack, leaving, settle } = useLayers();
   if (!isOpen(stack, name) && leaving !== name) return null;
   const onAnimationEnd = (event: AnimationEvent<HTMLDivElement>) => {
     if (event.target === event.currentTarget && leaving === name) settle(name);
   };
   return (
-    <section className="layer" role="region" aria-label={label} data-side={SIDES[name]} data-leaving={leaving === name || undefined} onAnimationEnd={onAnimationEnd}>
+    <section className="layer" role="region" aria-label={label} data-side={SIDES[name]} data-fill={fill || undefined} data-leaving={leaving === name || undefined} onAnimationEnd={onAnimationEnd}>
       <div className="layer-scroll">{children}</div>
     </section>
   );

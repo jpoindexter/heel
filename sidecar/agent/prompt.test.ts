@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 import { testStore } from "../store/test-helpers";
-import { buildSnapshot, buildSystemPrompt, buildUserPrompt, loadSkill, selectSkills } from "./prompt";
+import { buildSnapshot, buildSystemPrompt, buildUserPrompt, loadSkill, mailSection, selectSkills, wantsMail } from "./prompt";
 
 describe("selectSkills", () => {
   it("always leads with the router and never loads more than three skills", () => {
@@ -111,5 +111,20 @@ describe("buildUserPrompt", () => {
     expect(prompt).toContain(`Heel: ${"x".repeat(400)}\n`);
     expect(prompt.match(/Person:/g)).toHaveLength(1);
     expect(prompt.indexOf("Earlier in this conversation")).toBeLessThan(prompt.indexOf("The person says"));
+  });
+});
+
+describe("mail in a turn", () => {
+  it("notices when the person is asking about their email", () => {
+    for (const text of ["check my email", "any new e-mails?", "what's in my inbox", "newest newsletters please", "unread stuff", "messages from Aoi"]) expect(wantsMail(text), text).toBe(true);
+    for (const text of ["help me start the report", "I'm stuck", "plan my week"]) expect(wantsMail(text), text).toBe(false);
+  });
+
+  it("writes one short line per message and says plainly when there is none or it failed", () => {
+    expect(mailSection({ ok: true, items: [{ from: "A", subject: "S", date: "d", snippet: "line one\n\n  line two" }] })).toContain("m1 d | A | S | line one line two");
+    expect(mailSection({ ok: true, items: [] })).toBe("Unread mail (last 7 days): none.");
+    expect(mailSection({ ok: false, message: "nope" })).toContain("could not be read (nope)");
+    const long = mailSection({ ok: true, items: [{ from: "A", subject: "S", date: "d", snippet: "x".repeat(500) }] });
+    expect(long.split("\n")[1]!.length).toBeLessThan(220);
   });
 });

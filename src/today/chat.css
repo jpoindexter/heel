@@ -105,13 +105,12 @@
   flex: none;
 }
 
-/* Inside its layer the reply fills what the layer gives it. */
+/* Inside its layer the reply fills what the layer gives it, with the same breathing room as every other layer (the focus ring and rounded bubbles must not touch the edge). */
 .layer .reply {
   flex: 1;
   max-height: none;
   min-height: 0;
-  padding-right: var(--ring-room);
-  padding-bottom: var(--space-2);
+  padding: var(--ring-room) var(--ring-room) var(--space-2);
 }
 
 /* The reply, shaped like an iOS chat: what was asked as a bubble on the right, Heel's answer on the left, a speaker's gap between them. Each bubble arrives from its author's side. */
@@ -168,6 +167,7 @@
 
 .bubble-heel {
   min-width: 0;
+  max-width: var(--message-max-width);
   background: var(--gray-a3);
   border-end-start-radius: var(--radius-2);
 }

@@ -105,7 +105,7 @@ export function TodayView({ showing, summary, reloadKey, settings }: Props) {
         <Layer name="email" label="Email">
           <InboxPanel digest={state.digest} reply={state.reply} onOpen={(id) => void state.openMail(id)} />
         </Layer>
-        <Layer name="reply" label="Reply">
+        <Layer name="reply" label="Reply" fill>
           <ReplyLayer thread={thread} onOpenSettings={openSettings} onOpenDocument={(id, file) => void documents.open(id, { file })} onClosed={layers.back} />
         </Layer>
         <Layer name="search" label="Search">
