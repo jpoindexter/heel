@@ -2,7 +2,8 @@ import { createContext, useCallback, useContext, useEffect, useMemo, useRef, use
 import { invoke } from "@tauri-apps/api/core";
 import { listen } from "@tauri-apps/api/event";
 import { NOTICE_UNDO_EVENT } from "../events";
-import { NOTICE_MS, replaceNotice, routeNotice, toBubble, UndoPayloadSchema, type Notice, type ShownNotice } from "./notice-model";
+import { NOTICE_AFTER_HOVER_MS, NOTICE_CEILING_MS, noticeMs, replaceNotice, routeNotice, shapeOf, toBubble, UndoPayloadSchema, type Notice, type ShownNotice } from "./notice-model";
+import { systemToastsOn } from "./system-toasts";
 import { usePanelVisible } from "./usePanelVisible";
 
 type ShowOptions = {
@@ -14,7 +15,7 @@ export type Notices = {
   notice: ShownNotice | null;
   show: (notice: Notice, options?: ShowOptions) => void;
   dismiss: () => void;
-  /** The pointer is over the toast, or it has focus: it waits. `release` gives it its full time again. */
+  /** The pointer is over the toast, or it has focus: it waits (up to a ceiling). `release` lets it go after a short moment. */
   hold: () => void;
   release: () => void;
   /** A time-box is running: nothing but its own notices may appear next to Greg. */
@@ -41,6 +42,32 @@ function useBubbleUndo(undos: React.RefObject<Map<number, (choice?: number) => v
   }, [undos, dismiss]);
 }
 
+/** The toast's two clocks: its own life (restarted by hover and focus), and a ceiling nothing can hold past. */
+function useNoticeClock(onExpire: () => void) {
+  const clock = useRef<number | undefined>(undefined);
+  const ceiling = useRef<number | undefined>(undefined);
+  const hold = useCallback(() => window.clearTimeout(clock.current), []);
+  const stop = useCallback(() => {
+    window.clearTimeout(clock.current);
+    window.clearTimeout(ceiling.current);
+  }, []);
+  /** Start the clock: the notice's own life when it has just arrived, the short after-hover moment when held. */
+  const arm = useCallback(
+    (ms: number) => {
+      window.clearTimeout(clock.current);
+      clock.current = window.setTimeout(onExpire, ms);
+    },
+    [onExpire],
+  );
+  const release = useCallback(() => arm(NOTICE_AFTER_HOVER_MS), [arm]);
+  const startCeiling = useCallback(() => {
+    window.clearTimeout(ceiling.current);
+    ceiling.current = window.setTimeout(onExpire, NOTICE_CEILING_MS);
+  }, [onExpire]);
+  useEffect(() => stop, [stop]);
+  return { hold, arm, release, stop, startCeiling };
+}
+
 /**
  * The one notice system: in the panel it is the toast at the top edge; with the panel closed it is a bubble
  * next to Greg (the shell places a tiny window over his head). Routing is `routeNotice`, pure and tested.
@@ -55,21 +82,17 @@ export function NoticesProvider({ quiet, children }: { quiet: boolean; children:
   const undos = useRef(new Map<number, (choice?: number) => void>());
 
   // The toast's clock is ours, not Radix's: Radix pauses while the window is unfocused, which left toasts stuck for good.
-  const clock = useRef<number | undefined>(undefined);
-  const hold = useCallback(() => window.clearTimeout(clock.current), []);
+  const expire = useRef(() => {});
+  const { hold, arm, release, stop, startCeiling } = useNoticeClock(() => expire.current());
   const dismiss = useCallback(() => {
-    hold();
+    stop();
     setNotice(null);
-  }, [hold]);
-  const release = useCallback(() => {
-    hold();
-    clock.current = window.setTimeout(dismiss, NOTICE_MS);
-  }, [dismiss, hold]);
-  useEffect(() => hold, [hold]);
+  }, [stop]);
+  expire.current = dismiss;
   // Set while the panel was closed, a toast gets its full time once the panel is on screen.
   useEffect(() => {
-    if (panelVisible && notice) release();
-  }, [panelVisible, notice, release]);
+    if (panelVisible && notice) arm(noticeMs(shapeOf(notice)));
+  }, [panelVisible, notice, arm]);
 
   const show = useCallback((next: Notice, options: ShowOptions = {}) => {
     const route = routeNotice(next, flags.current);
@@ -77,12 +100,14 @@ export function NoticesProvider({ quiet, children }: { quiet: boolean; children:
     const shown = replaceNotice(null, next, ++nextId.current);
     // The toast is set either way: open the panel within the notice's life and Undo is there, by keyboard too.
     setNotice((current) => replaceNotice(current, next, shown.id));
-    release();
+    arm(noticeMs(shapeOf(next)));
+    startCeiling();
     if (route !== "bubble") return;
+    if (systemToastsOn()) void invoke("system_notify", { title: "Heel", body: next.message }).catch(() => undefined);
     undos.current.clear();
     if (next.undo || next.choices) undos.current.set(shown.id, (choice) => (choice === undefined ? next.undo?.() : next.choices?.[choice]?.run()));
     void invoke("show_notice", { payload: toBubble(shown) }).catch(() => undefined);
-  }, [release]);
+  }, [arm, startCeiling]);
   useBubbleUndo(undos, dismiss);
 
   const value = useMemo<Notices>(

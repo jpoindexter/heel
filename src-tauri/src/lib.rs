@@ -18,6 +18,7 @@ mod placement;
 mod pointer_sense;
 mod panel_place;
 mod sidecar_process;
+mod system_notice;
 mod undock;
 mod walk;
 
@@ -34,6 +35,7 @@ use walk::{start_walk, stop_walk, Walker};
 use panel_window::{panel_is_visible, reveal_panel, show_panel, toggle_panel};
 use helper_watch::{helper_status, restart_helper};
 use sidecar_process::SidecarProc;
+use system_notice::system_notify;
 use undock::{dock_panel_command, panel_offset};
 use tauri_plugin_global_shortcut::{Code, Modifiers, Shortcut, ShortcutState};
 
@@ -53,6 +55,7 @@ pub fn run() {
     }));
 
     builder
+        .plugin(tauri_plugin_notification::init())
         .manage(Attention::default())
         .manage(Dock::new())
         .manage(PendingView::new())
@@ -72,7 +75,7 @@ pub fn run() {
                 .build(),
         )
         .on_menu_event(|app, event| mascot_menu::on_menu_event(app, event.id().as_ref()))
-        .invoke_handler(tauri::generate_handler![toggle_panel_command, sidecar_info, take_pending_view, set_mascot_hit_region, set_mascot_pressed, show_mascot_menu, set_life_flags, start_walk, stop_walk, hide_greg, show_greg, panel_anchor, helper_status, restart_helper, panel_visible, show_notice, hide_notice, set_attention_enabled, dock_panel_command, panel_offset])
+        .invoke_handler(tauri::generate_handler![toggle_panel_command, sidecar_info, take_pending_view, set_mascot_hit_region, set_mascot_pressed, show_mascot_menu, set_life_flags, start_walk, stop_walk, hide_greg, show_greg, panel_anchor, helper_status, restart_helper, panel_visible, show_notice, hide_notice, set_attention_enabled, dock_panel_command, panel_offset, system_notify])
         .setup(app_setup::setup)
         .build(tauri::generate_context!())
         .expect("error while building Heel")

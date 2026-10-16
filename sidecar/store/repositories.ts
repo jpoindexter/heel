@@ -10,7 +10,7 @@ import { movePomodoro, readPomodoro, setPomodoroConfig, startCycle } from "./pom
 import type { FocusOutcome, TaskStatus } from "./schema";
 import { search } from "./search";
 import { childrenOf, doneStepCounts, splitTask, unsplitTask } from "./split";
-import { getBrain, getMethod, getMethodNumbers, setBrain, setMethod, setMethodNumbers } from "./settings";
+import { getBrain, getMethod, getMethodNumbers, getSkillsOff, setBrain, setMethod, setMethodNumbers, setSkillsOff } from "./settings";
 import { addTask, completeTask, dropTask, getTask, listTasks, patchTask, restoreTask, setNowStep, startTask } from "./tasks";
 
 /** Steps under a task (N23). */
@@ -92,6 +92,8 @@ export function systemRepositories(ctx: Ctx) {
       setMethod: (input: unknown) => setMethod(ctx, input),
       getMethodNumbers: () => getMethodNumbers(ctx),
       setMethodNumbers: (input: unknown) => setMethodNumbers(ctx, input),
+      getSkillsOff: () => getSkillsOff(ctx),
+      setSkillsOff: (ids: readonly string[]) => setSkillsOff(ctx, ids),
       getAttention: () => getAttentionSettings(ctx),
       setAttention: (input: unknown) => setAttentionSettings(ctx, input),
     },

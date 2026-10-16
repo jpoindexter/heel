@@ -6,16 +6,16 @@ import { MAX_ACTIONS_PER_REPLY, MAX_SAY_CHARS } from "./actions";
 import type { TaskRefs } from "./execute";
 import { skillsDir } from "./skills-dir";
 
-const SKILLS_DIR = skillsDir(process.env, new URL("../../skills/nd-skills/", import.meta.url));
+export const SKILLS_DIR = skillsDir(process.env, new URL("../../skills/nd-skills/", import.meta.url));
 const SKILL_CHAR_LIMIT = 5_000;
 const MAX_TASKS_IN_PROMPT = 10;
-const ROUTER = "nd-executive-function-router";
+export const ROUTER = "nd-executive-function-router";
 const MAX_EXTRA_SKILLS = 2;
 const MAX_DOCUMENTS_IN_PROMPT = 3;
 const HISTORY_CHAR_LIMIT = 400;
 
 /** Intent signals -> the one or two nd-skills worth loading this turn. First matches win. */
-const SKILL_SIGNALS: ReadonlyArray<readonly [RegExp, string]> = [
+export const SKILL_SIGNALS: ReadonlyArray<readonly [RegExp, string]> = [
   [/overwhelm|too much|can'?t cope|exhaust|burn(ed|t) out|low energy/i, "nd-functional-minimums"],
   [/panic|furious|angry|ashamed|shame|anxious|melt ?down/i, "nd-emotion-regulation"],
   [/stuck|can'?t start|don'?t know where to start|blank|avoid|procrastinat/i, "nd-task-initiation"],
@@ -27,12 +27,20 @@ const SKILL_SIGNALS: ReadonlyArray<readonly [RegExp, string]> = [
 
 /** A turn that asks for research may use the web (Claude's CLI has WebSearch; Ollama has nothing and says so). */
 export const wantsWeb = (userText: string): boolean => /look into|research|find out|what('s| is) the latest|sources|compare/i.test(userText);
-const FALLBACK_SKILL = "nd-task-initiation";
+export const FALLBACK_SKILL = "nd-task-initiation";
 
-export function selectSkills(userText: string): string[] {
-  const matched = SKILL_SIGNALS.filter(([pattern]) => pattern.test(userText)).map(([, skill]) => skill);
-  const extras = (matched.length ? matched : [FALLBACK_SKILL]).slice(0, MAX_EXTRA_SKILLS);
-  return [ROUTER, ...extras];
+/** What the person has changed: their own skills (chosen by their trigger words) and what they switched off. */
+export type SkillChoices = { yours: readonly { id: string; triggers: readonly string[] }[]; off: ReadonlySet<string> };
+
+/** The router always leads. Then yours (their words are the strongest signal), then the bundled signals, at most two in all; nothing matched = the fallback, if it is on. */
+export function selectSkills(userText: string, choices?: SkillChoices): string[] {
+  const off = choices?.off ?? new Set<string>();
+  const lower = userText.toLowerCase();
+  const mine = (choices?.yours ?? []).filter((s) => s.triggers.some((t) => lower.includes(t))).map((s) => s.id);
+  const bundled = SKILL_SIGNALS.filter(([pattern]) => pattern.test(userText)).map(([, skill]) => skill).filter((skill) => !off.has(skill));
+  const matched = [...new Set([...mine, ...bundled])];
+  const fallback = off.has(FALLBACK_SKILL) ? [] : [FALLBACK_SKILL];
+  return [ROUTER, ...(matched.length ? matched : fallback).slice(0, MAX_EXTRA_SKILLS)];
 }
 
 export type SkillLoader = (id: string) => string | null;

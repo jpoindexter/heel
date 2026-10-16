@@ -10,6 +10,9 @@ import { createInbox } from "../inbox/service";
 import { osascriptJxa } from "../mail/jxa";
 import { appleMail } from "../mail/source";
 import { mailAppExists } from "../mail/available";
+import { BUNDLED_SKILLS } from "../agent/bundled-skills";
+import { SKILLS_DIR } from "../agent/prompt";
+import { createSkillsService } from "../agent/skills";
 import { createPdfRenderer } from "../pdf/renderer";
 import { openStore } from "../store/store";
 import { createApp, DEV_ORIGIN, TAURI_ORIGINS } from "./app";
@@ -39,7 +42,8 @@ const token = randomBytes(TOKEN_BYTES).toString("hex");
 const inbox = createInbox({ fetch, secrets: macKeychain(runCommand), now: Date.now, openUrl });
 const mail = appleMail(osascriptJxa(runCommand), runCommand);
 const pdf = createPdfRenderer({ run: runCommand, dir: join(dir, "pdf") });
-const app = createApp({ store, providers: createProviders(), inbox, mail, mailAvailable: mailAppExists(), token, allowedOrigins: [DEV_ORIGIN, ...TAURI_ORIGINS], openFile, renderPdf: pdf.render });
+const skills = createSkillsService({ bundledDir: SKILLS_DIR, bundled: BUNDLED_SKILLS, userDir: join(dir, "skills"), off: store.settings.getSkillsOff, setOff: store.settings.setSkillsOff });
+const app = createApp({ store, providers: createProviders(), inbox, mail, mailAvailable: mailAppExists(), token, allowedOrigins: [DEV_ORIGIN, ...TAURI_ORIGINS], openFile, renderPdf: pdf.render, skills });
 
 // Port 0 = let the OS pick a free port; the panel finds it in the connection file.
 const server = serve({ fetch: app.fetch, hostname: HOST, port: 0 }, (info) => {

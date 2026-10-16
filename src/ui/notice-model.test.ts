@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { BubblePayloadSchema, replaceNotice, routeNotice, toBubble } from "./notice-model";
+import { BubblePayloadSchema, NOTICE_CEILING_MS, NOTICE_MS, noticeMs, replaceNotice, routeNotice, shapeOf, toBubble } from "./notice-model";
 
 const quietDay = { panelVisible: false, quiet: false, focusRunning: false };
 
@@ -45,5 +45,21 @@ describe("choices", () => {
     const bubble = toBubble({ id: 4, count: 1, message: "Back to it?", tone: "info", choices: [{ label: "Back to it", run: () => undefined }, { label: "Not now", run: () => undefined }] });
     expect(bubble.choices).toEqual(["Back to it", "Not now"]);
     expect(BubblePayloadSchema.safeParse(bubble).success).toBe(true);
+  });
+});
+
+describe("how long a notice stays", () => {
+  it("is short for a plain confirmation, longer for Undo, longer again for an error, longest for a question", () => {
+    expect(noticeMs({ tone: "info", undoable: false, choices: 0 })).toBe(NOTICE_MS.plain);
+    expect(noticeMs({ tone: "info", undoable: true, choices: 0 })).toBe(NOTICE_MS.undo);
+    expect(noticeMs({ tone: "error", undoable: true, choices: 0 })).toBe(NOTICE_MS.error);
+    expect(noticeMs({ tone: "info", undoable: false, choices: 3 })).toBe(NOTICE_MS.choices);
+    expect(NOTICE_MS.plain).toBeLessThan(NOTICE_MS.undo);
+    expect(NOTICE_MS.choices).toBeLessThan(NOTICE_CEILING_MS);
+  });
+
+  it("reads the shape from a notice", () => {
+    expect(shapeOf({ tone: "info", undo: () => undefined })).toEqual({ tone: "info", undoable: true, choices: 0 });
+    expect(shapeOf({ tone: "error", choices: [{ label: "a", run: () => undefined }] })).toEqual({ tone: "error", undoable: false, choices: 1 });
   });
 });

@@ -92,3 +92,26 @@ export function setMethodNumbers(ctx: Ctx, input: unknown): Result<MethodNumbers
     .run(NUMBERS_KEY, JSON.stringify(parsed.data), ctx.now());
   return ok(parsed.data);
 }
+
+const SKILLS_OFF_KEY = "skills-off";
+const MAX_SKILLS_OFF = 200;
+
+/** Skill ids the person switched off. A missing or corrupt row means none. */
+export function getSkillsOff(ctx: Ctx): string[] {
+  const row = ctx.db.prepare("SELECT value FROM settings WHERE key = ?").get(SKILLS_OFF_KEY);
+  if (!row) return [];
+  try {
+    return z.array(z.string()).max(MAX_SKILLS_OFF).safeParse(JSON.parse(String(row.value))).data ?? [];
+  } catch {
+    return [];
+  }
+}
+
+export function setSkillsOff(ctx: Ctx, ids: readonly string[]): Result<string[]> {
+  const parsed = z.array(z.string().min(1).max(100)).max(MAX_SKILLS_OFF).safeParse([...new Set(ids)]);
+  if (!parsed.success) return fail("invalid", firstIssue(parsed.error));
+  ctx.db
+    .prepare("INSERT INTO settings (key, value, updated_at) VALUES (?, ?, ?) ON CONFLICT (key) DO UPDATE SET value = excluded.value, updated_at = excluded.updated_at")
+    .run(SKILLS_OFF_KEY, JSON.stringify(parsed.data), ctx.now());
+  return ok(parsed.data);
+}

@@ -1,5 +1,6 @@
 import { ExclamationTriangleIcon } from "@radix-ui/react-icons";
 import { Button, Callout, Text } from "@radix-ui/themes";
+import { usedLine } from "../ui/skill-label";
 import { Receipts } from "./Receipts";
 import type { HeelMessage } from "./thread-model";
 
@@ -27,6 +28,7 @@ export function Message({ message, onRetry, onOpenSettings, onUndo, onOpenDocume
         <>
           <Paragraphs text={message.say} />
           <Receipts receipts={message.receipts} onUndo={onUndo} onOpen={onOpenDocument} />
+          {usedLine(message.skills) && <Text as="p" size="1" color="gray" className="used-line">{usedLine(message.skills)}</Text>}
         </>
       )}
       {message.status === "failed" && (

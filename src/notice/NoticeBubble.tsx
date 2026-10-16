@@ -9,14 +9,14 @@ import { NOTICE_EVENT, NOTICE_UNDO_EVENT } from "../events";
 import { SCALING } from "../theme/density";
 import { useAppearance } from "../theme/useAppearance";
 import { useDensity } from "../theme/useDensity";
-import { BubblePayloadSchema, NOTICE_MS, type BubblePayload } from "../ui/notice-model";
+import { BubblePayloadSchema, NOTICE_AFTER_HOVER_MS, noticeMs, type BubblePayload } from "../ui/notice-model";
 
 /** If the exit animation never reports its end (reduced motion, a hidden tab), the window still goes away. */
 const LEAVE_FALLBACK_MS = 400;
 
 const hideWindow = () => void invoke("hide_notice").catch(() => undefined);
 
-/** What is showing, and the clock that fades it: NOTICE_MS from arrival, paused while the pointer is over it. */
+/** What is showing, and the clock that fades it: the notice's own life from arrival, paused while the pointer is over it. */
 function useBubble() {
   const [bubble, setBubble] = useState<BubblePayload | null>(null);
   const [leaving, setLeaving] = useState(false);
@@ -27,10 +27,13 @@ function useBubble() {
     setLeaving(true);
     timer.current = window.setTimeout(hideWindow, LEAVE_FALLBACK_MS);
   }, []);
-  const arm = useCallback(() => {
-    stop();
-    timer.current = window.setTimeout(leave, NOTICE_MS);
-  }, [leave]);
+  const arm = useCallback(
+    (ms: number) => {
+      stop();
+      timer.current = window.setTimeout(leave, ms);
+    },
+    [leave],
+  );
 
   useEffect(() => {
     const unlisten = listen<unknown>(NOTICE_EVENT, (event) => {
@@ -38,7 +41,7 @@ function useBubble() {
       if (!parsed.success) return;
       setLeaving(false);
       setBubble(parsed.data);
-      arm();
+      arm(noticeMs({ tone: parsed.data.tone, undoable: parsed.data.undoable, choices: parsed.data.choices.length }));
     }).catch(() => undefined);
     return () => {
       stop();
@@ -51,7 +54,7 @@ function useBubble() {
     setBubble(null);
     hideWindow();
   };
-  return { bubble, leaving, hold: stop, release: arm, leave, gone };
+  return { bubble, leaving, hold: stop, release: () => arm(NOTICE_AFTER_HOVER_MS), leave, gone };
 }
 
 /** The small notice window next to Greg: one line of what happened, Undo when it can be undone, a tail pointing at him. */

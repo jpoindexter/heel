@@ -32,7 +32,7 @@ function ToastButtons({ notice, onDismiss }: { notice: ShownNotice; onDismiss: (
 }
 
 /**
- * The toast: drops in from the panel's top edge, stays NOTICE_MS (held while hovered or focused), fades out.
+ * The toast: drops in from the panel's top edge, stays as long as its kind needs (noticeMs; held while hovered or focused, up to a ceiling), fades out.
  * Radix announces it and keeps Undo reachable by keyboard (F8 jumps to it). Its viewport floats, so nothing below moves.
  * One at a time: a newer notice replaces this one and shows how many it stands for.
  */

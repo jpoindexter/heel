@@ -14,6 +14,8 @@ import { registerMethodRoutes } from "./method-routes";
 import { registerPomodoroRoutes } from "./pomodoro-routes";
 import { registerMessagesRoutes } from "./messages-routes";
 import type { RenderPdf } from "../pdf/make-pdf";
+import type { SkillsService } from "../agent/skills";
+import { registerSkillsRoutes } from "./skills-routes";
 import { registerDocumentsRoutes } from "./documents-routes";
 import { registerSearchRoutes } from "./search-routes";
 import { registerSplitRoutes } from "./split-routes";
@@ -34,6 +36,8 @@ export type AppDeps = {
   openFile: (path: string, reveal: boolean) => Promise<boolean>;
   /** Render a page of HTML to a PDF file on this Mac (N15). */
   renderPdf: RenderPdf;
+  /** The skills the agent reads: bundled and your own (N3). */
+  skills: SkillsService;
 };
 
 export const DEV_ORIGIN = "http://localhost:1420";
@@ -57,5 +61,6 @@ export function createApp(deps: AppDeps) {
   registerAttentionRoutes(app, deps);
   registerSearchRoutes(app, deps);
   registerDocumentsRoutes(app, deps);
+  registerSkillsRoutes(app, deps);
   return app;
 }

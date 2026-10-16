@@ -19,3 +19,4 @@
 - [2026-10-16 tool-access-per-turn-not-per-provider](2026-10-16-tool-access-per-turn-not-per-provider.md) — Decide a tool per request from the person's words; the provider maps the flag; the model never picks its tools.
 - [2026-10-16 compile-the-native-helper-once](2026-10-16-compile-the-native-helper-once.md) — A tiny Swift program shipped as a string and compiled once with swiftc bridges Node to WebKit (PDF) at ~1 s per call.
 - [2026-10-16 reload-to-retest-once-a-day-rules](2026-10-16-reload-to-retest-once-a-day-rules.md) — Reload the window to retest a once-a-day rule; match the exact window row when tracing positions.
+- [2026-10-16 never-restore-a-stale-backup-over-live-data](2026-10-16-never-restore-a-stale-backup-over-live-data.md) — Back up fresh before each test run after the person has used the app; the WAL file hides newer data; read a setting back after restoring.

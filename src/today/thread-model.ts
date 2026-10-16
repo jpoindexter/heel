@@ -34,7 +34,7 @@ export function historyFor(messages: readonly Message[]): HistoryMessage[] {
 
 /** The message that replaces "Thinking…": what Heel said and did, or why it couldn't (with the words to retry). */
 export function answerFrom(result: ApiResult<TurnResultDto>, id: number, askedText: string): Message {
-  if (result.ok) return { id, role: "heel", status: "said", say: result.data.say, receipts: toReceipts(result.data.applied) };
+  if (result.ok) return { id, role: "heel", status: "said", say: result.data.say, receipts: toReceipts(result.data.applied), skills: result.data.skills };
   return { id, role: "heel", status: "failed", ...replyError(result.error.code, result.error.message), retryText: askedText };
 }
 

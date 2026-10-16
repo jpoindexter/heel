@@ -19,8 +19,23 @@ export type ShownNotice = Notice & { id: number; count: number };
 export type NoticeRoute = "panel" | "bubble" | "silent";
 export type NoticeContext = { panelVisible: boolean; quiet: boolean; focusRunning: boolean };
 
-/** How long a notice stays (longer while hovered or focused). */
-export const NOTICE_MS = 8_000;
+/** How long a notice stays, by what it asks of the person: a plain "done" is gone fast; Undo needs a moment; an error or a question waits longer. */
+export const NOTICE_MS = { plain: 3_000, undo: 5_000, error: 8_000, choices: 10_000 } as const;
+/** After the pointer or focus leaves a held toast it goes soon, not after a full new life. */
+export const NOTICE_AFTER_HOVER_MS = 2_000;
+/** Hovering or focus can hold a toast, but never for ever: nothing lives past this. */
+export const NOTICE_CEILING_MS = 12_000;
+
+/** What decides a notice's life: the same facts the toast and Greg's bubble both have. */
+export type NoticeShape = { tone: NoticeTone; undoable: boolean; choices: number };
+
+export function noticeMs({ tone, undoable, choices }: NoticeShape): number {
+  if (choices > 0) return NOTICE_MS.choices;
+  if (tone === "error") return NOTICE_MS.error;
+  return undoable ? NOTICE_MS.undo : NOTICE_MS.plain;
+}
+
+export const shapeOf = (notice: Pick<Notice, "tone" | "undo" | "choices">): NoticeShape => ({ tone: notice.tone, undoable: notice.undo !== undefined, choices: notice.choices?.length ?? 0 });
 
 /**
  * Where a notice goes: the panel's toast while the panel is open; a bubble next to Greg when it is closed,

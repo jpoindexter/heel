@@ -24,6 +24,7 @@ serde = { version = "1", features = ["derive"] }
 serde_json = "1"
 # Already in the lockfile through tauri (0.3.x); only the two classes the attention sensor reads are enabled.
 objc2-app-kit = { version = "0.3", features = ["NSWorkspace", "NSRunningApplication"] }
+tauri-plugin-notification = "2"
 
 
 [target.'cfg(not(any(target_os = "android", target_os = "ios")))'.dependencies]

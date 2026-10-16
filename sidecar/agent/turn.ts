@@ -5,6 +5,7 @@ import { parseAgentReply } from "./actions";
 import { executeActions, type ActionOutcome, type SideEffects } from "./execute";
 import { buildSnapshot, buildSystemPrompt, buildUserPrompt, loadSkill, selectSkills, wantsWeb, type SkillLoader } from "./prompt";
 import type { Provider, ProviderErrorCode, ProviderId } from "./providers/types";
+import type { SkillsService } from "./skills";
 
 export const MAX_USER_CHARS = 4_000;
 const MAX_ATTEMPTS = 2; // one retry with the rejection reason, then stop
@@ -20,6 +21,8 @@ export type TurnDeps = {
   provider: Provider;
   model: string | null;
   loadSkill?: SkillLoader;
+  /** Bundled and your own skills (N3). Absent = the bundled ones only, as in tests. */
+  skills?: SkillsService;
   /** Apple Mail, for draft_email. Absent = that action fails with a sentence. */
   mail?: Pick<MailSource, "draft">;
   /** The PDF printer, for make_pdf. Absent = that action fails with a sentence. */
@@ -41,8 +44,8 @@ export async function runTurn(deps: TurnDeps, userText: string, history: readonl
     return turnError("empty_input", `That message is ${text.length} characters. Keep it under ${MAX_USER_CHARS}, or split it.`);
   }
 
-  const skills = selectSkills(text);
-  const system = buildSystemPrompt(skills, deps.loadSkill ?? loadSkill);
+  const skills = selectSkills(text, deps.skills?.forSelection());
+  const system = buildSystemPrompt(skills, deps.loadSkill ?? deps.skills?.load ?? loadSkill);
   const snapshot = buildSnapshot(deps.store);
   const basePrompt = buildUserPrompt(snapshot, text, history);
 
