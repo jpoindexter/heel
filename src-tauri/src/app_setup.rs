@@ -18,6 +18,7 @@ pub(crate) fn setup(app: &mut App) -> Result<(), Box<dyn std::error::Error>> {
     watch_moves(&handle);
     hit_region::start_polling(&handle);
     crate::attention::start(&handle);
+    crate::system_notice::test_on_launch();
     build_app_menu(&handle)?;
     build_tray(&handle)?;
     // Isolation switches for hunting input/focus conflicts with other apps (see DECISIONS: B1).

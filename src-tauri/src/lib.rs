@@ -55,7 +55,6 @@ pub fn run() {
     }));
 
     builder
-        .plugin(tauri_plugin_notification::init())
         .manage(Attention::default())
         .manage(Dock::new())
         .manage(PendingView::new())

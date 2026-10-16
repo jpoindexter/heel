@@ -80,6 +80,9 @@
     ],
     "resources": [
       "resources/sidecar/**/*"
-    ]
+    ],
+    "macOS": {
+      "signingIdentity": "-"
+    }
   }
 }
