@@ -4,10 +4,11 @@ import type { useDocuments } from "./useDocuments";
 
 /** What Heel wrote, newest first: open it, make or open its PDF, reveal it in Finder, or take it off the list (the file stays; Undo brings it back). */
 export function DocumentsList({ documents }: { documents: ReturnType<typeof useDocuments> }) {
-  if (documents.documents.length === 0) return null;
+  if (documents.documents.length === 0 && !documents.problem) return null;
   return (
     <section className="history-day" aria-label="Documents">
       <Text size="1" weight="medium" color="gray" className="section-label">Documents</Text>
+      {documents.problem && <Text as="p" size="2" color="amber" role="alert">{documents.problem}</Text>}
       <ul className="rows">
         {documents.documents.map((doc) => (
           <li key={doc.id} className="task-row history-row">

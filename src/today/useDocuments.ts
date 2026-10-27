@@ -1,17 +1,18 @@
 import { useCallback, useEffect, useState } from "react";
 import { DocumentResultSchema, DocumentsListSchema, OpenedSchema, type DocumentDto, type DocumentFile } from "../../shared/api";
 import type { Client } from "../api/client";
+import { afterListLoad, EMPTY_LIST, type ListState } from "../ui/list-state";
 import { undoThen } from "../ui/undo-said";
 
 type Options = { active: boolean; notify: (message: string, tone?: "info" | "error", undo?: () => void) => void };
 
 /** Documents Heel wrote (N15): the list while its surface shows, open / reveal on this Mac, delete with Undo. */
 export function useDocuments(client: Client, { active, notify }: Options) {
-  const [documents, setDocuments] = useState<DocumentDto[]>([]);
+  const [list, setList] = useState<ListState<DocumentDto>>(EMPTY_LIST);
 
   const load = useCallback(async () => {
     const result = await client.get("/documents", DocumentsListSchema);
-    if (result.ok) setDocuments(result.data.documents);
+    setList((current) => afterListLoad(current, result, (data) => data.documents));
   }, [client]);
 
   useEffect(() => {
@@ -47,5 +48,5 @@ export function useDocuments(client: Client, { active, notify }: Options) {
     [client, load, notify],
   );
 
-  return { documents, load, open, pdf, remove };
+  return { documents: list.items, problem: list.problem, load, open, pdf, remove };
 }

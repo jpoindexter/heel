@@ -27,6 +27,7 @@ export function SkillsSettings({ active }: { active: boolean }) {
         </div>
       ) : (
         <>
+          {skills.problem && <Text as="p" size="2" color="amber" role="alert">{skills.problem}</Text>}
           <ul className="skill-list">
             {skills.skills.map((skill) => (
               <li key={skill.id} className="skill-row">

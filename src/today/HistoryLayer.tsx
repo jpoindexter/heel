@@ -63,6 +63,7 @@ export function HistoryLayer({ history, documents, today }: Props) {
   return (
     <div className="history">
       <WeekStrip week={week} />
+      {state.error && <Text as="p" size="2" color="amber" role="alert">{state.error}</Text>}
       <DocumentsList documents={documents} />
       <DayWent />
       {days.length === 0 && <Text size="2" color="gray" className="history-empty">Nothing finished in the last month. The list is where it starts.</Text>}

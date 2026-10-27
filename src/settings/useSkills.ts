@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useState } from "react";
 import { SkillResultSchema, SkillTextSchema, SkillsListSchema, UnsplitResultSchema, type SkillInfoDto } from "../../shared/api";
 import type { Client } from "../api/client";
+import { afterListLoad, EMPTY_LIST, type ListState } from "../ui/list-state";
 import { undoThen } from "../ui/undo-said";
 
 type Notify = (message: string, tone?: "info" | "error", undo?: () => void) => void;
@@ -10,12 +11,12 @@ const path = (id: string) => `/skills/${encodeURIComponent(id)}`;
 
 /** The skills manager's state (N3): the list, one open editor, and every write with its sentence and Undo. */
 export function useSkills(client: Client, { active, notify }: { active: boolean; notify: Notify }) {
-  const [skills, setSkills] = useState<SkillInfoDto[]>([]);
+  const [list, setList] = useState<ListState<SkillInfoDto>>(EMPTY_LIST);
   const [editing, setEditing] = useState<Editing>(null);
 
   const load = useCallback(async () => {
     const result = await client.get("/skills", SkillsListSchema);
-    if (result.ok) setSkills(result.data.skills);
+    setList((current) => afterListLoad(current, result, (data) => data.skills));
   }, [client]);
   useEffect(() => {
     if (active) void load();
@@ -45,7 +46,7 @@ export function useSkills(client: Client, { active, notify }: { active: boolean;
 
   const { save, remove } = useSkillWrites({ client, editing, setEditing, load, notify });
 
-  return { skills, editing, toggle, open, startNew, edit, close, save, remove };
+  return { skills: list.items, problem: list.problem, editing, toggle, open, startNew, edit, close, save, remove };
 }
 
 type Writes = { client: Client; editing: Editing; setEditing: (next: Editing) => void; load: () => Promise<void>; notify: Notify };
