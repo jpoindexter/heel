@@ -45,7 +45,7 @@ const mail = appleMail(osascriptJxa(runCommand), runCommand);
 const apps = appleApps((app) => osascriptJxa(runCommand, app, app === "Calendar" ? CALENDAR_TIMEOUT_MS : undefined));
 const pdf = createPdfRenderer({ run: runCommand, dir: join(dir, "pdf") });
 const skills = createSkillsService({ bundledDir: SKILLS_DIR, bundled: BUNDLED_SKILLS, userDir: join(dir, "skills"), off: store.settings.getSkillsOff, setOff: store.settings.setSkillsOff });
-const app = createApp({ store, providers: createProviders(), inbox, mail, mailAvailable: mailAppExists(), apps, token, allowedOrigins: [DEV_ORIGIN, ...TAURI_ORIGINS], openFile, renderPdf: pdf.render, skills });
+const app = createApp({ store, providers: createProviders(), inbox, mail, mailAvailable: mailAppExists(), apps, token, allowedOrigins: [DEV_ORIGIN, ...TAURI_ORIGINS, ...(process.env.HEEL_DEV_ORIGIN ? [process.env.HEEL_DEV_ORIGIN] : [])], openFile, renderPdf: pdf.render, skills });
 
 // Port 0 = let the OS pick a free port; the panel finds it in the connection file.
 const server = serve({ fetch: app.fetch, hostname: HOST, port: 0 }, (info) => {

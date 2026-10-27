@@ -85,6 +85,12 @@ describe("buildSnapshot", () => {
     expect(buildSnapshot(testStore()).text).not.toContain("Ways of working");
   });
 
+  it("tells the model the frog rule in one line", () => {
+    const store = testStore();
+    store.settings.setMethod({ timer: "timebox", structure: "frog", sizing: "none" });
+    expect(buildSnapshot(store).text).toContain("Ways of working: Eat the frog: the frog is the hardest task of the day, one only");
+  });
+
   it("caps the task list and says none when empty", () => {
     const store = testStore();
     expect(buildSnapshot(store).text).toContain("Open tasks:\nnone");

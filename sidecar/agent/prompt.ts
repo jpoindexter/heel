@@ -1,4 +1,4 @@
-import { BUCKETS, type Method } from "../../shared/method";
+import { BUCKETS, type Method, type Structure } from "../../shared/method";
 import { readFileSync } from "node:fs";
 import type { HistoryMessage } from "../../shared/api";
 import type { Store } from "../store/store";
@@ -116,12 +116,17 @@ export function buildSystemPrompt(skillIds: readonly string[], load: SkillLoader
 
 export type Snapshot = { text: string; refs: TaskRefs };
 
+/** What each structure asks of the model, in one clause; the rest get a generic one from their buckets. */
+const STRUCTURE_LINES: Partial<Record<Structure, string>> = {
+  "pickle-jar": 'Pickle jar: rocks (must do, big) first, then pebbles, then sand (small filler); set "bucket" on add_task to rock, pebble or sand',
+  frog: 'Eat the frog: the frog is the hardest task of the day, one only, done first; set "bucket" on add_task to frog or rest; if no task is marked [frog] and the person asks what to do, ask which one is the frog',
+};
+
 /** The chosen ways of working, as one line the model can act on (set `bucket` / `size` on add_task). */
 export function methodLine(method: Method): string | null {
   const parts: string[] = [];
   if (method.timer === "pomodoro") parts.push("Timer: Pomodoro cycles (work, short break, long break after a few)");
-  if (method.structure === "pickle-jar") parts.push("Pickle jar: rocks (must do, big) first, then pebbles, then sand (small filler); set \"bucket\" on add_task to rock, pebble or sand");
-  else if (method.structure !== "none") parts.push(`Structure: ${method.structure}; set \"bucket\" to one of ${BUCKETS[method.structure].join(", ")}`);
+  if (method.structure !== "none") parts.push(STRUCTURE_LINES[method.structure] ?? `Structure: ${method.structure}; set "bucket" to one of ${BUCKETS[method.structure].join(", ")}`);
   if (method.sizing === "tshirt") parts.push("T-shirt sizes: set \"size\" on add_task to xs, s, m, l or xl (xs = minutes, xl = half a day)");
   return parts.length ? `Ways of working: ${parts.join(". ")}.` : null;
 }

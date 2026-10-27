@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 import type { TaskDto } from "../../shared/api";
-import { bucketLabel, groupTasks, nextBucket, nextSize, sizeLabel } from "./method-model";
+import { bucketLabel, bucketPatches, groupTasks, nextBucket, nextSize, orderTasks, sizeLabel } from "./method-model";
 import { whatChanges } from "../ui/method";
 
 const task = (title: string, bucket: string | null = null): TaskDto => ({
@@ -52,5 +52,21 @@ describe("labels and the Settings sentence", () => {
     expect(bucketLabel("pebble")).toBe("Pebble");
     expect(whatChanges({ timer: "timebox", structure: "pickle-jar", sizing: "tshirt" })).toContain("Rocks, Pebbles and Sand");
     expect(whatChanges({ timer: "timebox", structure: "none", sizing: "none" })).toContain("one plain list");
+  });
+});
+
+describe("orderTasks (the Now rule)", () => {
+  it("puts the buckets first in their order and what has no bucket last, keeping the order within a bucket", () => {
+    const ordered = orderTasks([task("loose"), task("rest1", "rest"), task("frog", "frog"), task("rest2", "rest"), task("odd", "big")], "frog");
+    expect(ordered.map((t) => t.title)).toEqual(["frog", "rest1", "rest2", "loose", "odd"]);
+    expect(orderTasks([task("b", "sand"), task("a", "rock")], "none").map((t) => t.title)).toEqual(["b", "a"]);
+  });
+});
+
+describe("bucketPatches", () => {
+  it("writes the one task for most structures and demotes the old frog for the frog", () => {
+    expect(bucketPatches("pickle-jar", [task("a", "rock")], task("b"), "rock")).toEqual([{ task: task("b"), bucket: "rock" }]);
+    expect(bucketPatches("frog", [task("a", "frog")], task("b"), "frog").map((p) => [p.task.title, p.bucket])).toEqual([["b", "frog"], ["a", "rest"]]);
+    expect(bucketPatches("frog", [task("a", "frog")], task("b"), null)).toEqual([{ task: task("b"), bucket: null }]);
   });
 });

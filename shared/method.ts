@@ -29,7 +29,7 @@ export const DEFAULT_METHOD: Method = { timer: "timebox", structure: "none", siz
 
 export const BUILT = {
   timer: ["timebox", "pomodoro"] as readonly Timer[],
-  structure: ["none", "pickle-jar"] as readonly Structure[],
+  structure: ["none", "pickle-jar", "frog"] as readonly Structure[],
   sizing: ["none", "tshirt"] as readonly Sizing[],
 } as const;
 

@@ -11,6 +11,7 @@ import { client } from "../api/default-client";
 import type { useTodayState } from "./useTodayState";
 import { useMethod } from "../ui/method";
 import { JarMeter } from "./JarMeter";
+import { bucketPatches } from "./method-model";
 import { minutesForSize } from "./size-model";
 
 /** A ticked or removed row fades out first, then the write happens (it is the write that shows Undo). */
@@ -39,7 +40,11 @@ export function TaskSection({ state, foundId = null }: { state: ReturnType<typeo
   const split = useSplit({ client, refresh: tasks.refresh, notify: (notice) => tasks.showNotice(notice.message, notice.tone, notice.undo) });
   const marks = {
     method,
-    onPatch: (task: TaskDto, change: Parameters<typeof tasks.patch>[1]) => void tasks.patch(task, change),
+    onPatch: async (task: TaskDto, change: Parameters<typeof tasks.patch>[1]) => {
+      if (change.bucket === undefined) return tasks.patch(task, change);
+      // A bucket tap may write two tasks (the frog demotes the old one); one at a time, so the last refresh sees both.
+      for (const p of bucketPatches(method.structure, ready?.tasks ?? [], task, change.bucket)) await tasks.patch(p.task, { bucket: p.bucket });
+    },
     onSplit: (task: TaskDto) => void split.propose(task),
     after: (task: TaskDto) => (split.state?.task.id === task.id ? <SplitCard split={split} /> : null),
   };
