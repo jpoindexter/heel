@@ -50,7 +50,7 @@ export function MethodProvider({ client, children }: { client: Client; children:
 const STRUCTURE_SENTENCES: Readonly<Record<Structure, string>> = {
   none: "The list is one plain list.",
   "pickle-jar": "The list shows Rocks, Pebbles and Sand; a tap on a task's bucket moves it.",
-  "one-three-five": "The list is grouped by 1-3-5.",
+  "one-three-five": "The list shows Big, Medium and Small with their slots; one more than a slot holds asks to park one.",
   eisenhower: "The list is grouped by Eisenhower.",
   frog: "One task is the frog, the hardest one: it sits first and is Now. Marking another moves the frog to the rest.",
 };

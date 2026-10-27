@@ -2,6 +2,7 @@ import type { TaskDto } from "../../shared/api";
 import type { Method, MethodNumbers, Sizing } from "../../shared/method";
 import { frogMeter } from "./frog-model";
 import { JAR_FULL_PROMPT, jarFor } from "./jar-model";
+import { oneThreeFiveMeter } from "./one-three-five-model";
 import { dayTotal } from "./size-model";
 
 /** One quiet line over the list; `note` is the calm sentence when the day is over its rule, `ask` the one way out (a question to Heel). */
@@ -19,6 +20,8 @@ function structureMeter(tasks: readonly TaskDto[], method: Method, numbers: Meth
       return jarMeter(tasks, numbers, method.sizing);
     case "frog":
       return frogMeter(tasks);
+    case "one-three-five":
+      return oneThreeFiveMeter(tasks, numbers);
     default:
       return null;
   }
