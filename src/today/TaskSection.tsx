@@ -32,11 +32,22 @@ function useLeavingRow(run: (task: TaskDto, action: "complete" | "remove") => vo
   return { leavingId, complete: (t: TaskDto) => leave(t, "complete"), remove: (t: TaskDto) => leave(t, "remove") };
 }
 
+/** N7: the words and the order are the person's to change, each with Undo in its toast. */
+function useRowEditing(tasks: ReturnType<typeof useTodayState>["tasks"]) {
+  const [editing, setEditing] = useState<{ id: string; field: EditField } | null>(null);
+  return {
+    editing,
+    onEdit: (task: TaskDto, field: EditField | null) => setEditing(field ? { id: task.id, field } : null),
+    onRename: (task: TaskDto, title: string) => (setEditing(null), void tasks.rename(task, title)),
+    onStep: (task: TaskDto, step: string) => (setEditing(null), void tasks.setStep(task, step)),
+    onMove: (task: TaskDto, place: number) => void tasks.move(task, place),
+  };
+}
+
 /** Now, the rest, and the parked ideas. Starting a time-box opens its small form right under the Now row. */
 export function TaskSection({ state, foundId = null }: { state: ReturnType<typeof useTodayState>; foundId?: string | null }) {
   const { tasks, ready, now, focus, pomodoro, thread } = state;
   const [starting, setStarting] = useState(false);
-  const [editing, setEditing] = useState<{ id: string; field: EditField } | null>(null);
   const rows = useLeavingRow((task, action) => void (action === "complete" ? tasks.complete(task) : tasks.remove(task)));
   const { method, numbers } = useMethod();
   const ask = (prompt: string, label: string) => void thread.send(prompt, label);
@@ -51,13 +62,8 @@ export function TaskSection({ state, foundId = null }: { state: ReturnType<typeo
     },
     onSplit: (task: TaskDto) => void split.propose(task),
     after: (task: TaskDto) => (split.state?.task.id === task.id ? <SplitCard split={split} /> : null),
-    // N7: the words and the order are the person's to change, each with Undo in its toast.
-    editing,
     open: ready?.tasks ?? [],
-    onEdit: (task: TaskDto, field: EditField | null) => setEditing(field ? { id: task.id, field } : null),
-    onRename: (task: TaskDto, title: string) => (setEditing(null), void tasks.rename(task, title)),
-    onStep: (task: TaskDto, step: string) => (setEditing(null), void tasks.setStep(task, step)),
-    onMove: (task: TaskDto, place: number) => void tasks.move(task, place),
+    ...useRowEditing(tasks),
   };
   return (
     <>
