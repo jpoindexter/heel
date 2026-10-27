@@ -1,6 +1,7 @@
 import type { TaskDto } from "../../shared/api";
 import type { Method, MethodNumbers, Sizing } from "../../shared/method";
 import { frogMeter } from "./frog-model";
+import { ivyLeeMeter } from "./ivy-lee-model";
 import { JAR_FULL_PROMPT, jarFor } from "./jar-model";
 import { oneThreeFiveMeter } from "./one-three-five-model";
 import { dayTotal } from "./size-model";
@@ -22,6 +23,8 @@ function structureMeter(tasks: readonly TaskDto[], method: Method, numbers: Meth
       return frogMeter(tasks);
     case "one-three-five":
       return oneThreeFiveMeter(tasks, numbers);
+    case "ivy-lee":
+      return ivyLeeMeter(tasks, numbers);
     default:
       return null;
   }

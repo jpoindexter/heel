@@ -52,7 +52,7 @@ describe("/method/numbers", () => {
   it("has defaults, saves whole minutes, and refuses nonsense", async () => {
     const { json, send } = setup();
     const numbers = envelope(MethodNumbersSchema);
-    expect(numbers.parse(await json("/method/numbers"))).toMatchObject({ ok: true, data: { jarCapacityMin: 240, maxRocks: 2, sizeMinutes: { m: 50 }, slots: { big: 1, medium: 3, small: 5 }, quickMin: 2 } });
+    expect(numbers.parse(await json("/method/numbers"))).toMatchObject({ ok: true, data: { jarCapacityMin: 240, maxRocks: 2, sizeMinutes: { m: 50 }, slots: { big: 1, medium: 3, small: 5 }, quickMin: 2, ivyLeeCount: 6 } });
     expect(numbers.parse(await send("PUT", "/method/numbers", { jarCapacityMin: 300, maxRocks: 3, sizeMinutes: { xs: 5, s: 15, m: 30, l: 60, xl: 120 } }))).toMatchObject({ ok: true, data: { jarCapacityMin: 300, sizeMinutes: { xl: 120 } } });
     expect(numbers.parse(await json("/method/numbers"))).toMatchObject({ data: { maxRocks: 3 } });
     expect(numbers.parse(await send("PUT", "/method/numbers", { jarCapacityMin: 5 }))).toMatchObject({ ok: false });

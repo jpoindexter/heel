@@ -103,6 +103,12 @@ describe("buildSnapshot", () => {
     expect(buildSnapshot(store).text).toContain("Two-minute rule: anything that takes under 2 min is done now");
   });
 
+  it("tells the model Ivy Lee with its count", () => {
+    const store = testStore();
+    store.settings.setMethod({ timer: "timebox", structure: "ivy-lee", sizing: "none" });
+    expect(buildSnapshot(store).text).toContain("Ivy Lee: at the end of the day the person picks the 6 tasks");
+  });
+
   it("tells the model 1-3-5 with the slots from Settings", () => {
     const store = testStore();
     store.settings.setMethod({ timer: "timebox", structure: "one-three-five", sizing: "none" });

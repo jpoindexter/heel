@@ -21,6 +21,9 @@ describe("meterFor", () => {
     expect(meterFor([task("frog", "m")], method("frog", "tshirt"), DEFAULT_METHOD_NUMBERS)).toEqual({ line: "about 50 min on the list" });
     expect(meterFor([task("frog")], method("frog"), DEFAULT_METHOD_NUMBERS)).toBeNull();
   });
+  it("is the count picked for Ivy Lee", () => {
+    expect(meterFor([task("six"), task("six")], method("ivy-lee"), DEFAULT_METHOD_NUMBERS)).toEqual({ line: "2 of 6 picked" });
+  });
   it("is the three slots for 1-3-5", () => {
     expect(meterFor([task("small")], method("one-three-five"), DEFAULT_METHOD_NUMBERS)).toEqual({ line: "Big 0 of 1 · Medium 0 of 3 · Small 1 of 5" });
   });

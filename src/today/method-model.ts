@@ -5,7 +5,7 @@ import { frogPatches } from "./frog-model";
 export type TaskGroup = { key: string; label: string; tasks: TaskDto[] };
 
 const UNSORTED = "unsorted";
-const GROUP_LABELS: Readonly<Record<string, string>> = { rock: "Rocks", pebble: "Pebbles", sand: "Sand", big: "Big", medium: "Medium", small: "Small", do: "Do", schedule: "Schedule", delegate: "Delegate", drop: "Drop", frog: "The frog", rest: "The rest", quick: "Do it now", [UNSORTED]: "Not sorted yet" };
+const GROUP_LABELS: Readonly<Record<string, string>> = { rock: "Rocks", pebble: "Pebbles", sand: "Sand", big: "Big", medium: "Medium", small: "Small", do: "Do", schedule: "Schedule", delegate: "Delegate", drop: "Drop", frog: "The frog", rest: "The rest", quick: "Do it now", six: "The six", [UNSORTED]: "Not sorted yet" };
 
 /** The list in the chosen structure's groups (buckets in their order, then what has no bucket yet), empty groups left out. No structure = one group. */
 export function groupTasks(tasks: readonly TaskDto[], structure: Structure): TaskGroup[] {

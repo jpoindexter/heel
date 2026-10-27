@@ -5,7 +5,7 @@ import { z } from "zod";
  * knows so the stored setting stays stable; `BUILT` says which can be chosen today (the rest arrive with N18–N21).
  */
 export const TIMERS = ["timebox", "pomodoro"] as const;
-export const STRUCTURES = ["none", "pickle-jar", "one-three-five", "eisenhower", "frog", "two-minute"] as const;
+export const STRUCTURES = ["none", "pickle-jar", "one-three-five", "eisenhower", "frog", "two-minute", "ivy-lee"] as const;
 export const SIZINGS = ["none", "tshirt"] as const;
 export const SIZES = ["xs", "s", "m", "l", "xl"] as const;
 
@@ -25,6 +25,7 @@ export const BUCKETS: Readonly<Record<Exclude<Structure, "none">, readonly strin
   eisenhower: ["do", "schedule", "delegate", "drop"],
   frog: ["frog", "rest"],
   "two-minute": ["quick"],
+  "ivy-lee": ["six"],
 };
 export const ALL_BUCKETS: readonly string[] = [...new Set(Object.values(BUCKETS).flat())];
 
@@ -34,7 +35,7 @@ export const DEFAULT_METHOD: Method = { timer: "timebox", structure: "none", siz
 
 export const BUILT = {
   timer: ["timebox", "pomodoro"] as readonly Timer[],
-  structure: ["none", "pickle-jar", "one-three-five", "eisenhower", "frog", "two-minute"] as readonly Structure[],
+  structure: ["none", "pickle-jar", "one-three-five", "eisenhower", "frog", "two-minute", "ivy-lee"] as readonly Structure[],
   sizing: ["none", "tshirt"] as readonly Sizing[],
 } as const;
 
@@ -62,6 +63,7 @@ export const BUCKET_LABELS: Readonly<Record<string, string>> = {
   frog: "Frog",
   rest: "Rest",
   quick: "Do it now",
+  six: "Six",
 };
 
 const slot = (holds: number) => z.number().int().min(0).max(12).default(holds);
@@ -78,6 +80,8 @@ export const MethodNumbersSchema = z.object({
   slots: z.object({ big: slot(1), medium: slot(3), small: slot(5) }).default({ big: 1, medium: 3, small: 5 }),
   /** Two-minute rule: the box a "Do it now" task gets (minutes). */
   quickMin: z.number().int().min(1).max(15).default(2),
+  /** Ivy Lee: how many tasks tomorrow starts with. */
+  ivyLeeCount: z.number().int().min(1).max(10).default(6),
 });
 export type MethodNumbers = z.output<typeof MethodNumbersSchema>;
 export const DEFAULT_METHOD_NUMBERS: MethodNumbers = MethodNumbersSchema.parse({});

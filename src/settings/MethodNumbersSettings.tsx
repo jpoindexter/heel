@@ -37,10 +37,13 @@ function StructureNumbers({ method, numbers, save, id }: SaveProps & { method: M
   if (method.structure === "two-minute") {
     return <NumberField id={`${id}-quick`} label="Do it now under (min)" value={numbers.quickMin} onCommit={(n) => save({ ...numbers, quickMin: n })} />;
   }
+  if (method.structure === "ivy-lee") {
+    return <NumberField id={`${id}-six`} label="Tasks for tomorrow" value={numbers.ivyLeeCount} onCommit={(n) => save({ ...numbers, ivyLeeCount: n })} />;
+  }
   return null;
 }
 
-const STRUCTURES_WITH_NUMBERS: readonly Method["structure"][] = ["pickle-jar", "one-three-five", "two-minute"];
+const STRUCTURES_WITH_NUMBERS: readonly Method["structure"][] = ["pickle-jar", "one-three-five", "two-minute", "ivy-lee"];
 
 /** The structure's numbers and the minutes behind each T-shirt size, only for the methods that are on. Saved on blur, with Undo. */
 export function MethodNumbersSettings({ method }: { method: Method }) {
