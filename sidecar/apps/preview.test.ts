@@ -25,7 +25,7 @@ describe("app write previews", () => {
     expect(describeWrite({ kind: "note", title: "Ideas", body: "one two\nthree" })).toBe('"Ideas" — 3 words');
   });
 
-  it("turns a note into Notes' HTML with the title first and nothing unescaped", () => {
-    expect(noteHtml("A <b>", "line one\n\n2 > 1")).toBe("<div>A &lt;b&gt;</div><div>line one</div><div><br></div><div>2 &gt; 1</div>");
+  it("turns a note into Notes' HTML, one line per div, nothing unescaped, no title (Notes adds its name as the first line)", () => {
+    expect(noteHtml("line one\n\n2 > 1 <b>")).toBe("<div>line one</div><div><br></div><div>2 &gt; 1 &lt;b&gt;</div>");
   });
 });

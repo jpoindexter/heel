@@ -69,7 +69,7 @@ export function appleApps(jxa: (app: string) => JxaRunner): AppsSource {
     notes: () => list("note", { days: NOTE_DAYS, limit: MAX_ITEMS }) as Promise<Outcome<NoteItem[]>>,
 
     async add(write) {
-      const input = write.kind === "note" ? { title: write.title, html: noteHtml(write.title, write.body) } : write.kind === "event" ? { ...write, defaultMinutes: DEFAULT_EVENT_MINUTES } : write;
+      const input = write.kind === "note" ? { title: write.title, html: noteHtml(write.body) } : write.kind === "event" ? { ...write, defaultMinutes: DEFAULT_EVENT_MINUTES } : write;
       const result = parsed(await run(write.kind, { op: "add", ...input }), Added, APP_NAMES[write.kind]);
       if (!result.ok) return result;
       if (!result.value.ok) return fail("app_failed", `${APP_NAMES[write.kind]} didn't take it (${result.value.error}).`);

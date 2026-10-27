@@ -33,7 +33,7 @@ describe("appleApps", () => {
     expect(await apps.add({ kind: "reminder", title: "Call vet", due: "2026-10-29" })).toEqual({ ok: true, value: { id: "x-apple-reminder://1", where: "Reminders" } });
     expect(asked[0]).toEqual({ app: "Reminders", input: { op: "add", kind: "reminder", title: "Call vet", due: "2026-10-29" } });
     await apps.add({ kind: "note", title: "Vet", body: "teeth" });
-    expect(asked[1]).toEqual({ app: "Notes", input: { op: "add", title: "Vet", html: "<div>Vet</div><div>teeth</div>" } });
+    expect(asked[1]).toEqual({ app: "Notes", input: { op: "add", title: "Vet", html: "<div>teeth</div>" } });
     await apps.add({ kind: "event", title: "Dentist", start: "2026-10-28T10:00" });
     expect(asked[2]!.input).toMatchObject({ op: "add", defaultMinutes: 60 });
     await apps.remove("note", "x-coredata://1");

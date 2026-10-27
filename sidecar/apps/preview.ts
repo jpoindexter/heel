@@ -46,8 +46,8 @@ export const writtenText = (write: AppWrite, where: string): string => `Added to
 
 const escapeHtml = (text: string) => text.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
 
-/** Notes wants HTML; the title is the first line (Notes takes it as the name), then one div per line. */
-export function noteHtml(title: string, body: string): string {
-  const lines = [title, ...body.split("\n")].map((line) => `<div>${escapeHtml(line) || "<br>"}</div>`);
+/** Notes wants HTML, one div per line. The title goes in the note's `name`: Notes shows it as the first line itself. */
+export function noteHtml(body: string): string {
+  const lines = body.split("\n").map((line) => `<div>${escapeHtml(line) || "<br>"}</div>`);
   return lines.join("");
 }
