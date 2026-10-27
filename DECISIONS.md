@@ -358,3 +358,8 @@ Choice: every window root (panel, Greg, the notice bubble) sits in one `ErrorBou
 Why: React 19 unmounts a root on an uncaught render error: the panel went blank with no way back. Found in the 2026-10-27 audit.
 Also from that audit: README/PRD/ROADMAP/ARCHITECTURE now describe the real app (N28); the attention budget fold and the connection file have failing-when-broken tests and `npm run smoke` runs the helper end to end over HTTP with a fake AI (N29). Not done: the empty-catch comment sweep (41 sites in files another session is editing).
 Reversible? Yes.
+
+## 2026-10-27 — F9: keyboard focus follows the layers; the four buttons say their names
+Choice: the base and any covered layer are `inert` (no pointer, no Tab, nothing announced); a layer that becomes the top takes focus unless something inside already has it (the search box, the chat card); when it leaves, focus returns to the control that opened it, found again by its accessible name when the header re-made it, else to the layer underneath. The four round buttons carry a Radix tooltip that opens on hover and on keyboard focus (replaces the `title` attribute, which never showed for keyboard users).
+Verified in the panel preview: push → layer focused, base inert; Back and Esc → the gear; ⌘K → "Find anything" box; Esc → the gear.
+Reversible? Yes.
