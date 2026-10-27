@@ -25,9 +25,19 @@ function Hit({ hit, active, onPick, onHover }: { hit: SearchHitDto; active: bool
   );
 }
 
+/** A search that failed: what went wrong, and the same query again. Shown instead of "nothing holds", which it is not. */
+function SearchError({ message, onRetry }: { message: string; onRetry: () => void }) {
+  return (
+    <div className="search-hint row" role="alert">
+      <Text size="2" color="amber">{message}</Text>
+      <Button size="1" variant="soft" radius="full" onClick={onRetry}>Try again</Button>
+    </div>
+  );
+}
+
 /** One box over everything: results as you type, grouped; ↑ ↓ and Enter need no mouse; Esc goes back; the query can go to Heel as a question. */
 export function SearchLayer({ search, active, onPick, onAsk }: Props) {
-  const { state, setQuery, move, setActive } = search;
+  const { state, setQuery, move, setActive, refresh } = search;
   const box = useRef<HTMLInputElement>(null);
   useEffect(() => {
     if (active) box.current?.focus();
@@ -51,9 +61,9 @@ export function SearchLayer({ search, active, onPick, onAsk }: Props) {
           <MagnifyingGlassIcon aria-hidden="true" />
         </TextField.Slot>
       </TextField.Root>
-      {state.error && <Text size="2" color="amber" role="alert">{state.error}</Text>}
-      {groups.length === 0 && !state.searching && <Text size="2" color="gray" className="search-hint">{hint(state.query)}</Text>}
-      <div className="search-results" role="listbox" aria-label="Results">
+      {state.error && <SearchError message={state.error} onRetry={refresh} />}
+      {groups.length === 0 && !state.searching && !state.error && <Text size="2" color="gray" role="status" className="search-hint">{hint(state.query)}</Text>}
+      <div className="search-results">
         {groups.map((group) => (
           <section key={group.kind} className="search-group" aria-label={group.label}>
             <Text size="1" weight="medium" color="gray" className="section-label">{group.label}</Text>

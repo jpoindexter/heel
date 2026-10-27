@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Select, Text, TextField } from "@radix-ui/themes";
-import type { ModelControl } from "./brain-model";
+import { modelToCommit, type ModelControl } from "./brain-model";
 
 /** Radix Select can't hold an empty value, so "provider default" travels as this word and becomes null on the way out. */
 const DEFAULT_CHOICE = "__provider-default__";
@@ -31,7 +31,10 @@ function ModelSelect({ control, onCommit }: { control: Extract<ModelControl, { k
 
 function ModelText({ control, onCommit }: { control: Extract<ModelControl, { kind: "text" }>; onCommit: Props["onCommit"] }) {
   const [draft, setDraft] = useState(control.value);
-  const commit = () => onCommit(draft.trim() || null);
+  const commit = () => {
+    const next = modelToCommit(draft, control.value);
+    if (next !== undefined) onCommit(next);
+  };
   return (
     <>
       <Text as="label" size="2" weight="medium" htmlFor="model">Model (optional)</Text>

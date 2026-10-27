@@ -73,7 +73,7 @@ export function HistoryLayer({ history, documents, today }: Props) {
             {day.tasks.map((task) => (
               <li key={task.id} className="task-row history-row">
                 <Text size="2" className="grow task-text clamp-2">{task.title}</Text>
-                <Button size="1" variant="ghost" color="gray" className="row-action" onClick={() => void restore(task.id, task.title)}>Restore</Button>
+                <Button size="1" variant="ghost" color="gray" className="row-action" aria-label={`Restore: ${task.title}`} onClick={() => void restore(task.id, task.title)}>Restore</Button>
               </li>
             ))}
           </ul>

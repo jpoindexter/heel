@@ -40,6 +40,12 @@ export function modelControl(provider: ProviderId | null, models: string[] | nul
   return { kind: "text", value: current ?? "" };
 }
 
+/** What a typed model name means on blur: the new name, null for "provider default", or undefined when nothing changed (so Tab through the field writes nothing). */
+export function modelToCommit(draft: string, current: string): string | null | undefined {
+  const next = draft.trim() || null;
+  return next === (current.trim() || null) ? undefined : next;
+}
+
 export function labelFor(state: BrainStateDto, id: ProviderId | null): string {
   return state.providers.find((provider) => provider.id === id)?.label ?? "no provider";
 }

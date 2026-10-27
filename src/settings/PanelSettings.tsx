@@ -6,7 +6,7 @@ export function PanelSettings() {
   const { settings, setAlwaysOnTop } = useShellSettings();
   return (
     <section aria-labelledby="panel-heading" className="settings-section">
-      <Heading as="h2" id="panel-heading" size="2">Panel</Heading>
+      <Heading as="h3" id="panel-heading" size="2">Panel</Heading>
       <Text as="label" size="2" className="attention-switch">
         <Switch size="1" checked={settings.alwaysOnTop} onCheckedChange={setAlwaysOnTop} /> Always on top
       </Text>

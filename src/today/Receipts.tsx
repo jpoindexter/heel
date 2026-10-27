@@ -21,10 +21,10 @@ export function Receipts({ receipts, onUndo, onOpen, onOpenMail, onConfirm }: Pr
             <Text size="1" color="gray">Undone</Text>
           ) : (
             <>
-              {receipt.document && onOpen && <Button size="1" variant="ghost" onClick={() => onOpen(receipt.document!, receipt.file ?? "md")}>Open</Button>}
+              {receipt.document && onOpen && <Button size="1" variant="ghost" aria-label={`Open: ${receipt.text}`} onClick={() => onOpen(receipt.document!, receipt.file ?? "md")}>Open</Button>}
               {receipt.mail && onOpenMail && <Button size="1" variant="ghost" aria-label={`Open in Mail: ${receipt.text}`} onClick={() => onOpenMail(receipt.mail!)}>Open in Mail</Button>}
               {receipt.proposal && onConfirm && <Button size="1" variant="soft" onClick={() => onConfirm(index)}>{ADD_TO[receipt.proposal.kind]}</Button>}
-              {receipt.undo && <Button size="1" variant="ghost" onClick={() => onUndo(index)}>Undo</Button>}
+              {receipt.undo && <Button size="1" variant="ghost" aria-label={`Undo: ${receipt.text}`} onClick={() => onUndo(index)}>Undo</Button>}
             </>
           )}
         </li>

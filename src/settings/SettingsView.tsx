@@ -1,3 +1,4 @@
+import { useState } from "react";
 import type { Preference } from "../theme/appearance";
 import { APP_VERSION } from "../../shared/version";
 import { client } from "../api/default-client";
@@ -6,7 +7,7 @@ import { useActivity } from "../mascot/life/useActivity";
 import type { Density } from "../theme/density";
 import { useAttentionSettings } from "../ui/attention";
 import { useMethod } from "../ui/method";
-import { systemToastsOn } from "../ui/system-toasts";
+import { setSystemToasts, systemToastsOn } from "../ui/system-toasts";
 import { ActivitySettings } from "./ActivitySettings";
 import { AppearanceSettings } from "./AppearanceSettings";
 import { AttentionSettings } from "./AttentionSettings";
@@ -37,6 +38,9 @@ export function SettingsView({ active, onSaved, preference, onPreference, densit
   const [activity] = useActivity();
   const { settings: attention } = useAttentionSettings();
   const { method } = useMethod();
+  // Held here, not in NoticeSettings: the group row reads it at rest and must change with the switch.
+  const [noticesOn, setNoticesOn] = useState(systemToastsOn);
+  const changeNotices = (on: boolean) => (setNoticesOn(on), setSystemToasts(on));
   return (
     <div className="settings">
       <SettingsGroup title="Look" summary={lookSummary(preference, density)}>
@@ -44,9 +48,9 @@ export function SettingsView({ active, onSaved, preference, onPreference, densit
         <DensitySettings density={density} onDensity={onDensity} />
         <PanelSettings />
       </SettingsGroup>
-      <SettingsGroup title="Greg" summary={gregSummary(activity, systemToastsOn(), attention.enabled)}>
+      <SettingsGroup title="Greg" summary={gregSummary(activity, noticesOn, attention.enabled)}>
         <ActivitySettings />
-        <NoticeSettings />
+        <NoticeSettings on={noticesOn} onChange={changeNotices} />
         <AttentionSettings />
       </SettingsGroup>
       <SettingsGroup title="Ways of working" summary={workSummary(method)}>

@@ -1,6 +1,14 @@
 import { describe, expect, it } from "vitest";
 import type { TaskDto } from "../../shared/api";
-import { CHIPS, nowCard, replyError } from "./today-model";
+import { CHIPS, emptyListLine, nowCard, replyError } from "./today-model";
+
+describe("emptyListLine", () => {
+  it("tells a first-time (or cleared-by-removal) list how to add, and a finished day that it is done", () => {
+    expect(emptyListLine(0)).toContain("Nothing on your list");
+    expect(emptyListLine(3)).toContain("All done for today");
+    expect(emptyListLine(3)).not.toContain("Nothing on your list");
+  });
+});
 
 const task = (title: string, nowStep: string | null = null): TaskDto => ({
   id: title,

@@ -1,15 +1,13 @@
 import { useCallback, useMemo, useRef, useState } from "react";
-import { ParkedListSchema, TasksStateSchema, type ParkedIdeaDto, type TaskDto } from "../../shared/api";
+import { ParkedListSchema, TasksStateSchema } from "../../shared/api";
 import type { Client } from "../api/client";
 import type { Notice } from "../ui/notice-model";
 import { useNotices } from "../ui/notices";
 import { useFocusRefresh } from "../ui/useFocusRefresh";
 import { createTaskActions } from "./task-actions";
+import { afterRefresh, type TasksState } from "./tasks-state";
 
-export type TasksState =
-  | { phase: "loading" }
-  | { phase: "error"; message: string }
-  | { phase: "ready"; tasks: TaskDto[]; parked: ParkedIdeaDto[]; doneToday: number };
+export type { TasksState } from "./tasks-state";
 
 /** Open tasks, parked ideas, and their notices (Added, Parked, Completed… with Undo). `active` = this view is showing (hidden views stay mounted, so drafts survive). */
 export function useTasks(client: Client, active: boolean) {
@@ -18,9 +16,7 @@ export function useTasks(client: Client, active: boolean) {
 
   const refresh = useCallback(async () => {
     const [tasks, parked] = await Promise.all([client.get("/tasks", TasksStateSchema), client.get("/parked", ParkedListSchema)]);
-    // A failed reload keeps what is already on screen: stale tasks beat a blank panel. Only a first load can show the error.
-    if (!tasks.ok) return setState((current) => (current.phase === "ready" ? current : { phase: "error", message: tasks.error.message }));
-    setState({ phase: "ready", tasks: tasks.data.tasks, parked: parked.ok ? parked.data.parked : [], doneToday: tasks.data.doneToday });
+    setState((current) => afterRefresh(current, tasks, parked));
   }, [client]);
   const latest = useRef(state);
   latest.current = state;

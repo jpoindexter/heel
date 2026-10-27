@@ -1,4 +1,4 @@
-import { ParkedResultSchema, TaskResultSchema, UnparkResultSchema, type ParkedIdeaDto, type TaskDto } from "../../shared/api";
+import { ParkedResultSchema, TaskResultSchema, UnparkResultSchema, type ApiResult, type ParkedIdeaDto, type TaskDto } from "../../shared/api";
 import type { Client } from "../api/client";
 import type { Notice } from "../ui/Notifier";
 import { encouragement, lineOf } from "./encouragement";
@@ -26,6 +26,15 @@ function makeCheer(doneToday: () => number): (title: string) => string {
 }
 
 export type TaskPatch = { size?: TaskDto["size"]; bucket?: string | null; title?: string; nowStep?: string | null; place?: number };
+
+/** An Undo that the helper refuses must say so: a row that quietly fails to come back reads as lost. The list reloads either way. */
+function undoThen(run: () => Promise<ApiResult<unknown>>, refresh: () => Promise<void>, fail: (message: string) => void): () => void {
+  return () =>
+    void run().then((result) => {
+      if (!result.ok) fail(result.error.message);
+      return refresh();
+    });
+}
 
 /** Where a task sits among the open tasks that share its parent (0 = first). */
 export function placeOf(task: TaskDto, open: readonly TaskDto[]): number {
@@ -65,7 +74,7 @@ function makeEdits(client: Client, refresh: () => Promise<void>, fail: (message:
   const change = async (task: TaskDto, patch: TaskPatch, message: string, back: TaskPatch) => {
     const result = await client.patch(`/tasks/${task.id}`, TaskResultSchema, patch);
     if (!result.ok) return fail(result.error.message);
-    notify({ message, tone: "info", undo: () => void client.patch(`/tasks/${task.id}`, TaskResultSchema, back).then(refresh) });
+    notify({ message, tone: "info", undo: undoThen(() => client.patch(`/tasks/${task.id}`, TaskResultSchema, back), refresh, fail) });
     await refresh();
   };
   return {
@@ -79,8 +88,7 @@ function makeEdits(client: Client, refresh: () => Promise<void>, fail: (message:
 export function createTaskActions({ client, refresh, dropLocally, notify, doneToday, openTasks }: Deps) {
   const fail = (message: string) => notify({ message, tone: "error" });
   const cheer = makeCheer(doneToday);
-  const undoWith = (run: () => Promise<unknown>) => () =>
-    void run().then(refresh);
+  const undoWith = (run: () => Promise<ApiResult<unknown>>) => undoThen(run, refresh, fail);
 
   const settle = async (task: TaskDto, action: "complete" | "drop") => {
     dropLocally(task.id);

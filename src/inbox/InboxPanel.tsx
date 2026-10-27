@@ -18,8 +18,8 @@ function Item({ item, added, onAdd, onOpen, onReply }: { item: DigestItemDto; ad
       <Text size="1" color="gray" className="inbox-from clamp-1">{item.from} · {item.subject}</Text>
       <div className="inbox-actions">
         <Button size="1" radius="full" variant="soft" disabled={added} onClick={onAdd}>{added ? "Added" : "Add task"}</Button>
-        <Button size="1" radius="full" variant="soft" color="gray" onClick={onOpen}>Open</Button>
-        <Button size="1" radius="full" variant="soft" color="gray" onClick={onReply}>Reply</Button>
+        <Button size="1" radius="full" variant="soft" color="gray" aria-label={`Open in Mail: ${item.subject}`} onClick={onOpen}>Open</Button>
+        <Button size="1" radius="full" variant="soft" color="gray" aria-label={`Reply: ${item.subject}`} onClick={onReply}>Reply</Button>
       </div>
     </div>
   );
@@ -55,6 +55,7 @@ export function InboxPanel({ digest: controller, reply, onOpen }: Props) {
           </div>
         ))
       )}
+      {state.error && <Text size="2" color="amber" role="alert">{state.error}</Text>}
       <Text size="1" color="gray">Read from Apple Mail on this Mac. Sent to the AI: sender, subject and the first lines of each unread email.</Text>
       <div className="inbox-actions">
         <Button size="1" radius="full" variant="soft" color="gray" onClick={() => void check()}>Check again</Button>

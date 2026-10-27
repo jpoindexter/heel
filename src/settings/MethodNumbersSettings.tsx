@@ -1,23 +1,13 @@
 import { useId } from "react";
-import { Text, TextField } from "@radix-ui/themes";
 import { BUCKET_LABELS, SIZES, SIZE_LABELS, SLOT_BUCKETS, type Method, type MethodNumbers } from "../../shared/method";
 import { useMethod } from "../ui/method";
 import { useNotices } from "../ui/notices";
+import { NumberField } from "./NumberField";
 
 const MIN_PER_HOUR = 60;
 
-type FieldProps = { id: string; label: string; value: number; onCommit: (value: number) => void };
-
-function NumberField({ id, label, value, onCommit }: FieldProps) {
-  return (
-    <div className="field">
-      <Text as="label" size="1" color="gray" htmlFor={id}>{label}</Text>
-      <TextField.Root id={id} size="1" type="number" inputMode="numeric" defaultValue={value} onBlur={(e) => Number(e.target.value) !== value && onCommit(Number(e.target.value))} />
-    </div>
-  );
-}
-
-type SaveProps = { numbers: MethodNumbers; save: (next: MethodNumbers) => void; id: string };
+type Save = (next: MethodNumbers) => Promise<boolean>;
+type SaveProps = { numbers: MethodNumbers; save: Save; id: string };
 
 /** The structure's own numbers: the jar's size, or 1-3-5's slots. Nothing for the structures that have none. */
 function StructureNumbers({ method, numbers, save, id }: SaveProps & { method: Method }) {
@@ -50,19 +40,21 @@ export function MethodNumbersSettings({ method }: { method: Method }) {
   const { numbers, changeNumbers } = useMethod();
   const notices = useNotices();
   const id = useId();
-  const save = (next: MethodNumbers, previous: MethodNumbers) => {
-    void changeNumbers(next).then((refused) => {
-      if (refused) return notices.show({ message: refused, tone: "error" });
+  const save: Save = (next) => {
+    const previous = numbers;
+    return changeNumbers(next).then((refused) => {
+      if (refused) return (notices.show({ message: refused, tone: "error" }), false);
       notices.show({ message: "Numbers changed", tone: "info", undo: () => void changeNumbers(previous) });
+      return true;
     });
   };
   if (!STRUCTURES_WITH_NUMBERS.includes(method.structure) && method.sizing !== "tshirt") return null;
   return (
     <div className="method-numbers">
-      <StructureNumbers method={method} numbers={numbers} save={(next) => save(next, numbers)} id={id} />
+      <StructureNumbers method={method} numbers={numbers} save={save} id={id} />
       {method.sizing === "tshirt" &&
         SIZES.map((size) => (
-          <NumberField key={size} id={`${id}-${size}`} label={`${SIZE_LABELS[size]} (min)`} value={numbers.sizeMinutes[size]} onCommit={(n) => save({ ...numbers, sizeMinutes: { ...numbers.sizeMinutes, [size]: n } }, numbers)} />
+          <NumberField key={size} id={`${id}-${size}`} label={`${SIZE_LABELS[size]} (min)`} value={numbers.sizeMinutes[size]} onCommit={(n) => save({ ...numbers, sizeMinutes: { ...numbers.sizeMinutes, [size]: n } })} />
         ))}
     </div>
   );

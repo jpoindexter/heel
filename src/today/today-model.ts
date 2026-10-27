@@ -29,3 +29,8 @@ const NEEDS_SETTINGS = new Set(["not_ready", "not_signed_in", "not_installed"]);
 export function replyError(code: string, message: string): { message: string; offerSettings: boolean } {
   return { message, offerSettings: NEEDS_SETTINGS.has(code) };
 }
+
+/** The list with nothing on it: a day's work finished is an ending, not a first-use lesson in how to add a task. */
+export function emptyListLine(doneToday: number): string {
+  return doneToday > 0 ? "All done for today. Anything else goes to Heel, or + › Add task." : "Nothing on your list. Tell Heel, or + › Add task.";
+}

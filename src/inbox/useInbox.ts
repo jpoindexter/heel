@@ -1,8 +1,9 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import { z } from "zod";
-import { DigestSchema, InboxConnectSchema, InboxStatusSchema, type DigestDto, type InboxStatusDto } from "../../shared/api";
+import { DigestSchema, InboxConnectSchema, InboxStatusSchema, type InboxStatusDto } from "../../shared/api";
 import type { Client } from "../api/client";
 import { beginWork } from "../mascot/motion-events";
+import { afterAddTask, type DigestState } from "./digest-model";
 
 /** After Connect the person is in their browser; look again this often (and for this long) until Google has sent them back. */
 const WATCH_MS = 2_000;
@@ -70,7 +71,7 @@ export function useInboxConnection(client: Client, active: boolean): InboxAction
   return { status, error, saveClient, connect, disconnect, refresh };
 }
 
-export type DigestState = { phase: "idle" } | { phase: "loading" } | { phase: "error"; message: string } | { phase: "ready"; digest: DigestDto; added: readonly string[] };
+export type { DigestState } from "./digest-model";
 
 /** "Email": ask for the digest (Apple Mail on this Mac) and add items as tasks, once each. */
 export function useDigest(client: Client, onTaskAdded: () => void) {
@@ -81,15 +82,14 @@ export function useDigest(client: Client, onTaskAdded: () => void) {
     const endWork = beginWork("digest");
     const result = await client.post("/mail/digest", DigestSchema);
     endWork();
-    setState(result.ok ? { phase: "ready", digest: result.data, added: [] } : { phase: "error", message: result.error.message });
+    setState(result.ok ? { phase: "ready", digest: result.data, added: [], error: null } : { phase: "error", message: result.error.message });
   }, [client]);
 
   const addTask = useCallback(
     async (messageId: string, title: string) => {
       const result = await client.post("/inbox/add-task", AddedSchema, { messageId, title });
-      if (!result.ok) return setState((s) => (s.phase === "ready" ? s : { phase: "error", message: result.error.message }));
-      setState((s) => (s.phase === "ready" ? { ...s, added: [...s.added, messageId] } : s));
-      onTaskAdded();
+      setState((s) => afterAddTask(s, messageId, result));
+      if (result.ok) onTaskAdded();
     },
     [client, onTaskAdded],
   );
