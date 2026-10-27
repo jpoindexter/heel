@@ -21,7 +21,8 @@ export type AttentionContext = {
   wanderBundles: readonly string[];
 };
 
-export type Rule = "rabbit-hole" | "time-suck" | "drifting" | "hyperfocus";
+export const RULES = ["rabbit-hole", "time-suck", "drifting", "hyperfocus"] as const;
+export type Rule = (typeof RULES)[number];
 
 export type Nudge = { rule: Rule; text: string; choices: readonly string[] };
 

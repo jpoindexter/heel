@@ -1,3 +1,7 @@
+import { mkdtempSync } from "node:fs";
+import { tmpdir } from "node:os";
+import { join } from "node:path";
+import { DatabaseSync } from "node:sqlite";
 import { describe, expect, it } from "vitest";
 import { DEFAULT_ATTENTION_SETTINGS } from "../../shared/api";
 import { testStore } from "./test-helpers";
@@ -80,6 +84,18 @@ describe("foldAttention", () => {
     expect(store.interrupts.state().remaining).toBe(0);
     expect(timeSuck(store)).toEqual([]);
     expect(store.interrupts.state().used).toBe(3);
+    store.close();
+  });
+
+  it("treats a drift-state row of another shape as a fresh start instead of failing every sample", () => {
+    const path = join(mkdtempSync(join(tmpdir(), "heel-attention-")), "heel.db");
+    const store = testStore({ path });
+    store.settings.setAttention({ ...DEFAULT_ATTENTION_SETTINGS, enabled: true });
+    const raw = new DatabaseSync(path);
+    raw.prepare("INSERT INTO settings (key, value, updated_at) VALUES ('attention-state', '{}', 0)").run();
+    raw.close();
+    expect(store.attention.fold(sample(0), context)).toBeNull();
+    expect(timeSuck(store).map((n) => n.rule)).toEqual(["time-suck"]);
     store.close();
   });
 
