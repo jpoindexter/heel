@@ -12,6 +12,7 @@ import { useActivity } from "../mascot/life/useActivity";
 import { OPEN_SETTINGS_EVENT } from "../events";
 import { Notifier } from "../ui/Notifier";
 import { NoticesProvider, useNotices } from "../ui/notices";
+import { useBackgroundFailures } from "../ui/useBackgroundFailures";
 import { LayersProvider, useLayers, type Layers } from "../ui/layers";
 import { AttentionProvider } from "../ui/attention";
 import { MethodProvider } from "../ui/method";
@@ -81,6 +82,7 @@ function PanelBody({ look, parked }: { look: ReturnType<typeof usePanelLook>; pa
   const inSettings = layers.top === "settings";
   const { summary, refresh: refreshSummary } = useBrainSummary(client, inSettings ? "settings" : "chat");
   const notices = useNotices();
+  useBackgroundFailures(notices);
   const helper = useHelperStatus((from) => {
     void refreshSummary();
     if (from !== "starting") notices.show({ message: "Heel's helper is back", tone: "info" });

@@ -5,6 +5,7 @@ import { shouldBlockContextMenu } from "./context-menu";
 import { Mascot } from "./mascot/Mascot";
 import { NoticeBubble } from "./notice/NoticeBubble";
 import { Panel } from "./panel/Panel";
+import { ErrorBoundary } from "./ui/ErrorBoundary";
 import "./design/base.css";
 import "./design/motion.css";
 
@@ -23,6 +24,11 @@ window.addEventListener("contextmenu", (event) => {
   if (shouldBlockContextMenu(event.target as HTMLElement | null)) event.preventDefault();
 });
 
+const view = label === "panel" ? <Panel /> : label === "notice" ? <NoticeBubble /> : <Mascot />;
+
+// A crash in one window must never leave it blank: each root has its own recovery screen.
 ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
-  <React.StrictMode>{label === "panel" ? <Panel /> : label === "notice" ? <NoticeBubble /> : <Mascot />}</React.StrictMode>,
+  <React.StrictMode>
+    <ErrorBoundary name={label}>{view}</ErrorBoundary>
+  </React.StrictMode>,
 );

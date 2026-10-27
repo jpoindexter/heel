@@ -1,0 +1,16 @@
+/* The recovery screen: fills the window, reads top to bottom, nothing else on it. */
+.crash {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  align-items: flex-start;
+  box-sizing: border-box;
+  height: var(--viewport-height);
+  padding: var(--space-4);
+  background: var(--color-panel-solid);
+}
+
+.crash-detail {
+  overflow-wrap: anywhere;
+  user-select: text;
+}

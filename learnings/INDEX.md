@@ -21,3 +21,4 @@
 - [2026-10-16 reload-to-retest-once-a-day-rules](2026-10-16-reload-to-retest-once-a-day-rules.md) — Reload the window to retest a once-a-day rule; match the exact window row when tracing positions.
 - [2026-10-16 never-restore-a-stale-backup-over-live-data](2026-10-16-never-restore-a-stale-backup-over-live-data.md) — Back up fresh before each test run after the person has used the app; the WAL file hides newer data; read a setting back after restoring.
 - [2026-10-16 an-ok-from-a-fire-and-forget-api-means-nothing](2026-10-16-an-ok-from-a-fire-and-forget-api-means-nothing.md) — A queued call is not a delivered one: get the OS's own answer, ship a way to see it, and check the app's signature when macOS says not allowed.
+- [2026-10-27 coverage-by-filename-lies](2026-10-27-coverage-by-filename-lies.md) — "No test for X" is a claim about symbols: grep the symbol in `*.test.*` before writing it down; sibling filenames are a convention.

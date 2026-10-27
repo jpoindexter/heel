@@ -352,3 +352,9 @@ Choice: a model that answers from the unread mail may add `show_mail {mail: "m1"
 Verified (real window, Codex brain): "check my email for the newest newsletters" → "Used: task initiation, mail inbox" and receipts "Your £2.99 producer bundle… — Glitchedtones <…>" and "Libera tu estilo con Converse — Zalando <…>", each with Open in Mail; clicking the first brought Mail to the front on that message's window ("Your £2.99 producer bundle: 12+ GB of sounds"). Tests: refs map to ids, an unknown ref (m9) fails with the known list, the message text is "Subject — Sender".
 Not verified: the Open button in the packaged app (Mail's Automation permission is per app); Gmail links; opening a message that has since left the inbox (the route returns its sentence).
 Reversible? Yes (one action, one receipt field).
+
+## 2026-10-27 — N27: a crash never leaves a window blank; N28/N29 hygiene from the audit
+Choice: every window root (panel, Greg, the notice bubble) sits in one `ErrorBoundary` (src/ui/ErrorBoundary.tsx) that draws its own Radix Theme, one calm line ("Something in Heel broke. Nothing you did; your tasks are safe."), what broke in small type, and Reload. A promise nobody awaited or an error outside React becomes the normal error toast (useBackgroundFailures in the panel). These three places are the only `console.error` calls in src/: the crash path is where the "one logger" rule yields to "the person can see it in the log".
+Why: React 19 unmounts a root on an uncaught render error: the panel went blank with no way back. Found in the 2026-10-27 audit.
+Also from that audit: README/PRD/ROADMAP/ARCHITECTURE now describe the real app (N28); the attention budget fold and the connection file have failing-when-broken tests and `npm run smoke` runs the helper end to end over HTTP with a fake AI (N29). Not done: the empty-catch comment sweep (41 sites in files another session is editing).
+Reversible? Yes.
