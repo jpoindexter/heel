@@ -10,3 +10,16 @@ export function parseShellSettings(payload: unknown): ShellSettings {
   const parsed = ShellSettingsSchema.safeParse(payload);
   return parsed.success ? parsed.data : SHELL_DEFAULTS;
 }
+
+export type ShellSwitch = keyof ShellSettings;
+
+const COULDNT: Readonly<Record<ShellSwitch, string>> = {
+  alwaysOnTop: "Couldn't keep the panel on top.",
+  dockIcon: "Couldn't change the Dock icon.",
+};
+
+/** A switch the shell refused: what did not happen, in the person's words, with the shell's own words after it for anyone who asks. */
+export function shellRefusal(which: ShellSwitch, error: unknown): string {
+  const raw = String(error instanceof Error ? error.message : error).trim();
+  return raw ? `${COULDNT[which]} (${raw})` : COULDNT[which];
+}

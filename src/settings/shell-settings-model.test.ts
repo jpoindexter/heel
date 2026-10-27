@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { parseShellSettings, SHELL_DEFAULTS } from "./shell-settings-model";
+import { parseShellSettings, SHELL_DEFAULTS, shellRefusal } from "./shell-settings-model";
 
 describe("parseShellSettings", () => {
   it("takes the shell's answer as it is", () => {
@@ -10,5 +10,13 @@ describe("parseShellSettings", () => {
     expect(parseShellSettings(undefined)).toEqual(SHELL_DEFAULTS);
     expect(parseShellSettings({ alwaysOnTop: "yes" })).toEqual(SHELL_DEFAULTS);
     expect(SHELL_DEFAULTS).toEqual({ alwaysOnTop: false, dockIcon: true });
+  });
+});
+
+describe("shellRefusal", () => {
+  it("says what did not happen first, then what the shell said", () => {
+    expect(shellRefusal("dockIcon", "NSApplication refused")).toBe("Couldn't change the Dock icon. (NSApplication refused)");
+    expect(shellRefusal("alwaysOnTop", new Error("no window"))).toBe("Couldn't keep the panel on top. (no window)");
+    expect(shellRefusal("alwaysOnTop", "")).toBe("Couldn't keep the panel on top.");
   });
 });

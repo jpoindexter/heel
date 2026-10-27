@@ -8,7 +8,7 @@ const openDataFolder = () => void invoke("reveal_data_folder").catch(() => undef
 
 /** Launch at login (a macOS login item), Heel in the Dock, and where the data lives (N10). */
 export function StartupSettings() {
-  const { settings, setDockIcon } = useShellSettings();
+  const { settings, refused: dockRefused, setDockIcon } = useShellSettings();
   const [login, setLogin] = useState<LoginStatus>("off");
   const [refused, setRefused] = useState<string | null>(null);
   useEffect(() => {
@@ -31,6 +31,7 @@ export function StartupSettings() {
       <Text as="label" size="2" className="attention-switch">
         <Switch size="1" checked={settings.dockIcon} onCheckedChange={setDockIcon} /> Show Heel in the Dock
       </Text>
+      {dockRefused && <Text as="p" size="1" color="amber" role="alert">{dockRefused}</Text>}
       <Text as="p" size="1" color="gray">Off, Heel lives in the menu bar and as Greg only.</Text>
       <div className="skill-actions">
         <Button size="1" variant="soft" radius="full" onClick={openDataFolder}>Show data folder</Button>

@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import { z } from "zod";
-import { DigestSchema, InboxConnectSchema, InboxStatusSchema, type InboxStatusDto } from "../../shared/api";
+import { DigestSchema, InboxConnectSchema, InboxStatusSchema, type ApiResult, type InboxStatusDto } from "../../shared/api";
 import type { Client } from "../api/client";
 import { beginWork } from "../mascot/motion-events";
 import { afterAddTask, type DigestState } from "./digest-model";
@@ -48,14 +48,13 @@ export function useInboxConnection(client: Client, active: boolean): InboxAction
     }, WATCH_MS);
   }, [client]);
 
-  const saveClient = useCallback(
-    async (clientId: string, clientSecret: string) => {
-      const result = await client.put("/inbox/client", InboxStatusSchema, { clientId, clientSecret });
-      if (result.ok) setStatus(result.data);
-      setError(result.ok ? null : result.error.message);
-    },
-    [client],
-  );
+  /** The helper's answer to a write: its status when it answered, and the refusal (or none) either way. */
+  const settle = useCallback((result: ApiResult<InboxStatusDto>) => {
+    if (result.ok) setStatus(result.data);
+    setError(result.ok ? null : result.error.message);
+  }, []);
+
+  const saveClient = useCallback(async (clientId: string, clientSecret: string) => settle(await client.put("/inbox/client", InboxStatusSchema, { clientId, clientSecret })), [client, settle]);
 
   const connect = useCallback(async () => {
     const result = await client.post("/inbox/connect", InboxConnectSchema);
@@ -63,10 +62,7 @@ export function useInboxConnection(client: Client, active: boolean): InboxAction
     if (result.ok) watchUntilDone();
   }, [client, watchUntilDone]);
 
-  const disconnect = useCallback(async () => {
-    const result = await client.post("/inbox/disconnect", InboxStatusSchema);
-    if (result.ok) setStatus(result.data);
-  }, [client]);
+  const disconnect = useCallback(async () => settle(await client.post("/inbox/disconnect", InboxStatusSchema)), [client, settle]);
 
   return { status, error, saveClient, connect, disconnect, refresh };
 }
