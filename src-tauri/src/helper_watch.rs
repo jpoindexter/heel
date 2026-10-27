@@ -7,7 +7,7 @@ use std::time::{Duration, Instant};
 use tauri::{AppHandle, Emitter, Manager};
 
 use crate::constants::{HEALTHY_RESET_MS, HEALTH_INTERVAL_MS, HELPER_STATUS_EVENT, PANEL_LABEL, SIDECAR_FILE, SIDECAR_LOG_FILE, STARTUP_GRACE_MS};
-use crate::helper_health::{decide, describe_stop, last_log_line, restart_delay_ms, Next, Seen, Status, MAX_RESTARTS};
+use crate::helper_health::{decide, describe_stop, last_log_line, observe, restart_delay_ms, Next, Status, MAX_RESTARTS};
 use crate::sidecar_process::{last_error, remember_error, spawn, SidecarProc};
 
 const CONNECT_TIMEOUT_MS: u64 = 400;
@@ -106,11 +106,7 @@ fn restart(app: &AppHandle, restarts_so_far: u32) {
 fn tick(app: &AppHandle) {
     let proc = app.state::<SidecarProc>();
     let (restarts, started_at) = proc.tracker.lock().map(|t| (t.restarts, t.started_at)).unwrap_or_default();
-    let seen = if reachable(app) {
-        Seen::Reachable
-    } else {
-        Seen::Unreachable { child: child_alive(app), since_start_ms: started_at.map(|t| t.elapsed().as_millis() as u64).unwrap_or(u64::MAX) }
-    };
+    let seen = observe(reachable(app), child_alive(app), started_at.map(|t| t.elapsed().as_millis() as u64).unwrap_or(u64::MAX));
     let decision = decide(seen, restarts, STARTUP_GRACE_MS);
     match decision.next {
         Next::Nothing if decision.state == "running" => {
