@@ -1,11 +1,11 @@
 import { useState } from "react";
 import { invoke } from "@tauri-apps/api/core";
 import { Button, Heading, Switch, Text } from "@radix-ui/themes";
-import { setSystemToasts, systemToastsOn } from "../ui/system-toasts";
+
+type Props = { /** Notification Center too; the group row above reads the same value, so SettingsView owns it. */ on: boolean; onChange: (on: boolean) => void };
 
 /** Where a notice shows when the panel is closed: Greg's bubble always, and Notification Center too unless turned off. */
-export function NoticeSettings() {
-  const [on, setOn] = useState(systemToastsOn);
+export function NoticeSettings({ on, onChange }: Props) {
   const [said, setSaid] = useState<string | null>(null);
   /** One real notification, and macOS's own answer in words, so "nothing appeared" always has a reason. */
   const test = () =>
@@ -16,7 +16,7 @@ export function NoticeSettings() {
     <section aria-labelledby="notices-heading" className="settings-section">
       <Heading as="h3" id="notices-heading" size="2">Notices</Heading>
       <Text as="label" size="2" className="attention-switch">
-        <Switch size="1" checked={on} onCheckedChange={(next) => (setOn(next), setSystemToasts(next))} /> Also show in Notification Center
+        <Switch size="1" checked={on} onCheckedChange={onChange} /> Also show in Notification Center
       </Text>
       <Text as="p" size="1" color="gray">When the panel is closed, a notice appears next to Greg. This adds the Mac's own notification, text only. Never during Quiet mode or a time-box.</Text>
       <div className="skill-actions">
