@@ -3,8 +3,7 @@ import { ACTIVITIES, type Activity } from "../mascot/life/config";
 import { isActivity } from "../mascot/life/activity";
 import { useActivity } from "../mascot/life/useActivity";
 import { useGags } from "../mascot/life/useGags";
-
-const LABELS: Record<Activity, string> = { off: "Off", calm: "Calm", lively: "Lively" };
+import { ACTIVITY_LABELS as LABELS } from "./settings-model";
 const HELP: Record<Activity, string> = {
   off: "Greg sits still and never wanders.",
   calm: "Now and then he looks around, waves, lies down, and sleeps when you are away.",
@@ -17,7 +16,7 @@ export function ActivitySettings() {
   const [gags, setGags] = useGags();
   return (
     <section aria-labelledby="activity-heading" className="settings-section">
-      <Heading as="h2" id="activity-heading" size="2">Greg's activity</Heading>
+      <Heading as="h3" id="activity-heading" size="2">Greg's activity</Heading>
       <SegmentedControl.Root value={activity} onValueChange={(value) => isActivity(value) && setActivity(value)} aria-label="Greg's activity">
         {ACTIVITIES.map((choice) => (
           <SegmentedControl.Item key={choice} value={choice}>{LABELS[choice]}</SegmentedControl.Item>

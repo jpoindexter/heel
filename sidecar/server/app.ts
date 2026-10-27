@@ -8,6 +8,7 @@ import type { Store } from "../store/store";
 import { registerAppsRoutes } from "./apps-routes";
 import { registerAttentionRoutes } from "./attention-routes";
 import { registerBrainRoutes } from "./brain-routes";
+import { registerDataRoutes } from "./data-routes";
 import { registerDebugRoutes, type DebugDeps } from "./debug-routes";
 import { applyGuards } from "./guards";
 import { registerFocusRoutes } from "./focus-routes";
@@ -71,5 +72,6 @@ export function createApp(deps: AppDeps) {
   registerDocumentsRoutes(app, deps);
   registerSkillsRoutes(app, deps);
   registerDebugRoutes(app, deps);
+  registerDataRoutes(app, deps);
   return app;
 }

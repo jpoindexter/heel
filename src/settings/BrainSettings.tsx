@@ -15,7 +15,7 @@ export function BrainSettings({ active, onSaved }: Props) {
 
   return (
     <section aria-labelledby="brain-heading" className="settings-section">
-      <Heading as="h2" id="brain-heading" size="2">Brain</Heading>
+      <Heading as="h3" id="brain-heading" size="2">Brain</Heading>
       <Text as="p" size="1" color="gray">Pick the AI Heel uses. What you type goes to that provider. Local keeps it on this Mac.</Text>
       {view.phase === "loading" && <Text role="status" size="2">Checking your providers…</Text>}
       {view.phase === "error" && (

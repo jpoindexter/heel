@@ -1,9 +1,13 @@
 import { useEffect, useRef } from "react";
-import { Button, Heading, Text } from "@radix-ui/themes";
+import { invoke } from "@tauri-apps/api/core";
+import { Button, Text } from "@radix-ui/themes";
 import { APP_VERSION } from "../../shared/version";
 import { client } from "../api/default-client";
 import { formatLog } from "../ui/debug-log";
 import { useDebugReport } from "./useDebugReport";
+
+/** The shell restarts the helper; outside Tauri (a browser preview) there is nobody to ask. */
+const restartHelper = () => void invoke("restart_helper").catch(() => undefined);
 
 /** About: the facts at a glance. Debug, folded under it: both logs, and the report copied, saved, or cleared. */
 export function DebugSettings({ active }: { active: boolean }) {
@@ -21,8 +25,7 @@ export function DebugSettings({ active }: { active: boolean }) {
     ["Kept", helper ? `${helper.counts.tasks} tasks · ${helper.counts.parked} parked · ${helper.counts.documents} documents` : "—"],
   ];
   return (
-    <section aria-labelledby="about-heading" className="settings-section">
-      <Heading as="h2" id="about-heading" size="2">About</Heading>
+    <section aria-label="About" className="settings-section">
       <Text as="div" size="1">
         <dl className="about-facts">
           {facts.map(([name, value]) => (
@@ -33,6 +36,9 @@ export function DebugSettings({ active }: { active: boolean }) {
           ))}
         </dl>
       </Text>
+      <div className="skill-actions">
+        <Button size="1" variant="ghost" color="gray" radius="full" onClick={restartHelper}>Restart helper</Button>
+      </div>
       <details className="debug-fold">
         <summary><Text size="2" weight="medium">Debug</Text></summary>
         <div className="settings-section">

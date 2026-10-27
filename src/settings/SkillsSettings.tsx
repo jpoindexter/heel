@@ -13,7 +13,7 @@ export function SkillsSettings({ active }: { active: boolean }) {
   const note = editing ? sizeNote(editing.text.length) : null;
   return (
     <section aria-labelledby="skills-heading" className="settings-section">
-      <Heading as="h2" id="skills-heading" size="2">Skills</Heading>
+      <Heading as="h3" id="skills-heading" size="2">Skills</Heading>
       <Text as="p" size="1" color="gray">Short instructions Heel reads before answering. They are plain text: nothing here runs. Your own are chosen by the words you give them.</Text>
       {editing ? (
         <div className="field">
