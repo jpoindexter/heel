@@ -52,7 +52,7 @@ export function registerTodayRoutes(app: Hono, deps: AppDeps): void {
       drop: store.tasks.drop,
       restore: store.tasks.restore,
     };
-    if (!(action in run)) return fail(c, "invalid", "Action must be complete, drop or restore.");
+    if (!Object.hasOwn(run, action)) return fail(c, "invalid", "Action must be complete, drop or restore.");
     const result = run[action](c.req.param("id"));
     return result.ok ? ok(c, { task: result.value }) : fail(c, result.error.code, result.error.message);
   });

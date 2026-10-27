@@ -50,6 +50,13 @@ describe("POST /tasks/:id/:action", () => {
       error: { code: "invalid", message: "Action must be complete, drop or restore." },
     });
   });
+
+  it("treats an inherited object key as an unknown action, not as a handler", async () => {
+    const { post } = setup();
+    for (const action of ["constructor", "toString", "__proto__"]) {
+      expect(await post(`/tasks/missing/${action}`)).toMatchObject({ ok: false, error: { code: "invalid" } });
+    }
+  });
 });
 
 describe("POST /parked", () => {

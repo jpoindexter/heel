@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { INITIAL_ATTENTION, decideAttention, type AttentionContext, type AttentionState, type Nudge, type Sample } from "../../shared/attention";
+import { INITIAL_ATTENTION, RULES, decideAttention, type AttentionContext, type AttentionState, type Nudge, type Sample } from "../../shared/attention";
 import { AttentionSettingsSchema, DEFAULT_ATTENTION_SETTINGS, type AttentionSettings } from "../../shared/api";
 import type { Ctx } from "./context";
 import { dayKey } from "./history";
@@ -13,6 +13,13 @@ const DAY_KEY = "attention-day";
 
 const DaySchema = z.object({ date: z.string(), apps: z.record(z.string(), z.object({ name: z.string(), seconds: z.number() })) });
 export type AttentionDay = z.output<typeof DaySchema>;
+const StateSchema = z.object({
+  app: z.object({ bundle: z.string(), name: z.string(), since: z.number() }).nullable(),
+  switches: z.array(z.number()),
+  lastIdleSec: z.number(),
+  wasIdle: z.boolean(),
+  spokeAt: z.partialRecord(z.enum(RULES), z.number()),
+});
 
 function readRow<T>(ctx: Ctx, key: string, parse: (raw: unknown) => T | undefined): T | undefined {
   const row = ctx.db.prepare("SELECT value FROM settings WHERE key = ?").get(key);
@@ -51,8 +58,8 @@ export function getAttentionDay(ctx: Ctx): AttentionDay {
   return day && day.date === today ? day : { date: today, apps: {} };
 }
 
-/** Rather than the `attention-state` row growing, nothing is kept but the fold's small state. */
-const getState = (ctx: Ctx): AttentionState => readRow(ctx, STATE_KEY, (raw) => (raw as AttentionState | undefined)) ?? INITIAL_ATTENTION;
+/** Rather than the `attention-state` row growing, nothing is kept but the fold's small state. A row of another shape is a fresh start. */
+const getState = (ctx: Ctx): AttentionState => readRow(ctx, STATE_KEY, (raw) => StateSchema.safeParse(raw).data) ?? INITIAL_ATTENTION;
 
 type SampleIn = Sample & { intervalSec: number };
 

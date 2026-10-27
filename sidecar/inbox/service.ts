@@ -56,6 +56,17 @@ function accessTokenFrom(deps: InboxDeps): () => Promise<string> {
   };
 }
 
+/** The sign-in page in the browser. When the Mac refuses, the listener is closed at once rather than left waiting for a redirect that can't come. */
+async function openSignIn(deps: InboxDeps, server: CallbackServer, url: string): Promise<Outcome<true>> {
+  try {
+    await deps.openUrl(url);
+    return ok(true);
+  } catch (error) {
+    server.close();
+    return fail("failed", `Couldn't open your browser for Google sign-in (${error instanceof Error ? error.message : String(error)}). Try Connect again.`);
+  }
+}
+
 /** Wait for Google to send the person back, trade the code for tokens, and keep them. Returns what went wrong, or null. */
 async function finishConnect(deps: InboxDeps, server: CallbackServer, credentials: Client, verifier: string): Promise<string | null> {
   const callback = await server.result;
@@ -83,8 +94,7 @@ export function createInbox(deps: InboxDeps) {
     },
 
     async setClient(input: { clientId: string; clientSecret: string }): Promise<Outcome<true>> {
-      const clientId = input.clientId.trim();
-      const clientSecret = input.clientSecret.trim();
+      const [clientId, clientSecret] = [input.clientId.trim(), input.clientSecret.trim()];
       if (!clientId || !clientSecret) return fail("invalid", "Paste both the client ID and the client secret from Google Cloud.");
       await secrets.set(CLIENT_KEY, JSON.stringify({ clientId, clientSecret }));
       await secrets.remove(TOKENS_KEY); // tokens belong to the old client
@@ -101,7 +111,8 @@ export function createInbox(deps: InboxDeps) {
       const server = await (deps.startCallback ?? startCallbackServer)(state, CONNECT_TIMEOUT_MS);
       const url = authUrl({ clientId: credentials.clientId, redirectUri: server.redirectUri, challenge, state });
       problem = null;
-      await deps.openUrl(url);
+      const opened = await openSignIn(deps, server, url);
+      if (!opened.ok) return opened;
       void finishConnect(deps, server, credentials, verifier).then((message) => (problem = message));
       return ok({ url });
     },
