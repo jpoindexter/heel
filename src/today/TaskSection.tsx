@@ -15,6 +15,7 @@ import { JarMeter } from "./JarMeter";
 import { dropsOnBucket } from "./eisenhower-model";
 import { bucketPatches } from "./method-model";
 import { boxMinutes } from "./two-minute-model";
+import { emptyListLine } from "./today-model";
 
 /** A ticked or removed row fades out first, then the write happens (it is the write that shows Undo). */
 function useLeavingRow(run: (task: TaskDto, action: "complete" | "remove") => void) {
@@ -88,7 +89,7 @@ export function TaskSection({ state, foundId = null }: { state: ReturnType<typeo
         />
       )}
       <LaterList tasks={ready ? ready.tasks.filter((task) => task.id !== now?.task.id) : []} leavingId={rows.leavingId} foundId={foundId} onComplete={rows.complete} onRemove={rows.remove} {...marks} />
-      {ready && ready.tasks.length === 0 && <Text size="2" color="gray" className="tasks-empty in">Nothing on your list. Tell Heel, or + › Add task.</Text>}
+      {ready && ready.tasks.length === 0 && <Text size="2" color="gray" className="tasks-empty in">{emptyListLine(ready.doneToday)}</Text>}
       <ParkedList parked={ready?.parked ?? []} onPromote={(idea) => void tasks.promote(idea)} />
     </>
   );
