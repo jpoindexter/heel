@@ -9,6 +9,7 @@ import { AttentionSettings } from "./AttentionSettings";
 import { NoticeSettings } from "./NoticeSettings";
 import { SkillsSettings } from "./SkillsSettings";
 import { BrainSettings } from "./BrainSettings";
+import { DebugSettings } from "./DebugSettings";
 import { DensitySettings } from "./DensitySettings";
 import { MethodSettings } from "./MethodSettings";
 import "./settings.css";
@@ -42,6 +43,8 @@ export function SettingsView({ active, onSaved, preference, onPreference, densit
       <SkillsSettings active={active} />
       <Separator size="4" />
       <EmailSettings client={client} active={active} />
+      <Separator size="4" />
+      <DebugSettings active={active} />
     </div>
   );
 }

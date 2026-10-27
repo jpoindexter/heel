@@ -6,6 +6,7 @@ import type { MailSource } from "../mail/source";
 import type { Store } from "../store/store";
 import { registerAttentionRoutes } from "./attention-routes";
 import { registerBrainRoutes } from "./brain-routes";
+import { registerDebugRoutes, type DebugDeps } from "./debug-routes";
 import { applyGuards } from "./guards";
 import { registerFocusRoutes } from "./focus-routes";
 import { registerInboxRoutes } from "./inbox-routes";
@@ -38,6 +39,8 @@ export type AppDeps = {
   renderPdf: RenderPdf;
   /** The skills the agent reads: bundled and your own (N3). */
   skills: SkillsService;
+  /** Facts for Settings > Debug (N30). */
+  debug: DebugDeps;
 };
 
 export const DEV_ORIGIN = "http://localhost:1420";
@@ -62,5 +65,6 @@ export function createApp(deps: AppDeps) {
   registerSearchRoutes(app, deps);
   registerDocumentsRoutes(app, deps);
   registerSkillsRoutes(app, deps);
+  registerDebugRoutes(app, deps);
   return app;
 }
