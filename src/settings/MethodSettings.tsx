@@ -1,5 +1,6 @@
 import { Heading, SegmentedControl, Select, Text } from "@radix-ui/themes";
 import { BUILT, SIZINGS, STRUCTURES, TIMERS, type Method } from "../../shared/method";
+import { undoSaid } from "../ui/undo-said";
 import { useMethod, whatChanges } from "../ui/method";
 import { useNotices } from "../ui/notices";
 import { MethodNumbersSettings } from "./MethodNumbersSettings";
@@ -42,11 +43,12 @@ function Picker<T extends string>({ label, value, options, built, labels, onChan
 export function MethodSettings() {
   const { method, change } = useMethod();
   const notices = useNotices();
+  const fail = (message: string) => notices.show({ message, tone: "error" });
   const apply = (next: Method) => {
     const previous = method;
     void change(next).then((refused) => {
-      if (refused) return notices.show({ message: refused, tone: "error" });
-      notices.show({ message: "Ways of working changed", tone: "info", undo: () => void change(previous) });
+      if (refused) return fail(refused);
+      notices.show({ message: "Ways of working changed", tone: "info", undo: undoSaid(() => change(previous), fail) });
     });
   };
   return (

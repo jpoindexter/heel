@@ -61,14 +61,13 @@ export function useInboxConnection(client: Client, active: boolean): InboxAction
     if (active) void refresh();
   }, [active, refresh]);
 
-  const saveClient = useCallback(
-    async (clientId: string, clientSecret: string) => {
-      const result = await client.put("/inbox/client", InboxStatusSchema, { clientId, clientSecret });
-      if (result.ok) setStatus(result.data);
-      setError(result.ok ? null : result.error.message);
-    },
-    [client],
-  );
+  /** The helper's answer to a write: its status when it answered, and the refusal (or none) either way. */
+  const settle = useCallback((result: ApiResult<InboxStatusDto>) => {
+    if (result.ok) setStatus(result.data);
+    setError(result.ok ? null : result.error.message);
+  }, []);
+
+  const saveClient = useCallback(async (clientId: string, clientSecret: string) => settle(await client.put("/inbox/client", InboxStatusSchema, { clientId, clientSecret })), [client, settle]);
 
   const connect = useCallback(async () => {
     const result = await client.post("/inbox/connect", InboxConnectSchema);
@@ -76,10 +75,7 @@ export function useInboxConnection(client: Client, active: boolean): InboxAction
     if (result.ok) watchUntilDone();
   }, [client, watchUntilDone]);
 
-  const disconnect = useCallback(async () => {
-    const result = await client.post("/inbox/disconnect", InboxStatusSchema);
-    if (result.ok) setStatus(result.data);
-  }, [client]);
+  const disconnect = useCallback(async () => settle(await client.post("/inbox/disconnect", InboxStatusSchema)), [client, settle]);
 
   return { status, error, waiting, saveClient, connect, disconnect, refresh };
 }

@@ -22,9 +22,14 @@ export function wipeLines(preview: DataPreviewDto): string[] {
 /** The phrase must match exactly, as typed; surrounding spaces are forgiven, capitals are not. */
 export const confirmsWipe = (typed: string): boolean => typed.trim() === WIPE_PHRASE;
 
-/** After a wipe: the rows are always gone; an entry the helper could not remove is named, with its reason. */
-export function wipeSaid(result: WipeResultDto): string {
-  if (result.failed.length === 0) return "Everything is gone. Heel starts fresh.";
+/** One line under the data buttons: what happened (status), or what did not and needs the person (alert). */
+export type Said = { text: string; tone: "info" | "error" };
+
+export const refused = (message: string): Said => ({ text: message, tone: "error" });
+
+/** After a wipe: the rows are always gone; an entry the helper could not remove is named, with its reason, as something to act on. */
+export function wipeSaid(result: WipeResultDto): Said {
+  if (result.failed.length === 0) return { text: "Everything is gone. Heel starts fresh.", tone: "info" };
   const stayed = result.failed.map((f) => `${f.name} (${f.reason})`).join(", ");
-  return `Your tasks, ideas, messages and documents are gone, but Heel couldn't remove ${stayed}. Delete it by hand from the data folder.`;
+  return refused(`Your tasks, ideas, messages and documents are gone, but Heel couldn't remove ${stayed}. Delete it by hand from the data folder.`);
 }

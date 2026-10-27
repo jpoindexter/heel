@@ -34,7 +34,7 @@ export function DataSettings() {
           </div>
         </div>
       )}
-      {said && <Text as="p" size="1" color="gray" role="status">{said}</Text>}
+      {said && (said.tone === "error" ? <Text as="p" size="1" color="amber" role="alert">{said.text}</Text> : <Text as="p" size="1" color="gray" role="status">{said.text}</Text>)}
     </section>
   );
 }

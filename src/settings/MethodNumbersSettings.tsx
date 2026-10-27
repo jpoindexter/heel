@@ -1,5 +1,6 @@
 import { useId } from "react";
 import { BUCKET_LABELS, SIZES, SIZE_LABELS, SLOT_BUCKETS, type Method, type MethodNumbers } from "../../shared/method";
+import { undoSaid } from "../ui/undo-said";
 import { useMethod } from "../ui/method";
 import { useNotices } from "../ui/notices";
 import { NumberField } from "./NumberField";
@@ -40,11 +41,12 @@ export function MethodNumbersSettings({ method }: { method: Method }) {
   const { numbers, changeNumbers } = useMethod();
   const notices = useNotices();
   const id = useId();
+  const fail = (message: string) => notices.show({ message, tone: "error" });
   const save: Save = (next) => {
     const previous = numbers;
     return changeNumbers(next).then((refused) => {
-      if (refused) return (notices.show({ message: refused, tone: "error" }), false);
-      notices.show({ message: "Numbers changed", tone: "info", undo: () => void changeNumbers(previous) });
+      if (refused) return (fail(refused), false);
+      notices.show({ message: "Numbers changed", tone: "info", undo: undoSaid(() => changeNumbers(previous), fail) });
       return true;
     });
   };

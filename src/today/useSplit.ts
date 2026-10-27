@@ -2,6 +2,7 @@ import { useCallback, useRef, useState } from "react";
 import { SplitProposalSchema, SplitResultSchema, UnsplitResultSchema, type TaskDto } from "../../shared/api";
 import type { Client } from "../api/client";
 import type { Notice } from "../ui/notice-model";
+import { undoThen } from "../ui/undo-said";
 
 export type SplitState = { task: TaskDto; phase: "asking" | "ready" | "error"; steps: string[]; message: string | null } | null;
 
@@ -37,7 +38,7 @@ export function useSplit({ client, refresh, notify }: Deps) {
     setState(null);
     await refresh();
     const n = result.data.children.length;
-    notify({ message: `${n} step${n === 1 ? "" : "s"} under “${task.title}”`, tone: "info", undo: () => void client.post(`/tasks/${task.id}/unsplit`, UnsplitResultSchema, {}).then(refresh) });
+    notify({ message: `${n} step${n === 1 ? "" : "s"} under “${task.title}”`, tone: "info", undo: undoThen(() => client.post(`/tasks/${task.id}/unsplit`, UnsplitResultSchema, {}), refresh, (message) => notify({ message, tone: "error" })) });
   }, [client, notify, refresh, state]);
 
   return { state, propose, remove, cancel, apply };
