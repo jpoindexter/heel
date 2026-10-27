@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 import type { ParkedIdeaDto } from "../../shared/api";
-import { afterRefresh, type TasksState } from "./tasks-state";
+import { afterRefresh, showLoadingLine, type TasksState } from "./tasks-state";
 
 const idea: ParkedIdeaDto = { id: "p1", idea: "Paint the van", createdAt: 0 };
 const shown: TasksState = { phase: "ready", tasks: [], parked: [idea], doneToday: 2 };
@@ -18,5 +18,17 @@ describe("afterRefresh", () => {
   it("keeps what is shown when the tasks fail to reload, and shows the error only on a first load", () => {
     expect(afterRefresh(shown, refused, refused)).toBe(shown);
     expect(afterRefresh({ phase: "loading" }, refused, refused)).toEqual({ phase: "error", message: "Not running." });
+  });
+});
+
+describe("showLoadingLine", () => {
+  it("stays quiet for the first 200 ms of a first load, then says so", () => {
+    expect(showLoadingLine("loading", 0)).toBe(false);
+    expect(showLoadingLine("loading", 199)).toBe(false);
+    expect(showLoadingLine("loading", 200)).toBe(true);
+  });
+  it("never shows once the list is ready or failed, however long the wait was", () => {
+    expect(showLoadingLine("ready", 5_000)).toBe(false);
+    expect(showLoadingLine("error", 5_000)).toBe(false);
   });
 });

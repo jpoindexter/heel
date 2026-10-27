@@ -93,7 +93,7 @@ export function TodayView({ showing, summary, reloadKey, settings }: Props) {
       <FocusStatus focus={state.focus} pomodoro={state.pomodoro} onTaskDone={(id) => { const task = state.ready?.tasks.find((t) => t.id === id); if (task) void tasks.complete(task); }} />
       <LayerHost
         base={
-          <div className="today-scroll">
+          <div className="today-scroll" aria-busy={tasks.state.phase === "loading" || undefined}>
             <ReplyRow messages={thread.messages} onOpen={() => layers.push("reply")} />
             <TaskSection state={state} foundId={found.foundId} />
             {state.ready && <DoneRow doneToday={state.ready.doneToday} onOpen={() => layers.push("history")} />}

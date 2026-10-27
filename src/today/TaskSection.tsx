@@ -16,6 +16,19 @@ import { dropsOnBucket } from "./eisenhower-model";
 import { bucketPatches } from "./method-model";
 import { boxMinutes } from "./two-minute-model";
 import { emptyListLine } from "./today-model";
+import { LOADING_LINE_DELAY_MS, showLoadingLine, type TasksState } from "./tasks-state";
+
+/** True once a first load has run long enough to be worth a line; a quick load shows nothing. */
+function useLoadingLine(phase: TasksState["phase"]) {
+  const [waitedMs, setWaitedMs] = useState(0);
+  useEffect(() => {
+    if (phase !== "loading") return;
+    const started = Date.now();
+    const timer = window.setTimeout(() => setWaitedMs(Date.now() - started), LOADING_LINE_DELAY_MS);
+    return () => window.clearTimeout(timer);
+  }, [phase]);
+  return showLoadingLine(phase, waitedMs);
+}
 
 /** A ticked or removed row fades out first, then the write happens (it is the write that shows Undo). */
 function useLeavingRow(run: (task: TaskDto, action: "complete" | "remove") => void) {
@@ -49,6 +62,7 @@ function useRowEditing(tasks: ReturnType<typeof useTodayState>["tasks"]) {
 export function TaskSection({ state, foundId = null }: { state: ReturnType<typeof useTodayState>; foundId?: string | null }) {
   const { tasks, ready, now, focus, pomodoro, thread } = state;
   const [starting, setStarting] = useState(false);
+  const loading = useLoadingLine(tasks.state.phase);
   const rows = useLeavingRow((task, action) => void (action === "complete" ? tasks.complete(task) : tasks.remove(task)));
   const { method, numbers } = useMethod();
   const ask = (prompt: string, label: string) => void thread.send(prompt, label);
@@ -89,6 +103,7 @@ export function TaskSection({ state, foundId = null }: { state: ReturnType<typeo
         />
       )}
       <LaterList tasks={ready ? ready.tasks.filter((task) => task.id !== now?.task.id) : []} leavingId={rows.leavingId} foundId={foundId} onComplete={rows.complete} onRemove={rows.remove} {...marks} />
+      {loading && <Text size="2" color="gray" role="status" className="tasks-empty pulse">Loading your day…</Text>}
       {ready && ready.tasks.length === 0 && <Text size="2" color="gray" className="tasks-empty in">{emptyListLine(ready.doneToday)}</Text>}
       <ParkedList parked={ready?.parked ?? []} onPromote={(idea) => void tasks.promote(idea)} />
     </>
