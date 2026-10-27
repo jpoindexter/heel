@@ -2,7 +2,6 @@ import type { Ctx } from "./context";
 import type { Task } from "./schema";
 import { toTask } from "./tasks";
 
-const DAY_MS = 86_400_000;
 const pad = (n: number) => String(n).padStart(2, "0");
 
 /** The local calendar day of a moment, YYYY-MM-DD. The helper runs on the person's Mac, so local time is their day. */
@@ -14,6 +13,13 @@ export function dayKey(ts: number): string {
 export function startOfDay(ts: number): number {
   const d = new Date(ts);
   d.setHours(0, 0, 0, 0);
+  return d.getTime();
+}
+
+/** Local midnight `n` days before the day of `ts`. Counted in calendar days, not 24-hour steps: a clock change makes a day 23 or 25 hours. */
+export function daysAgo(ts: number, n: number): number {
+  const d = new Date(startOfDay(ts));
+  d.setDate(d.getDate() - n);
   return d.getTime();
 }
 
@@ -46,9 +52,8 @@ export function weekOf(done: readonly Task[], now: number, length: number): Week
     const key = dayKey(task.completedAt ?? task.updatedAt);
     counts.set(key, (counts.get(key) ?? 0) + 1);
   }
-  const today = startOfDay(now);
   return Array.from({ length }, (_, i) => {
-    const date = dayKey(today - (length - 1 - i) * DAY_MS);
+    const date = dayKey(daysAgo(now, length - 1 - i));
     return { date, count: counts.get(date) ?? 0 };
   });
 }
@@ -58,9 +63,9 @@ export const WEEK_DAYS = 7;
 /** What was finished over the last `days` days, grouped, with the week's counts. */
 export function history(ctx: Ctx, days: number): History {
   const now = ctx.now();
-  const since = startOfDay(now) - (Math.max(days, WEEK_DAYS) - 1) * DAY_MS;
+  const since = daysAgo(now, Math.max(days, WEEK_DAYS) - 1);
   const done = listDone(ctx, since);
-  const sinceDays = startOfDay(now) - (days - 1) * DAY_MS;
+  const sinceDays = daysAgo(now, days - 1);
   return { days: groupByDay(done.filter((t) => (t.completedAt ?? 0) >= sinceDays)), week: weekOf(done, now, WEEK_DAYS) };
 }
 

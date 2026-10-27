@@ -1,6 +1,9 @@
 import { describe, expect, it } from "vitest";
-import { dayKey, groupByDay, startOfDay, weekOf } from "./history";
+import { dayKey, daysAgo, groupByDay, startOfDay, weekOf } from "./history";
 import { testStore } from "./test-helpers";
+
+/** One worker per test file, so the zone is this file's alone. Madrid has a 23-hour day each March and a 25-hour day each October. */
+process.env.TZ = "Europe/Madrid";
 
 const DAY = 86_400_000;
 /** A fixed local noon so day boundaries are unambiguous whatever the machine's zone. */
@@ -57,5 +60,24 @@ describe("history", () => {
     const tasks = [{ completedAt: NOON, updatedAt: NOON }, { completedAt: NOON - 10 * DAY, updatedAt: NOON }] as never[];
     expect(groupByDay(tasks).length).toBe(2);
     expect(weekOf(tasks, NOON, 7).reduce((s, d) => s + d.count, 0)).toBe(1);
+  });
+});
+
+describe("across a clock change (Europe/Madrid: 2026-03-29 forward, 2026-10-25 back)", () => {
+  it("names seven distinct days in the week strip the day after the clocks go forward", () => {
+    const now = new Date(2026, 2, 30, 12).getTime();
+    expect(weekOf([], now, 7).map((d) => d.date)).toEqual(["2026-03-24", "2026-03-25", "2026-03-26", "2026-03-27", "2026-03-28", "2026-03-29", "2026-03-30"]);
+    expect(new Date(daysAgo(now, 1)).getHours()).toBe(0);
+  });
+
+  it("keeps a task finished just after midnight on the window's first day, the week after the clocks go back", () => {
+    let clock = new Date(2026, 9, 20, 0, 30).getTime();
+    const store = testStore({ now: () => clock });
+    const early = must(store.tasks.add({ title: "Early" }));
+    must(store.tasks.complete(early.id));
+    clock = new Date(2026, 9, 26, 12).getTime();
+    const result = store.history.list(7);
+    expect(result.days.map((d) => d.date)).toEqual(["2026-10-20"]);
+    expect(result.week[0]).toEqual({ date: "2026-10-20", count: 1 });
   });
 });
