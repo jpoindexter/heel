@@ -14,7 +14,7 @@ use crate::constants::{SIDECAR_BUNDLE_DIRS, SIDECAR_LOG_FILE, SIDECAR_STOP_GRACE
 #[derive(Default)]
 pub(crate) struct SidecarProc {
     pub(crate) child: Mutex<Option<Child>>,
-    error: Mutex<Option<String>>,
+    pub(crate) error: Mutex<Option<String>>,
     pub(crate) status: Mutex<crate::helper_health::Status>,
     pub(crate) tracker: Mutex<crate::helper_watch::Tracker>,
 }
@@ -30,9 +30,14 @@ pub(crate) fn node_candidates(home: &str, override_path: Option<&str>) -> Vec<Pa
 
 /// Last resort: ask a login shell, which has the PATH the user's terminal has (nvm, fnm, volta...).
 fn node_from_login_shell() -> Option<PathBuf> {
-    let output = Command::new("/bin/zsh").args(["-lc", "command -v node"]).output().ok()?;
-    let path = String::from_utf8(output.stdout).ok()?.trim().to_string();
-    (!path.is_empty()).then(|| PathBuf::from(path))
+    // No stdin: a profile that waits for input fails at once instead of holding Heel's launch (setup runs this).
+    let output = Command::new("/bin/zsh").args(["-lc", "command -v node"]).stdin(Stdio::null()).output().ok()?;
+    node_path_from_shell(&String::from_utf8_lossy(&output.stdout))
+}
+
+/// The path is the last line: nvm, fnm and volta print "Now using node v22…" to stdout before it. Not a path means not found.
+pub(crate) fn node_path_from_shell(stdout: &str) -> Option<PathBuf> {
+    stdout.lines().map(str::trim).rfind(|line| !line.is_empty()).filter(|line| line.starts_with('/')).map(PathBuf::from)
 }
 
 fn find_node() -> Option<PathBuf> {
@@ -64,7 +69,8 @@ pub(crate) fn last_error(app: &AppHandle) -> Option<String> {
 pub(crate) fn spawn(app: &AppHandle) -> Result<Child, String> {
     let dir = bundled_sidecar(app).ok_or("Heel's helper is missing from the app. Reinstall Heel.")?;
     let node = find_node().ok_or("Heel needs Node 22 or newer. Install it (brew install node), then restart Heel.")?;
-    let data_dir = app.path().app_data_dir().unwrap_or_default();
+    // An empty HEEL_DATA_DIR reads as unset to the helper, which would then open the live data under its hardcoded id.
+    let data_dir = app.path().app_data_dir().map_err(|error| format!("Heel couldn't find its data folder: {error}."))?;
     let _ = std::fs::create_dir_all(&data_dir);
     let log = OpenOptions::new().create(true).append(true).open(data_dir.join(SIDECAR_LOG_FILE));
     let (out, err) = match log.and_then(|file| file.try_clone().map(|clone| (file, clone))) {
@@ -99,6 +105,10 @@ pub(crate) fn stop(app: &AppHandle) {
     let Some(mut child) = app.state::<SidecarProc>().child.lock().ok().and_then(|mut slot| slot.take()) else {
         return;
     };
+    // The watcher may already have reaped it (try_wait): its pid can belong to another process by now.
+    if !matches!(child.try_wait(), Ok(None)) {
+        return;
+    }
     let _ = Command::new("kill").args(["-TERM", &child.id().to_string()]).status();
     let deadline = Instant::now() + Duration::from_millis(SIDECAR_STOP_GRACE_MS);
     while Instant::now() < deadline {
@@ -122,6 +132,15 @@ mod tests {
         assert!(list.contains(&PathBuf::from("/Users/jo/.local/bin/node")));
         assert!(list.contains(&PathBuf::from("/opt/homebrew/bin/node")));
         assert!(list.contains(&PathBuf::from("/usr/local/bin/node")));
+    }
+
+    #[test]
+    fn takes_the_path_from_the_last_line_of_a_chatty_login_shell() {
+        let nvm = "Now using node v22.1.0 (npm v10.7.0)\n/Users/jo/.nvm/versions/node/v22.1.0/bin/node\n";
+        assert_eq!(node_path_from_shell(nvm), Some(PathBuf::from("/Users/jo/.nvm/versions/node/v22.1.0/bin/node")));
+        assert_eq!(node_path_from_shell("/opt/homebrew/bin/node\n"), Some(PathBuf::from("/opt/homebrew/bin/node")));
+        assert_eq!(node_path_from_shell(""), None);
+        assert_eq!(node_path_from_shell("Now using node v22.1.0\n"), None, "chatter but no path: not found");
     }
 
     #[test]

@@ -42,6 +42,12 @@ pub(crate) struct Decision {
     pub next: Next,
 }
 
+/// What a tick saw. An answering port counts only while our helper is alive (or not ours): after it exited, the
+/// connection file is stale and whatever answers on that port is another process. SIGKILL leaves the file behind.
+pub(crate) fn observe(port_answers: bool, child: Option<bool>, since_start_ms: u64) -> Seen {
+    if port_answers && child != Some(false) { Seen::Reachable } else { Seen::Unreachable { child, since_start_ms } }
+}
+
 pub(crate) fn decide(seen: Seen, restarts_so_far: u32, startup_grace_ms: u64) -> Decision {
     let retry = |next| if restarts_so_far >= MAX_RESTARTS { Decision { state: "stopped", next: Next::GiveUp } } else { Decision { state: "restarting", next } };
     match seen {
@@ -90,6 +96,14 @@ mod tests {
     const GRACE: u64 = 10_000;
     fn unreachable(child: Option<bool>, since: u64) -> Seen {
         Seen::Unreachable { child, since_start_ms: since }
+    }
+
+    #[test]
+    fn an_answering_port_is_ours_only_while_our_helper_is_alive_or_not_ours_at_all() {
+        assert_eq!(observe(true, Some(true), 0), Seen::Reachable);
+        assert_eq!(observe(true, None, 0), Seen::Reachable, "development: not our process");
+        assert_eq!(observe(true, Some(false), 5), unreachable(Some(false), 5), "it exited: the port belongs to someone else now");
+        assert_eq!(observe(false, Some(true), 5), unreachable(Some(true), 5));
     }
 
     #[test]

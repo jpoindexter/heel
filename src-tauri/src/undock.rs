@@ -26,10 +26,7 @@ pub(crate) fn save_place(app: &AppHandle) {
     }) else {
         return;
     };
-    if let Some(dir) = path.parent() {
-        let _ = std::fs::create_dir_all(dir);
-    }
-    let _ = std::fs::write(path, panel_place::serialize(place));
+    let _ = crate::save_file::write(&path, &panel_place::serialize(place));
 }
 
 /// At launch: docked unless the person left the panel parked, in which case its place waits for the first show.

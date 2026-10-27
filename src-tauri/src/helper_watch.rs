@@ -7,10 +7,11 @@ use std::time::{Duration, Instant};
 use tauri::{AppHandle, Emitter, Manager};
 
 use crate::constants::{HEALTHY_RESET_MS, HEALTH_INTERVAL_MS, HELPER_STATUS_EVENT, PANEL_LABEL, SIDECAR_FILE, SIDECAR_LOG_FILE, STARTUP_GRACE_MS};
-use crate::helper_health::{decide, describe_stop, last_log_line, restart_delay_ms, Next, Seen, Status, MAX_RESTARTS};
+use crate::helper_health::{decide, describe_stop, last_log_line, observe, restart_delay_ms, Next, Status, MAX_RESTARTS};
 use crate::sidecar_process::{last_error, remember_error, spawn, SidecarProc};
 
 const CONNECT_TIMEOUT_MS: u64 = 400;
+const LOG_TAIL_BYTES: u64 = 16 * 1024;
 
 #[derive(Default)]
 pub(crate) struct Tracker {
@@ -23,7 +24,15 @@ pub(crate) struct Tracker {
 pub(crate) fn adopt(app: &AppHandle, child: Child) {
     let proc = app.state::<SidecarProc>();
     if let Ok(mut slot) = proc.child.lock() {
-        *slot = Some(child);
+        // The watcher's delayed restart and the person's "Restart helper" can cross: the earlier helper would otherwise run on unowned, past quit.
+        if let Some(mut earlier) = slot.replace(child) {
+            let _ = earlier.kill();
+            let _ = earlier.wait();
+        }
+    }
+    // A start error belongs to the start that failed; kept, it would be quoted for every later stop.
+    if let Ok(mut error) = proc.error.lock() {
+        *error = None;
     }
     if let Ok(mut tracker) = proc.tracker.lock() {
         tracker.started_at = Some(Instant::now());
@@ -67,11 +76,23 @@ fn reason(app: &AppHandle, fallback: &str) -> String {
     if let Some(error) = last_error(app) {
         return error;
     }
-    let log = data_dir(app).and_then(|dir| std::fs::read_to_string(dir.join(SIDECAR_LOG_FILE)).ok()).unwrap_or_default();
+    let log = data_dir(app).and_then(|dir| log_tail(&dir.join(SIDECAR_LOG_FILE))).unwrap_or_default();
     match last_log_line(&log) {
         Some(line) => describe_stop(Some(&line)),
         None => fallback.to_string(),
     }
+}
+
+/// The end of the helper's log. It is append-only and never rotated, and this runs every tick while the helper is down,
+/// so only the last stretch is read (the first line of it may be cut; the last useful line is what is wanted).
+fn log_tail(path: &std::path::Path) -> Option<String> {
+    use std::io::{Read, Seek, SeekFrom};
+    let mut file = std::fs::File::open(path).ok()?;
+    let len = file.metadata().ok()?.len();
+    file.seek(SeekFrom::Start(len.saturating_sub(LOG_TAIL_BYTES))).ok()?;
+    let mut bytes = Vec::new();
+    file.read_to_end(&mut bytes).ok()?;
+    Some(String::from_utf8_lossy(&bytes).into_owned())
 }
 
 fn end_child(app: &AppHandle) {
@@ -98,11 +119,7 @@ fn restart(app: &AppHandle, restarts_so_far: u32) {
 fn tick(app: &AppHandle) {
     let proc = app.state::<SidecarProc>();
     let (restarts, started_at) = proc.tracker.lock().map(|t| (t.restarts, t.started_at)).unwrap_or_default();
-    let seen = if reachable(app) {
-        Seen::Reachable
-    } else {
-        Seen::Unreachable { child: child_alive(app), since_start_ms: started_at.map(|t| t.elapsed().as_millis() as u64).unwrap_or(u64::MAX) }
-    };
+    let seen = observe(reachable(app), child_alive(app), started_at.map(|t| t.elapsed().as_millis() as u64).unwrap_or(u64::MAX));
     let decision = decide(seen, restarts, STARTUP_GRACE_MS);
     match decision.next {
         Next::Nothing if decision.state == "running" => {
@@ -174,5 +191,24 @@ pub(crate) fn revive_if_stopped(app: &AppHandle) {
     let stopped = app.state::<SidecarProc>().status.lock().map(|status| status.state == "stopped").unwrap_or(false);
     if stopped {
         let _ = restart_now(app);
+    }
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn reads_only_the_end_of_a_long_log_and_all_of_a_short_one() {
+        let path = std::env::temp_dir().join(format!("heel-log-tail-{}.log", std::process::id()));
+        let long = format!("{}\nlast line\n", "x".repeat(LOG_TAIL_BYTES as usize * 2));
+        std::fs::write(&path, &long).unwrap();
+        let tail = log_tail(&path).unwrap();
+        assert!(tail.len() <= LOG_TAIL_BYTES as usize);
+        assert_eq!(last_log_line(&tail).as_deref(), Some("last line"));
+        std::fs::write(&path, "only line\n").unwrap();
+        assert_eq!(log_tail(&path).as_deref(), Some("only line\n"));
+        let _ = std::fs::remove_file(&path);
+        assert_eq!(log_tail(&path), None, "no log yet");
     }
 }

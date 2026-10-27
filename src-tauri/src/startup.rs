@@ -63,7 +63,8 @@ pub(crate) fn set_dock_icon(app: AppHandle, on: bool) -> Result<(), String> {
 #[tauri::command]
 pub(crate) fn reveal_data_folder(app: AppHandle) -> Result<(), String> {
     let dir = app.path().app_data_dir().map_err(|error| error.to_string())?;
-    std::process::Command::new("open").arg(&dir).spawn().map(|_| ()).map_err(|error| error.to_string())
+    // `open` returns as soon as Finder has the request; waiting reaps it (a spawned-and-dropped Child stays defunct until Heel quits).
+    std::process::Command::new("open").arg(&dir).status().map(|_| ()).map_err(|error| error.to_string())
 }
 
 #[cfg(test)]

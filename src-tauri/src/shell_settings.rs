@@ -52,10 +52,7 @@ pub(crate) fn save(app: &AppHandle) {
     let (Some(path), Ok(settings)) = (file(app), app.state::<Shell>().0.lock().map(|state| *state)) else {
         return;
     };
-    if let Some(dir) = path.parent() {
-        let _ = std::fs::create_dir_all(dir);
-    }
-    let _ = std::fs::write(path, serialize(settings));
+    let _ = crate::save_file::write(&path, &serialize(settings));
 }
 
 /// The panel asks when Settings opens.

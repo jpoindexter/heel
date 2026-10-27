@@ -17,6 +17,7 @@ mod panel_window;
 mod placement;
 mod pointer_sense;
 mod panel_place;
+mod save_file;
 mod shell_settings;
 mod sidecar_process;
 mod startup;
