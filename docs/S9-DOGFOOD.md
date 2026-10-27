@@ -5,8 +5,8 @@ Everything on the board is "built" until this day says it is "done". Jason runs 
 ## Before the day (10 min, the evening before)
 1. Build and open it: `npm run smoke && npm run tauri build -- --bundles app`, then `open src-tauri/target/release/bundle/macos/Heel.app`.
 2. Settings › Brain: the AI you'll use all day; Test connection is green.
-3. Settings › Attention sense: on if you want the rabbit-hole nudges tested, off if not (either is a valid day; note which).
-4. Quit the dev stack if it is running (`pkill -f "tauri dev"`); only Heel.app may own the data dir.
+3. Settings › Greg › Attention sense: on if you want the rabbit-hole nudges tested, off if not (either is a valid day; note which).
+4. Quit the dev stack if it is running (Ctrl-C in the terminal running `npm run tauri dev`; no `pkill -f`, it reaches sibling sessions); only Heel.app may own the data dir.
 5. `cp -a ~/Library/Application\ Support/studio.theft.heel ~/Desktop/heel-before-S9` (the before copy).
 
 ## The day (do your real work; these are the only extra asks)
