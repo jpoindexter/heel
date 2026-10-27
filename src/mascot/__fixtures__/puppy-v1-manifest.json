@@ -1,0 +1,2512 @@
+{
+ "animations": {
+  "idle": {
+   "frameCount": 16,
+   "loop": true,
+   "frames": [
+    {
+     "durationMs": 167
+    },
+    {
+     "durationMs": 167
+    },
+    {
+     "durationMs": 167
+    },
+    {
+     "durationMs": 167
+    },
+    {
+     "durationMs": 167
+    },
+    {
+     "durationMs": 167
+    },
+    {
+     "durationMs": 167
+    },
+    {
+     "durationMs": 167
+    },
+    {
+     "durationMs": 167
+    },
+    {
+     "durationMs": 167
+    },
+    {
+     "durationMs": 167
+    },
+    {
+     "durationMs": 167
+    },
+    {
+     "durationMs": 167
+    },
+    {
+     "durationMs": 167
+    },
+    {
+     "durationMs": 167
+    },
+    {
+     "durationMs": 167
+    }
+   ]
+  },
+  "walk-right": {
+   "frameCount": 24,
+   "loop": true,
+   "frames": [
+    {
+     "durationMs": 62
+    },
+    {
+     "durationMs": 62
+    },
+    {
+     "durationMs": 62
+    },
+    {
+     "durationMs": 62
+    },
+    {
+     "durationMs": 62
+    },
+    {
+     "durationMs": 62
+    },
+    {
+     "durationMs": 62
+    },
+    {
+     "durationMs": 62
+    },
+    {
+     "durationMs": 62
+    },
+    {
+     "durationMs": 62
+    },
+    {
+     "durationMs": 62
+    },
+    {
+     "durationMs": 62
+    },
+    {
+     "durationMs": 62
+    },
+    {
+     "durationMs": 62
+    },
+    {
+     "durationMs": 62
+    },
+    {
+     "durationMs": 62
+    },
+    {
+     "durationMs": 62
+    },
+    {
+     "durationMs": 62
+    },
+    {
+     "durationMs": 62
+    },
+    {
+     "durationMs": 62
+    },
+    {
+     "durationMs": 62
+    },
+    {
+     "durationMs": 62
+    },
+    {
+     "durationMs": 62
+    },
+    {
+     "durationMs": 62
+    }
+   ]
+  },
+  "ball-play": {
+   "frameCount": 32,
+   "loop": false,
+   "frames": [
+    {
+     "durationMs": 220
+    },
+    {
+     "durationMs": 62
+    },
+    {
+     "durationMs": 62
+    },
+    {
+     "durationMs": 62
+    },
+    {
+     "durationMs": 62
+    },
+    {
+     "durationMs": 62
+    },
+    {
+     "durationMs": 62
+    },
+    {
+     "durationMs": 62
+    },
+    {
+     "durationMs": 62
+    },
+    {
+     "durationMs": 62
+    },
+    {
+     "durationMs": 62
+    },
+    {
+     "durationMs": 62
+    },
+    {
+     "durationMs": 62
+    },
+    {
+     "durationMs": 62
+    },
+    {
+     "durationMs": 62
+    },
+    {
+     "durationMs": 62
+    },
+    {
+     "durationMs": 62
+    },
+    {
+     "durationMs": 62
+    },
+    {
+     "durationMs": 62
+    },
+    {
+     "durationMs": 62
+    },
+    {
+     "durationMs": 62
+    },
+    {
+     "durationMs": 62
+    },
+    {
+     "durationMs": 62
+    },
+    {
+     "durationMs": 62
+    },
+    {
+     "durationMs": 62
+    },
+    {
+     "durationMs": 62
+    },
+    {
+     "durationMs": 62
+    },
+    {
+     "durationMs": 62
+    },
+    {
+     "durationMs": 62
+    },
+    {
+     "durationMs": 62
+    },
+    {
+     "durationMs": 62
+    },
+    {
+     "durationMs": 500
+    }
+   ]
+  },
+  "listening": {
+   "frameCount": 16,
+   "loop": true,
+   "frames": [
+    {
+     "durationMs": 125
+    },
+    {
+     "durationMs": 125
+    },
+    {
+     "durationMs": 125
+    },
+    {
+     "durationMs": 125
+    },
+    {
+     "durationMs": 125
+    },
+    {
+     "durationMs": 125
+    },
+    {
+     "durationMs": 125
+    },
+    {
+     "durationMs": 125
+    },
+    {
+     "durationMs": 125
+    },
+    {
+     "durationMs": 125
+    },
+    {
+     "durationMs": 125
+    },
+    {
+     "durationMs": 125
+    },
+    {
+     "durationMs": 125
+    },
+    {
+     "durationMs": 125
+    },
+    {
+     "durationMs": 125
+    },
+    {
+     "durationMs": 125
+    }
+   ]
+  },
+  "focus": {
+   "frameCount": 16,
+   "loop": true,
+   "frames": [
+    {
+     "durationMs": 167
+    },
+    {
+     "durationMs": 167
+    },
+    {
+     "durationMs": 167
+    },
+    {
+     "durationMs": 167
+    },
+    {
+     "durationMs": 167
+    },
+    {
+     "durationMs": 167
+    },
+    {
+     "durationMs": 167
+    },
+    {
+     "durationMs": 167
+    },
+    {
+     "durationMs": 167
+    },
+    {
+     "durationMs": 167
+    },
+    {
+     "durationMs": 167
+    },
+    {
+     "durationMs": 167
+    },
+    {
+     "durationMs": 167
+    },
+    {
+     "durationMs": 167
+    },
+    {
+     "durationMs": 167
+    },
+    {
+     "durationMs": 167
+    }
+   ]
+  },
+  "nudge": {
+   "frameCount": 16,
+   "loop": false,
+   "frames": [
+    {
+     "durationMs": 220
+    },
+    {
+     "durationMs": 83
+    },
+    {
+     "durationMs": 83
+    },
+    {
+     "durationMs": 83
+    },
+    {
+     "durationMs": 83
+    },
+    {
+     "durationMs": 83
+    },
+    {
+     "durationMs": 83
+    },
+    {
+     "durationMs": 83
+    },
+    {
+     "durationMs": 83
+    },
+    {
+     "durationMs": 83
+    },
+    {
+     "durationMs": 83
+    },
+    {
+     "durationMs": 83
+    },
+    {
+     "durationMs": 83
+    },
+    {
+     "durationMs": 83
+    },
+    {
+     "durationMs": 83
+    },
+    {
+     "durationMs": 500
+    }
+   ]
+  },
+  "done": {
+   "frameCount": 16,
+   "loop": false,
+   "frames": [
+    {
+     "durationMs": 220
+    },
+    {
+     "durationMs": 83
+    },
+    {
+     "durationMs": 83
+    },
+    {
+     "durationMs": 83
+    },
+    {
+     "durationMs": 83
+    },
+    {
+     "durationMs": 83
+    },
+    {
+     "durationMs": 83
+    },
+    {
+     "durationMs": 83
+    },
+    {
+     "durationMs": 83
+    },
+    {
+     "durationMs": 83
+    },
+    {
+     "durationMs": 83
+    },
+    {
+     "durationMs": 83
+    },
+    {
+     "durationMs": 83
+    },
+    {
+     "durationMs": 83
+    },
+    {
+     "durationMs": 83
+    },
+    {
+     "durationMs": 500
+    }
+   ]
+  },
+  "rest": {
+   "frameCount": 16,
+   "loop": true,
+   "frames": [
+    {
+     "durationMs": 167
+    },
+    {
+     "durationMs": 167
+    },
+    {
+     "durationMs": 167
+    },
+    {
+     "durationMs": 167
+    },
+    {
+     "durationMs": 167
+    },
+    {
+     "durationMs": 167
+    },
+    {
+     "durationMs": 167
+    },
+    {
+     "durationMs": 167
+    },
+    {
+     "durationMs": 167
+    },
+    {
+     "durationMs": 167
+    },
+    {
+     "durationMs": 167
+    },
+    {
+     "durationMs": 167
+    },
+    {
+     "durationMs": 167
+    },
+    {
+     "durationMs": 167
+    },
+    {
+     "durationMs": 167
+    },
+    {
+     "durationMs": 167
+    }
+   ]
+  },
+  "wave": {
+   "frameCount": 16,
+   "loop": false,
+   "frames": [
+    {
+     "durationMs": 220
+    },
+    {
+     "durationMs": 83
+    },
+    {
+     "durationMs": 83
+    },
+    {
+     "durationMs": 83
+    },
+    {
+     "durationMs": 83
+    },
+    {
+     "durationMs": 83
+    },
+    {
+     "durationMs": 83
+    },
+    {
+     "durationMs": 83
+    },
+    {
+     "durationMs": 83
+    },
+    {
+     "durationMs": 83
+    },
+    {
+     "durationMs": 83
+    },
+    {
+     "durationMs": 83
+    },
+    {
+     "durationMs": 83
+    },
+    {
+     "durationMs": 83
+    },
+    {
+     "durationMs": 83
+    },
+    {
+     "durationMs": 500
+    }
+   ]
+  },
+  "jump": {
+   "frameCount": 16,
+   "loop": false,
+   "frames": [
+    {
+     "durationMs": 220
+    },
+    {
+     "durationMs": 83
+    },
+    {
+     "durationMs": 83
+    },
+    {
+     "durationMs": 83
+    },
+    {
+     "durationMs": 83
+    },
+    {
+     "durationMs": 83
+    },
+    {
+     "durationMs": 83
+    },
+    {
+     "durationMs": 83
+    },
+    {
+     "durationMs": 83
+    },
+    {
+     "durationMs": 83
+    },
+    {
+     "durationMs": 83
+    },
+    {
+     "durationMs": 83
+    },
+    {
+     "durationMs": 83
+    },
+    {
+     "durationMs": 83
+    },
+    {
+     "durationMs": 83
+    },
+    {
+     "durationMs": 500
+    }
+   ]
+  },
+  "error": {
+   "frameCount": 16,
+   "loop": false,
+   "frames": [
+    {
+     "durationMs": 220
+    },
+    {
+     "durationMs": 83
+    },
+    {
+     "durationMs": 83
+    },
+    {
+     "durationMs": 83
+    },
+    {
+     "durationMs": 83
+    },
+    {
+     "durationMs": 83
+    },
+    {
+     "durationMs": 83
+    },
+    {
+     "durationMs": 83
+    },
+    {
+     "durationMs": 83
+    },
+    {
+     "durationMs": 83
+    },
+    {
+     "durationMs": 83
+    },
+    {
+     "durationMs": 83
+    },
+    {
+     "durationMs": 83
+    },
+    {
+     "durationMs": 83
+    },
+    {
+     "durationMs": 83
+    },
+    {
+     "durationMs": 500
+    }
+   ]
+  },
+  "review": {
+   "frameCount": 16,
+   "loop": true,
+   "frames": [
+    {
+     "durationMs": 125
+    },
+    {
+     "durationMs": 125
+    },
+    {
+     "durationMs": 125
+    },
+    {
+     "durationMs": 125
+    },
+    {
+     "durationMs": 125
+    },
+    {
+     "durationMs": 125
+    },
+    {
+     "durationMs": 125
+    },
+    {
+     "durationMs": 125
+    },
+    {
+     "durationMs": 125
+    },
+    {
+     "durationMs": 125
+    },
+    {
+     "durationMs": 125
+    },
+    {
+     "durationMs": 125
+    },
+    {
+     "durationMs": 125
+    },
+    {
+     "durationMs": 125
+    },
+    {
+     "durationMs": 125
+    },
+    {
+     "durationMs": 125
+    }
+   ]
+  },
+  "fetch-offer": {
+   "frameCount": 24,
+   "loop": false,
+   "frames": [
+    {
+     "durationMs": 220
+    },
+    {
+     "durationMs": 62
+    },
+    {
+     "durationMs": 62
+    },
+    {
+     "durationMs": 62
+    },
+    {
+     "durationMs": 62
+    },
+    {
+     "durationMs": 62
+    },
+    {
+     "durationMs": 62
+    },
+    {
+     "durationMs": 62
+    },
+    {
+     "durationMs": 62
+    },
+    {
+     "durationMs": 62
+    },
+    {
+     "durationMs": 62
+    },
+    {
+     "durationMs": 62
+    },
+    {
+     "durationMs": 62
+    },
+    {
+     "durationMs": 62
+    },
+    {
+     "durationMs": 62
+    },
+    {
+     "durationMs": 62
+    },
+    {
+     "durationMs": 62
+    },
+    {
+     "durationMs": 62
+    },
+    {
+     "durationMs": 62
+    },
+    {
+     "durationMs": 62
+    },
+    {
+     "durationMs": 62
+    },
+    {
+     "durationMs": 62
+    },
+    {
+     "durationMs": 62
+    },
+    {
+     "durationMs": 500
+    }
+   ]
+  },
+  "play-bow": {
+   "frameCount": 24,
+   "loop": false,
+   "frames": [
+    {
+     "durationMs": 220
+    },
+    {
+     "durationMs": 62
+    },
+    {
+     "durationMs": 62
+    },
+    {
+     "durationMs": 62
+    },
+    {
+     "durationMs": 62
+    },
+    {
+     "durationMs": 62
+    },
+    {
+     "durationMs": 62
+    },
+    {
+     "durationMs": 62
+    },
+    {
+     "durationMs": 62
+    },
+    {
+     "durationMs": 62
+    },
+    {
+     "durationMs": 62
+    },
+    {
+     "durationMs": 62
+    },
+    {
+     "durationMs": 62
+    },
+    {
+     "durationMs": 62
+    },
+    {
+     "durationMs": 62
+    },
+    {
+     "durationMs": 62
+    },
+    {
+     "durationMs": 62
+    },
+    {
+     "durationMs": 62
+    },
+    {
+     "durationMs": 62
+    },
+    {
+     "durationMs": 62
+    },
+    {
+     "durationMs": 62
+    },
+    {
+     "durationMs": 62
+    },
+    {
+     "durationMs": 62
+    },
+    {
+     "durationMs": 500
+    }
+   ]
+  },
+  "chew-stick": {
+   "frameCount": 16,
+   "loop": true,
+   "frames": [
+    {
+     "durationMs": 83
+    },
+    {
+     "durationMs": 83
+    },
+    {
+     "durationMs": 83
+    },
+    {
+     "durationMs": 83
+    },
+    {
+     "durationMs": 83
+    },
+    {
+     "durationMs": 83
+    },
+    {
+     "durationMs": 83
+    },
+    {
+     "durationMs": 83
+    },
+    {
+     "durationMs": 83
+    },
+    {
+     "durationMs": 83
+    },
+    {
+     "durationMs": 83
+    },
+    {
+     "durationMs": 83
+    },
+    {
+     "durationMs": 83
+    },
+    {
+     "durationMs": 83
+    },
+    {
+     "durationMs": 83
+    },
+    {
+     "durationMs": 83
+    }
+   ]
+  },
+  "scratch-ear": {
+   "frameCount": 16,
+   "loop": false,
+   "frames": [
+    {
+     "durationMs": 220
+    },
+    {
+     "durationMs": 83
+    },
+    {
+     "durationMs": 83
+    },
+    {
+     "durationMs": 83
+    },
+    {
+     "durationMs": 83
+    },
+    {
+     "durationMs": 83
+    },
+    {
+     "durationMs": 83
+    },
+    {
+     "durationMs": 83
+    },
+    {
+     "durationMs": 83
+    },
+    {
+     "durationMs": 83
+    },
+    {
+     "durationMs": 83
+    },
+    {
+     "durationMs": 83
+    },
+    {
+     "durationMs": 83
+    },
+    {
+     "durationMs": 83
+    },
+    {
+     "durationMs": 83
+    },
+    {
+     "durationMs": 500
+    }
+   ]
+  },
+  "yawn": {
+   "frameCount": 16,
+   "loop": false,
+   "frames": [
+    {
+     "durationMs": 220
+    },
+    {
+     "durationMs": 83
+    },
+    {
+     "durationMs": 83
+    },
+    {
+     "durationMs": 83
+    },
+    {
+     "durationMs": 83
+    },
+    {
+     "durationMs": 83
+    },
+    {
+     "durationMs": 83
+    },
+    {
+     "durationMs": 83
+    },
+    {
+     "durationMs": 83
+    },
+    {
+     "durationMs": 83
+    },
+    {
+     "durationMs": 83
+    },
+    {
+     "durationMs": 83
+    },
+    {
+     "durationMs": 83
+    },
+    {
+     "durationMs": 83
+    },
+    {
+     "durationMs": 83
+    },
+    {
+     "durationMs": 500
+    }
+   ]
+  },
+  "sniff-search": {
+   "frameCount": 16,
+   "loop": true,
+   "frames": [
+    {
+     "durationMs": 83
+    },
+    {
+     "durationMs": 83
+    },
+    {
+     "durationMs": 83
+    },
+    {
+     "durationMs": 83
+    },
+    {
+     "durationMs": 83
+    },
+    {
+     "durationMs": 83
+    },
+    {
+     "durationMs": 83
+    },
+    {
+     "durationMs": 83
+    },
+    {
+     "durationMs": 83
+    },
+    {
+     "durationMs": 83
+    },
+    {
+     "durationMs": 83
+    },
+    {
+     "durationMs": 83
+    },
+    {
+     "durationMs": 83
+    },
+    {
+     "durationMs": 83
+    },
+    {
+     "durationMs": 83
+    },
+    {
+     "durationMs": 83
+    }
+   ]
+  },
+  "stretch": {
+   "frameCount": 24,
+   "loop": false,
+   "frames": [
+    {
+     "durationMs": 220
+    },
+    {
+     "durationMs": 62
+    },
+    {
+     "durationMs": 62
+    },
+    {
+     "durationMs": 62
+    },
+    {
+     "durationMs": 62
+    },
+    {
+     "durationMs": 62
+    },
+    {
+     "durationMs": 62
+    },
+    {
+     "durationMs": 62
+    },
+    {
+     "durationMs": 62
+    },
+    {
+     "durationMs": 62
+    },
+    {
+     "durationMs": 62
+    },
+    {
+     "durationMs": 62
+    },
+    {
+     "durationMs": 62
+    },
+    {
+     "durationMs": 62
+    },
+    {
+     "durationMs": 62
+    },
+    {
+     "durationMs": 62
+    },
+    {
+     "durationMs": 62
+    },
+    {
+     "durationMs": 62
+    },
+    {
+     "durationMs": 62
+    },
+    {
+     "durationMs": 62
+    },
+    {
+     "durationMs": 62
+    },
+    {
+     "durationMs": 62
+    },
+    {
+     "durationMs": 62
+    },
+    {
+     "durationMs": 500
+    }
+   ]
+  },
+  "error-facepalm": {
+   "frameCount": 16,
+   "loop": false,
+   "frames": [
+    {
+     "durationMs": 220
+    },
+    {
+     "durationMs": 83
+    },
+    {
+     "durationMs": 83
+    },
+    {
+     "durationMs": 83
+    },
+    {
+     "durationMs": 83
+    },
+    {
+     "durationMs": 83
+    },
+    {
+     "durationMs": 83
+    },
+    {
+     "durationMs": 83
+    },
+    {
+     "durationMs": 83
+    },
+    {
+     "durationMs": 83
+    },
+    {
+     "durationMs": 83
+    },
+    {
+     "durationMs": 83
+    },
+    {
+     "durationMs": 83
+    },
+    {
+     "durationMs": 83
+    },
+    {
+     "durationMs": 83
+    },
+    {
+     "durationMs": 500
+    }
+   ]
+  },
+  "poop-gag": {
+   "frameCount": 24,
+   "loop": false,
+   "frames": [
+    {
+     "durationMs": 220
+    },
+    {
+     "durationMs": 62
+    },
+    {
+     "durationMs": 62
+    },
+    {
+     "durationMs": 62
+    },
+    {
+     "durationMs": 62
+    },
+    {
+     "durationMs": 62
+    },
+    {
+     "durationMs": 62
+    },
+    {
+     "durationMs": 62
+    },
+    {
+     "durationMs": 62
+    },
+    {
+     "durationMs": 62
+    },
+    {
+     "durationMs": 62
+    },
+    {
+     "durationMs": 62
+    },
+    {
+     "durationMs": 62
+    },
+    {
+     "durationMs": 62
+    },
+    {
+     "durationMs": 62
+    },
+    {
+     "durationMs": 62
+    },
+    {
+     "durationMs": 62
+    },
+    {
+     "durationMs": 62
+    },
+    {
+     "durationMs": 62
+    },
+    {
+     "durationMs": 62
+    },
+    {
+     "durationMs": 62
+    },
+    {
+     "durationMs": 62
+    },
+    {
+     "durationMs": 62
+    },
+    {
+     "durationMs": 500
+    }
+   ]
+  },
+  "pee-gag": {
+   "frameCount": 24,
+   "loop": false,
+   "frames": [
+    {
+     "durationMs": 220
+    },
+    {
+     "durationMs": 62
+    },
+    {
+     "durationMs": 62
+    },
+    {
+     "durationMs": 62
+    },
+    {
+     "durationMs": 62
+    },
+    {
+     "durationMs": 62
+    },
+    {
+     "durationMs": 62
+    },
+    {
+     "durationMs": 62
+    },
+    {
+     "durationMs": 62
+    },
+    {
+     "durationMs": 62
+    },
+    {
+     "durationMs": 62
+    },
+    {
+     "durationMs": 62
+    },
+    {
+     "durationMs": 62
+    },
+    {
+     "durationMs": 62
+    },
+    {
+     "durationMs": 62
+    },
+    {
+     "durationMs": 62
+    },
+    {
+     "durationMs": 62
+    },
+    {
+     "durationMs": 62
+    },
+    {
+     "durationMs": 62
+    },
+    {
+     "durationMs": 62
+    },
+    {
+     "durationMs": 62
+    },
+    {
+     "durationMs": 62
+    },
+    {
+     "durationMs": 62
+    },
+    {
+     "durationMs": 500
+    }
+   ]
+  },
+  "sniff-trail": {
+   "frameCount": 24,
+   "loop": true,
+   "frames": [
+    {
+     "durationMs": 62
+    },
+    {
+     "durationMs": 62
+    },
+    {
+     "durationMs": 62
+    },
+    {
+     "durationMs": 62
+    },
+    {
+     "durationMs": 62
+    },
+    {
+     "durationMs": 62
+    },
+    {
+     "durationMs": 62
+    },
+    {
+     "durationMs": 62
+    },
+    {
+     "durationMs": 62
+    },
+    {
+     "durationMs": 62
+    },
+    {
+     "durationMs": 62
+    },
+    {
+     "durationMs": 62
+    },
+    {
+     "durationMs": 62
+    },
+    {
+     "durationMs": 62
+    },
+    {
+     "durationMs": 62
+    },
+    {
+     "durationMs": 62
+    },
+    {
+     "durationMs": 62
+    },
+    {
+     "durationMs": 62
+    },
+    {
+     "durationMs": 62
+    },
+    {
+     "durationMs": 62
+    },
+    {
+     "durationMs": 62
+    },
+    {
+     "durationMs": 62
+    },
+    {
+     "durationMs": 62
+    },
+    {
+     "durationMs": 62
+    }
+   ]
+  },
+  "graze-grass": {
+   "frameCount": 24,
+   "loop": false,
+   "frames": [
+    {
+     "durationMs": 220
+    },
+    {
+     "durationMs": 62
+    },
+    {
+     "durationMs": 62
+    },
+    {
+     "durationMs": 62
+    },
+    {
+     "durationMs": 62
+    },
+    {
+     "durationMs": 62
+    },
+    {
+     "durationMs": 62
+    },
+    {
+     "durationMs": 62
+    },
+    {
+     "durationMs": 62
+    },
+    {
+     "durationMs": 62
+    },
+    {
+     "durationMs": 62
+    },
+    {
+     "durationMs": 62
+    },
+    {
+     "durationMs": 62
+    },
+    {
+     "durationMs": 62
+    },
+    {
+     "durationMs": 62
+    },
+    {
+     "durationMs": 62
+    },
+    {
+     "durationMs": 62
+    },
+    {
+     "durationMs": 62
+    },
+    {
+     "durationMs": 62
+    },
+    {
+     "durationMs": 62
+    },
+    {
+     "durationMs": 62
+    },
+    {
+     "durationMs": 62
+    },
+    {
+     "durationMs": 62
+    },
+    {
+     "durationMs": 500
+    }
+   ]
+  },
+  "pick-up-stick": {
+   "frameCount": 24,
+   "loop": false,
+   "frames": [
+    {
+     "durationMs": 220
+    },
+    {
+     "durationMs": 62
+    },
+    {
+     "durationMs": 62
+    },
+    {
+     "durationMs": 62
+    },
+    {
+     "durationMs": 62
+    },
+    {
+     "durationMs": 62
+    },
+    {
+     "durationMs": 62
+    },
+    {
+     "durationMs": 62
+    },
+    {
+     "durationMs": 62
+    },
+    {
+     "durationMs": 62
+    },
+    {
+     "durationMs": 62
+    },
+    {
+     "durationMs": 62
+    },
+    {
+     "durationMs": 62
+    },
+    {
+     "durationMs": 62
+    },
+    {
+     "durationMs": 62
+    },
+    {
+     "durationMs": 62
+    },
+    {
+     "durationMs": 62
+    },
+    {
+     "durationMs": 62
+    },
+    {
+     "durationMs": 62
+    },
+    {
+     "durationMs": 62
+    },
+    {
+     "durationMs": 62
+    },
+    {
+     "durationMs": 62
+    },
+    {
+     "durationMs": 62
+    },
+    {
+     "durationMs": 500
+    }
+   ]
+  },
+  "carry-stick": {
+   "frameCount": 24,
+   "loop": true,
+   "frames": [
+    {
+     "durationMs": 62
+    },
+    {
+     "durationMs": 62
+    },
+    {
+     "durationMs": 62
+    },
+    {
+     "durationMs": 62
+    },
+    {
+     "durationMs": 62
+    },
+    {
+     "durationMs": 62
+    },
+    {
+     "durationMs": 62
+    },
+    {
+     "durationMs": 62
+    },
+    {
+     "durationMs": 62
+    },
+    {
+     "durationMs": 62
+    },
+    {
+     "durationMs": 62
+    },
+    {
+     "durationMs": 62
+    },
+    {
+     "durationMs": 62
+    },
+    {
+     "durationMs": 62
+    },
+    {
+     "durationMs": 62
+    },
+    {
+     "durationMs": 62
+    },
+    {
+     "durationMs": 62
+    },
+    {
+     "durationMs": 62
+    },
+    {
+     "durationMs": 62
+    },
+    {
+     "durationMs": 62
+    },
+    {
+     "durationMs": 62
+    },
+    {
+     "durationMs": 62
+    },
+    {
+     "durationMs": 62
+    },
+    {
+     "durationMs": 62
+    }
+   ]
+  },
+  "sit-down": {
+   "frameCount": 24,
+   "loop": false,
+   "frames": [
+    {
+     "durationMs": 220
+    },
+    {
+     "durationMs": 62
+    },
+    {
+     "durationMs": 62
+    },
+    {
+     "durationMs": 62
+    },
+    {
+     "durationMs": 62
+    },
+    {
+     "durationMs": 62
+    },
+    {
+     "durationMs": 62
+    },
+    {
+     "durationMs": 62
+    },
+    {
+     "durationMs": 62
+    },
+    {
+     "durationMs": 62
+    },
+    {
+     "durationMs": 62
+    },
+    {
+     "durationMs": 62
+    },
+    {
+     "durationMs": 62
+    },
+    {
+     "durationMs": 62
+    },
+    {
+     "durationMs": 62
+    },
+    {
+     "durationMs": 62
+    },
+    {
+     "durationMs": 62
+    },
+    {
+     "durationMs": 62
+    },
+    {
+     "durationMs": 62
+    },
+    {
+     "durationMs": 62
+    },
+    {
+     "durationMs": 62
+    },
+    {
+     "durationMs": 62
+    },
+    {
+     "durationMs": 62
+    },
+    {
+     "durationMs": 500
+    }
+   ]
+  },
+  "lie-down": {
+   "frameCount": 24,
+   "loop": false,
+   "frames": [
+    {
+     "durationMs": 220
+    },
+    {
+     "durationMs": 62
+    },
+    {
+     "durationMs": 62
+    },
+    {
+     "durationMs": 62
+    },
+    {
+     "durationMs": 62
+    },
+    {
+     "durationMs": 62
+    },
+    {
+     "durationMs": 62
+    },
+    {
+     "durationMs": 62
+    },
+    {
+     "durationMs": 62
+    },
+    {
+     "durationMs": 62
+    },
+    {
+     "durationMs": 62
+    },
+    {
+     "durationMs": 62
+    },
+    {
+     "durationMs": 62
+    },
+    {
+     "durationMs": 62
+    },
+    {
+     "durationMs": 62
+    },
+    {
+     "durationMs": 62
+    },
+    {
+     "durationMs": 62
+    },
+    {
+     "durationMs": 62
+    },
+    {
+     "durationMs": 62
+    },
+    {
+     "durationMs": 62
+    },
+    {
+     "durationMs": 62
+    },
+    {
+     "durationMs": 62
+    },
+    {
+     "durationMs": 62
+    },
+    {
+     "durationMs": 500
+    }
+   ]
+  },
+  "curl-up": {
+   "frameCount": 24,
+   "loop": false,
+   "frames": [
+    {
+     "durationMs": 220
+    },
+    {
+     "durationMs": 62
+    },
+    {
+     "durationMs": 62
+    },
+    {
+     "durationMs": 62
+    },
+    {
+     "durationMs": 62
+    },
+    {
+     "durationMs": 62
+    },
+    {
+     "durationMs": 62
+    },
+    {
+     "durationMs": 62
+    },
+    {
+     "durationMs": 62
+    },
+    {
+     "durationMs": 62
+    },
+    {
+     "durationMs": 62
+    },
+    {
+     "durationMs": 62
+    },
+    {
+     "durationMs": 62
+    },
+    {
+     "durationMs": 62
+    },
+    {
+     "durationMs": 62
+    },
+    {
+     "durationMs": 62
+    },
+    {
+     "durationMs": 62
+    },
+    {
+     "durationMs": 62
+    },
+    {
+     "durationMs": 62
+    },
+    {
+     "durationMs": 62
+    },
+    {
+     "durationMs": 62
+    },
+    {
+     "durationMs": 62
+    },
+    {
+     "durationMs": 62
+    },
+    {
+     "durationMs": 500
+    }
+   ]
+  },
+  "wake-up": {
+   "frameCount": 24,
+   "loop": false,
+   "frames": [
+    {
+     "durationMs": 220
+    },
+    {
+     "durationMs": 62
+    },
+    {
+     "durationMs": 62
+    },
+    {
+     "durationMs": 62
+    },
+    {
+     "durationMs": 62
+    },
+    {
+     "durationMs": 62
+    },
+    {
+     "durationMs": 62
+    },
+    {
+     "durationMs": 62
+    },
+    {
+     "durationMs": 62
+    },
+    {
+     "durationMs": 62
+    },
+    {
+     "durationMs": 62
+    },
+    {
+     "durationMs": 62
+    },
+    {
+     "durationMs": 62
+    },
+    {
+     "durationMs": 62
+    },
+    {
+     "durationMs": 62
+    },
+    {
+     "durationMs": 62
+    },
+    {
+     "durationMs": 62
+    },
+    {
+     "durationMs": 62
+    },
+    {
+     "durationMs": 62
+    },
+    {
+     "durationMs": 62
+    },
+    {
+     "durationMs": 62
+    },
+    {
+     "durationMs": 62
+    },
+    {
+     "durationMs": 62
+    },
+    {
+     "durationMs": 500
+    }
+   ]
+  },
+  "turn-around": {
+   "frameCount": 24,
+   "loop": false,
+   "frames": [
+    {
+     "durationMs": 220
+    },
+    {
+     "durationMs": 62
+    },
+    {
+     "durationMs": 62
+    },
+    {
+     "durationMs": 62
+    },
+    {
+     "durationMs": 62
+    },
+    {
+     "durationMs": 62
+    },
+    {
+     "durationMs": 62
+    },
+    {
+     "durationMs": 62
+    },
+    {
+     "durationMs": 62
+    },
+    {
+     "durationMs": 62
+    },
+    {
+     "durationMs": 62
+    },
+    {
+     "durationMs": 62
+    },
+    {
+     "durationMs": 62
+    },
+    {
+     "durationMs": 62
+    },
+    {
+     "durationMs": 62
+    },
+    {
+     "durationMs": 62
+    },
+    {
+     "durationMs": 62
+    },
+    {
+     "durationMs": 62
+    },
+    {
+     "durationMs": 62
+    },
+    {
+     "durationMs": 62
+    },
+    {
+     "durationMs": 62
+    },
+    {
+     "durationMs": 62
+    },
+    {
+     "durationMs": 62
+    },
+    {
+     "durationMs": 500
+    }
+   ]
+  },
+  "look-directions": {
+   "frameCount": 16,
+   "loop": false,
+   "frames": [
+    {
+     "durationMs": 250
+    },
+    {
+     "durationMs": 250
+    },
+    {
+     "durationMs": 250
+    },
+    {
+     "durationMs": 250
+    },
+    {
+     "durationMs": 250
+    },
+    {
+     "durationMs": 250
+    },
+    {
+     "durationMs": 250
+    },
+    {
+     "durationMs": 250
+    },
+    {
+     "durationMs": 250
+    },
+    {
+     "durationMs": 250
+    },
+    {
+     "durationMs": 250
+    },
+    {
+     "durationMs": 250
+    },
+    {
+     "durationMs": 250
+    },
+    {
+     "durationMs": 250
+    },
+    {
+     "durationMs": 250
+    },
+    {
+     "durationMs": 250
+    }
+   ]
+  },
+  "walk-left": {
+   "frameCount": 24,
+   "loop": true,
+   "frames": [
+    {
+     "durationMs": 62
+    },
+    {
+     "durationMs": 62
+    },
+    {
+     "durationMs": 62
+    },
+    {
+     "durationMs": 62
+    },
+    {
+     "durationMs": 62
+    },
+    {
+     "durationMs": 62
+    },
+    {
+     "durationMs": 62
+    },
+    {
+     "durationMs": 62
+    },
+    {
+     "durationMs": 62
+    },
+    {
+     "durationMs": 62
+    },
+    {
+     "durationMs": 62
+    },
+    {
+     "durationMs": 62
+    },
+    {
+     "durationMs": 62
+    },
+    {
+     "durationMs": 62
+    },
+    {
+     "durationMs": 62
+    },
+    {
+     "durationMs": 62
+    },
+    {
+     "durationMs": 62
+    },
+    {
+     "durationMs": 62
+    },
+    {
+     "durationMs": 62
+    },
+    {
+     "durationMs": 62
+    },
+    {
+     "durationMs": 62
+    },
+    {
+     "durationMs": 62
+    },
+    {
+     "durationMs": 62
+    },
+    {
+     "durationMs": 62
+    }
+   ]
+  },
+  "pacing": {
+   "frameCount": 96,
+   "loop": true,
+   "frames": [
+    {
+     "durationMs": 70
+    },
+    {
+     "durationMs": 70
+    },
+    {
+     "durationMs": 70
+    },
+    {
+     "durationMs": 70
+    },
+    {
+     "durationMs": 70
+    },
+    {
+     "durationMs": 70
+    },
+    {
+     "durationMs": 70
+    },
+    {
+     "durationMs": 70
+    },
+    {
+     "durationMs": 70
+    },
+    {
+     "durationMs": 70
+    },
+    {
+     "durationMs": 70
+    },
+    {
+     "durationMs": 70
+    },
+    {
+     "durationMs": 70
+    },
+    {
+     "durationMs": 70
+    },
+    {
+     "durationMs": 70
+    },
+    {
+     "durationMs": 70
+    },
+    {
+     "durationMs": 70
+    },
+    {
+     "durationMs": 70
+    },
+    {
+     "durationMs": 70
+    },
+    {
+     "durationMs": 70
+    },
+    {
+     "durationMs": 70
+    },
+    {
+     "durationMs": 70
+    },
+    {
+     "durationMs": 70
+    },
+    {
+     "durationMs": 70
+    },
+    {
+     "durationMs": 80
+    },
+    {
+     "durationMs": 80
+    },
+    {
+     "durationMs": 80
+    },
+    {
+     "durationMs": 80
+    },
+    {
+     "durationMs": 80
+    },
+    {
+     "durationMs": 80
+    },
+    {
+     "durationMs": 80
+    },
+    {
+     "durationMs": 80
+    },
+    {
+     "durationMs": 80
+    },
+    {
+     "durationMs": 80
+    },
+    {
+     "durationMs": 80
+    },
+    {
+     "durationMs": 80
+    },
+    {
+     "durationMs": 80
+    },
+    {
+     "durationMs": 80
+    },
+    {
+     "durationMs": 80
+    },
+    {
+     "durationMs": 80
+    },
+    {
+     "durationMs": 80
+    },
+    {
+     "durationMs": 80
+    },
+    {
+     "durationMs": 80
+    },
+    {
+     "durationMs": 80
+    },
+    {
+     "durationMs": 80
+    },
+    {
+     "durationMs": 80
+    },
+    {
+     "durationMs": 80
+    },
+    {
+     "durationMs": 80
+    },
+    {
+     "durationMs": 70
+    },
+    {
+     "durationMs": 70
+    },
+    {
+     "durationMs": 70
+    },
+    {
+     "durationMs": 70
+    },
+    {
+     "durationMs": 70
+    },
+    {
+     "durationMs": 70
+    },
+    {
+     "durationMs": 70
+    },
+    {
+     "durationMs": 70
+    },
+    {
+     "durationMs": 70
+    },
+    {
+     "durationMs": 70
+    },
+    {
+     "durationMs": 70
+    },
+    {
+     "durationMs": 70
+    },
+    {
+     "durationMs": 70
+    },
+    {
+     "durationMs": 70
+    },
+    {
+     "durationMs": 70
+    },
+    {
+     "durationMs": 70
+    },
+    {
+     "durationMs": 70
+    },
+    {
+     "durationMs": 70
+    },
+    {
+     "durationMs": 70
+    },
+    {
+     "durationMs": 70
+    },
+    {
+     "durationMs": 70
+    },
+    {
+     "durationMs": 70
+    },
+    {
+     "durationMs": 70
+    },
+    {
+     "durationMs": 70
+    },
+    {
+     "durationMs": 80
+    },
+    {
+     "durationMs": 80
+    },
+    {
+     "durationMs": 80
+    },
+    {
+     "durationMs": 80
+    },
+    {
+     "durationMs": 80
+    },
+    {
+     "durationMs": 80
+    },
+    {
+     "durationMs": 80
+    },
+    {
+     "durationMs": 80
+    },
+    {
+     "durationMs": 80
+    },
+    {
+     "durationMs": 80
+    },
+    {
+     "durationMs": 80
+    },
+    {
+     "durationMs": 80
+    },
+    {
+     "durationMs": 80
+    },
+    {
+     "durationMs": 80
+    },
+    {
+     "durationMs": 80
+    },
+    {
+     "durationMs": 80
+    },
+    {
+     "durationMs": 80
+    },
+    {
+     "durationMs": 80
+    },
+    {
+     "durationMs": 80
+    },
+    {
+     "durationMs": 80
+    },
+    {
+     "durationMs": 80
+    },
+    {
+     "durationMs": 80
+    },
+    {
+     "durationMs": 80
+    },
+    {
+     "durationMs": 80
+    }
+   ]
+  }
+ }
+}
