@@ -20,6 +20,7 @@ import { openStore } from "../store/store";
 import { createApp, DEV_ORIGIN, TAURI_ORIGINS } from "./app";
 import { findRunningHelper, removeConnectionFile, writeConnectionFile } from "./connection-file";
 import { dataDir } from "./data-dir";
+import { watchParent } from "./parent-watch";
 
 const HOST = "127.0.0.1";
 const TOKEN_BYTES = 32;
@@ -68,3 +69,4 @@ function shutdown(): void {
 }
 process.on("SIGINT", shutdown);
 process.on("SIGTERM", shutdown);
+watchParent({ parentPid: process.ppid, ppid: () => process.ppid, onGone: shutdown });
