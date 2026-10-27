@@ -1,6 +1,7 @@
 import { ParkedResultSchema, TaskResultSchema, UnparkResultSchema, type ApiResult, type ParkedIdeaDto, type TaskDto } from "../../shared/api";
 import type { Client } from "../api/client";
 import type { Notice } from "../ui/Notifier";
+import { undoThen } from "../ui/undo-said";
 import { encouragement, lineOf } from "./encouragement";
 
 type Deps = {
@@ -26,15 +27,6 @@ function makeCheer(doneToday: () => number): (title: string) => string {
 }
 
 export type TaskPatch = { size?: TaskDto["size"]; bucket?: string | null; title?: string; nowStep?: string | null; place?: number };
-
-/** An Undo that the helper refuses must say so: a row that quietly fails to come back reads as lost. The list reloads either way. */
-function undoThen(run: () => Promise<ApiResult<unknown>>, refresh: () => Promise<void>, fail: (message: string) => void): () => void {
-  return () =>
-    void run().then((result) => {
-      if (!result.ok) fail(result.error.message);
-      return refresh();
-    });
-}
 
 /** Where a task sits among the open tasks that share its parent (0 = first). */
 export function placeOf(task: TaskDto, open: readonly TaskDto[]): number {

@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useState } from "react";
 import { DocumentResultSchema, DocumentsListSchema, OpenedSchema, type DocumentDto, type DocumentFile } from "../../shared/api";
 import type { Client } from "../api/client";
+import { undoThen } from "../ui/undo-said";
 
 type Options = { active: boolean; notify: (message: string, tone?: "info" | "error", undo?: () => void) => void };
 
@@ -41,7 +42,7 @@ export function useDocuments(client: Client, { active, notify }: Options) {
       const result = await client.post(`/documents/${doc.id}/delete`, DocumentResultSchema, {});
       if (!result.ok) return notify(result.error.message, "error");
       await load();
-      notify(`Removed “${doc.title}” from the list (the file stays)`, "info", () => void client.post(`/documents/${doc.id}/restore`, DocumentResultSchema, {}).then(load));
+      notify(`Removed “${doc.title}” from the list (the file stays)`, "info", undoThen(() => client.post(`/documents/${doc.id}/restore`, DocumentResultSchema, {}), load, (message) => notify(message, "error")));
     },
     [client, load, notify],
   );

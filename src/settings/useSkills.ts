@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useState } from "react";
 import { SkillResultSchema, SkillTextSchema, SkillsListSchema, UnsplitResultSchema, type SkillInfoDto } from "../../shared/api";
 import type { Client } from "../api/client";
+import { undoThen } from "../ui/undo-said";
 
 type Notify = (message: string, tone?: "info" | "error", undo?: () => void) => void;
 export type Editing = { id: string | null; text: string; editable: boolean; error: string | null } | null;
@@ -66,7 +67,7 @@ function useSkillWrites({ client, editing, setEditing, load, notify }: Writes) {
       if (!result.ok) return notify(result.error.message, "error");
       setEditing(null);
       await load();
-      notify(`Deleted “${skill.name}”`, "info", () => void client.post(`${path(skill.id)}/restore`, SkillResultSchema, {}).then(load));
+      notify(`Deleted “${skill.name}”`, "info", undoThen(() => client.post(`${path(skill.id)}/restore`, SkillResultSchema, {}), load, (message) => notify(message, "error")));
     },
     [client, setEditing, load, notify],
   );

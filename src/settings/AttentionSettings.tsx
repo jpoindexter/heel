@@ -1,5 +1,6 @@
 import { useId } from "react";
 import { Heading, Switch, Text, TextArea } from "@radix-ui/themes";
+import { undoSaid } from "../ui/undo-said";
 import { useAttentionSettings } from "../ui/attention";
 import { useNotices } from "../ui/notices";
 import { parseWanderList } from "./settings-model";
@@ -9,11 +10,12 @@ export function AttentionSettings() {
   const { settings, change } = useAttentionSettings();
   const notices = useNotices();
   const listId = useId();
+  const fail = (message: string) => notices.show({ message, tone: "error" });
   const apply = (next: typeof settings, said: string) => {
     const previous = settings;
     void change(next).then((refused) => {
-      if (refused) return notices.show({ message: refused, tone: "error" });
-      notices.show({ message: said, tone: "info", undo: () => void change(previous) });
+      if (refused) return fail(refused);
+      notices.show({ message: said, tone: "info", undo: undoSaid(() => change(previous), fail) });
     });
   };
   return (
