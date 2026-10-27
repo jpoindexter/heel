@@ -11,6 +11,7 @@ use crate::helper_health::{decide, describe_stop, last_log_line, observe, restar
 use crate::sidecar_process::{last_error, remember_error, spawn, SidecarProc};
 
 const CONNECT_TIMEOUT_MS: u64 = 400;
+const LOG_TAIL_BYTES: u64 = 16 * 1024;
 
 #[derive(Default)]
 pub(crate) struct Tracker {
@@ -75,11 +76,23 @@ fn reason(app: &AppHandle, fallback: &str) -> String {
     if let Some(error) = last_error(app) {
         return error;
     }
-    let log = data_dir(app).and_then(|dir| std::fs::read_to_string(dir.join(SIDECAR_LOG_FILE)).ok()).unwrap_or_default();
+    let log = data_dir(app).and_then(|dir| log_tail(&dir.join(SIDECAR_LOG_FILE))).unwrap_or_default();
     match last_log_line(&log) {
         Some(line) => describe_stop(Some(&line)),
         None => fallback.to_string(),
     }
+}
+
+/// The end of the helper's log. It is append-only and never rotated, and this runs every tick while the helper is down,
+/// so only the last stretch is read (the first line of it may be cut; the last useful line is what is wanted).
+fn log_tail(path: &std::path::Path) -> Option<String> {
+    use std::io::{Read, Seek, SeekFrom};
+    let mut file = std::fs::File::open(path).ok()?;
+    let len = file.metadata().ok()?.len();
+    file.seek(SeekFrom::Start(len.saturating_sub(LOG_TAIL_BYTES))).ok()?;
+    let mut bytes = Vec::new();
+    file.read_to_end(&mut bytes).ok()?;
+    Some(String::from_utf8_lossy(&bytes).into_owned())
 }
 
 fn end_child(app: &AppHandle) {
@@ -178,5 +191,24 @@ pub(crate) fn revive_if_stopped(app: &AppHandle) {
     let stopped = app.state::<SidecarProc>().status.lock().map(|status| status.state == "stopped").unwrap_or(false);
     if stopped {
         let _ = restart_now(app);
+    }
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn reads_only_the_end_of_a_long_log_and_all_of_a_short_one() {
+        let path = std::env::temp_dir().join(format!("heel-log-tail-{}.log", std::process::id()));
+        let long = format!("{}\nlast line\n", "x".repeat(LOG_TAIL_BYTES as usize * 2));
+        std::fs::write(&path, &long).unwrap();
+        let tail = log_tail(&path).unwrap();
+        assert!(tail.len() <= LOG_TAIL_BYTES as usize);
+        assert_eq!(last_log_line(&tail).as_deref(), Some("last line"));
+        std::fs::write(&path, "only line\n").unwrap();
+        assert_eq!(log_tail(&path).as_deref(), Some("only line\n"));
+        let _ = std::fs::remove_file(&path);
+        assert_eq!(log_tail(&path), None, "no log yet");
     }
 }
