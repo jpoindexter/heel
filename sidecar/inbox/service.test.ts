@@ -24,14 +24,16 @@ function fakeGoogle(extra: Route[] = []) {
   return { fetcher, calls };
 }
 
-function fakeCallback(): { start: (state: string, ms: number) => Promise<CallbackServer>; deliver: (code: string) => void; lastState: () => string } {
+function fakeCallback(): { start: (state: string, ms: number) => Promise<CallbackServer>; deliver: (code: string) => void; lastState: () => string; closed: () => boolean } {
   let state = "";
+  let closed = false;
   let resolve: (value: { ok: true; code: string }) => void = () => undefined;
   const result = new Promise<{ ok: true; code: string }>((r) => (resolve = r));
   return {
-    start: async (s) => ((state = s), { redirectUri: "http://127.0.0.1:1/callback", result, close: () => undefined }),
+    start: async (s) => ((state = s), { redirectUri: "http://127.0.0.1:1/callback", result, close: () => void (closed = true) }),
     deliver: (code) => resolve({ ok: true, code }),
     lastState: () => state,
+    closed: () => closed,
   };
 }
 
@@ -86,6 +88,15 @@ describe("inbox service", () => {
     await secrets.set("gmail-tokens", JSON.stringify({ accessToken: "a", expiresAt: 9e12, refreshToken: "r", account: "a@b.c" }));
     await inbox.disconnect();
     expect((await inbox.status()).connected).toBe(false);
+  });
+
+  it("answers with a sentence and closes the listener when the browser can't be opened", async () => {
+    const callback = fakeCallback();
+    const inbox = createInbox({ fetch: fakeGoogle().fetcher, secrets: memorySecrets(), now: () => 0, openUrl: async () => { throw new Error("open: not permitted"); }, startCallback: callback.start });
+    await inbox.setClient({ clientId: "cid", clientSecret: "csecret" });
+    expect(await inbox.connect()).toMatchObject({ ok: false, error: { code: "failed", message: expect.stringContaining("open: not permitted") } });
+    expect(callback.closed()).toBe(true);
+    expect(await inbox.status()).toMatchObject({ connected: false, problem: null });
   });
 
   it("reports a failed connect as a sentence in status, not a crash", async () => {
