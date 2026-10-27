@@ -44,4 +44,4 @@ Jason: "like the iOS chat: one on the right which is me, one on the left which i
 
 Found on the way: after B2 removed the clamp the asked bubble was an inline span, so `max-width` never applied; and with `content-box` the 82 % excluded the padding (the bubble measured 90 %). Both fixed here (block, border-box).
 
-Screens (real window): `b3-light.png`, `b3-dark.png` in the session scratchpad until Jason says it reads like the iOS chat; then they move here.
+Screens (real window, 2026-10-27, the default 300×420, a real three-proposal answer): `b3-light.png`, `b3-dark.png` (dark through Settings › Appearance, put back to System after). Re-checked against make-interfaces-feel-better and grid-and-spacing: speaker gap `--space-3` (12 pt at 100 %), inset-squish `--space-2`/`--space-3`, concentric corners (`--radius-6` body, `--radius-2` tail), exits shorter than entrances (`--motion-exit` < `--motion-base`), Heel's bubble staggered 2 × `--stagger`, press `--press-scale`; nothing to change. Waiting on Jason's eye: does it read like the iOS chat?
