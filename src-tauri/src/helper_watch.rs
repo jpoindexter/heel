@@ -23,7 +23,15 @@ pub(crate) struct Tracker {
 pub(crate) fn adopt(app: &AppHandle, child: Child) {
     let proc = app.state::<SidecarProc>();
     if let Ok(mut slot) = proc.child.lock() {
-        *slot = Some(child);
+        // The watcher's delayed restart and the person's "Restart helper" can cross: the earlier helper would otherwise run on unowned, past quit.
+        if let Some(mut earlier) = slot.replace(child) {
+            let _ = earlier.kill();
+            let _ = earlier.wait();
+        }
+    }
+    // A start error belongs to the start that failed; kept, it would be quoted for every later stop.
+    if let Ok(mut error) = proc.error.lock() {
+        *error = None;
     }
     if let Ok(mut tracker) = proc.tracker.lock() {
         tracker.started_at = Some(Instant::now());

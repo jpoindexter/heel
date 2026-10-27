@@ -14,7 +14,7 @@ use crate::constants::{SIDECAR_BUNDLE_DIRS, SIDECAR_LOG_FILE, SIDECAR_STOP_GRACE
 #[derive(Default)]
 pub(crate) struct SidecarProc {
     pub(crate) child: Mutex<Option<Child>>,
-    error: Mutex<Option<String>>,
+    pub(crate) error: Mutex<Option<String>>,
     pub(crate) status: Mutex<crate::helper_health::Status>,
     pub(crate) tracker: Mutex<crate::helper_watch::Tracker>,
 }
