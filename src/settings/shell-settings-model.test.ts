@@ -18,5 +18,6 @@ describe("shellRefusal", () => {
     expect(shellRefusal("dockIcon", "NSApplication refused")).toBe("Couldn't change the Dock icon. (NSApplication refused)");
     expect(shellRefusal("alwaysOnTop", new Error("no window"))).toBe("Couldn't keep the panel on top. (no window)");
     expect(shellRefusal("alwaysOnTop", "")).toBe("Couldn't keep the panel on top.");
+    expect(shellRefusal("launchAtLogin", "SMAppService: Operation not permitted")).toBe("Couldn't change whether Heel opens when you log in. (SMAppService: Operation not permitted)");
   });
 });

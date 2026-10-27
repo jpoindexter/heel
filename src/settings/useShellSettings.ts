@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
 import { invoke } from "@tauri-apps/api/core";
-import { parseShellSettings, SHELL_DEFAULTS, shellRefusal, type ShellSettings, type ShellSwitch } from "./shell-settings-model";
+import { parseShellSettings, SHELL_DEFAULTS, shellRefusal, type ShellSettings } from "./shell-settings-model";
 
-const COMMANDS: Readonly<Record<ShellSwitch, string>> = { alwaysOnTop: "set_always_on_top", dockIcon: "set_dock_icon" };
+const COMMANDS: Readonly<Record<keyof ShellSettings, string>> = { alwaysOnTop: "set_always_on_top", dockIcon: "set_dock_icon" };
 
 /** The settings the shell keeps itself (the panel's level, the Dock icon): read once, written through the shell. A write it refuses puts the switch back and says why. */
 export function useShellSettings() {
@@ -13,7 +13,7 @@ export function useShellSettings() {
       .then((payload) => setSettings(parseShellSettings(payload)))
       .catch(() => undefined);
   }, []);
-  const write = (which: ShellSwitch, on: boolean) => {
+  const write = (which: keyof ShellSettings, on: boolean) => {
     setRefused(null);
     setSettings((current) => ({ ...current, [which]: on }));
     void invoke(COMMANDS[which], { on }).catch((error: unknown) => {

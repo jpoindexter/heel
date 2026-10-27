@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { invoke } from "@tauri-apps/api/core";
 import { Button, Heading, Switch, Text } from "@radix-ui/themes";
+import { shellRefusal } from "./shell-settings-model";
 import { loginNote, parseLoginStatus, type LoginStatus } from "./startup-model";
 import { useShellSettings } from "./useShellSettings";
 
@@ -18,16 +19,16 @@ export function StartupSettings() {
     setRefused(null);
     void invoke("set_launch_at_login", { on })
       .then((payload) => setLogin(parseLoginStatus(payload)))
-      .catch((error: unknown) => setRefused(String(error)));
+      .catch((error: unknown) => setRefused(shellRefusal("launchAtLogin", error)));
   };
-  const note = refused ?? loginNote(login);
+  const note = loginNote(login);
   return (
     <section aria-labelledby="startup-heading" className="settings-section">
       <Heading as="h3" id="startup-heading" size="2">General</Heading>
       <Text as="label" size="2" className="attention-switch">
         <Switch size="1" checked={login !== "off"} onCheckedChange={changeLogin} /> Open Heel when you log in
       </Text>
-      {note && <Text as="p" size="1" color="gray" role="status">{note}</Text>}
+      {refused ? <Text as="p" size="1" color="amber" role="alert">{refused}</Text> : note && <Text as="p" size="1" color="gray" role="status">{note}</Text>}
       <Text as="label" size="2" className="attention-switch">
         <Switch size="1" checked={settings.dockIcon} onCheckedChange={setDockIcon} /> Show Heel in the Dock
       </Text>

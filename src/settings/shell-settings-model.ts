@@ -11,11 +11,13 @@ export function parseShellSettings(payload: unknown): ShellSettings {
   return parsed.success ? parsed.data : SHELL_DEFAULTS;
 }
 
-export type ShellSwitch = keyof ShellSettings;
+/** The switches the shell owns: the two in shell-settings.json and the macOS login item. */
+export type ShellSwitch = keyof ShellSettings | "launchAtLogin";
 
 const COULDNT: Readonly<Record<ShellSwitch, string>> = {
   alwaysOnTop: "Couldn't keep the panel on top.",
   dockIcon: "Couldn't change the Dock icon.",
+  launchAtLogin: "Couldn't change whether Heel opens when you log in.",
 };
 
 /** A switch the shell refused: what did not happen, in the person's words, with the shell's own words after it for anyone who asks. */
