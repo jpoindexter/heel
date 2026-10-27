@@ -99,6 +99,10 @@ pub(crate) fn stop(app: &AppHandle) {
     let Some(mut child) = app.state::<SidecarProc>().child.lock().ok().and_then(|mut slot| slot.take()) else {
         return;
     };
+    // The watcher may already have reaped it (try_wait): its pid can belong to another process by now.
+    if !matches!(child.try_wait(), Ok(None)) {
+        return;
+    }
     let _ = Command::new("kill").args(["-TERM", &child.id().to_string()]).status();
     let deadline = Instant::now() + Duration::from_millis(SIDECAR_STOP_GRACE_MS);
     while Instant::now() < deadline {
