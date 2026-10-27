@@ -13,3 +13,12 @@ describe("lastStepParent", () => {
     expect(lastStepParent(task("s2", "gone"), [big])).toBeNull();
   });
 });
+
+describe("placeOf (N7)", () => {
+  const task = (id: string, parentId: string | null = null) => ({ id, parentId }) as unknown as import("../../shared/api").TaskDto;
+  it("counts a task's place among the open tasks that share its parent", async () => {
+    const { placeOf } = await import("./task-actions");
+    const open = [task("a"), task("a1", "a"), task("b"), task("a2", "a"), task("c")];
+    expect(open.map((t) => placeOf(t, open))).toEqual([0, 0, 1, 1, 2]);
+  });
+});

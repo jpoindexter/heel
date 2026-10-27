@@ -5,6 +5,7 @@ import { FocusForm } from "../focus/FocusForm";
 import { LEAVE_MS } from "./bar-model";
 import { ParkedList } from "./ParkedList";
 import { SplitCard } from "./SplitCard";
+import type { EditField } from "./RowMenu";
 import { LaterList, NowRow } from "./TaskRows";
 import { useSplit } from "./useSplit";
 import { client } from "../api/default-client";
@@ -33,6 +34,7 @@ function useLeavingRow(run: (task: TaskDto, action: "complete" | "remove") => vo
 export function TaskSection({ state, foundId = null }: { state: ReturnType<typeof useTodayState>; foundId?: string | null }) {
   const { tasks, ready, now, focus, pomodoro, thread } = state;
   const [starting, setStarting] = useState(false);
+  const [editing, setEditing] = useState<{ id: string; field: EditField } | null>(null);
   const rows = useLeavingRow((task, action) => void (action === "complete" ? tasks.complete(task) : tasks.remove(task)));
   const { method, numbers } = useMethod();
   const ask = (prompt: string, label: string) => void thread.send(prompt, label);
@@ -42,6 +44,13 @@ export function TaskSection({ state, foundId = null }: { state: ReturnType<typeo
     onPatch: (task: TaskDto, change: Parameters<typeof tasks.patch>[1]) => void tasks.patch(task, change),
     onSplit: (task: TaskDto) => void split.propose(task),
     after: (task: TaskDto) => (split.state?.task.id === task.id ? <SplitCard split={split} /> : null),
+    // N7: the words and the order are the person's to change, each with Undo in its toast.
+    editing,
+    open: ready?.tasks ?? [],
+    onEdit: (task: TaskDto, field: EditField | null) => setEditing(field ? { id: task.id, field } : null),
+    onRename: (task: TaskDto, title: string) => (setEditing(null), void tasks.rename(task, title)),
+    onStep: (task: TaskDto, step: string) => (setEditing(null), void tasks.setStep(task, step)),
+    onMove: (task: TaskDto, place: number) => void tasks.move(task, place),
   };
   return (
     <>

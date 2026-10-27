@@ -25,7 +25,12 @@ function makeCheer(doneToday: () => number): (title: string) => string {
   };
 }
 
-export type TaskPatch = { size?: TaskDto["size"]; bucket?: string | null };
+export type TaskPatch = { size?: TaskDto["size"]; bucket?: string | null; title?: string; nowStep?: string | null; place?: number };
+
+/** Where a task sits among the open tasks that share its parent (0 = first). */
+export function placeOf(task: TaskDto, open: readonly TaskDto[]): number {
+  return open.filter((t) => t.parentId === task.parentId).findIndex((t) => t.id === task.id);
+}
 
 /** The task a just-finished step belonged to, when no open step of it is left: worth an offer to finish it too. */
 export function lastStepParent(step: TaskDto, open: readonly TaskDto[]): TaskDto | null {
@@ -52,6 +57,21 @@ function makePatch(client: Client, refresh: () => Promise<void>, fail: (message:
     const result = await client.patch(`/tasks/${task.id}`, TaskResultSchema, change);
     if (!result.ok) return fail(result.error.message);
     await refresh();
+  };
+}
+
+/** Rename, set the next step, or move a task (N7): one PATCH each, and Undo patches the old value back. */
+function makeEdits(client: Client, refresh: () => Promise<void>, fail: (message: string) => void, notify: (notice: Notice) => void, openTasks: () => readonly TaskDto[]) {
+  const change = async (task: TaskDto, patch: TaskPatch, message: string, back: TaskPatch) => {
+    const result = await client.patch(`/tasks/${task.id}`, TaskResultSchema, patch);
+    if (!result.ok) return fail(result.error.message);
+    notify({ message, tone: "info", undo: () => void client.patch(`/tasks/${task.id}`, TaskResultSchema, back).then(refresh) });
+    await refresh();
+  };
+  return {
+    rename: (task: TaskDto, title: string) => change(task, { title }, `Renamed: ${title}`, { title: task.title }),
+    setStep: (task: TaskDto, step: string) => change(task, { nowStep: step }, `Next step: ${step}`, { nowStep: task.nowStep }),
+    move: (task: TaskDto, place: number) => change(task, { place }, place === 0 && task.parentId === null ? `Now: ${task.title}` : place < placeOf(task, openTasks()) ? `Moved up: ${task.title}` : `Moved down: ${task.title}`, { place: placeOf(task, openTasks()) }),
   };
 }
 
@@ -100,5 +120,5 @@ export function createTaskActions({ client, refresh, dropLocally, notify, doneTo
 
   const promote = makePromote(client, refresh, fail, notify);
   const patch = makePatch(client, refresh, fail);
-  return { complete: (task: TaskDto) => settle(task, "complete"), remove: (task: TaskDto) => settle(task, "drop"), add, park, promote, patch };
+  return { complete: (task: TaskDto) => settle(task, "complete"), remove: (task: TaskDto) => settle(task, "drop"), add, park, promote, patch, ...makeEdits(client, refresh, fail, notify, openTasks) };
 }

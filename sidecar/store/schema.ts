@@ -34,15 +34,19 @@ export const NewTaskInput = z.object({
   bucket: bucketField.default(null),
 });
 
-/** What a person (or the model) may change on a task later: its size, bucket and estimate. */
+/** What a person (or the model) may change on a task later: its words, its next step, its place among its siblings, its size, bucket and estimate. */
 export const TaskPatchInput = z
   .object({
+    title: text("Task title"),
+    nowStep: text("Next step").nullable(),
+    /** 0-based index among the open tasks with the same parent (0 = Now, for a top-level task). */
+    place: z.number().int("Place must be a whole number.").min(0, "Place must be 0 or more."),
     size: sizeField,
     bucket: bucketField,
     estimateMin: z.number().int("Estimate must be whole minutes.").positive("Estimate must be more than 0 minutes.").nullable(),
   })
   .partial()
-  .refine((p) => Object.keys(p).length > 0, { message: "Send at least one of size, bucket, estimateMin." });
+  .refine((p) => Object.keys(p).length > 0, { message: "Send at least one of title, nowStep, place, size, bucket, estimateMin." });
 
 export const NewParkedInput = z.object({
   idea: text("Idea", MAX_IDEA),

@@ -63,16 +63,31 @@ export function addTask(ctx: Ctx, input: unknown): Result<Task> {
   return getTask(ctx, id);
 }
 
-/** Change a task's size, bucket or estimate; a field left out stays as it is. */
+/**
+ * Put an open task at `place` among its siblings (same parent), then number every open task again in the order the list
+ * shows: each top-level task followed by its steps. Positions stay small whole numbers, and the first row stays a top-level task.
+ */
+function placeTask(ctx: Ctx, task: Task, place: number): void {
+  const open = listTasks(ctx);
+  const siblings = open.filter((t) => t.parentId === task.parentId && t.id !== task.id);
+  siblings.splice(Math.min(place, siblings.length), 0, task);
+  const ordered = task.parentId === null ? siblings.flatMap((parent) => [parent, ...open.filter((t) => t.parentId === parent.id)]) : open.filter((t) => t.parentId !== task.parentId).concat(siblings);
+  const update = ctx.db.prepare("UPDATE tasks SET position = ? WHERE id = ?");
+  ordered.forEach((t, index) => update.run(index + 1, t.id));
+}
+
+/** Change a task's words, next step, place, size, bucket or estimate; a field left out stays as it is. */
 export function patchTask(ctx: Ctx, id: string, input: unknown): Result<Task> {
   const parsed = TaskPatchInput.safeParse(input);
   if (!parsed.success) return fail("invalid", firstIssue(parsed.error));
   const current = getTask(ctx, id);
   if (!current.ok) return current;
-  const next = { ...current.value, ...parsed.data };
+  const { place, ...fields } = parsed.data;
+  const next = { ...current.value, ...fields };
   ctx.db
-    .prepare("UPDATE tasks SET size = ?, bucket = ?, estimate_min = ?, updated_at = ? WHERE id = ?")
-    .run(next.size, next.bucket, next.estimateMin, ctx.now(), id);
+    .prepare("UPDATE tasks SET title = ?, now_step = ?, size = ?, bucket = ?, estimate_min = ?, updated_at = ? WHERE id = ?")
+    .run(next.title, next.nowStep, next.size, next.bucket, next.estimateMin, ctx.now(), id);
+  if (place !== undefined && ACTIVE.includes(current.value.status)) placeTask(ctx, current.value, place);
   return getTask(ctx, id);
 }
 

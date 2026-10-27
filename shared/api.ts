@@ -75,7 +75,7 @@ export const TaskSchema = z.object({
   /** For a task with steps: how many are finished (the open ones are in the list). */
   stepsDone: z.number().int().optional(),
 });
-export const TaskPatchSchema = z.object({ size: z.enum(SIZES).nullable(), bucket: z.string().nullable(), estimateMin: z.number().int().positive().nullable() }).partial();
+export const TaskPatchSchema = z.object({ title: z.string().trim().min(1), nowStep: z.string().trim().min(1).nullable(), /** 0-based index among the open tasks with the same parent; 0 makes a top-level task Now (N7). */ place: z.number().int().min(0), size: z.enum(SIZES).nullable(), bucket: z.string().nullable(), estimateMin: z.number().int().positive().nullable() }).partial();
 export { MethodNumbersSchema, MethodSchema, type Method, type MethodNumbers } from "./method";
 /** Attention sense (N24). Off by default; the wander list is where the rabbit-hole rule may look. */
 export const DEFAULT_WANDER_BUNDLES = ["com.apple.Safari", "com.google.Chrome", "company.thebrowser.Browser", "org.mozilla.firefox", "com.apple.MobileSMS", "com.tinyspeck.slackmacgap", "com.hnc.Discord", "com.apple.mail"] as const;

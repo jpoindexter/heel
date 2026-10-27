@@ -72,3 +72,40 @@ describe("tasks", () => {
     expect(store.tasks.list().map((t) => t.status)).toEqual(["doing"]);
   });
 });
+
+describe("task basics (N7): rename, next step, place", () => {
+  const titles = (store: ReturnType<typeof testStore>) => store.tasks.list().map((t) => t.title);
+
+  it("renames a task and sets or clears its next step through patch", () => {
+    const store = testStore();
+    const task = must(store.tasks.add({ title: "Call the vet" }));
+    expect(must(store.tasks.patch(task.id, { title: "  Call the vet about teeth " }))).toMatchObject({ title: "Call the vet about teeth", nowStep: null });
+    expect(must(store.tasks.patch(task.id, { nowStep: "Find the number" })).nowStep).toBe("Find the number");
+    expect(must(store.tasks.patch(task.id, { nowStep: null })).nowStep).toBeNull();
+    expect(store.tasks.patch(task.id, { title: "   " })).toMatchObject({ ok: false, error: { code: "invalid", message: "Task title can't be empty." } });
+  });
+
+  it("moves a task up, down and to Now, and keeps the order across a fresh read", () => {
+    const store = testStore();
+    const [a, b, c] = ["A", "B", "C"].map((title) => must(store.tasks.add({ title })));
+    must(store.tasks.patch(c!.id, { place: 0 }));
+    expect(titles(store)).toEqual(["C", "A", "B"]);
+    must(store.tasks.patch(a!.id, { place: 2 }));
+    expect(titles(store)).toEqual(["C", "B", "A"]);
+    must(store.tasks.patch(b!.id, { place: 9 }));
+    expect(titles(store)).toEqual(["C", "A", "B"]);
+    expect(store.tasks.list().map((t) => t.position)).toEqual([1, 2, 3]);
+    expect(store.tasks.patch(b!.id, { place: -1 })).toMatchObject({ ok: false, error: { code: "invalid" } });
+  });
+
+  it("keeps a task's steps right after it when the list is renumbered, and moves steps only among their own task's steps", () => {
+    const store = testStore();
+    const a = must(store.tasks.add({ title: "A" }));
+    const b = must(store.tasks.add({ title: "B" }));
+    const steps = must(store.split.apply(a.id, { titles: ["A1", "A2"] }));
+    must(store.tasks.patch(b.id, { place: 0 }));
+    expect(titles(store)).toEqual(["B", "A", "A1", "A2"]);
+    must(store.tasks.patch(steps.children[1]!.id, { place: 0 }));
+    expect(titles(store)).toEqual(["B", "A", "A2", "A1"]);
+  });
+});

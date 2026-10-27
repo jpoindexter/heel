@@ -7,6 +7,8 @@ import type { Method } from "../../shared/method";
 import { groupTasks } from "./method-model";
 import { hueFor } from "./colour-model";
 import { nest, progressLabel } from "./split-model";
+import { InlineEdit } from "./InlineEdit";
+import { RowMenu, type EditField } from "./RowMenu";
 import { TaskBadges, type Patch } from "./TaskBadges";
 import type { NowCard } from "./today-model";
 
@@ -23,7 +25,28 @@ type Common = {
   onSplit: (task: TaskDto) => void;
   /** Something to show right under a task's row (the steps card). */
   after?: (task: TaskDto) => ReactNode;
+  /** The row whose words are being edited in place, and which of them (N7). */
+  editing: { id: string; field: EditField } | null;
+  onEdit: (task: TaskDto, field: EditField | null) => void;
+  onRename: (task: TaskDto, title: string) => void;
+  onStep: (task: TaskDto, step: string) => void;
+  onMove: (task: TaskDto, place: number) => void;
+  /** Every open task, to place a row among its siblings. */
+  open: readonly TaskDto[];
 };
+
+/** The row's words, or the editor for the one being edited: the title, or the next step. */
+function RowWords({ task, editing, onEdit, onRename, onStep, children }: Pick<Common, "editing" | "onEdit" | "onRename" | "onStep"> & { task: TaskDto; children: ReactNode }) {
+  const field = editing?.id === task.id ? editing.field : null;
+  if (!field) return <>{children}</>;
+  const title = field === "title";
+  return <InlineEdit label={title ? `Rename: ${task.title}` : `Next step for: ${task.title}`} initial={title ? task.title : task.nowStep ?? ""} onSave={(text) => (title ? onRename(task, text) : onStep(task, text))} onCancel={() => onEdit(task, null)} />;
+}
+
+function MoreButton({ task, open, onEdit, onMove }: Pick<Common, "open" | "onEdit" | "onMove"> & { task: TaskDto }) {
+  const siblings = open.filter((t) => t.parentId === task.parentId);
+  return <RowMenu task={task} at={{ index: siblings.findIndex((t) => t.id === task.id), count: siblings.length }} onEdit={onEdit} onMove={onMove} />;
+}
 
 function RemoveButton({ task, onRemove }: { task: TaskDto; onRemove: (task: TaskDto) => void }) {
   return (
@@ -45,7 +68,7 @@ function SplitButton({ task, onSplit }: { task: TaskDto; onSplit: (task: TaskDto
 type NowProps = Common & { now: NowCard | null; /** The task the Now step belongs to, when it is a step. */ nowParent?: TaskDto | null; /** No box is running, so one can start. */ canTimebox: boolean; onStartBox: () => void };
 
 /** The one thing to do now: a quiet tinted row. Its clock starts a time-box on it. */
-export function NowRow({ now, nowParent, leavingId, foundId, canTimebox, onStartBox, onComplete, onRemove, method, onPatch, onSplit, after }: NowProps) {
+export function NowRow({ now, nowParent, leavingId, foundId, canTimebox, onStartBox, onComplete, onRemove, method, onPatch, onSplit, after, ...edit }: NowProps) {
   if (!now) return null;
   const { task } = now;
   const leaving = leavingId === task.id;
@@ -55,8 +78,10 @@ export function NowRow({ now, nowParent, leavingId, foundId, canTimebox, onStart
       <section aria-label="Now" className="task-row" data-now data-hue={hue} data-leaving={leaving || undefined} data-found={foundId === task.id || undefined}>
         <Checkbox size="2" checked={leaving} aria-label={`Complete: ${task.title}`} onCheckedChange={() => onComplete(task)} />
         <div className="grow">
-          <Text size="2" weight="medium" as="p" className="task-text clamp-2">{now.text}</Text>
-          {now.taskTitle && <Text size="1" color="gray" as="p" className="task-text clamp-1">{now.taskTitle}</Text>}
+          <RowWords task={task} {...edit}>
+            <Text size="2" weight="medium" as="p" className="task-text clamp-2">{now.text}</Text>
+            {now.taskTitle && <Text size="1" color="gray" as="p" className="task-text clamp-1">{now.taskTitle}</Text>}
+          </RowWords>
           <TaskBadges task={task} method={method} onPatch={onPatch} onSplit={onSplit} />
         </div>
         {canTimebox && (
@@ -65,6 +90,7 @@ export function NowRow({ now, nowParent, leavingId, foundId, canTimebox, onStart
           </IconButton>
         )}
         <SplitButton task={task} onSplit={onSplit} />
+        <MoreButton task={task} {...edit} />
         <RemoveButton task={task} onRemove={onRemove} />
       </section>
       {after?.(task)}
@@ -75,7 +101,7 @@ export function NowRow({ now, nowParent, leavingId, foundId, canTimebox, onStart
 type RowProps = Common & { task: TaskDto; /** Open steps under this task, for "2 of 5". */ openSteps: number; /** The task this row is a step of. */ parent?: TaskDto };
 
 /** One open task (or one step of a task, indented, in its task's colour): tick it off; the cross and the scissors appear on hover or keyboard focus. */
-function TaskRow({ task, openSteps, parent, leavingId, foundId, onComplete, onRemove, method, onPatch, onSplit }: RowProps) {
+function TaskRow({ task, openSteps, parent, leavingId, foundId, onComplete, onRemove, method, onPatch, onSplit, ...edit }: RowProps) {
   const step = parent !== undefined;
   const progress = step ? null : progressLabel(task, openSteps);
   const hue = hueFor(task, { structure: method.structure, parent });
@@ -83,13 +109,16 @@ function TaskRow({ task, openSteps, parent, leavingId, foundId, onComplete, onRe
     <li className="task-row" data-hue={hue} data-step={step || undefined} data-leaving={leavingId === task.id || undefined} data-found={foundId === task.id || undefined}>
       <Checkbox size="2" checked={leavingId === task.id} aria-label={`Complete: ${task.title}`} onCheckedChange={() => onComplete(task)} />
       <div className="grow">
-        <Text size="2" as="p" className="task-text clamp-2">
-          {task.title}
-          {progress && <Text size="1" color="gray" as="span" className="task-progress" aria-label={`${progress} steps done`}>{progress}</Text>}
-        </Text>
+        <RowWords task={task} {...edit}>
+          <Text size="2" as="p" className="task-text clamp-2">
+            {task.title}
+            {progress && <Text size="1" color="gray" as="span" className="task-progress" aria-label={`${progress} steps done`}>{progress}</Text>}
+          </Text>
+        </RowWords>
         <TaskBadges task={task} method={method} onPatch={onPatch} onSplit={onSplit} />
       </div>
       <SplitButton task={task} onSplit={onSplit} />
+      <MoreButton task={task} {...edit} />
       <RemoveButton task={task} onRemove={onRemove} />
     </li>
   );

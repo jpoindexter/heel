@@ -65,3 +65,16 @@ describe("/method/numbers", () => {
     expect(numbers.parse(await send("PUT", "/method/numbers", { jarCapacityMin: 5 }))).toMatchObject({ ok: false });
   });
 });
+
+describe("PATCH /tasks/:id for the person's own edits (N7)", () => {
+  it("renames, sets the next step and moves a task to Now", async () => {
+    const { store, send } = setup();
+    const a = store.tasks.add({ title: "A" });
+    const b = store.tasks.add({ title: "B" });
+    if (!a.ok || !b.ok) throw new Error("setup");
+    expect(await send("PATCH", `/tasks/${b.value.id}`, { title: "Bee", nowStep: "Open the hive" })).toMatchObject({ ok: true, data: { task: { title: "Bee", nowStep: "Open the hive" } } });
+    expect(await send("PATCH", `/tasks/${b.value.id}`, { place: 0 })).toMatchObject({ ok: true });
+    expect(store.tasks.list().map((t) => t.title)).toEqual(["Bee", "A"]);
+    expect(await send("PATCH", `/tasks/${b.value.id}`, { title: "" })).toMatchObject({ ok: false, error: { code: "invalid" } });
+  });
+});
