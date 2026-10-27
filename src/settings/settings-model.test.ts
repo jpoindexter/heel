@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { numberToCommit } from "./settings-model";
+import { numberToCommit, parseWanderList } from "./settings-model";
 
 describe("numberToCommit", () => {
   it("stores a changed positive number, hours with a fraction included", () => {
@@ -8,5 +8,12 @@ describe("numberToCommit", () => {
   });
   it("stores nothing for an emptied field, nonsense, zero or the same number (so Tab through a field writes nothing)", () => {
     for (const text of ["", "   ", "abc", "0", "-5", "25"]) expect(numberToCommit(text, 25)).toBeNull();
+  });
+});
+
+describe("parseWanderList", () => {
+  it("takes one bundle id per line and drops blanks and edges", () => {
+    expect(parseWanderList(" com.a \n\n com.b\n")).toEqual(["com.a", "com.b"]);
+    expect(parseWanderList("")).toEqual([]);
   });
 });

@@ -2,6 +2,7 @@ import { useId } from "react";
 import { Heading, Switch, Text, TextArea } from "@radix-ui/themes";
 import { useAttentionSettings } from "../ui/attention";
 import { useNotices } from "../ui/notices";
+import { parseWanderList } from "./settings-model";
 
 /** The switch, the exact list of what is read, and the apps where the person wanders. Off by default. */
 export function AttentionSettings() {
@@ -26,12 +27,13 @@ export function AttentionSettings() {
       </Text>
       <Text as="label" size="1" color="gray" htmlFor={listId}>Where you wander (bundle ids, one per line)</Text>
       <TextArea
+        key={settings.wanderBundles.join("\n")}
         id={listId}
         size="1"
         rows={4}
         defaultValue={settings.wanderBundles.join("\n")}
         onBlur={(event) => {
-          const wanderBundles = event.target.value.split("\n").map((line) => line.trim()).filter(Boolean);
+          const wanderBundles = parseWanderList(event.target.value);
           if (wanderBundles.join("\n") !== settings.wanderBundles.join("\n")) apply({ ...settings, wanderBundles }, "Wander list changed");
         }}
       />

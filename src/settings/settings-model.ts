@@ -26,6 +26,11 @@ export function numberToCommit(text: string, current: number): number | null {
   return trimmed === "" || !Number.isFinite(next) || next <= 0 || next === current ? null : next;
 }
 
+/** The wander list as typed, one bundle id per line, blanks dropped. */
+export function parseWanderList(text: string): string[] {
+  return text.split("\n").map((line) => line.trim()).filter(Boolean);
+}
+
 export function workSummary(method: Method): string {
   const parts = [TIMER_LABELS[method.timer]];
   if (method.structure !== "none") parts.push(STRUCTURE_LABELS[method.structure]);
