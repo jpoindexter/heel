@@ -9,15 +9,19 @@ I get lost in rabbit holes, over-scope, and don't finish. Tasks, inbox, and proj
 Me (senior UX + solo dev, autism + ADHD + dyslexia + aphantasia). Second user later: friend who built a similar Bunny/Owl companion.
 
 ## v0 done criteria
-- [ ] One full workday on my Mac using it
-- [ ] It held my tasks (add, complete, remove, survives restart)
-- [ ] Inbox digest: <=3 actions, literal one-line summaries, add as task in one click (Apple Mail on this Mac, no keys to paste)
-- [ ] One declared focus time-box ran with an end check-in ("where are you vs [goal verbatim]")
-- [ ] It never sent/deleted anything and never spoke past the interrupt budget
-- [x] Settings > Brain: choose provider and model, test connection (Claude, Codex and Ollama each ran a real turn; picker confirmed in the real window 2026-10-15)
+Built = the feature exists and was verified in the real window by me. Done = Jason saw it hold up in a real workday (S9). Only S9 ticks the left box.
+
+| v0 criterion | Built | Done (S9) |
+|---|---|---|
+| One full workday on my Mac using it | — | [ ] |
+| It held my tasks (add, complete, remove, survives restart) | [x] N6, N7 queue (edit/reorder), F7 persistence | [ ] |
+| Inbox digest: ≤3 actions, literal one-line summaries, add as task in one click (Apple Mail, no keys) | [x] N11 | [ ] |
+| One declared focus time-box ran with an end check-in ("where are you vs [goal verbatim]") | [x] S6 | [ ] |
+| It never sent/deleted anything and never spoke past the interrupt budget | [x] S8 budget; N11 send only after Send on a preview | [ ] |
+| Settings > Brain: choose provider and model, test connection | [x] S4 (Claude, Codex, Ollama each ran a real turn, 2026-10-15) | [ ] |
 
 ## In scope (v0)
-Floating mascot (placeholder art), panel with tasks + ask box + <=3 chips, brain-dump capture, focus session, interrupt budget + Off, mail digest from Apple Mail (read), open a message, reply or draft with a preview first, local SQLite.
+Floating mascot (puppy-v1 art), one-surface panel (tasks, latest reply, a bar with + and four round buttons, a chat card), brain-dump capture, focus session, interrupt budget + Off, mail from Apple Mail (read, open, reply or draft with a preview first), local SQLite. Grew during build (all on the board): methods (Pomodoro, jar, sizes), History, search, split a task, documents + PDF, skills manager, attention sense (opt-in), notices/toasts, Greg's life.
 
 ## Out of scope (see PARKED.md / Trello v1, v2+)
 Passive drift detection, calendar, business-coach weekly review, autism layer, drafts/sync, skins, voice, Windows, local-first private mode polish.

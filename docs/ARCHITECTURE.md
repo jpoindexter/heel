@@ -17,14 +17,18 @@ docs/ DECISIONS.md PARKED.md ROADMAP.md PRD.md ERRORS.md learnings/
 |---|---|---|
 | Design tokens, base reset | `src/design/` | `tokens.css` is the **only** place a raw px / ms / z-index may appear |
 | Light / dark / system | `src/theme/` | pure `appearance.ts` + one hook |
-| Shared UI pieces | `src/ui/` | e.g. `Notifier` (Radix Toast); feature-free |
+| Shared UI pieces | `src/ui/` | `layers*` (one stack of panel layers: push/back/forward/home with directions), `notices*` + `Notifier` (one notice system: toast in the panel, bubble by Greg, Notification Center copy), `attention`, `method`; feature-free |
 | Typed helper client | `src/api/` | every response validated |
 | Panel shell | `src/panel/` | header, views, Esc, menu-bar requests |
 | Today: tasks, reply, one input | `src/today/` | `TodayView` is the public entry |
 | Settings | `src/settings/` | `SettingsView`, `brain-summary`, `useBrainSummary` are public |
-| Mascot | `src/mascot/` | sprite, atlas, hit region; `motion-events` is public |
-| Agent loop | `sidecar/agent/` | prompt, actions (Zod), executor, providers |
+| Mascot | `src/mascot/` | sprite player (`manifests/`, `puppy.ts` = the 34-clip pack), hit region, `work*` (shows the AI working), `life/` (idle, walk, nap, pointer, play, gags, following the panel); `motion-events` is public |
+| Notice bubble window | `src/notice/` | the tiny window the shell places over Greg's head |
 | Mail on this Mac | `sidecar/mail/` | JXA scripts for Apple Mail (`scripts.ts`), `osascript` runner, `MailSource` (+ fake), AI reply drafter; routes in `server/mail-routes.ts` |
+| Documents + PDF | `sidecar/store/documents.ts`, `sidecar/pdf/` | saved notes under `documents/`; a Swift WebKit printer compiled once with `swiftc` |
+| Skills | `sidecar/agent/skills.ts`, `skills/` | bundled nd-skills + the person's own under `<data>/skills/<slug>/SKILL.md`; off-switch per skill |
+| Attention sense | `src-tauri/src/attention.rs`, `sidecar/store/attention.ts`, `shared/attention.ts` | shell samples front app + idle every 5 s (opt-in); helper folds, spends the budget, decides one nudge; rules are pure and tested |
+| Agent loop | `sidecar/agent/` | prompt, actions (Zod), executor, providers |
 | Persistence | `sidecar/store/` | SQLite behind `store.ts`; reversible migrations |
 | HTTP | `sidecar/server/` | token + Host + CORS guards, routes |
 
@@ -44,6 +48,5 @@ docs/ DECISIONS.md PARKED.md ROADMAP.md PRD.md ERRORS.md learnings/
 3. Layout CSS in `<feature>.css` using only tokens.
 4. Add the Done sentence to a Trello card before writing code.
 
-## Next architectural decision
-
-How Heel relates to Vanta (companion pairing, ACP provider, or merge into Vanta Desktop) is open: see Trello card "23 V-AUDIT" and DECISIONS.md.
+## Architectural decisions already taken
+Vanta integration is frozen (X1–X7 in Parked) until S9. Mail, and next Calendar/Reminders/Notes, go through macOS Automation (JXA over osascript) — no OAuth consoles; every write outside the app shows a preview first (DECISIONS 2026-10-15, N11).
