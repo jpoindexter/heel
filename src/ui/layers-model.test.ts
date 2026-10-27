@@ -1,5 +1,6 @@
 import { describe, expect, it } from "vitest";
 import { atRoot, back, baseState, forward, home, isOpen, push, ROOT, swipeFrom, topOf, underOf } from "./layers-model";
+import { focusAfterLeave, openerOf } from "./layers-model";
 
 describe("push / back / forward", () => {
   it("opens a layer on top and remembers what is under it", () => {
@@ -50,5 +51,22 @@ describe("swipeFrom", () => {
     expect(swipeFrom(200)).toBe("forward");
     expect(swipeFrom(-40)).toBeNull();
     expect(swipeFrom(-50, 50)).toBe("back");
+  });
+});
+
+describe("focusAfterLeave", () => {
+  it("returns focus to the opener only while it is on screen and not covered", () => {
+    expect(focusAfterLeave({ connected: true, covered: false })).toBe("opener");
+    expect(focusAfterLeave({ connected: false, covered: false })).toBe("under");
+    expect(focusAfterLeave({ connected: true, covered: true })).toBe("under");
+    expect(focusAfterLeave(null)).toBe("under");
+  });
+});
+
+describe("openerOf", () => {
+  it("keeps the node and its accessible name, and copes with nothing focused", () => {
+    const node = { getAttribute: (name: string) => (name === "aria-label" ? "Settings" : null) } as unknown as Element;
+    expect(openerOf(node)).toEqual({ node, label: "Settings" });
+    expect(openerOf(null)).toEqual({ node: null, label: null });
   });
 });

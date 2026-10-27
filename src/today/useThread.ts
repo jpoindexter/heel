@@ -5,6 +5,7 @@ import { beginWork, celebrate, settle, stumble } from "../mascot/motion-events";
 import type { Notice } from "../ui/notice-model";
 import { answerFrom, answerNotice, historyFor, type Message } from "./thread-model";
 import { useClearConversation } from "./useClearConversation";
+import { useReceiptConfirm } from "./useReceiptConfirm";
 import { useReceiptUndo } from "./useReceiptUndo";
 import { useStoppable } from "./useStoppable";
 import { useThreadState } from "./useThreadState";
@@ -41,6 +42,7 @@ function useRetry({ ask, commit, isBusy, latest }: RetryDeps) {
 export function useThread(client: Client, { onChanged, notify, onCleared, onAnswered }: Options) {
   const { messages, latest, nextId, commit, isBusy, persist } = useThreadState(client);
   const undoReceipt = useReceiptUndo({ client, latest, commit, notify, onChanged, persist });
+  const confirmReceipt = useReceiptConfirm({ client, latest, commit, notify, persist });
   const { begin, end, stop } = useStoppable();
   const ask = useCallback(
     async (text: string, history: HistoryMessage[], pendingId: number): Promise<boolean> => {
@@ -77,5 +79,5 @@ export function useThread(client: Client, { onChanged, notify, onCleared, onAnsw
   const retry = useRetry({ ask, commit, isBusy, latest });
   const clear = useClearConversation({ client, commit, isBusy, latest, notify, onCleared });
 
-  return { messages, clear, busy: messages.some((m) => m.role === "heel" && m.status === "pending"), send, retry, stop, undoReceipt };
+  return { messages, clear, busy: messages.some((m) => m.role === "heel" && m.status === "pending"), send, retry, stop, undoReceipt, confirmReceipt };
 }

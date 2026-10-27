@@ -1,4 +1,4 @@
-import { MAX_HISTORY_MESSAGES, type ActionOutcomeDto, type ApiResult, type HistoryMessage, type ReceiptDto, type StoredMessage, type TurnResultDto } from "../../shared/api";
+import { MAX_HISTORY_MESSAGES, type ActionOutcomeDto, type ApiResult, type AppWrittenDto, type HistoryMessage, type ReceiptDto, type StoredMessage, type TurnResultDto } from "../../shared/api";
 import type { Notice } from "../ui/notice-model";
 import { replyError } from "./today-model";
 
@@ -12,7 +12,7 @@ export type Receipt = ReceiptDto;
 export type Message = StoredMessage | { id: number; role: "heel"; status: "pending" };
 
 export function toReceipts(applied: readonly ActionOutcomeDto[]): Receipt[] {
-  return applied.map((o) => ({ ok: o.ok, text: o.ok ? o.message : `Couldn't: ${o.message}`, undo: o.undo ?? null, undone: false, ...(o.document ? { document: o.document, file: o.file ?? "md" } : {}), ...(o.mail ? { mail: o.mail } : {}) }));
+  return applied.map((o) => ({ ok: o.ok, text: o.ok ? o.message : `Couldn't: ${o.message}`, undo: o.undo ?? null, undone: false, ...(o.document ? { document: o.document, file: o.file ?? "md" } : {}), ...(o.mail ? { mail: o.mail } : {}), ...(o.proposal ? { proposal: o.proposal } : {}) }));
 }
 
 /** Collapsed receipt label: counts, in words, with failures never hidden. */
@@ -52,6 +52,13 @@ export function latestExchange(messages: readonly Message[]): { asked: string | 
 export function withReceiptUndone(messages: readonly Message[], id: number, index: number, undone: boolean): Message[] {
   return messages.map((m) =>
     m.id === id && m.role === "heel" && m.status === "said" ? { ...m, receipts: m.receipts.map((r, i) => (i === index ? { ...r, undone } : r)) } : m,
+  );
+}
+
+/** The same thread with one proposal turned into the write the app made: its line, and Undo instead of the button. */
+export function withReceiptWritten(messages: readonly Message[], id: number, index: number, written: AppWrittenDto): Message[] {
+  return messages.map((m) =>
+    m.id === id && m.role === "heel" && m.status === "said" ? { ...m, receipts: m.receipts.map((r, i) => (i === index ? { ok: true, text: written.message, undo: written.undo, undone: false } : r)) } : m,
   );
 }
 

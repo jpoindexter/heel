@@ -2,7 +2,8 @@ import type { MailSource } from "../mail/source";
 import type { Store } from "../store/store";
 import type { Result } from "../store/result";
 import type { Action } from "./actions";
-import type { DocumentDto } from "../../shared/api";
+import type { AppWrite, DocumentDto } from "../../shared/api";
+import { proposalText } from "../apps/preview";
 
 /** What an action may touch outside the store. Mail is absent in tests and on a Mac without Mail; the PDF printer needs this Mac. */
 export type SideEffects = {
@@ -13,9 +14,9 @@ export type SideEffects = {
 };
 
 /** How the panel can reverse a write: the route it calls and the id it calls it with. */
-export type Undo = { kind: "restore_task" | "drop_task" | "unpark" | "delete_document"; id: string };
+export type Undo = { kind: "restore_task" | "drop_task" | "unpark" | "delete_document" | "delete_event" | "delete_reminder" | "delete_note"; id: string };
 
-export type ActionOutcome = { type: Action["type"]; ok: boolean; message: string; undo?: Undo; /** A document the person can open (N15), and which of its files. */ document?: string; file?: "md" | "pdf"; /** A message id the person can open in Mail (N26). */ mail?: string };
+export type ActionOutcome = { type: Action["type"]; ok: boolean; message: string; undo?: Undo; /** A document the person can open (N15), and which of its files. */ document?: string; file?: "md" | "pdf"; /** A message id the person can open in Mail (N26). */ mail?: string; /** A write to Calendar, Reminders or Notes that waits for the person's tap (N26). */ proposal?: AppWrite };
 
 /** Short task refs (t1, t2) the model sees, mapped to real ids. The model never handles raw ids. */
 export type TaskRefs = ReadonlyMap<string, string>;
@@ -23,6 +24,11 @@ export type TaskRefs = ReadonlyMap<string, string>;
 type Handler<T extends Action["type"]> = (store: Store, action: Extract<Action, { type: T }>, refs: TaskRefs, side: SideEffects) => ActionOutcome | Promise<ActionOutcome>;
 
 const failed = (type: Action["type"], message: string): ActionOutcome => ({ type, ok: false, message });
+
+/** Nothing is written here: the receipt carries the write and an "Add to …" button; POST /apps/write does it on the tap. */
+function propose(type: Action["type"], write: AppWrite): ActionOutcome {
+  return { type, ok: true, message: proposalText(write), proposal: write };
+}
 
 function fromResult<T>(type: Action["type"], result: Result<T>, success: (value: T) => string, undo?: (value: T) => Undo): ActionOutcome {
   if (!result.ok) return failed(type, result.error.message);
@@ -97,6 +103,10 @@ const HANDLERS: { [T in Action["type"]]: Handler<T> } = {
     if (!found) return failed(a.type, `Unknown message "${a.mail}". Known: ${[...(side.mailRefs?.keys() ?? [])].join(", ") || "none"}.`);
     return { type: a.type, ok: true, message: `${found.subject.trim() || "(no subject)"} — ${found.from.trim()}`, mail: found.id };
   },
+
+  add_event: (_store, { type, ...write }) => propose(type, { kind: "event", ...write }),
+  add_reminder: (_store, { type, ...write }) => propose(type, { kind: "reminder", ...write }),
+  add_note: (_store, { type, ...write }) => propose(type, { kind: "note", ...write }),
 
   /** "Make that a PDF": the newest document (or the one whose title the model names) rendered next to its .md, on this Mac. */
   make_pdf: async (store, a, _refs, side) => {

@@ -57,3 +57,16 @@ export function swipeFrom(deltaXSum: number, threshold = SWIPE_THRESHOLD): "back
   if (deltaXSum >= threshold) return "forward";
   return null;
 }
+
+/**
+ * Where focus goes when a layer leaves: back to the control that opened it, if it is still on screen and not covered;
+ * otherwise to the layer underneath (its region), so keyboard focus never falls to the body.
+ */
+export function focusAfterLeave(opener: { connected: boolean; covered: boolean } | null): "opener" | "under" {
+  return opener && opener.connected && !opener.covered ? "opener" : "under";
+}
+
+/** What to remember about the control that opened a layer: the node, and its name in case the node is re-made meanwhile (the header does that). */
+export type Opener = { node: Element | null; label: string | null };
+
+export const openerOf = (node: Element | null): Opener => ({ node, label: node?.getAttribute("aria-label") ?? null });

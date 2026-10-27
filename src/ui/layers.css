@@ -62,6 +62,12 @@
   animation-name: layer-out-top;
 }
 
+/* The layer itself takes focus when it opens (so Tab starts inside it); that focus needs no ring of its own. */
+.layer:focus,
+.layer-base:focus {
+  outline: none;
+}
+
 .layer-scroll {
   display: flex;
   flex: 1;

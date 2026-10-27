@@ -8,7 +8,8 @@ import { runCommand } from "../agent/providers/process";
 import { macKeychain } from "../inbox/keychain";
 import { openUrl } from "../inbox/open-url";
 import { createInbox } from "../inbox/service";
-import { osascriptJxa } from "../mail/jxa";
+import { appleApps } from "../apps/source";
+import { CALENDAR_TIMEOUT_MS, osascriptJxa } from "../mail/jxa";
 import { appleMail } from "../mail/source";
 import { mailAppExists } from "../mail/available";
 import { BUNDLED_SKILLS } from "../agent/bundled-skills";
@@ -42,11 +43,12 @@ const openFile = async (path: string, reveal: boolean): Promise<boolean> => (awa
 const token = randomBytes(TOKEN_BYTES).toString("hex");
 const inbox = createInbox({ fetch, secrets: macKeychain(runCommand), now: Date.now, openUrl });
 const mail = appleMail(osascriptJxa(runCommand), runCommand);
+const apps = appleApps((app) => osascriptJxa(runCommand, app, app === "Calendar" ? CALENDAR_TIMEOUT_MS : undefined));
 const pdf = createPdfRenderer({ run: runCommand, dir: join(dir, "pdf") });
 const skills = createSkillsService({ bundledDir: SKILLS_DIR, bundled: BUNDLED_SKILLS, userDir: join(dir, "skills"), off: store.settings.getSkillsOff, setOff: store.settings.setSkillsOff });
 // HEEL_DEV_ORIGIN: a second dev panel on another Vite port (a worktree beside the main checkout) may call this helper.
 let port: number | null = null;
-const app = createApp({ store, providers: createProviders(), inbox, mail, mailAvailable: mailAppExists(), token, allowedOrigins: [DEV_ORIGIN, ...TAURI_ORIGINS, ...(process.env.HEEL_DEV_ORIGIN ? [process.env.HEEL_DEV_ORIGIN] : [])], openFile, renderPdf: pdf.render, skills, debug: { dataDir: dir, port: () => port, exportDir: join(homedir(), "Desktop") } });
+const app = createApp({ store, providers: createProviders(), inbox, mail, mailAvailable: mailAppExists(), apps, token, allowedOrigins: [DEV_ORIGIN, ...TAURI_ORIGINS, ...(process.env.HEEL_DEV_ORIGIN ? [process.env.HEEL_DEV_ORIGIN] : [])], openFile, renderPdf: pdf.render, skills, debug: { dataDir: dir, port: () => port, exportDir: join(homedir(), "Desktop") } });
 
 // Port 0 = let the OS pick a free port; the panel finds it in the connection file.
 const server = serve({ fetch: app.fetch, hostname: HOST, port: 0 }, (info) => {

@@ -4,6 +4,7 @@ import type { HistoryMessage } from "../../shared/api";
 import type { Store } from "../store/store";
 import { MAX_ACTIONS_PER_REPLY, MAX_SAY_CHARS } from "./actions";
 import type { TaskRefs } from "./execute";
+import { nowLine } from "../apps/sections";
 import { skillsDir } from "./skills-dir";
 
 export const SKILLS_DIR = skillsDir(process.env, new URL("../../skills/nd-skills/", import.meta.url));
@@ -83,6 +84,9 @@ Actions (exact field names):
 - {"type":"write_document","title":"...","body":"Markdown"} — saves a document on the person's Mac (research notes, a brief, a write-up). The full text goes in "body"; "say" stays a two-line summary.
 - {"type":"show_mail","mail":"m1"} — gives the person an Open button for that unread message, which opens it in their Mail app. Use it for each message you name in "say" (at most five), by its ref from the "Unread mail" list.
 - {"type":"make_pdf","title":"optional words from the document's title"} — turns a saved document into a PDF next to it and opens it. Leave "title" out for the newest document ("make that a PDF").
+- {"type":"add_event","title":"...","start":"2026-10-28T10:00","end":"2026-10-28T11:00","location":"optional","notes":"optional"} — proposes a Calendar event; the person sees a preview and adds it with one tap. Dates are local, "YYYY-MM-DD" for all day or "YYYY-MM-DDTHH:mm"; work them out from the "Now" line. Leave "end" out for one hour.
+- {"type":"add_reminder","title":"...","due":"2026-10-28T09:00","notes":"optional"} — proposes a Reminder the same way. Leave "due" out when no time was given.
+- {"type":"add_note","title":"...","body":"plain text, lines separated by newlines"} — proposes a note in the person's Notes app the same way.
 
 Rules:
 - Refer to existing tasks in "actions" only by the refs in the task list (t1, t2). Never invent a ref.
@@ -91,6 +95,7 @@ Rules:
 - When the person asks for an email, letter or message to someone, use draft_email with the full text in "body" (plain, their voice, no placeholders like [name] unless you truly lack it). Leave "to" out if you don't know the address.
 - Drafting or opening an email never completes a task. Only use complete_task when the person says the thing is done.
 - Name a message by its sender and subject in "say", never by its ref (m1): the person never sees refs.
+- When "Calendar", "Reminders" or "Notes" is in the state, answer from it, in the person's own time (the "Now" line); name events by title and time, never by ref (c1, r1, n1). You can only read them; you cannot change or delete anything there. Say "proposed", never "added": the person adds it with a tap.
 - When "Unread mail" is in the state, answer from it: name who wrote and what about, newest first, a few lines. You can only read it and open a draft (draft_email); you cannot send, move or delete mail. If it says the mail could not be read, say that in one sentence.
 - When the person asks you to look into, research, write up or draft a document about something, put the whole thing in write_document (headings, short paragraphs, a "Sources" list with the URLs you actually used; if you could not search, say so in the body). Never paste a long text into "say".
 - "say" is at most ${MAX_SAY_CHARS} characters and at most ${MAX_ACTIONS_PER_REPLY} actions. Plain words, short sentences, one idea per paragraph.
@@ -122,7 +127,7 @@ export function methodLine(method: Method): string | null {
 }
 
 /** What the model is allowed to know about the current state, with short refs instead of ids. */
-export function buildSnapshot(store: Store, extra: readonly string[] = []): Snapshot {
+export function buildSnapshot(store: Store, extra: readonly string[] = [], now: Date = new Date()): Snapshot {
   const tasks = store.tasks.list().slice(0, MAX_TASKS_IN_PROMPT);
   const refs = new Map(tasks.map((task, index) => [`t${index + 1}`, task.id]));
   const lines = tasks.map((task, index) => {
@@ -134,6 +139,7 @@ export function buildSnapshot(store: Store, extra: readonly string[] = []): Snap
   const global = store.ledger.get(null);
   const documents = store.documents.list().slice(0, MAX_DOCUMENTS_IN_PROMPT);
   const parts = [
+    nowLine(now),
     `Open tasks:\n${lines.length ? lines.join("\n") : "none"}`,
     `Focus session: ${focus ? `running, goal "${focus.goal}"` : "none"}`,
     documents.length ? `Saved documents, newest first: ${documents.map((d) => `"${d.title}"`).join(", ")}` : null,

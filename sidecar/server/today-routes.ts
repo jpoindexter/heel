@@ -94,7 +94,7 @@ export function registerTurnRoute(app: Hono, deps: AppDeps): void {
       if (made.ok && made.value.pdfPath) await deps.openFile(made.value.pdfPath, false);
       return made;
     };
-    const result = await runTurn({ store, provider: deps.providers[provider], model, mail: deps.mail, skills: deps.skills, makePdf: makeAndOpenPdf, signal: c.req.raw.signal }, body.data.text, body.data.history);
+    const result = await runTurn({ store, provider: deps.providers[provider], model, mail: deps.mail, apps: deps.apps, skills: deps.skills, makePdf: makeAndOpenPdf, signal: c.req.raw.signal }, body.data.text, body.data.history);
     if (!result.ok) return fail(c, result.error.code, result.error.message);
     return ok(c, { say: result.say, applied: result.applied, skills: result.skills, provider: result.provider });
   });
