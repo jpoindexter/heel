@@ -97,5 +97,5 @@
 /* A row found from search: tinted for a moment so the eye lands on it. */
 .task-row[data-found] {
   background: var(--accent-a4);
-  transition: background var(--motion-slow) var(--ease-out);
+  transition: background var(--motion-base) var(--ease-out);
 }
