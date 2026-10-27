@@ -55,6 +55,7 @@ export function InboxPanel({ digest: controller, reply, onOpen }: Props) {
           </div>
         ))
       )}
+      {state.error && <Text size="2" color="amber" role="alert">{state.error}</Text>}
       <Text size="1" color="gray">Read from Apple Mail on this Mac. Sent to the AI: sender, subject and the first lines of each unread email.</Text>
       <div className="inbox-actions">
         <Button size="1" radius="full" variant="soft" color="gray" onClick={() => void check()}>Check again</Button>
