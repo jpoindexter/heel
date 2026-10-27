@@ -13,7 +13,7 @@ import { useMethod } from "../ui/method";
 import { JarMeter } from "./JarMeter";
 import { dropsOnBucket } from "./eisenhower-model";
 import { bucketPatches } from "./method-model";
-import { minutesForSize } from "./size-model";
+import { boxMinutes } from "./two-minute-model";
 
 /** A ticked or removed row fades out first, then the write happens (it is the write that shows Undo). */
 function useLeavingRow(run: (task: TaskDto, action: "complete" | "remove") => void) {
@@ -67,7 +67,7 @@ export function TaskSection({ state, foundId = null }: { state: ReturnType<typeo
       {starting && now && !focus.session && (
         <FocusForm
           initialGoal={now.text}
-          initialMinutes={minutesForSize(now.task.size, numbers)}
+          initialMinutes={boxMinutes(now.task, method, numbers)}
           onCancel={() => setStarting(false)}
           onStart={(goal, realisticMin) => void focus.start({ goal, taskId: now.task.id, realisticMin }).then((started) => started && setStarting(false))}
         />

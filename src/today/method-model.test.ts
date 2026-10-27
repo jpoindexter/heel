@@ -33,6 +33,13 @@ describe("groupTasks", () => {
   });
 });
 
+describe("groupTasks under the two-minute rule", () => {
+  it("puts Do it now first and the rest under Not sorted yet", () => {
+    const groups = groupTasks([task("slow"), task("fast", "quick")], "two-minute");
+    expect(groups.map((g) => [g.label, g.tasks.map((t) => t.title)])).toEqual([["Do it now", ["fast"]], ["Not sorted yet", ["slow"]]]);
+  });
+});
+
 describe("nextSize / nextBucket", () => {
   it("walk the scale and come back to none", () => {
     expect(nextSize(null)).toBe("xs");

@@ -53,6 +53,7 @@ const STRUCTURE_SENTENCES: Readonly<Record<Structure, string>> = {
   "one-three-five": "The list shows Big, Medium and Small with their slots; one more than a slot holds asks to park one.",
   eisenhower: "The list shows Do, Schedule and Delegate; a tap to Drop takes the task off the list, with Undo.",
   frog: "One task is the frog, the hardest one: it sits first and is Now. Marking another moves the frog to the rest.",
+  "two-minute": "Anything that takes under two minutes is marked Do it now: it sits first, is Now, and its clock offers a short box.",
 };
 
 /** One sentence per picker for Settings: what the panel does differently. */

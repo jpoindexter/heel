@@ -97,6 +97,12 @@ describe("buildSnapshot", () => {
     expect(buildSnapshot(store).text).toContain("Eisenhower: urgent and important = do");
   });
 
+  it("tells the model the two-minute rule with its minutes", () => {
+    const store = testStore();
+    store.settings.setMethod({ timer: "timebox", structure: "two-minute", sizing: "none" });
+    expect(buildSnapshot(store).text).toContain("Two-minute rule: anything that takes under 2 min is done now");
+  });
+
   it("tells the model 1-3-5 with the slots from Settings", () => {
     const store = testStore();
     store.settings.setMethod({ timer: "timebox", structure: "one-three-five", sizing: "none" });

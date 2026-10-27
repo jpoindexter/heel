@@ -6,7 +6,7 @@ import { MethodNumbersSettings } from "./MethodNumbersSettings";
 import { PomodoroSettings } from "./PomodoroSettings";
 
 const TIMER_LABELS: Record<Timer, string> = { timebox: "Time-box", pomodoro: "Pomodoro" };
-const STRUCTURE_LABELS: Record<Structure, string> = { none: "None", "pickle-jar": "Pickle jar", "one-three-five": "1-3-5", eisenhower: "Eisenhower", frog: "Frog" };
+const STRUCTURE_LABELS: Record<Structure, string> = { none: "None", "pickle-jar": "Pickle jar", "one-three-five": "1-3-5", eisenhower: "Eisenhower", frog: "Frog", "two-minute": "Two-minute rule" };
 const SIZING_LABELS: Record<Sizing, string> = { none: "None", tshirt: "T-shirt" };
 
 type PickerProps<T extends string> = { label: string; value: T; options: readonly T[]; built: readonly T[]; labels: Record<T, string>; onChange: (next: T) => void };
