@@ -9,7 +9,7 @@ export const PREFERENCE_LABELS: Record<Preference, string> = { system: "System",
 export const DENSITY_LABELS: Record<Density, string> = { compact: "Compact", comfortable: "Comfortable" };
 export const ACTIVITY_LABELS: Record<Activity, string> = { off: "Off", calm: "Calm", lively: "Lively" };
 export const TIMER_LABELS: Record<Timer, string> = { timebox: "Time-box", pomodoro: "Pomodoro" };
-export const STRUCTURE_LABELS: Record<Structure, string> = { none: "None", "pickle-jar": "Pickle jar", "one-three-five": "1-3-5", eisenhower: "Eisenhower", frog: "Frog" };
+export const STRUCTURE_LABELS: Record<Structure, string> = { none: "None", "pickle-jar": "Pickle jar", "one-three-five": "1-3-5", eisenhower: "Eisenhower", frog: "Frog", "two-minute": "Two-minute rule", "ivy-lee": "Ivy Lee" };
 export const SIZING_LABELS: Record<Sizing, string> = { none: "None", tshirt: "T-shirt" };
 
 /** What a folded group says at rest (N4): the current values, so nobody opens a group just to check. */

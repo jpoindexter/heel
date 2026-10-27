@@ -3,7 +3,9 @@ import { client } from "../api/default-client";
 import { useDigest } from "../inbox/useInbox";
 import { useMailStatus, useOpenMail, useReplyFlow } from "../inbox/useMail";
 import { usePomodoro } from "../focus/usePomodoro";
+import { useMethod } from "../ui/method";
 import { useNotices } from "../ui/notices";
+import { orderTasks } from "./method-model";
 import { nowCard } from "./today-model";
 import { useChatActions } from "./useChatActions";
 import { useTasks } from "./useTasks";
@@ -14,6 +16,7 @@ import { useTodayFocus } from "./useTodayFocus";
 export function useTodayState(active: boolean, reloadKey: number) {
   const tasks = useTasks(client, active);
   const notices = useNotices();
+  const { method } = useMethod();
   const thread = useThread(client, {
     onChanged: tasks.refresh,
     notify: (message) => tasks.showNotice(message, "error"),
@@ -35,5 +38,5 @@ export function useTodayState(active: boolean, reloadKey: number) {
   const digest = useDigest(client, refresh);
   const reply = useReplyFlow(client, tasks.showNotice);
   const openMail = useOpenMail(client, tasks.showNotice);
-  return { tasks, thread, chat, ready, now: ready ? nowCard(ready.tasks) : null, focus, pomodoro, mail, digest, reply, openMail };
+  return { tasks, thread, chat, ready, now: ready ? nowCard(orderTasks(ready.tasks, method.structure)) : null, focus, pomodoro, mail, digest, reply, openMail };
 }

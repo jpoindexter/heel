@@ -20,13 +20,6 @@ describe("PUT /method", () => {
     expect(method.parse(await json("/method"))).toMatchObject({ data: { structure: "pickle-jar" } });
   });
 
-  it("refuses a method that is not built yet, in a sentence that says when", async () => {
-    // The store says "conflict": the value is valid, just not available yet.
-    const result = method.parse(await setup().send("PUT", "/method", { timer: "timebox", structure: "one-three-five", sizing: "none" }));
-    expect(result.ok).toBe(false);
-    if (!result.ok) expect(result.error.message).toContain("N21");
-  });
-
   it("rejects a value outside the enums", async () => {
     const result = method.parse(await setup().send("PUT", "/method", { timer: "egg", structure: "none", sizing: "none" }));
     expect(result).toMatchObject({ ok: false, error: { code: "invalid" } });
@@ -59,7 +52,7 @@ describe("/method/numbers", () => {
   it("has defaults, saves whole minutes, and refuses nonsense", async () => {
     const { json, send } = setup();
     const numbers = envelope(MethodNumbersSchema);
-    expect(numbers.parse(await json("/method/numbers"))).toMatchObject({ ok: true, data: { jarCapacityMin: 240, maxRocks: 2, sizeMinutes: { m: 50 } } });
+    expect(numbers.parse(await json("/method/numbers"))).toMatchObject({ ok: true, data: { jarCapacityMin: 240, maxRocks: 2, sizeMinutes: { m: 50 }, slots: { big: 1, medium: 3, small: 5 }, quickMin: 2, ivyLeeCount: 6 } });
     expect(numbers.parse(await send("PUT", "/method/numbers", { jarCapacityMin: 300, maxRocks: 3, sizeMinutes: { xs: 5, s: 15, m: 30, l: 60, xl: 120 } }))).toMatchObject({ ok: true, data: { jarCapacityMin: 300, sizeMinutes: { xl: 120 } } });
     expect(numbers.parse(await json("/method/numbers"))).toMatchObject({ data: { maxRocks: 3 } });
     expect(numbers.parse(await send("PUT", "/method/numbers", { jarCapacityMin: 5 }))).toMatchObject({ ok: false });

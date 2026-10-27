@@ -1,4 +1,4 @@
-import { Heading, SegmentedControl, Text } from "@radix-ui/themes";
+import { Heading, SegmentedControl, Select, Text } from "@radix-ui/themes";
 import { BUILT, SIZINGS, STRUCTURES, TIMERS, type Method } from "../../shared/method";
 import { useMethod, whatChanges } from "../ui/method";
 import { useNotices } from "../ui/notices";
@@ -8,17 +8,31 @@ import { SIZING_LABELS, STRUCTURE_LABELS, TIMER_LABELS } from "./settings-model"
 
 type PickerProps<T extends string> = { label: string; value: T; options: readonly T[]; built: readonly T[]; labels: Record<T, string>; onChange: (next: T) => void };
 
+/** Up to this many choices read at a glance side by side in a 300 pt panel; more become a select. */
+const MAX_SEGMENTS = 3;
+
 /** One row of choices: only what is built can be picked; the rest is named below so nobody looks for it. */
 function Picker<T extends string>({ label, value, options, built, labels, onChange }: PickerProps<T>) {
   const later = options.filter((option) => !built.includes(option)).map((option) => labels[option]);
   return (
     <div className="field">
       <Text as="p" size="1" weight="medium" color="gray">{label}</Text>
-      <SegmentedControl.Root value={value} onValueChange={(next) => onChange(next as T)} aria-label={label}>
-        {built.map((option) => (
-          <SegmentedControl.Item key={option} value={option}>{labels[option]}</SegmentedControl.Item>
-        ))}
-      </SegmentedControl.Root>
+      {built.length > MAX_SEGMENTS ? (
+        <Select.Root value={value} onValueChange={(next) => onChange(next as T)}>
+          <Select.Trigger aria-label={label} />
+          <Select.Content>
+            {built.map((option) => (
+              <Select.Item key={option} value={option}>{labels[option]}</Select.Item>
+            ))}
+          </Select.Content>
+        </Select.Root>
+      ) : (
+        <SegmentedControl.Root value={value} onValueChange={(next) => onChange(next as T)} aria-label={label}>
+          {built.map((option) => (
+            <SegmentedControl.Item key={option} value={option}>{labels[option]}</SegmentedControl.Item>
+          ))}
+        </SegmentedControl.Root>
+      )}
       {later.length > 0 && <Text as="p" size="1" color="gray">Later: {later.join(", ")}.</Text>}
     </div>
   );

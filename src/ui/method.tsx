@@ -1,5 +1,5 @@
 import { createContext, useCallback, useContext, useEffect, useMemo, useState, type ReactNode } from "react";
-import { DEFAULT_METHOD, DEFAULT_METHOD_NUMBERS, MethodNumbersSchema, MethodSchema, type Method, type MethodNumbers } from "../../shared/method";
+import { DEFAULT_METHOD, DEFAULT_METHOD_NUMBERS, MethodNumbersSchema, MethodSchema, type Method, type MethodNumbers, type Structure } from "../../shared/method";
 import type { Client } from "../api/client";
 
 export type MethodState = {
@@ -47,13 +47,21 @@ export function MethodProvider({ client, children }: { client: Client; children:
   return <MethodContext.Provider value={value}>{children}</MethodContext.Provider>;
 }
 
+const STRUCTURE_SENTENCES: Readonly<Record<Structure, string>> = {
+  none: "The list is one plain list.",
+  "pickle-jar": "The list shows Rocks, Pebbles and Sand; a tap on a task's bucket moves it.",
+  "one-three-five": "The list shows Big, Medium and Small with their slots; one more than a slot holds asks to park one.",
+  eisenhower: "The list shows Do, Schedule and Delegate; a tap to Drop takes the task off the list, with Undo.",
+  frog: "One task is the frog, the hardest one: it sits first and is Now. Marking another moves the frog to the rest.",
+  "two-minute": "Anything that takes under two minutes is marked Do it now: it sits first, is Now, and its clock offers a short box.",
+  "ivy-lee": "At the end of the day you pick the six tasks tomorrow starts with; they sit first, in order, and the first is Now.",
+};
+
 /** One sentence per picker for Settings: what the panel does differently. */
 export function whatChanges(method: Method): string {
   const parts: string[] = [];
   parts.push(method.timer === "pomodoro" ? "The clock on Now runs 25/5 cycles." : "The clock on Now is a single time-box.");
-  if (method.structure === "pickle-jar") parts.push("The list shows Rocks, Pebbles and Sand; a tap on a task's bucket moves it.");
-  else if (method.structure !== "none") parts.push(`The list is grouped by ${method.structure}.`);
-  else parts.push("The list is one plain list.");
+  parts.push(STRUCTURE_SENTENCES[method.structure]);
   if (method.sizing === "tshirt") parts.push("Every task gets XS–XL; a tap cycles it.");
   return parts.join(" ");
 }

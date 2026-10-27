@@ -85,6 +85,37 @@ describe("buildSnapshot", () => {
     expect(buildSnapshot(testStore()).text).not.toContain("Ways of working");
   });
 
+  it("tells the model the frog rule in one line", () => {
+    const store = testStore();
+    store.settings.setMethod({ timer: "timebox", structure: "frog", sizing: "none" });
+    expect(buildSnapshot(store).text).toContain("Ways of working: Eat the frog: the frog is the hardest task of the day, one only");
+  });
+
+  it("tells the model Eisenhower's four words", () => {
+    const store = testStore();
+    store.settings.setMethod({ timer: "timebox", structure: "eisenhower", sizing: "none" });
+    expect(buildSnapshot(store).text).toContain("Eisenhower: urgent and important = do");
+  });
+
+  it("tells the model the two-minute rule with its minutes", () => {
+    const store = testStore();
+    store.settings.setMethod({ timer: "timebox", structure: "two-minute", sizing: "none" });
+    expect(buildSnapshot(store).text).toContain("Two-minute rule: anything that takes under 2 min is done now");
+  });
+
+  it("tells the model Ivy Lee with its count", () => {
+    const store = testStore();
+    store.settings.setMethod({ timer: "timebox", structure: "ivy-lee", sizing: "none" });
+    expect(buildSnapshot(store).text).toContain("Ivy Lee: at the end of the day the person picks the 6 tasks");
+  });
+
+  it("tells the model 1-3-5 with the slots from Settings", () => {
+    const store = testStore();
+    store.settings.setMethod({ timer: "timebox", structure: "one-three-five", sizing: "none" });
+    store.settings.setMethodNumbers({ ...store.settings.getMethodNumbers(), slots: { big: 2, medium: 3, small: 5 } });
+    expect(buildSnapshot(store).text).toContain("1-3-5: the day holds 2 big, 3 medium and 5 small tasks");
+  });
+
   it("caps the task list and says none when empty", () => {
     const store = testStore();
     expect(buildSnapshot(store).text).toContain("Open tasks:\nnone");

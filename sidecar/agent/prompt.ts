@@ -1,4 +1,4 @@
-import { BUCKETS, type Method } from "../../shared/method";
+import { BUCKETS, DEFAULT_METHOD_NUMBERS, type Method, type MethodNumbers, type Structure } from "../../shared/method";
 import { readFileSync } from "node:fs";
 import type { HistoryMessage } from "../../shared/api";
 import type { Store } from "../store/store";
@@ -116,12 +116,21 @@ export function buildSystemPrompt(skillIds: readonly string[], load: SkillLoader
 
 export type Snapshot = { text: string; refs: TaskRefs };
 
+/** What each structure asks of the model, in one clause; the rest get a generic one from their buckets. */
+const STRUCTURE_LINES: Partial<Record<Structure, (n: MethodNumbers) => string>> = {
+  "pickle-jar": () => 'Pickle jar: rocks (must do, big) first, then pebbles, then sand (small filler); set "bucket" on add_task to rock, pebble or sand',
+  frog: () => 'Eat the frog: the frog is the hardest task of the day, one only, done first; set "bucket" on add_task to frog or rest; if no task is marked [frog] and the person asks what to do, ask which one is the frog',
+  eisenhower: () => 'Eisenhower: urgent and important = do; important but not urgent = schedule; urgent but not important = delegate; neither = drop (do not add it: park_idea it instead); set "bucket" on add_task to do, schedule or delegate',
+  "two-minute": (n) => `Two-minute rule: anything that takes under ${n.quickMin} min is done now, before the rest; set "bucket" on add_task to quick for those and leave the others without a bucket`,
+  "ivy-lee": (n) => `Ivy Lee: at the end of the day the person picks the ${n.ivyLeeCount} tasks tomorrow starts with, most important first, and works them in order; set "bucket" on add_task to six when the person says a task is one of them; never more than ${n.ivyLeeCount}`,
+  "one-three-five": (n) => `1-3-5: the day holds ${n.slots.big} big, ${n.slots.medium} medium and ${n.slots.small} small tasks (big = L or XL, medium = M, small = XS or S); set "bucket" on add_task to big, medium or small; one more than a slot holds means one of them should be parked`,
+};
+
 /** The chosen ways of working, as one line the model can act on (set `bucket` / `size` on add_task). */
-export function methodLine(method: Method): string | null {
+export function methodLine(method: Method, numbers: MethodNumbers = DEFAULT_METHOD_NUMBERS): string | null {
   const parts: string[] = [];
   if (method.timer === "pomodoro") parts.push("Timer: Pomodoro cycles (work, short break, long break after a few)");
-  if (method.structure === "pickle-jar") parts.push("Pickle jar: rocks (must do, big) first, then pebbles, then sand (small filler); set \"bucket\" on add_task to rock, pebble or sand");
-  else if (method.structure !== "none") parts.push(`Structure: ${method.structure}; set \"bucket\" to one of ${BUCKETS[method.structure].join(", ")}`);
+  if (method.structure !== "none") parts.push(STRUCTURE_LINES[method.structure]?.(numbers) ?? `Structure: ${method.structure}; set "bucket" to one of ${BUCKETS[method.structure].join(", ")}`);
   if (method.sizing === "tshirt") parts.push("T-shirt sizes: set \"size\" on add_task to xs, s, m, l or xl (xs = minutes, xl = half a day)");
   return parts.length ? `Ways of working: ${parts.join(". ")}.` : null;
 }
@@ -145,7 +154,7 @@ export function buildSnapshot(store: Store, extra: readonly string[] = [], now: 
     documents.length ? `Saved documents, newest first: ${documents.map((d) => `"${d.title}"`).join(", ")}` : null,
     ...extra,
     `Finished today: ${store.history.doneToday()}`,
-    methodLine(store.settings.getMethod()),
+    methodLine(store.settings.getMethod(), store.settings.getMethodNumbers()),
     global?.outcome ? `Current outcome: ${global.outcome}` : null,
   ].filter((part): part is string => part !== null);
   return { text: parts.join("\n\n"), refs };

@@ -12,7 +12,9 @@ import { client } from "../api/default-client";
 import type { useTodayState } from "./useTodayState";
 import { useMethod } from "../ui/method";
 import { JarMeter } from "./JarMeter";
-import { minutesForSize } from "./size-model";
+import { dropsOnBucket } from "./eisenhower-model";
+import { bucketPatches } from "./method-model";
+import { boxMinutes } from "./two-minute-model";
 
 /** A ticked or removed row fades out first, then the write happens (it is the write that shows Undo). */
 function useLeavingRow(run: (task: TaskDto, action: "complete" | "remove") => void) {
@@ -41,7 +43,12 @@ export function TaskSection({ state, foundId = null }: { state: ReturnType<typeo
   const split = useSplit({ client, refresh: tasks.refresh, notify: (notice) => tasks.showNotice(notice.message, notice.tone, notice.undo) });
   const marks = {
     method,
-    onPatch: (task: TaskDto, change: Parameters<typeof tasks.patch>[1]) => void tasks.patch(task, change),
+    onPatch: async (task: TaskDto, change: Parameters<typeof tasks.patch>[1]) => {
+      if (change.bucket === undefined) return tasks.patch(task, change);
+      if (dropsOnBucket(method.structure, change.bucket)) return tasks.remove(task);
+      // A bucket tap may write two tasks (the frog demotes the old one); one at a time, so the last refresh sees both.
+      for (const p of bucketPatches(method.structure, ready?.tasks ?? [], task, change.bucket)) await tasks.patch(p.task, { bucket: p.bucket });
+    },
     onSplit: (task: TaskDto) => void split.propose(task),
     after: (task: TaskDto) => (split.state?.task.id === task.id ? <SplitCard split={split} /> : null),
     // N7: the words and the order are the person's to change, each with Undo in its toast.
@@ -69,7 +76,7 @@ export function TaskSection({ state, foundId = null }: { state: ReturnType<typeo
       {starting && now && !focus.session && (
         <FocusForm
           initialGoal={now.text}
-          initialMinutes={minutesForSize(now.task.size, numbers)}
+          initialMinutes={boxMinutes(now.task, method, numbers)}
           onCancel={() => setStarting(false)}
           onStart={(goal, realisticMin) => void focus.start({ goal, taskId: now.task.id, realisticMin }).then((started) => started && setStarting(false))}
         />
