@@ -1,6 +1,17 @@
 import { describe, expect, it } from "vitest";
 import type { BrainStateDto } from "../../shared/api";
-import { changeMessage, modelControl, providerRows } from "./brain-model";
+import { changeMessage, modelControl, modelToCommit, providerRows } from "./brain-model";
+
+describe("modelToCommit", () => {
+  it("writes nothing when the field is left as it was (empty stays the default, a name stays itself)", () => {
+    expect(modelToCommit("", "")).toBeUndefined();
+    expect(modelToCommit(" sonnet ", "sonnet")).toBeUndefined();
+  });
+  it("writes the new name, or null to go back to the provider's default", () => {
+    expect(modelToCommit("opus", "sonnet")).toBe("opus");
+    expect(modelToCommit("  ", "sonnet")).toBeNull();
+  });
+});
 
 const state = (provider: BrainStateDto["settings"]["provider"], model: string | null = null): BrainStateDto => ({
   settings: { provider, model },
