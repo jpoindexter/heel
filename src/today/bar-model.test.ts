@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { BAR_TRAY, CARD_TRAY, TRAY_LABEL, TRAY_NAME, barHint, barKey, rollOrder } from "./bar-model";
+import { BAR_TRAY, CARD_TRAY, TRAY_LABEL, TRAY_NAME, barHint, barKey, endLeave, rollOrder } from "./bar-model";
 
 describe("tray", () => {
   it("rolls out exactly four buttons in the bar and four in the card, chat only where chat is closed", () => {
@@ -44,5 +44,18 @@ describe("barHint", () => {
     expect(barHint(true, false)).toBe("");
     expect(barHint(false, false)).toContain("⌘↩");
     expect(barHint(false, true)).toBe("Heel is thinking");
+  });
+});
+
+describe("endLeave", () => {
+  it("runs the waiting clear once, whether the fade's timer or the layer's unmount (Esc) gets there first", () => {
+    let cleared = 0;
+    const leave = { clear: () => void (cleared += 1) };
+    endLeave(leave);
+    endLeave(leave);
+    expect(cleared).toBe(1);
+  });
+  it("does nothing when no close is under way, so Esc on an open reply keeps the conversation", () => {
+    expect(() => endLeave({})).not.toThrow();
   });
 });

@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { Cross2Icon } from "@radix-ui/react-icons";
 import { IconButton, Text } from "@radix-ui/themes";
-import { LEAVE_MS } from "./bar-model";
+import { endLeave, LEAVE_MS, type Leave } from "./bar-model";
 import { Message } from "./Message";
 import { latestExchange, type Message as ThreadMessage } from "./thread-model";
 
@@ -17,16 +17,24 @@ type Props = {
   onDismiss: () => void;
 };
 
-/** Closing fades the reply out first, then clears it. */
+/** Closing fades the reply out first, then clears it. Esc during the fade unmounts the layer: the clear still runs, from the cleanup, or the conversation is back on the next open. */
 function useLeave(onDismiss: () => void) {
   const [leaving, setLeaving] = useState(false);
+  const leave = useRef<Leave>({});
   const timer = useRef<number | undefined>(undefined);
-  useEffect(() => () => window.clearTimeout(timer.current), []);
+  useEffect(
+    () => () => {
+      window.clearTimeout(timer.current);
+      endLeave(leave.current);
+    },
+    [],
+  );
   const dismiss = () => {
     setLeaving(true);
+    leave.current.clear = onDismiss;
     timer.current = window.setTimeout(() => {
       setLeaving(false);
-      onDismiss();
+      endLeave(leave.current);
     }, LEAVE_MS);
   };
   return { leaving, dismiss };

@@ -32,6 +32,16 @@ export const COLLAPSE_AFTER_MS: Readonly<Record<"blur" | "sent" | "added", numbe
 /** A row fades out before it is removed; the reply too. */
 export const LEAVE_MS = 170;
 
+/** The clear a closing reply is waiting on while it fades. */
+export type Leave = { clear?: () => void };
+
+/** Whichever ends the fade first, its timer or the layer going away under it (Esc), runs the clear, once; nothing waiting, nothing runs. */
+export function endLeave(leave: Leave): void {
+  const clear = leave.clear;
+  leave.clear = undefined;
+  clear?.();
+}
+
 export type BarKey = "send" | "add" | "close" | null;
 
 /** Enter talks to Heel, Cmd/Ctrl+Enter adds the text as a task at once, Esc closes the card. Shift+Enter is a new line. */
