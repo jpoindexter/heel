@@ -28,6 +28,8 @@ objc2-foundation = { version = "0.3", features = ["NSString", "NSError", "NSBund
 block2 = "0.6"
 objc2-user-notifications = { version = "0.3", default-features = false, features = ["UNUserNotificationCenter", "UNNotificationContent", "UNNotificationRequest", "UNNotificationTrigger", "UNNotificationSound", "UNNotificationSettings", "block2", "std", "UNNotification"] }
 objc2 = "0.6"
+# Launch at login (N10): Apple's SMAppService, the same objc2 family and version as the AppKit bindings above.
+objc2-service-management = { version = "0.3", default-features = false, features = ["std", "SMAppService", "objc2", "objc2-foundation"] }
 
 
 [target.'cfg(not(any(target_os = "android", target_os = "ios")))'.dependencies]

@@ -8,6 +8,7 @@ import { AppearanceSettings } from "./AppearanceSettings";
 import { AttentionSettings } from "./AttentionSettings";
 import { NoticeSettings } from "./NoticeSettings";
 import { SkillsSettings } from "./SkillsSettings";
+import { StartupSettings } from "./StartupSettings";
 import { BrainSettings } from "./BrainSettings";
 import { DensitySettings } from "./DensitySettings";
 import { PanelSettings } from "./PanelSettings";
@@ -26,6 +27,8 @@ type Props = {
 export function SettingsView({ active, onSaved, preference, onPreference, density, onDensity }: Props) {
   return (
     <div className="settings">
+      <StartupSettings />
+      <Separator size="4" />
       <AppearanceSettings preference={preference} onPreference={onPreference} />
       <Separator size="4" />
       <DensitySettings density={density} onDensity={onDensity} />

@@ -14,5 +14,9 @@ export function useShellSettings() {
     setSettings((current) => ({ ...current, alwaysOnTop: on }));
     void invoke("set_always_on_top", { on }).catch(() => undefined);
   };
-  return { settings, setAlwaysOnTop };
+  const setDockIcon = (on: boolean) => {
+    setSettings((current) => ({ ...current, dockIcon: on }));
+    void invoke("set_dock_icon", { on }).catch(() => undefined);
+  };
+  return { settings, setAlwaysOnTop, setDockIcon };
 }

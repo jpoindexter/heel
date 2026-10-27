@@ -12,7 +12,7 @@ pub(crate) fn setup(app: &mut App) -> Result<(), Box<dyn std::error::Error>> {
     let handle = app.handle().clone();
     crate::sidecar_process::start(&handle);
     restore_panel_size(&handle);
-    crate::shell_settings::load(&handle);
+    let settings = crate::shell_settings::load(&handle);
     crate::undock::restore_place(&handle);
     crate::window_level::apply_panel_level(&handle);
     let home = place_mascot(&handle);
@@ -27,9 +27,8 @@ pub(crate) fn setup(app: &mut App) -> Result<(), Box<dyn std::error::Error>> {
     if std::env::var_os("HEEL_NO_HOTKEY").is_none() {
         app.global_shortcut().register(hotkey())?;
     }
+    // The Dock icon is a setting (N10); HEEL_ACCESSORY still forces it off for the B1 test.
     #[cfg(target_os = "macos")]
-    if std::env::var_os("HEEL_ACCESSORY").is_some() {
-        app.set_activation_policy(tauri::ActivationPolicy::Accessory);
-    }
+    app.set_activation_policy(crate::startup::activation_policy(settings.dock_icon && std::env::var_os("HEEL_ACCESSORY").is_none()));
     Ok(())
 }
