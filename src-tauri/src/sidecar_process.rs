@@ -29,10 +29,28 @@ pub(crate) fn node_candidates(home: &str, override_path: Option<&str>) -> Vec<Pa
 }
 
 /// Last resort: ask a login shell, which has the PATH the user's terminal has (nvm, fnm, volta...).
+/// A login shell that waits on the network (a slow nvm.sh, brew shellenv on a cold disk) must not hold Heel's launch: setup runs this on the main thread.
+const LOGIN_SHELL_DEADLINE: Duration = Duration::from_secs(5);
+
 fn node_from_login_shell() -> Option<PathBuf> {
     // No stdin: a profile that waits for input fails at once instead of holding Heel's launch (setup runs this).
-    let output = Command::new("/bin/zsh").args(["-lc", "command -v node"]).stdin(Stdio::null()).output().ok()?;
+    let child = Command::new("/bin/zsh").args(["-lc", "command -v node"]).stdin(Stdio::null()).stdout(Stdio::piped()).stderr(Stdio::null()).spawn().ok()?;
+    let output = wait_with_deadline(child, LOGIN_SHELL_DEADLINE)?;
     node_path_from_shell(&String::from_utf8_lossy(&output.stdout))
+}
+
+/// The child's output if it exits within `deadline`; otherwise it is killed and this is `None`.
+pub(crate) fn wait_with_deadline(mut child: Child, deadline: Duration) -> Option<std::process::Output> {
+    let started = Instant::now();
+    while child.try_wait().ok()?.is_none() {
+        if started.elapsed() > deadline {
+            let _ = child.kill();
+            let _ = child.wait();
+            return None;
+        }
+        std::thread::sleep(Duration::from_millis(25));
+    }
+    child.wait_with_output().ok()
 }
 
 /// The path is the last line: nvm, fnm and volta print "Now using node v22…" to stdout before it. Not a path means not found.
@@ -124,6 +142,21 @@ pub(crate) fn stop(app: &AppHandle) {
 #[cfg(test)]
 mod tests {
     use super::*;
+
+    #[test]
+    fn a_child_past_its_deadline_is_killed_and_yields_nothing() {
+        let child = Command::new("/bin/sh").args(["-c", "sleep 30"]).stdout(Stdio::piped()).spawn().unwrap();
+        let started = Instant::now();
+        assert!(wait_with_deadline(child, Duration::from_millis(200)).is_none());
+        assert!(started.elapsed() < Duration::from_secs(5));
+    }
+
+    #[test]
+    fn a_child_within_its_deadline_gives_its_output() {
+        let child = Command::new("/bin/sh").args(["-c", "echo /usr/local/bin/node"]).stdout(Stdio::piped()).spawn().unwrap();
+        let output = wait_with_deadline(child, Duration::from_secs(5)).unwrap();
+        assert_eq!(node_path_from_shell(&String::from_utf8_lossy(&output.stdout)), Some(PathBuf::from("/usr/local/bin/node")));
+    }
 
     #[test]
     fn looks_where_the_user_installs_node_with_an_override_first() {
