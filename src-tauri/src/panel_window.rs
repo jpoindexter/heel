@@ -19,10 +19,7 @@ pub(crate) fn save_panel_size(app: &AppHandle) {
     let Some(size) = panel_logical_size(&panel) else {
         return;
     };
-    if let Some(dir) = path.parent() {
-        let _ = std::fs::create_dir_all(dir);
-    }
-    let _ = std::fs::write(path, panel_size::serialize(clamp_size(size)));
+    let _ = crate::save_file::write(&path, &panel_size::serialize(clamp_size(size)));
 }
 
 /// Apply the remembered size (if any) before the panel is first shown.

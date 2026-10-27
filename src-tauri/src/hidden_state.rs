@@ -25,10 +25,7 @@ fn path(app: &AppHandle) -> Option<std::path::PathBuf> {
 
 pub(crate) fn save(app: &AppHandle, hidden: bool) {
     let Some(path) = path(app) else { return };
-    if let Some(dir) = path.parent() {
-        let _ = std::fs::create_dir_all(dir);
-    }
-    let _ = std::fs::write(path, serialize(hidden));
+    let _ = crate::save_file::write(&path, &serialize(hidden));
 }
 
 pub(crate) fn load(app: &AppHandle) -> bool {
