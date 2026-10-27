@@ -21,8 +21,8 @@ A quiet desktop companion for an autistic/ADHD brain: Greg, a small dog, sits on
 npm install
 npm run tauri dev                       # shell + panel + helper, hot reload
 npm run tauri build -- --bundles app    # → src-tauri/target/release/bundle/macos/Heel.app
-npm run typecheck && npm test           # 3 TS projects; ~400 Vitest tests incl. the quality gates
-npm run secrets:scan                    # gitleaks (also runs on every commit: .githooks/pre-commit)
+npm run typecheck && npm test           # 3 TS projects; ~660 Vitest tests incl. the quality gates
+npm run secrets:scan                    # gitleaks (also on every commit once you run: git config core.hooksPath .githooks)
 ```
 Quality gates run as tests: files ≤ 300 lines / functions ≤ 50, no raw px/ms/colour outside `src/design/tokens.css`, import boundaries (`quality/`).
 
