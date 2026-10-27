@@ -2,6 +2,7 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import { invoke } from "@tauri-apps/api/core";
 import { listen } from "@tauri-apps/api/event";
 import { HELPER_STATUS_EVENT } from "../events";
+import { logDebug } from "../ui/debug-log";
 import { ASSUMED_RUNNING, statusFromPayload, type HelperStatus } from "./status";
 
 /**
@@ -22,6 +23,7 @@ export function useHelperStatus(onRecovered: (from: HelperStatus["state"]) => vo
     const take = (payload: unknown) => {
       const next = statusFromPayload(payload);
       if (!next) return;
+      if (next.state !== was.current) logDebug(next.state === "running" ? "info" : "warn", "helper", next.reason ? `${next.state}: ${next.reason}` : next.state);
       if (next.state === "running" && was.current !== "running") {
         recovered.current(was.current);
         setRecoveries((count) => count + 1);
