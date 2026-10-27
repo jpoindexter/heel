@@ -19,6 +19,13 @@ export function gregSummary(activity: Activity, notices: boolean, attention: boo
   return `${ACTIVITY_LABELS[activity]} · notices ${notices ? "on" : "off"} · attention ${attention ? "on" : "off"}`;
 }
 
+/** What a number field should store on blur: a positive number that differs from what is stored; null for empty, nonsense, zero or no change. */
+export function numberToCommit(text: string, current: number): number | null {
+  const trimmed = text.trim();
+  const next = Number(trimmed);
+  return trimmed === "" || !Number.isFinite(next) || next <= 0 || next === current ? null : next;
+}
+
 export function workSummary(method: Method): string {
   const parts = [TIMER_LABELS[method.timer]];
   if (method.structure !== "none") parts.push(STRUCTURE_LABELS[method.structure]);
