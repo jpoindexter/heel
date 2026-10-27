@@ -73,7 +73,7 @@ export function registerDataRoutes(app: Hono, { store, skills, inbox, debug, ope
     const files = entries().filter(isWiped);
     store.reset();
     for (const name of files) rmSync(join(debug.dataDir, name), { recursive: true, force: true });
-    await inbox.disconnect();
+    await inbox.disconnect({ forgetClient: true });
     return ok(c, { rows, files: files.length });
   });
 }

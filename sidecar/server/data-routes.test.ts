@@ -4,6 +4,7 @@ import { join } from "node:path";
 import { DatabaseSync } from "node:sqlite";
 import { describe, expect, it } from "vitest";
 import { BackupResultSchema, DataPreviewSchema, WipeResultSchema, envelope } from "../../shared/api";
+import { memorySecrets } from "../inbox/keychain";
 import { openStore } from "../store/store";
 import { backupFolderName, sizeOf } from "./data-routes";
 import { setup } from "./test-app";
@@ -13,14 +14,14 @@ const backup = envelope(BackupResultSchema);
 const wiped = envelope(WipeResultSchema);
 
 /** A helper on a real folder: a database file, a document, a skill of yours, and the files a wipe must leave alone. */
-function dataFolder() {
+function dataFolder(secrets = memorySecrets()) {
   const dataDir = mkdtempSync(join(tmpdir(), "heel-data-"));
   const store = openStore({ path: join(dataDir, "heel.db"), documentsDir: join(dataDir, "documents") });
   writeFileSync(join(dataDir, "sidecar.json"), '{"port":1,"token":"x"}');
   writeFileSync(join(dataDir, "sidecar.log"), "a line\n");
   mkdirSync(join(dataDir, "pdf"));
   writeFileSync(join(dataDir, "pdf", "printer"), "binary");
-  const app = setup({}, {}, undefined, store, { dataDir });
+  const app = setup({}, { secrets }, undefined, store, { dataDir });
   store.tasks.add({ title: "one" });
   store.tasks.add({ title: "two" });
   store.parked.park({ idea: "later" });
@@ -85,5 +86,13 @@ describe("POST /data/wipe", () => {
     expect(store.schemaVersion()).toBeGreaterThan(0);
     expect(store.tasks.add({ title: "fresh" }).ok).toBe(true);
     expect(store.settings.getBrain()).toEqual({ provider: null, model: null });
+  });
+
+  it("forgets the Gmail client as well as its tokens", async () => {
+    const secrets = memorySecrets({ "gmail-client": '{"clientId":"c","clientSecret":"s"}', "gmail-tokens": '{"accessToken":"a","expiresAt":9e12,"refreshToken":"r","account":"a@b.c"}' });
+    const { post } = dataFolder(secrets);
+    expect(wiped.parse(await post("/data/wipe", { confirm: "wipe everything" })).ok).toBe(true);
+    expect(await secrets.get("gmail-tokens")).toBeNull();
+    expect(await secrets.get("gmail-client")).toBeNull();
   });
 });
