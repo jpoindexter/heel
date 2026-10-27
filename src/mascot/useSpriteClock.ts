@@ -1,11 +1,12 @@
 import { useEffect, useState } from "react";
-import { frameAt } from "./timeline";
+import { frameAt, msUntilNextFrame } from "./timeline";
 import { useReducedMotion } from "./useReducedMotion";
 
 /**
- * The frame to show, driven by one requestAnimationFrame loop on a monotonic clock. It restarts whenever the animation
- * changes, stops while the window is hidden (no work for an invisible dog), and shows only the first frame when the
- * person asked for reduced motion.
+ * The frame to show, from a monotonic clock. The clock sleeps until the next frame change (N9: a requestAnimationFrame
+ * loop kept the window's display link running at every refresh, the largest part of Heel's idle cost) and does nothing
+ * at all for a held pose or a finished one-shot. It restarts whenever the animation changes, stops while the window is
+ * hidden (no work for an invisible dog), and shows only the first frame when the person asked for reduced motion.
  */
 export function useSpriteClock(durationsMs: readonly number[], loop: boolean, key: string, held = false): number {
   const reduced = useReducedMotion();
@@ -15,26 +16,28 @@ export function useSpriteClock(durationsMs: readonly number[], loop: boolean, ke
     setFrame(0);
     if (reduced || held) return;
     let started = performance.now();
-    let raf = 0;
+    let timer = 0;
     let current = 0;
-    const tick = (now: number) => {
-      const { index, finished } = frameAt(durationsMs, now - started, loop);
+    const show = () => {
+      const elapsed = performance.now() - started;
+      const { index } = frameAt(durationsMs, elapsed, loop);
       if (index !== current) {
         current = index;
         setFrame(index);
       }
-      if (!finished) raf = requestAnimationFrame(tick);
+      const wait = msUntilNextFrame(durationsMs, elapsed, loop);
+      if (wait !== null) timer = window.setTimeout(show, wait);
     };
     const onVisibility = () => {
-      cancelAnimationFrame(raf);
+      window.clearTimeout(timer);
       if (document.hidden) return;
       started = performance.now() - frameStartOf(durationsMs, current);
-      raf = requestAnimationFrame(tick);
+      show();
     };
-    raf = requestAnimationFrame(tick);
+    show();
     document.addEventListener("visibilitychange", onVisibility);
     return () => {
-      cancelAnimationFrame(raf);
+      window.clearTimeout(timer);
       document.removeEventListener("visibilitychange", onVisibility);
     };
     // `key` identifies the animation; durationsMs is derived from it and is stable per key.
