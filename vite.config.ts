@@ -1,4 +1,5 @@
 import { defineConfig } from "vite";
+import { configDefaults } from "vitest/config";
 import react from "@vitejs/plugin-react";
 import process from "node:process";
 const host = process.env.TAURI_DEV_HOST;
@@ -6,6 +7,11 @@ const host = process.env.TAURI_DEV_HOST;
 // https://vite.dev/config/
 export default defineConfig(() => ({
   plugins: [react()],
+
+  test: {
+    // Agent worktrees live under .claude/; without this, main runs every sibling branch's tests too.
+    exclude: [...configDefaults.exclude, "**/.claude/**"],
+  },
 
   // Vite options tailored for Tauri development and only applied in `tauri dev` or `tauri build`
   //

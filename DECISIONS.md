@@ -444,3 +444,10 @@ Why: N21 ("at the end of the day, pick tomorrow's six in order; next morning the
 Verified (browser panel 300×420, throwaway helper, count set to 2 through the API so three picks go over): "0 of 2 picked · Pick the 2?"; one pill → "1 of 2 picked", the task Now with a Six pill; a second → "2 of 2 picked", "The six" group, the button gone; a third → "3 of 2 picked", "That's 3. Ivy Lee stops at 2." and "Park one?"; Settings → the select with Pickle jar, 1-3-5, Eisenhower, Frog, Two-minute rule, Ivy Lee (None above the fold) and the count field showing 2.
 Not verified: "Pick the 6?" / "Park one?" answers (no AI in the throwaway profile; the ask path is the frog's); saving the count from the field (the same NumberField, verified for the slots); the model's line on a real reply; the Tauri window; dark mode; Comfortable density.
 Reversible? Yes (a structure entry, one bucket, one number with a default).
+
+## 2026-10-27 — Settings has eight groups, not seven
+
+**Choice:** N4's two-level Settings gained an eighth `<details>` group, **Startup** (Login, Dock), when the N10 shell work merged. Order: Look, Greg, Ways of working, Brain, Email, Startup, Privacy & data, About.
+**Alternatives:** fold Login/Dock into Look (mixes appearance with OS integration) or Privacy & data (wrong mental model).
+**Why:** both switches change what macOS does at login or in the Dock; that is its own question for the person, not a look or a data concern.
+**Reversible?** Yes, one `SettingsGroup` move in `SettingsView.tsx`.
