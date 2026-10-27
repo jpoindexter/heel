@@ -23,7 +23,7 @@ export function StartupSettings() {
   const note = refused ?? loginNote(login);
   return (
     <section aria-labelledby="startup-heading" className="settings-section">
-      <Heading as="h2" id="startup-heading" size="2">General</Heading>
+      <Heading as="h3" id="startup-heading" size="2">General</Heading>
       <Text as="label" size="2" className="attention-switch">
         <Switch size="1" checked={login !== "off"} onCheckedChange={changeLogin} /> Open Heel when you log in
       </Text>
