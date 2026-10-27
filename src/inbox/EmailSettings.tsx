@@ -1,13 +1,14 @@
 import { useId, useState, type FormEvent } from "react";
 import { Button, Callout, Heading, Text, TextField } from "@radix-ui/themes";
 import type { Client } from "../api/client";
+import { ConnectStatus } from "./InboxPanel";
 import { useInboxConnection } from "./useInbox";
 
 type Props = { client: Client; active: boolean };
 
 /** Gmail, read-only. The Google client ID and secret go to the Keychain through the helper; Heel never shows them again. */
 export function EmailSettings({ client, active }: Props) {
-  const { status, error, saveClient, connect, disconnect } = useInboxConnection(client, active);
+  const { status, error, saveClient, connect, disconnect, waiting } = useInboxConnection(client, active);
   const idField = useId();
   const secretField = useId();
   const [clientId, setClientId] = useState("");
@@ -45,6 +46,7 @@ export function EmailSettings({ client, active }: Props) {
           </Text>
           <Button type="submit" variant="soft" disabled={!clientId.trim() || !clientSecret.trim()}>Save</Button>
           {status?.configured && <Button type="button" onClick={() => void connect()}>Connect Gmail</Button>}
+          <ConnectStatus waiting={waiting} />
         </form>
       )}
       {(error || status?.problem) && (
