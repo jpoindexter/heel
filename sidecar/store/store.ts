@@ -30,6 +30,14 @@ export function openStore(options: StoreOptions = {}) {
     documents: documentsRepository(ctx, options.documentsDir ?? null),
     ...systemRepositories(ctx),
     schemaVersion: () => currentVersion(db),
+    /** A consistent copy of the whole database as one file, safe while open (WAL included). */
+    backupTo: (path: string) => void db.prepare("VACUUM INTO ?").run(path),
+    /** Every table emptied and rebuilt at the latest version: the wipe (N4). The file stays, shrunk. */
+    reset: () => {
+      migrateDown(db, 0);
+      migrateUp(db, ctx.now);
+      db.exec("VACUUM");
+    },
     rollbackTo: (version: number) => migrateDown(db, version),
     close: () => db.close(),
   };

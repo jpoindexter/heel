@@ -39,6 +39,7 @@
   --motion-layer-exit: 180ms;
   --sway-distance: 4px; /* Greg sways in place while Heel works and the panel is docked to him */ /* a toast or Greg's bubble drops in from above */
   --bar-height: 36px;
+  --debug-log-height: 140px; /* a log scrolls inside itself: about nine lines, so Settings stays a list, not a wall */
   --list-fade: 18px; /* the task list fades out at its bottom edge instead of cutting */
   --label-tracking: 0.08em;
   --tail-size: 10px; /* the panel's tail pointing at Greg */

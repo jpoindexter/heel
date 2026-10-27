@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { cellOrigin, frameAt, nearestAngleIndex, totalMs } from "./timeline";
+import { cellOrigin, frameAt, msUntilNextFrame, nearestAngleIndex, totalMs } from "./timeline";
 
 const DURATIONS = [100, 200, 50];
 
@@ -32,6 +32,22 @@ describe("frameAt (one-shot)", () => {
 
   it("treats a negative start as the first frame", () => {
     expect(frameAt(DURATIONS, -5, false).index).toBe(0);
+  });
+});
+
+describe("msUntilNextFrame", () => {
+  it("is the time left on the current frame, wrapping for a loop", () => {
+    expect(msUntilNextFrame(DURATIONS, 0, true)).toBe(100);
+    expect(msUntilNextFrame(DURATIONS, 120, true)).toBe(180);
+    expect(msUntilNextFrame(DURATIONS, 349, true)).toBe(1);
+    expect(msUntilNextFrame(DURATIONS, 350 + 120, true)).toBe(180);
+  });
+
+  it("is null when nothing will change: a finished one-shot or a single frame", () => {
+    expect(msUntilNextFrame(DURATIONS, 349, false)).toBe(1);
+    expect(msUntilNextFrame(DURATIONS, 350, false)).toBeNull();
+    expect(msUntilNextFrame([400], 10, true)).toBeNull();
+    expect(msUntilNextFrame([], 0, true)).toBeNull();
   });
 });
 

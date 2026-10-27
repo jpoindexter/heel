@@ -17,6 +17,22 @@ export function frameAt(durationsMs: readonly number[], elapsedMs: number, loop:
   return { index: durationsMs.length - 1, finished: false };
 }
 
+/**
+ * How long the frame showing at `elapsedMs` still shows, so a clock can sleep until then instead of ticking every
+ * screen refresh. Null when nothing will change: a finished one-shot, or a clip with a single frame.
+ */
+export function msUntilNextFrame(durationsMs: readonly number[], elapsedMs: number, loop: boolean): number | null {
+  const total = totalMs(durationsMs);
+  if (total <= 0 || durationsMs.length < 2 || (!loop && elapsedMs >= total)) return null;
+  const into = loop ? elapsedMs % total : Math.max(0, elapsedMs);
+  let end = 0;
+  for (const ms of durationsMs) {
+    end += ms;
+    if (into < end) return end - into;
+  }
+  return null;
+}
+
 /** Top-left of a frame inside the sheet, in px. A wrapping sheet continues a row's frames on the rows below. */
 export function cellOrigin(manifest: Pick<Manifest, "cellWidth" | "cellHeight" | "columns" | "wrap">, row: number, frame: number): { x: number; y: number } {
   const column = manifest.wrap ? frame % manifest.columns : frame;

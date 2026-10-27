@@ -283,3 +283,5 @@ export type SplitResultDto = z.output<typeof SplitResultSchema>;
 export const UnsplitResultSchema = z.object({ count: z.number().int() });
 export * from "./skills";
 export * from "./apps";
+export * from "./data";
+export { DEBUG_REPORT_MAX_CHARS, DebugExportInputSchema, DebugExportResultSchema, DebugInfoSchema, type DebugInfoDto } from "./debug";

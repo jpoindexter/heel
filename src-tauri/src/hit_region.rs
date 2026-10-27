@@ -2,15 +2,20 @@
 //!
 //! The mascot window is a 192x208 rectangle but the dog only fills part of it. Everything else must belong to
 //! the app underneath (a mic button, a send button...). The sprite reports the dog's opaque box for the current
-//! frame; a poller turns window click-through on whenever the pointer is outside that box.
+//! frame; the window's click-through is turned on whenever the pointer is outside that box.
 //! When the box is unknown, or the person is pressing on Greg, the window never ignores the pointer.
+//!
+//! The answer is recomputed only when one of its inputs changes (N9): the pointer moved (AppKit's event monitors,
+//! so nothing at all runs while it rests), Greg's window moved, the box changed, a press began or ended.
+//! A 30 ms poll did the same work 33 times a second around the clock.
 
 use std::sync::Mutex;
 use std::time::Duration;
 
 use tauri::{AppHandle, Manager};
 
-const POLL_MS: u64 = 30;
+/// Only when the event monitors could not be installed: a poll, slow enough to be cheap, fast enough to feel exact.
+const FALLBACK_POLL_MS: u64 = 100;
 /// Extra room around the dog so a click that just misses the fur still lands.
 const HIT_PADDING_LOGICAL_PX: f64 = 8.0;
 const MASCOT_LABEL: &str = "main";
@@ -55,6 +60,7 @@ pub fn set_mascot_hit_region(app: AppHandle, x: f64, y: f64, width: f64, height:
     if let Ok(mut state) = app.state::<HitRegion>().0.lock() {
         state.region = (width > 0.0 && height > 0.0).then_some(Region { x, y, width, height });
     }
+    refresh(&app);
 }
 
 #[tauri::command]
@@ -62,18 +68,53 @@ pub fn set_mascot_pressed(app: AppHandle, pressed: bool) {
     if let Ok(mut state) = app.state::<HitRegion>().0.lock() {
         state.pressed = pressed;
     }
+    refresh(&app);
 }
 
-/// Start the poller. It only ever changes the window's ignore flag when the answer changes.
-pub fn start_polling(app: &AppHandle) {
+/// Watch the inputs instead of polling. Must run on the main thread (setup does). Falls back to a slow poll.
+pub(crate) fn start_watching(app: &AppHandle) {
+    if install_mouse_monitors(app) {
+        return;
+    }
     let handle = app.clone();
     std::thread::spawn(move || loop {
-        std::thread::sleep(Duration::from_millis(POLL_MS));
-        poll_once(&handle);
+        std::thread::sleep(Duration::from_millis(FALLBACK_POLL_MS));
+        refresh(&handle);
     });
 }
 
-fn poll_once(app: &AppHandle) {
+/// One monitor for events sent to other apps (the pointer is off Greg or his window is click-through) and one for
+/// Heel's own (the pointer is over him or the panel). Mouse moves need no permission; keys would, and none are watched.
+#[cfg(target_os = "macos")]
+fn install_mouse_monitors(app: &AppHandle) -> bool {
+    use objc2_app_kit::{NSEvent, NSEventMask};
+    let mask = NSEventMask::MouseMoved | NSEventMask::LeftMouseDragged | NSEventMask::RightMouseDragged | NSEventMask::OtherMouseDragged;
+    let handle = app.clone();
+    let global = block2::RcBlock::new(move |_event: std::ptr::NonNull<NSEvent>| refresh(&handle));
+    let handle = app.clone();
+    let local = block2::RcBlock::new(move |event: std::ptr::NonNull<NSEvent>| {
+        refresh(&handle);
+        event.as_ptr()
+    });
+    // SAFETY: the local block hands every event back unchanged. Both monitors live as long as the app, so their
+    // tokens are kept forever on purpose.
+    let (Some(global_token), Some(local_token)) = (NSEvent::addGlobalMonitorForEventsMatchingMask_handler(mask, &global), unsafe {
+        NSEvent::addLocalMonitorForEventsMatchingMask_handler(mask, &local)
+    }) else {
+        return false;
+    };
+    std::mem::forget(global_token);
+    std::mem::forget(local_token);
+    true
+}
+
+#[cfg(not(target_os = "macos"))]
+fn install_mouse_monitors(_app: &AppHandle) -> bool {
+    false
+}
+
+/// Recompute click-through from where the pointer is now. Changes the window's flag only when the answer changes.
+pub(crate) fn refresh(app: &AppHandle) {
     let Some(mascot) = app.get_webview_window(MASCOT_LABEL) else {
         return;
     };

@@ -17,10 +17,13 @@ mod panel_window;
 mod placement;
 mod pointer_sense;
 mod panel_place;
+mod shell_settings;
 mod sidecar_process;
+mod startup;
 mod system_notice;
 mod undock;
 mod walk;
+mod window_level;
 
 use anchor::panel_anchor;
 use appear::{hide_greg, show_greg, Departure};
@@ -37,6 +40,9 @@ use helper_watch::{helper_status, restart_helper};
 use sidecar_process::SidecarProc;
 use system_notice::system_notify;
 use undock::{dock_panel_command, panel_offset};
+use shell_settings::{shell_settings, Shell};
+use window_level::set_always_on_top;
+use startup::{launch_at_login, reveal_data_folder, set_dock_icon, set_launch_at_login};
 use tauri_plugin_global_shortcut::{Code, Modifiers, Shortcut, ShortcutState};
 
 fn hotkey() -> Shortcut {
@@ -64,6 +70,7 @@ pub fn run() {
         .manage(Walker::default())
         .manage(Departure::default())
         .manage(SidecarProc::default())
+        .manage(Shell::default())
         .plugin(
             tauri_plugin_global_shortcut::Builder::new()
                 .with_handler(|app, shortcut, event| {
@@ -74,7 +81,7 @@ pub fn run() {
                 .build(),
         )
         .on_menu_event(|app, event| mascot_menu::on_menu_event(app, event.id().as_ref()))
-        .invoke_handler(tauri::generate_handler![toggle_panel_command, sidecar_info, take_pending_view, set_mascot_hit_region, set_mascot_pressed, show_mascot_menu, set_life_flags, start_walk, stop_walk, hide_greg, show_greg, panel_anchor, helper_status, restart_helper, panel_visible, show_notice, hide_notice, set_attention_enabled, dock_panel_command, panel_offset, system_notify])
+        .invoke_handler(tauri::generate_handler![toggle_panel_command, sidecar_info, take_pending_view, set_mascot_hit_region, set_mascot_pressed, show_mascot_menu, set_life_flags, start_walk, stop_walk, hide_greg, show_greg, panel_anchor, helper_status, restart_helper, panel_visible, show_notice, hide_notice, set_attention_enabled, dock_panel_command, panel_offset, system_notify, shell_settings, set_always_on_top, launch_at_login, set_launch_at_login, set_dock_icon, reveal_data_folder])
         .setup(app_setup::setup)
         .build(tauri::generate_context!())
         .expect("error while building Heel")

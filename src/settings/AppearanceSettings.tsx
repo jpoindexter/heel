@@ -1,7 +1,6 @@
 import { Heading, SegmentedControl, Text } from "@radix-ui/themes";
 import { PREFERENCES, isPreference, type Preference } from "../theme/appearance";
-
-const LABELS: Record<Preference, string> = { system: "System", light: "Light", dark: "Dark" };
+import { PREFERENCE_LABELS as LABELS } from "./settings-model";
 
 type Props = { preference: Preference; onPreference: (next: Preference) => void };
 
@@ -9,7 +8,7 @@ type Props = { preference: Preference; onPreference: (next: Preference) => void 
 export function AppearanceSettings({ preference, onPreference }: Props) {
   return (
     <section aria-labelledby="appearance-heading" className="settings-section">
-      <Heading as="h2" id="appearance-heading" size="2">Appearance</Heading>
+      <Heading as="h3" id="appearance-heading" size="2">Appearance</Heading>
       <Text as="p" size="1" color="gray">System follows your Mac's light or dark setting.</Text>
       <SegmentedControl.Root value={preference} onValueChange={(value) => isPreference(value) && onPreference(value)} aria-label="Appearance">
         {PREFERENCES.map((choice) => (

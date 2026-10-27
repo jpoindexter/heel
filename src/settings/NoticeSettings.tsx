@@ -14,7 +14,7 @@ export function NoticeSettings() {
       .catch((error: unknown) => setSaid(String(error)));
   return (
     <section aria-labelledby="notices-heading" className="settings-section">
-      <Heading as="h2" id="notices-heading" size="2">Notices</Heading>
+      <Heading as="h3" id="notices-heading" size="2">Notices</Heading>
       <Text as="label" size="2" className="attention-switch">
         <Switch size="1" checked={on} onCheckedChange={(next) => (setOn(next), setSystemToasts(next))} /> Also show in Notification Center
       </Text>

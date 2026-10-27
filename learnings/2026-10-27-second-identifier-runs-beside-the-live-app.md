@@ -1,0 +1,7 @@
+# A second bundle identifier lets a packaged build run beside the live app
+
+**Context:** B9 needed real window levels from a packaged build while another session owned the live Heel; `tauri-plugin-single-instance` makes a second Heel exit at once and poke the running one, and both would share the data dir.
+**Dead ends:** Waiting for a quiet window (none was coming); the old packaged app as a baseline (same identifier, same lock).
+**What worked:** `npm run tauri build -- --bundles app --config '{"identifier":"studio.theft.heel.after","productName":"HeelAfter"}'` — the CLI merges that JSON, so the bundle gets its own lock and its own `~/Library/Application Support/<identifier>`; launch the binary directly with `HEEL_DATA_DIR` set to that same folder so the helper agrees with the shell; prepare window state by writing the saved files (`panel-place.json`, `shell-settings.json`) instead of clicking; read levels with a 15-line Swift `CGWindowListCopyWindowInfo` lister (layer 0 = normal, 5 = floating); a second direct launch is the single-instance "reveal" path.
+**Why:** Everything the shell keys on (lock, data dir, signature) comes from the identifier; everything the test needs to prove is in the OS window list and the saved files.
+**Rule:** When the real app is taken, build the same code under a test identifier and prove behaviour through saved state and the window list; say which paths (real clicks) that leaves unproven.

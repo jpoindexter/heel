@@ -13,6 +13,7 @@ import { OPEN_SETTINGS_EVENT } from "../events";
 import { Notifier } from "../ui/Notifier";
 import { NoticesProvider, useNotices } from "../ui/notices";
 import { useBackgroundFailures } from "../ui/useBackgroundFailures";
+import { logDebug } from "../ui/debug-log";
 import { LayersProvider, useLayers, type Layers } from "../ui/layers";
 import { AttentionProvider } from "../ui/attention";
 import { MethodProvider } from "../ui/method";
@@ -87,6 +88,7 @@ function PanelBody({ look, parked }: { look: ReturnType<typeof usePanelLook>; pa
     void refreshSummary();
     if (from !== "starting") notices.show({ message: "Heel's helper is back", tone: "info" });
   });
+  useEffect(() => logDebug("info", "layers", layers.top), [layers.top]);
   useEscape(layers);
   useOpenSettingsRequests(() => layers.push("settings"));
   const onWheel = useSwipe();

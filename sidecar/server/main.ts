@@ -1,5 +1,6 @@
 import { randomBytes } from "node:crypto";
 import { mkdirSync } from "node:fs";
+import { homedir } from "node:os";
 import { join } from "node:path";
 import { serve } from "@hono/node-server";
 import { createProviders } from "../agent/providers/registry";
@@ -45,10 +46,13 @@ const mail = appleMail(osascriptJxa(runCommand), runCommand);
 const apps = appleApps((app) => osascriptJxa(runCommand, app, app === "Calendar" ? CALENDAR_TIMEOUT_MS : undefined));
 const pdf = createPdfRenderer({ run: runCommand, dir: join(dir, "pdf") });
 const skills = createSkillsService({ bundledDir: SKILLS_DIR, bundled: BUNDLED_SKILLS, userDir: join(dir, "skills"), off: store.settings.getSkillsOff, setOff: store.settings.setSkillsOff });
-const app = createApp({ store, providers: createProviders(), inbox, mail, mailAvailable: mailAppExists(), apps, token, allowedOrigins: [DEV_ORIGIN, ...TAURI_ORIGINS], openFile, renderPdf: pdf.render, skills });
+// HEEL_DEV_ORIGIN: a second dev panel on another Vite port (a worktree beside the main checkout) may call this helper.
+let port: number | null = null;
+const app = createApp({ store, providers: createProviders(), inbox, mail, mailAvailable: mailAppExists(), apps, token, allowedOrigins: [DEV_ORIGIN, ...TAURI_ORIGINS, ...(process.env.HEEL_DEV_ORIGIN ? [process.env.HEEL_DEV_ORIGIN] : [])], openFile, renderPdf: pdf.render, skills, debug: { dataDir: dir, port: () => port, exportDir: join(homedir(), "Desktop") } });
 
 // Port 0 = let the OS pick a free port; the panel finds it in the connection file.
 const server = serve({ fetch: app.fetch, hostname: HOST, port: 0 }, (info) => {
+  port = info.port;
   writeConnectionFile(dir, { port: info.port, token });
   console.log(`Heel sidecar listening on ${HOST}:${info.port} (data: ${dir})`);
 });

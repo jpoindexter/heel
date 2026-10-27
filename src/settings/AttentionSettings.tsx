@@ -17,7 +17,7 @@ export function AttentionSettings() {
   };
   return (
     <section aria-labelledby="attention-heading" className="settings-section">
-      <Heading as="h2" id="attention-heading" size="2">Attention</Heading>
+      <Heading as="h3" id="attention-heading" size="2">Attention</Heading>
       <Text as="label" size="2" className="attention-switch">
         <Switch size="1" checked={settings.enabled} onCheckedChange={(enabled) => apply({ ...settings, enabled }, enabled ? "Attention sense on" : "Attention sense off")} /> Greg notices rabbit holes, time sucks and drifting
       </Text>

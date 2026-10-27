@@ -122,6 +122,7 @@ pub(crate) fn dock_panel(app: &AppHandle, mascot: &WebviewWindow, panel: &Webvie
     if let Ok(mut state) = app.state::<Dock>().0.lock() {
         state.docked = true;
     }
+    crate::window_level::apply_panel_level(app);
     move_panel(app, panel, origin);
     crate::anchor::announce(app, mascot, origin, scale);
     if let Ok(mut state) = app.state::<Dock>().0.lock() {
@@ -267,7 +268,12 @@ pub(crate) fn watch_moves(app: &AppHandle) {
         };
         let handle = app.clone();
         window.on_window_event(move |event| match event {
-            WindowEvent::Moved(_) => keep_docked(&handle, label),
+            WindowEvent::Moved(_) => {
+                if label == MASCOT_LABEL {
+                    crate::hit_region::refresh(&handle);
+                }
+                keep_docked(&handle, label);
+            }
             WindowEvent::Resized(_) if label == PANEL_LABEL => on_panel_resized(&handle),
             _ => {}
         });

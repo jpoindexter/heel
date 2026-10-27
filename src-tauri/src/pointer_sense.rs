@@ -1,6 +1,6 @@
 //! Where the pointer is, told to Greg's window (N25): his gaze and his "come over" need it. Logical px from his
-//! window's top-left, with the usable screen's bottom edge in the same frame. Sent only when it has moved, never
-//! more often than the hit-region poll. Nothing else about the pointer is read, and nothing is recorded.
+//! window's top-left, with the usable screen's bottom edge in the same frame. Sent only when it has moved (the
+//! hit-region monitors say when). Nothing else about the pointer is read, and nothing is recorded.
 
 use std::sync::Mutex;
 

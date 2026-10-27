@@ -1,0 +1,7 @@
+# Tauri's CSP covers only pages it serves; objc2 framework crates need their `objc2` feature
+
+**Context:** N10 added a Content Security Policy and a login item.
+**Dead ends:** `objc2-service-management` with `default-features = false, features = ["std", "SMAppService", "objc2-foundation"]` → "unresolved import SMAppService": the class bindings sit behind the crate's own `objc2` feature, not the framework-name feature. Worrying about `tauri dev` breaking under the CSP: it cannot — `AppManager::csp()` is applied in `get_asset` (the tauri:// protocol) and to data: URLs only, so Vite's pages in dev never see it.
+**What worked:** Enable `objc2` on the bindings crate; set `app.security.csp` as one string; keep `style-src 'unsafe-inline'` (Radix's scroll lock and popper inject `<style>` at runtime, which no nonce reaches); `connect-src` names `ipc:`, `http://ipc.localhost` and `http://127.0.0.1:*` (the helper's random port). Confirm the policy is in the binary with `strings heel | grep default-src`, then prove it functionally in the packaged app: styles render, the sprite loads, the helper answers.
+**Why:** Each of those three is the one thing a wrong directive would silently break; without an inspector in a release build they are the evidence.
+**Rule:** For a release-only policy, verify the three fetch classes it governs (style, image, connect) with eyes in the packaged app, and read the crate's `[features]` block before trimming default features.
