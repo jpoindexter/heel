@@ -1,4 +1,4 @@
-import { WIPE_PHRASE, type DataPreviewDto } from "../../shared/data";
+import { WIPE_PHRASE, type DataPreviewDto, type WipeResultDto } from "../../shared/data";
 
 const KB = 1024;
 const MB = KB * KB;
@@ -21,3 +21,10 @@ export function wipeLines(preview: DataPreviewDto): string[] {
 
 /** The phrase must match exactly, as typed; surrounding spaces are forgiven, capitals are not. */
 export const confirmsWipe = (typed: string): boolean => typed.trim() === WIPE_PHRASE;
+
+/** After a wipe: the rows are always gone; an entry the helper could not remove is named, with its reason. */
+export function wipeSaid(result: WipeResultDto): string {
+  if (result.failed.length === 0) return "Everything is gone. Heel starts fresh.";
+  const stayed = result.failed.map((f) => `${f.name} (${f.reason})`).join(", ");
+  return `Your tasks, ideas, messages and documents are gone, but Heel couldn't remove ${stayed}. Delete it by hand from the data folder.`;
+}

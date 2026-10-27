@@ -72,8 +72,21 @@ export function registerDataRoutes(app: Hono, { store, skills, inbox, debug, ope
     const rows = before.tasks + before.parked + before.messages + before.documents + before.skills;
     const files = entries().filter(isWiped);
     store.reset();
-    for (const name of files) rmSync(join(debug.dataDir, name), { recursive: true, force: true });
+    const failed = removeEntries(debug.dataDir, files);
     await inbox.disconnect({ forgetClient: true });
-    return ok(c, { rows, files: files.length });
+    return ok(c, { rows, files: files.length - failed.length, failed });
   });
+}
+
+/** The rows are already gone when this runs, so one entry that will not go must not turn the whole wipe into a 500. */
+function removeEntries(dataDir: string, names: string[]): { name: string; reason: string }[] {
+  const failed: { name: string; reason: string }[] = [];
+  for (const name of names) {
+    try {
+      rmSync(join(dataDir, name), { recursive: true, force: true });
+    } catch (error) {
+      failed.push({ name, reason: error instanceof Error ? error.message : String(error) });
+    }
+  }
+  return failed;
 }

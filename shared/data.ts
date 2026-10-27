@@ -17,4 +17,6 @@ export const BackupResultSchema = z.object({ path: z.string(), revealed: z.boole
 /** Typed exactly, by hand: a checkbox is clicked through, a phrase is not. */
 export const WIPE_PHRASE = "wipe everything";
 export const WipeInputSchema = z.object({ confirm: z.literal(WIPE_PHRASE) });
-export const WipeResultSchema = z.object({ rows: z.number().int(), files: z.number().int() });
+/** `failed` names the folder entries a wipe could not remove (the rows are gone either way). */
+export const WipeResultSchema = z.object({ rows: z.number().int(), files: z.number().int(), failed: z.array(z.object({ name: z.string(), reason: z.string() })).default([]) });
+export type WipeResultDto = z.infer<typeof WipeResultSchema>;

@@ -1,4 +1,4 @@
-import { existsSync, mkdirSync, mkdtempSync, readFileSync, readdirSync, writeFileSync } from "node:fs";
+import { chmodSync, existsSync, mkdirSync, mkdtempSync, readFileSync, readdirSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
 import { DatabaseSync } from "node:sqlite";
@@ -76,7 +76,7 @@ describe("POST /data/wipe", () => {
   it("empties every table, removes the folder's entries but the shell's files, and the store keeps working", async () => {
     const { post, json, store, dataDir } = dataFolder();
     const result = wiped.parse(await post("/data/wipe", { confirm: "wipe everything" }));
-    expect(result).toEqual({ ok: true, data: { rows: 5, files: 2 } });
+    expect(result).toEqual({ ok: true, data: { rows: 5, files: 2, failed: [] } });
     const after = preview.parse(await json("/data/preview"));
     expect(after.ok && after.data.counts).toEqual({ tasks: 0, parked: 0, messages: 0, documents: 0, skills: 0 });
     expect(existsSync(join(dataDir, "documents"))).toBe(false);
@@ -86,6 +86,23 @@ describe("POST /data/wipe", () => {
     expect(store.schemaVersion()).toBeGreaterThan(0);
     expect(store.tasks.add({ title: "fresh" }).ok).toBe(true);
     expect(store.settings.getBrain()).toEqual({ provider: null, model: null });
+  });
+
+  it("names an entry it could not remove instead of failing the whole wipe", async () => {
+    const { post, json, dataDir } = dataFolder();
+    chmodSync(join(dataDir, "pdf"), 0o500);
+    try {
+      const result = wiped.parse(await post("/data/wipe", { confirm: "wipe everything" }));
+      if (!result.ok) throw new Error(result.error.message);
+      expect(result.data.rows).toBe(5);
+      expect(result.data.files).toBe(1);
+      expect(result.data.failed.map((f) => f.name)).toEqual(["pdf"]);
+      expect(result.data.failed[0]!.reason).toMatch(/EACCES|EPERM|permission/i);
+      const after = preview.parse(await json("/data/preview"));
+      expect(after.ok && after.data.counts.tasks).toBe(0);
+    } finally {
+      chmodSync(join(dataDir, "pdf"), 0o700);
+    }
   });
 
   it("forgets the Gmail client as well as its tokens", async () => {

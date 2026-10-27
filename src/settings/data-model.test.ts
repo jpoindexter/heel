@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { confirmsWipe, formatBytes, wipeLines } from "./data-model";
+import { confirmsWipe, formatBytes, wipeLines, wipeSaid } from "./data-model";
 import { gregSummary, lookSummary, workSummary } from "./settings-model";
 
 describe("wipe preview", () => {
@@ -11,6 +11,8 @@ describe("wipe preview", () => {
     expect(lines[2]).toContain("Disconnects Gmail");
     expect(lines[3]).toContain("cannot be undone");
     expect(formatBytes(12)).toBe("12 B");
+    expect(wipeSaid({ rows: 5, files: 2, failed: [] })).toBe("Everything is gone. Heel starts fresh.");
+    expect(wipeSaid({ rows: 5, files: 1, failed: [{ name: "pdf", reason: "EACCES: permission denied" }] })).toBe("Your tasks, ideas, messages and documents are gone, but Heel couldn't remove pdf (EACCES: permission denied). Delete it by hand from the data folder.");
   });
 
   it("accepts the phrase exactly, with spaces forgiven and capitals not", () => {

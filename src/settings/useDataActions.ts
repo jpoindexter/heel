@@ -1,6 +1,7 @@
 import { useCallback, useState } from "react";
 import { BackupResultSchema, DataPreviewSchema, WipeResultSchema, type DataPreviewDto } from "../../shared/data";
 import type { Client } from "../api/client";
+import { wipeSaid } from "./data-model";
 
 /** Reload after a wipe so every view starts from the empty helper; long enough to read the sentence first. */
 const RELOAD_AFTER_WIPE_MS = 1_500;
@@ -37,7 +38,7 @@ export function useDataActions(client: Client) {
       setBusy(false);
       if (!done.ok) return setSaid(done.error.message);
       setPreview(null);
-      setSaid("Everything is gone. Heel starts fresh.");
+      setSaid(wipeSaid(done.data));
       window.setTimeout(() => window.location.reload(), RELOAD_AFTER_WIPE_MS);
     },
     [client],

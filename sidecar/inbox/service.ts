@@ -117,10 +117,8 @@ export function createInbox(deps: InboxDeps) {
       return ok({ url });
     },
 
-    /** Disconnect keeps the client so the person can connect again; a wipe forgets it too. */
     async disconnect(options: { forgetClient?: boolean } = {}): Promise<void> {
-      await secrets.remove(TOKENS_KEY);
-      if (options.forgetClient) await secrets.remove(CLIENT_KEY);
+      await Promise.all([secrets.remove(TOKENS_KEY), options.forgetClient ? secrets.remove(CLIENT_KEY) : undefined]);
       problem = null;
     },
 
