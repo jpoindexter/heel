@@ -1,5 +1,6 @@
 //! Keeps the helper running: checks it every few seconds, restarts it with a growing delay, and tells the panel its state.
 
+use std::io::{Read, Write};
 use std::net::{SocketAddr, TcpStream};
 use std::process::Child;
 use std::time::{Duration, Instant};
@@ -47,12 +48,24 @@ fn data_dir(app: &AppHandle) -> Option<std::path::PathBuf> {
 /// Does the helper's port answer? (Its port is in the connection file it writes when it starts.)
 fn reachable(app: &AppHandle) -> bool {
     let Some(dir) = data_dir(app) else { return false };
-    let port = std::fs::read_to_string(dir.join(SIDECAR_FILE))
-        .ok()
-        .and_then(|json| serde_json::from_str::<serde_json::Value>(&json).ok())
-        .and_then(|value| value["port"].as_u64())
-        .and_then(|port| u16::try_from(port).ok());
-    port.is_some_and(|port| TcpStream::connect_timeout(&SocketAddr::from(([127, 0, 0, 1], port)), Duration::from_millis(CONNECT_TIMEOUT_MS)).is_ok())
+    let Some(value) = std::fs::read_to_string(dir.join(SIDECAR_FILE)).ok().and_then(|json| serde_json::from_str::<serde_json::Value>(&json).ok()) else { return false };
+    let port = value["port"].as_u64().and_then(|port| u16::try_from(port).ok());
+    port.is_some_and(|port| health_ok(port, value["token"].as_str().unwrap_or_default()))
+}
+
+/// Only our helper answers 200 to /health with the file's token: a stale sidecar.json plus a stranger on that port is not "running".
+pub(crate) fn health_ok(port: u16, token: &str) -> bool {
+    let timeout = Duration::from_millis(CONNECT_TIMEOUT_MS);
+    let Ok(mut stream) = TcpStream::connect_timeout(&SocketAddr::from(([127, 0, 0, 1], port)), timeout) else { return false };
+    let _ = stream.set_read_timeout(Some(timeout));
+    let _ = stream.set_write_timeout(Some(timeout));
+    let request = format!("GET /health HTTP/1.0\r\nHost: 127.0.0.1\r\nx-heel-token: {token}\r\n\r\n");
+    if stream.write_all(request.as_bytes()).is_err() {
+        return false;
+    }
+    let mut head = [0u8; 16];
+    let read = stream.read(&mut head).unwrap_or(0);
+    String::from_utf8_lossy(&head[..read]).split(' ').nth(1) == Some("200")
 }
 
 /// What we know of the process we started: Some(true) alive, Some(false) exited, None when there is none (development, or it never started).
@@ -197,6 +210,35 @@ pub(crate) fn revive_if_stopped(app: &AppHandle) {
 #[cfg(test)]
 mod tests {
     use super::*;
+    use std::net::TcpListener;
+
+    /// A one-request server on a free port that answers `status` only when the request carries `token`.
+    fn serve_once(token: &'static str, status: &'static str) -> u16 {
+        let listener = TcpListener::bind("127.0.0.1:0").unwrap();
+        let port = listener.local_addr().unwrap().port();
+        std::thread::spawn(move || {
+            let (mut stream, _) = listener.accept().unwrap();
+            let mut buf = [0u8; 1024];
+            let n = stream.read(&mut buf).unwrap_or(0);
+            let ok = String::from_utf8_lossy(&buf[..n]).contains(&format!("x-heel-token: {token}"));
+            let line = if ok { status } else { "401 Unauthorized" };
+            let _ = stream.write_all(format!("HTTP/1.0 {line}\r\nContent-Length: 0\r\n\r\n").as_bytes());
+        });
+        port
+    }
+
+    #[test]
+    fn our_helper_answers_200_to_its_token() {
+        assert!(health_ok(serve_once("abc", "200 OK"), "abc"));
+    }
+
+    #[test]
+    fn a_stranger_on_the_port_or_a_wrong_token_is_not_running() {
+        assert!(!health_ok(serve_once("abc", "200 OK"), "nope"));
+        assert!(!health_ok(serve_once("abc", "404 Not Found"), "abc"));
+        let closed = TcpListener::bind("127.0.0.1:0").unwrap().local_addr().unwrap().port();
+        assert!(!health_ok(closed, "abc"));
+    }
 
     #[test]
     fn reads_only_the_end_of_a_long_log_and_all_of_a_short_one() {
