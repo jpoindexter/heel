@@ -31,7 +31,7 @@ export function TaskBadges({ task, method, onPatch, onSplit }: Props) {
       )}
       {showSize && onSplit && splitSuggested(task.size) && (
         <Badge asChild size="1" variant="outline" color="gray" radius="full">
-          <button type="button" onClick={() => onSplit(task)}>Split it?</button>
+          <button type="button" aria-label={`Split it? ${task.title}`} onClick={() => onSplit(task)}>Split it?</button>
         </Badge>
       )}
     </span>

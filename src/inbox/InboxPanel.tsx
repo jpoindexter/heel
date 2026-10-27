@@ -5,6 +5,12 @@ import { ReplyFlow } from "./ReplyFlow";
 import type { useDigest } from "./useInbox";
 import type { useReplyFlow } from "./useMail";
 
+/** Shown from Connect Gmail until Google sends the person back: the browser has them, Heel is looking every two seconds. */
+export function ConnectStatus({ waiting }: { waiting: boolean }) {
+  if (!waiting) return null;
+  return <Text size="2" color="gray" role="status" className="pulse">Waiting for Google…</Text>;
+}
+
 type Props = {
   digest: ReturnType<typeof useDigest>;
   reply: ReturnType<typeof useReplyFlow>;

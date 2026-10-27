@@ -1,7 +1,7 @@
 import { renderToStaticMarkup } from "react-dom/server";
 import { describe, expect, it } from "vitest";
 import type { DigestItemDto } from "../../shared/api";
-import { InboxPanel } from "./InboxPanel";
+import { ConnectStatus, InboxPanel } from "./InboxPanel";
 import type { useDigest } from "./useInbox";
 import type { useReplyFlow } from "./useMail";
 
@@ -13,6 +13,14 @@ function digest(state: ReturnType<typeof useDigest>["state"]): ReturnType<typeof
   return { state, check: noop, addTask: noop, dismiss: () => undefined };
 }
 const ready = (error: string | null = null) => ({ phase: "ready" as const, digest: { items: [item("m1", "Invoice"), item("m2", "Van")], considered: 4, sentToModel: "", checkedAt: 0 }, added: [], error });
+
+describe("ConnectStatus", () => {
+  it("says Heel is waiting for Google while the connect watch runs, and nothing once it is over", () => {
+    expect(renderToStaticMarkup(<ConnectStatus waiting />)).toContain('role="status"');
+    expect(renderToStaticMarkup(<ConnectStatus waiting />)).toContain("Waiting for Google…");
+    expect(renderToStaticMarkup(<ConnectStatus waiting={false} />)).toBe("");
+  });
+});
 
 describe("InboxPanel", () => {
   it("names Open and Reply after the email, so two items are not two identical buttons", () => {

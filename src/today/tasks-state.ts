@@ -14,3 +14,8 @@ export function afterRefresh(current: TasksState, tasks: ApiResult<TasksStateDto
   if (!tasks.ok) return shown ?? { phase: "error", message: tasks.error.message };
   return { phase: "ready", tasks: tasks.data.tasks, parked: parked.ok ? parked.data.parked : (shown?.parked ?? []), doneToday: tasks.data.doneToday };
 }
+
+/** A first load shorter than this shows nothing: a line that flashes for 80 ms reads as jank, not as help. */
+export const LOADING_LINE_DELAY_MS = 200;
+
+export const showLoadingLine = (phase: TasksState["phase"], waitedMs: number): boolean => phase === "loading" && waitedMs >= LOADING_LINE_DELAY_MS;

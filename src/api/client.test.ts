@@ -43,9 +43,9 @@ describe("api client", () => {
     expect(await client.put("/brain", Hello, { provider: "codex" })).toEqual({ ok: false, error: { code: "not_ready", message: "Not signed in." } });
   });
 
-  it("says the helper isn't running when there is no connection file", async () => {
+  it("says the helper isn't running when there is no connection file, and points at the Restart helper button rather than giving a second instruction", async () => {
     const client = createClient({ readInfo: async () => null, fetch: async () => reply({}) });
-    expect(await client.get("/x", Hello)).toMatchObject({ ok: false, error: { code: "offline" } });
+    expect(await client.get("/x", Hello)).toEqual({ ok: false, error: { code: "offline", message: "Heel's helper isn't running. Use Restart helper above." } });
   });
 
   it("says the helper isn't running when the connection is refused, and re-reads the file next time", async () => {

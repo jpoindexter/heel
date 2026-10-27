@@ -4,7 +4,7 @@ import { ConnectionInfoSchema, TOKEN_HEADER, envelope, type ApiResult, type Conn
 
 const OFFLINE: ApiResult<never> = {
   ok: false,
-  error: { code: "offline", message: "Heel's helper isn't running. Restart Heel." },
+  error: { code: "offline", message: "Heel's helper isn't running. Use Restart helper above." },
 };
 
 const STOPPED: ApiResult<never> = { ok: false, error: { code: "aborted", message: "Stopped." } };

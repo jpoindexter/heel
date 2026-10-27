@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import { z } from "zod";
-import { DigestSchema, InboxConnectSchema, InboxStatusSchema, type InboxStatusDto } from "../../shared/api";
+import { DigestSchema, InboxConnectSchema, InboxStatusSchema, type ApiResult, type InboxStatusDto } from "../../shared/api";
 import type { Client } from "../api/client";
 import { beginWork } from "../mascot/motion-events";
 import { afterAddTask, type DigestState } from "./digest-model";
@@ -11,20 +11,46 @@ const WATCH_FOR_MS = 5 * 60 * 1000;
 
 const AddedSchema = z.object({ id: z.string() });
 
+/** After Connect: the watch stops once Google has sent the person back (connected or a problem), or after WATCH_FOR_MS. */
+export const watchOver = (result: ApiResult<InboxStatusDto>, elapsedMs: number): boolean => (result.ok && (result.data.connected || result.data.problem !== null)) || elapsedMs > WATCH_FOR_MS;
+
 export type InboxActions = {
   status: InboxStatusDto | null;
   error: string | null;
+  /** True from Connect until Google has answered or the watch gave up: the person is in their browser and Heel is waiting. */
+  waiting: boolean;
   saveClient: (clientId: string, clientSecret: string) => Promise<void>;
   connect: () => Promise<void>;
   disconnect: () => Promise<void>;
   refresh: () => Promise<void>;
 };
 
+/** The watch after Connect: every WATCH_MS ask for the status, hand it on, and stop when watchOver says so. */
+function useConnectWatch(client: Client, onStatus: (status: InboxStatusDto) => void) {
+  const [waiting, setWaiting] = useState(false);
+  const watching = useRef<number | undefined>(undefined);
+  useEffect(() => () => window.clearInterval(watching.current), []);
+  const watch = useCallback(() => {
+    window.clearInterval(watching.current);
+    const started = Date.now();
+    setWaiting(true);
+    watching.current = window.setInterval(async () => {
+      const result = await client.get("/inbox/status", InboxStatusSchema);
+      if (result.ok) onStatus(result.data);
+      if (watchOver(result, Date.now() - started)) {
+        window.clearInterval(watching.current);
+        setWaiting(false);
+      }
+    }, WATCH_MS);
+  }, [client, onStatus]);
+  return { waiting, watch };
+}
+
 /** Gmail connection state and its actions (read-only: Heel can read recent mail, never send or change it). */
 export function useInboxConnection(client: Client, active: boolean): InboxActions {
   const [status, setStatus] = useState<InboxStatusDto | null>(null);
   const [error, setError] = useState<string | null>(null);
-  const watching = useRef<number | undefined>(undefined);
+  const { waiting, watch: watchUntilDone } = useConnectWatch(client, setStatus);
 
   const refresh = useCallback(async () => {
     const result = await client.get("/inbox/status", InboxStatusSchema);
@@ -34,19 +60,6 @@ export function useInboxConnection(client: Client, active: boolean): InboxAction
   useEffect(() => {
     if (active) void refresh();
   }, [active, refresh]);
-
-  useEffect(() => () => window.clearInterval(watching.current), []);
-
-  const watchUntilDone = useCallback(() => {
-    window.clearInterval(watching.current);
-    const started = Date.now();
-    watching.current = window.setInterval(async () => {
-      const result = await client.get("/inbox/status", InboxStatusSchema);
-      if (result.ok) setStatus(result.data);
-      const done = result.ok && (result.data.connected || result.data.problem !== null);
-      if (done || Date.now() - started > WATCH_FOR_MS) window.clearInterval(watching.current);
-    }, WATCH_MS);
-  }, [client]);
 
   const saveClient = useCallback(
     async (clientId: string, clientSecret: string) => {
@@ -68,7 +81,7 @@ export function useInboxConnection(client: Client, active: boolean): InboxAction
     if (result.ok) setStatus(result.data);
   }, [client]);
 
-  return { status, error, saveClient, connect, disconnect, refresh };
+  return { status, error, waiting, saveClient, connect, disconnect, refresh };
 }
 
 export type { DigestState } from "./digest-model";
