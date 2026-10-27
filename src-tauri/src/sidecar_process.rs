@@ -69,7 +69,8 @@ pub(crate) fn last_error(app: &AppHandle) -> Option<String> {
 pub(crate) fn spawn(app: &AppHandle) -> Result<Child, String> {
     let dir = bundled_sidecar(app).ok_or("Heel's helper is missing from the app. Reinstall Heel.")?;
     let node = find_node().ok_or("Heel needs Node 22 or newer. Install it (brew install node), then restart Heel.")?;
-    let data_dir = app.path().app_data_dir().unwrap_or_default();
+    // An empty HEEL_DATA_DIR reads as unset to the helper, which would then open the live data under its hardcoded id.
+    let data_dir = app.path().app_data_dir().map_err(|error| format!("Heel couldn't find its data folder: {error}."))?;
     let _ = std::fs::create_dir_all(&data_dir);
     let log = OpenOptions::new().create(true).append(true).open(data_dir.join(SIDECAR_LOG_FILE));
     let (out, err) = match log.and_then(|file| file.try_clone().map(|clone| (file, clone))) {
