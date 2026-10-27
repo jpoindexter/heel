@@ -28,6 +28,7 @@ export function EmailSettings({ client, active }: Props) {
         <>
           <Text as="p" size="2">Connected as {status.account}.</Text>
           <Button type="button" variant="soft" color="gray" onClick={() => void disconnect()}>Disconnect</Button>
+          <Text as="p" size="1" color="gray">Disconnecting signs Heel out of Google. To connect again you'll sign in to Google again; your client ID and secret stay in the Keychain.</Text>
         </>
       ) : (
         <form className="settings-section" onSubmit={submit}>
