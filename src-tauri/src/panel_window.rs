@@ -6,6 +6,7 @@ use crate::constants::{MASCOT_LABEL, PANEL_LABEL, PANEL_VISIBLE_EVENT};
 use crate::dock::{dock_panel, panel_logical_size, Dock};
 use crate::undock::{save_place, show_parked};
 use crate::panel_size::{self, clamp_size, parse_saved};
+use crate::window_level::{click_action, panel_floats_now, PanelClick};
 
 fn size_file(app: &AppHandle) -> Option<std::path::PathBuf> {
     app.path().app_data_dir().ok().map(|dir| dir.join(panel_size::SAVE_FILE))
@@ -43,17 +44,25 @@ pub(crate) fn panel_is_visible(app: &AppHandle) -> bool {
         .unwrap_or(false)
 }
 
-/// Show the panel next to Greg, or where it was parked, or hide it if already visible.
+/// Show the panel next to Greg or where it was parked; hide it if it is up; bring a parked one forward if another app covers it (B9).
 pub(crate) fn toggle_panel(app: &AppHandle) {
-    if panel_is_visible(app) {
-        save_panel_size(app);
-        save_place(app);
-        if let Some(panel) = app.get_webview_window(PANEL_LABEL) {
-            let _ = panel.hide();
+    let panel = app.get_webview_window(PANEL_LABEL);
+    let focused = panel.as_ref().and_then(|panel| panel.is_focused().ok()).unwrap_or(false);
+    match click_action(panel_is_visible(app), focused, panel_floats_now(app)) {
+        PanelClick::Show => show_panel(app),
+        PanelClick::Forward => {
+            if let Some(panel) = panel {
+                let _ = panel.set_focus();
+            }
         }
-        announce_panel(app, false);
-    } else {
-        show_panel(app);
+        PanelClick::Hide => {
+            save_panel_size(app);
+            save_place(app);
+            if let Some(panel) = panel {
+                let _ = panel.hide();
+            }
+            announce_panel(app, false);
+        }
     }
 }
 

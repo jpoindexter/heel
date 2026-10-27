@@ -10,6 +10,7 @@ import { NoticeSettings } from "./NoticeSettings";
 import { SkillsSettings } from "./SkillsSettings";
 import { BrainSettings } from "./BrainSettings";
 import { DensitySettings } from "./DensitySettings";
+import { PanelSettings } from "./PanelSettings";
 import { MethodSettings } from "./MethodSettings";
 import "./settings.css";
 
@@ -28,6 +29,8 @@ export function SettingsView({ active, onSaved, preference, onPreference, densit
       <AppearanceSettings preference={preference} onPreference={onPreference} />
       <Separator size="4" />
       <DensitySettings density={density} onDensity={onDensity} />
+      <Separator size="4" />
+      <PanelSettings />
       <Separator size="4" />
       <ActivitySettings />
       <Separator size="4" />

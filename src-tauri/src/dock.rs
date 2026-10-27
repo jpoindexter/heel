@@ -122,6 +122,7 @@ pub(crate) fn dock_panel(app: &AppHandle, mascot: &WebviewWindow, panel: &Webvie
     if let Ok(mut state) = app.state::<Dock>().0.lock() {
         state.docked = true;
     }
+    crate::window_level::apply_panel_level(app);
     move_panel(app, panel, origin);
     crate::anchor::announce(app, mascot, origin, scale);
     if let Ok(mut state) = app.state::<Dock>().0.lock() {

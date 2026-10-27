@@ -12,7 +12,9 @@ pub(crate) fn setup(app: &mut App) -> Result<(), Box<dyn std::error::Error>> {
     let handle = app.handle().clone();
     crate::sidecar_process::start(&handle);
     restore_panel_size(&handle);
+    crate::shell_settings::load(&handle);
     crate::undock::restore_place(&handle);
+    crate::window_level::apply_panel_level(&handle);
     let home = place_mascot(&handle);
     crate::appear::start_up(&handle, home);
     watch_moves(&handle);

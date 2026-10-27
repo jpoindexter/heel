@@ -51,6 +51,7 @@ pub(crate) fn park(app: &AppHandle, panel_at: Point) {
         state.last_place_saved = now_ms();
     }
     crate::anchor::announce_parked(app);
+    crate::window_level::apply_panel_level(app);
     save_place(app);
 }
 
@@ -82,6 +83,7 @@ pub(crate) fn show_parked(app: &AppHandle, mascot: &WebviewWindow, panel: &Webvi
         Some(origin) => {
             move_panel(app, panel, origin);
             crate::anchor::announce_parked(app);
+            crate::window_level::apply_panel_level(app);
         }
         None => dock_panel(app, mascot, panel),
     }
