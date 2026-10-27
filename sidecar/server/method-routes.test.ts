@@ -20,13 +20,6 @@ describe("PUT /method", () => {
     expect(method.parse(await json("/method"))).toMatchObject({ data: { structure: "pickle-jar" } });
   });
 
-  it("refuses a method that is not built yet, in a sentence that says when", async () => {
-    // The store says "conflict": the value is valid, just not available yet.
-    const result = method.parse(await setup().send("PUT", "/method", { timer: "timebox", structure: "eisenhower", sizing: "none" }));
-    expect(result.ok).toBe(false);
-    if (!result.ok) expect(result.error.message).toContain("N21");
-  });
-
   it("rejects a value outside the enums", async () => {
     const result = method.parse(await setup().send("PUT", "/method", { timer: "egg", structure: "none", sizing: "none" }));
     expect(result).toMatchObject({ ok: false, error: { code: "invalid" } });

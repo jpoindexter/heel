@@ -91,6 +91,12 @@ describe("buildSnapshot", () => {
     expect(buildSnapshot(store).text).toContain("Ways of working: Eat the frog: the frog is the hardest task of the day, one only");
   });
 
+  it("tells the model Eisenhower's four words", () => {
+    const store = testStore();
+    store.settings.setMethod({ timer: "timebox", structure: "eisenhower", sizing: "none" });
+    expect(buildSnapshot(store).text).toContain("Eisenhower: urgent and important = do");
+  });
+
   it("tells the model 1-3-5 with the slots from Settings", () => {
     const store = testStore();
     store.settings.setMethod({ timer: "timebox", structure: "one-three-five", sizing: "none" });

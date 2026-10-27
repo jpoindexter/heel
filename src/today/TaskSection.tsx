@@ -11,6 +11,7 @@ import { client } from "../api/default-client";
 import type { useTodayState } from "./useTodayState";
 import { useMethod } from "../ui/method";
 import { JarMeter } from "./JarMeter";
+import { dropsOnBucket } from "./eisenhower-model";
 import { bucketPatches } from "./method-model";
 import { minutesForSize } from "./size-model";
 
@@ -42,6 +43,7 @@ export function TaskSection({ state, foundId = null }: { state: ReturnType<typeo
     method,
     onPatch: async (task: TaskDto, change: Parameters<typeof tasks.patch>[1]) => {
       if (change.bucket === undefined) return tasks.patch(task, change);
+      if (dropsOnBucket(method.structure, change.bucket)) return tasks.remove(task);
       // A bucket tap may write two tasks (the frog demotes the old one); one at a time, so the last refresh sees both.
       for (const p of bucketPatches(method.structure, ready?.tasks ?? [], task, change.bucket)) await tasks.patch(p.task, { bucket: p.bucket });
     },
