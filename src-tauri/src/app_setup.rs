@@ -18,7 +18,7 @@ pub(crate) fn setup(app: &mut App) -> Result<(), Box<dyn std::error::Error>> {
     let home = place_mascot(&handle);
     crate::appear::start_up(&handle, home);
     watch_moves(&handle);
-    hit_region::start_polling(&handle);
+    hit_region::start_watching(&handle);
     crate::attention::start(&handle);
     crate::system_notice::test_on_launch();
     build_app_menu(&handle)?;

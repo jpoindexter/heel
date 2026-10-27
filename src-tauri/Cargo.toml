@@ -22,8 +22,8 @@ tauri = { version = "2", features = ["macos-private-api", "tray-icon"] }
 tauri-plugin-global-shortcut = "2"
 serde = { version = "1", features = ["derive"] }
 serde_json = "1"
-# Already in the lockfile through tauri (0.3.x); only the two classes the attention sensor reads are enabled.
-objc2-app-kit = { version = "0.3", features = ["NSWorkspace", "NSRunningApplication"] }
+# Already in the lockfile through tauri (0.3.x); only the classes the attention sensor reads and the mouse monitors (N9) are enabled.
+objc2-app-kit = { version = "0.3", features = ["NSWorkspace", "NSRunningApplication", "NSEvent", "block2"] }
 objc2-foundation = { version = "0.3", features = ["NSString", "NSError", "NSBundle"] }
 block2 = "0.6"
 objc2-user-notifications = { version = "0.3", default-features = false, features = ["UNUserNotificationCenter", "UNNotificationContent", "UNNotificationRequest", "UNNotificationTrigger", "UNNotificationSound", "UNNotificationSettings", "block2", "std", "UNNotification"] }
