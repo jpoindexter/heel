@@ -93,9 +93,11 @@ describe("look poses", () => {
 });
 
 describe("the puppy pack (A8)", () => {
-  const source = JSON.parse(readFileSync("assets/heel/puppy-v1/final/manifest.json", "utf8")) as { animations: Record<string, { frameCount: number; loop: boolean; frames: { durationMs: number }[] }> };
+  /** Jason's local art folder, not in the repo: the source comparison runs only where it exists (a clean clone still passes). */
+  const SOURCE = "assets/heel/puppy-v1/final/manifest.json";
 
-  it("carries every clip of the source pack with the same frame counts, timings and loop flags", () => {
+  it.skipIf(!existsSync(SOURCE))("carries every clip of the source pack with the same frame counts, timings and loop flags", () => {
+    const source = JSON.parse(readFileSync(SOURCE, "utf8")) as { animations: Record<string, { frameCount: number; loop: boolean; frames: { durationMs: number }[] }> };
     expect(Object.keys(PUPPY_PACK.clips).sort()).toEqual(Object.keys(source.animations).sort());
     for (const [name, clip] of Object.entries(source.animations)) {
       const ours = PUPPY_PACK.clips[name]!;
