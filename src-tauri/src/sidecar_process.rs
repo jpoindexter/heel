@@ -73,6 +73,8 @@ pub(crate) fn spawn(app: &AppHandle) -> Result<Child, String> {
     };
     Command::new(&node)
         .arg(dir.join("sidecar.mjs"))
+        // The helper would otherwise fall back to its hardcoded app id: a build under a test identifier must not open the live data.
+        .env("HEEL_DATA_DIR", &data_dir)
         .env("HEEL_SKILLS_DIR", dir.join("skills/nd-skills"))
         .stdin(Stdio::null())
         .stdout(out)
