@@ -58,6 +58,7 @@ function ReplyLayer({ thread, onOpenSettings, onOpenDocument, onOpenMail, onClos
       onOpenSettings={onOpenSettings}
       onOpenDocument={onOpenDocument}
       onOpenMail={onOpenMail}
+      onConfirm={(id, index) => void thread.confirmReceipt(id, index)}
       onUndo={(id, index) => void thread.undoReceipt(id, index)}
       onDismiss={() => {
         void thread.clear();

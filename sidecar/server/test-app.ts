@@ -1,6 +1,7 @@
 import type { Provider, ProviderId, ProviderResult, ProviderStatus } from "../agent/providers/types";
 import { memorySecrets } from "../inbox/keychain";
 import { createInbox, type InboxDeps } from "../inbox/service";
+import { fakeApps, type AppsSource } from "../apps/source";
 import { fakeMail, type MailSource } from "../mail/source";
 import { testStore } from "../store/test-helpers";
 import { mkdtempSync, writeFileSync } from "node:fs";
@@ -33,7 +34,7 @@ export function fakeProvider(
 }
 
 /** A real app on an in-memory store, with fake providers, called through app.request(). */
-export function setup(overrides: Partial<Record<ProviderId, Provider>> = {}, inboxDeps: Partial<InboxDeps> = {}, mail: MailSource = fakeMail(), store = testStore(), extra: { openFile?: (path: string, reveal: boolean) => Promise<boolean>; renderPdf?: RenderPdf } = {}) {
+export function setup(overrides: Partial<Record<ProviderId, Provider>> = {}, inboxDeps: Partial<InboxDeps> = {}, mail: MailSource = fakeMail(), store = testStore(), extra: { openFile?: (path: string, reveal: boolean) => Promise<boolean>; renderPdf?: RenderPdf; apps?: AppsSource } = {}) {
   const providers: Record<ProviderId, Provider> = {
     claude: fakeProvider("claude"),
     codex: fakeProvider("codex", { ready: false, detail: "Not signed in. Run codex login in a terminal." }),
@@ -45,7 +46,7 @@ export function setup(overrides: Partial<Record<ProviderId, Provider>> = {}, inb
   const renderPdf: RenderPdf = extra.renderPdf ?? (async (_html, outPath) => (writeFileSync(outPath, "%PDF-1.3 fake"), { ok: true, path: outPath }));
   const userDir = mkdtempSync(join(tmpdir(), "heel-skills-"));
   const skills = createSkillsService({ bundledDir: SKILLS_DIR, bundled: BUNDLED_SKILLS, userDir, off: store.settings.getSkillsOff, setOff: store.settings.setSkillsOff });
-  const app = createApp({ store, providers, inbox, mail, mailAvailable: true, token: TOKEN, allowedOrigins: [DEV_ORIGIN], openFile: extra.openFile ?? (async () => true), renderPdf, skills });
+  const app = createApp({ store, providers, inbox, mail, mailAvailable: true, apps: extra.apps ?? fakeApps(), token: TOKEN, allowedOrigins: [DEV_ORIGIN], openFile: extra.openFile ?? (async () => true), renderPdf, skills });
   const call = (path: string, init: Init = {}) =>
     app.request(path, { ...init, headers: { host: HOST, "x-heel-token": TOKEN, ...init.headers } });
   const json = async (path: string, init?: Init) => (await call(path, init)).json();

@@ -1,4 +1,5 @@
 import { z } from "zod";
+import { AppWriteSchema } from "../../shared/api";
 import { SIZES } from "../../shared/method";
 
 export const MAX_ACTIONS_PER_REPLY = 8;
@@ -20,6 +21,10 @@ export const ActionSchema = z.discriminatedUnion("type", [
   z.object({ type: z.literal("write_document"), title: z.string().min(1), body: z.string().min(1) }),
   z.object({ type: z.literal("make_pdf"), title: z.string().optional() }),
   z.object({ type: z.literal("show_mail"), mail: z.string().regex(/^m\d+$/, 'mail must be a ref like "m1" from the unread mail list') }),
+  // Writes to the person's apps (N26): these only propose; the panel shows a preview and the person's tap does the write.
+  z.object({ type: z.literal("add_event") }).extend(AppWriteSchema.options[0].omit({ kind: true }).shape),
+  z.object({ type: z.literal("add_reminder") }).extend(AppWriteSchema.options[1].omit({ kind: true }).shape),
+  z.object({ type: z.literal("add_note") }).extend(AppWriteSchema.options[2].omit({ kind: true }).shape),
 ]);
 
 export const AgentReplySchema = z.object({

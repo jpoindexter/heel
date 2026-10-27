@@ -1,5 +1,6 @@
 import { describe, expect, it } from "vitest";
 import { testStore } from "../store/test-helpers";
+import { fakeApps } from "../apps/source";
 import { fakeMail } from "../mail/source";
 import { MAIL_USED, MAX_USER_CHARS, runTurn } from "./turn";
 import type { CompleteRequest, Provider, ProviderResult } from "./providers/types";
@@ -150,5 +151,58 @@ describe("a turn about email", () => {
     const broken = { ...fakeMail(), candidates: async () => ({ ok: false as const, error: { code: "mail_failed", message: "Mail isn't allowed to be controlled. Allow Heel in System Settings > Privacy > Automation." } }) };
     await runTurn({ store: testStore(), provider, model: null, mail: broken }, "any new email?");
     expect(provider.requests[0]!.prompt).toContain("could not be read (Mail isn't allowed to be controlled");
+  });
+});
+
+describe("a turn about the person's apps", () => {
+  const apps = () => fakeApps({
+    events: [{ id: "E1", title: "Dentist", start: "2026-10-28T09:00:00.000Z", end: "2026-10-28T10:00:00.000Z", allDay: false, calendar: "Work", location: "" }],
+    reminders: [{ id: "R1", title: "Call vet", due: null, list: "Reminders", notes: "" }],
+    notes: [{ id: "N1", title: "Vet", modified: "2026-10-20T10:00:00.000Z" }],
+  });
+
+  it("reads only the apps the message is about, as data, and names them in what was used", async () => {
+    const provider = fakeProvider([good({ say: "A dentist on Wednesday.", actions: [] })]);
+    const result = await runTurn({ store: testStore(), provider, model: null, apps: apps() }, "what's on my calendar and my reminders?");
+    expect(result.ok && result.skills).toEqual(expect.arrayContaining(["calendar", "reminders"]));
+    expect(result.ok && result.skills).not.toContain("notes");
+    const prompt = provider.requests[0]!.prompt;
+    expect(prompt).toMatch(/^Current state:\nNow: /);
+    expect(prompt).toContain("Calendar, next 7 days (read-only");
+    expect(prompt).toContain("| Dentist | Work");
+    expect(prompt).toContain("r1 no date | Call vet | Reminders");
+    expect(prompt).not.toContain("Notes changed");
+  });
+
+  it("turns add_event / add_reminder / add_note into proposals: a preview line, nothing written", async () => {
+    const theApps = apps();
+    const provider = fakeProvider([good({ say: "Proposed.", actions: [
+      { type: "add_event", title: "Dentist", start: "2026-10-28T10:00", end: "2026-10-28T11:00" },
+      { type: "add_reminder", title: "Call vet", due: "2026-10-29T09:00" },
+      { type: "add_note", title: "Vet", body: "ask about teeth" },
+    ] })]);
+    const result = await runTurn({ store: testStore(), provider, model: null, apps: theApps }, "put the dentist in my calendar");
+    if (!result.ok) throw new Error(result.error.message);
+    expect(result.applied.map((a) => a.message)).toEqual([
+      'Add to Calendar? "Dentist" — Wed 28 Oct 10:00–11:00',
+      'Add to Reminders? "Call vet" — due Thu 29 Oct 09:00',
+      'Add to Notes? "Vet" — 3 words',
+    ]);
+    expect(result.applied[0]!.proposal).toEqual({ kind: "event", title: "Dentist", start: "2026-10-28T10:00", end: "2026-10-28T11:00" });
+    expect(result.applied.every((a) => a.undo === undefined)).toBe(true);
+    expect(theApps.added).toEqual([]);
+  });
+
+  it("rejects a write with a date it cannot read, so the model is asked again", async () => {
+    const provider = fakeProvider([good({ say: "x", actions: [{ type: "add_event", title: "Bad", start: "tomorrow" }] })]);
+    await runTurn({ store: testStore(), provider, model: null, apps: apps() }, "add it");
+    expect(provider.requests[1]!.prompt).toContain('rejected: actions.0.start: a date like "2026-10-28" or "2026-10-28T10:00" (local time)');
+  });
+
+  it("does not touch the apps when they are not there or not asked about", async () => {
+    const provider = fakeProvider([good({ say: "Ok.", actions: [] })]);
+    const result = await runTurn({ store: testStore(), provider, model: null }, "what's on my calendar?");
+    expect(result.ok && result.skills).not.toContain("calendar");
+    expect(provider.requests[0]!.prompt).not.toContain("Calendar, next 7 days");
   });
 });

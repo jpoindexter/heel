@@ -3,6 +3,7 @@ import { SIZES } from "./method";
 import { PHASES, PomodoroConfigSchema, PomodoroStateSchema } from "./pomodoro";
 import { FOCUS_OUTCOMES } from "./focus";
 import { PROVIDER_IDS } from "./providers";
+import { AppWriteSchema } from "./apps";
 
 /** Wire contract between the sidecar server and the panel. Both sides validate with these. */
 
@@ -100,7 +101,8 @@ export const TaskResultSchema = z.object({ task: TaskSchema });
 export const ParkedResultSchema = z.object({ id: z.string() });
 export const TextInputSchema = z.object({ text: z.string() });
 
-export const UndoSchema = z.object({ kind: z.enum(["restore_task", "drop_task", "unpark", "delete_document"]), id: z.string() });
+export const UndoSchema = z.object({ kind: z.enum(["restore_task", "drop_task", "unpark", "delete_document", "delete_event", "delete_reminder", "delete_note"]), id: z.string() });
+
 
 /** A document Heel wrote (N15): the row, with the file's path when one was written. */
 export const DocumentSchema = z.object({ id: z.string(), title: z.string(), path: z.string().nullable(), pdfPath: z.string().nullable().default(null), createdAt: z.number() });
@@ -111,8 +113,8 @@ export const DocumentsListSchema = z.object({ documents: z.array(DocumentSchema)
 export const DocumentResultSchema = z.object({ document: DocumentSchema });
 export const OpenedSchema = z.object({ opened: z.boolean() });
 
-/** `mail` is a message id the person can open in Mail from the receipt (N26). */
-export const ActionOutcomeSchema = z.object({ type: z.string(), ok: z.boolean(), message: z.string(), undo: UndoSchema.optional(), document: z.string().optional(), file: z.enum(DOCUMENT_FILES).optional(), mail: z.string().optional() });
+/** `mail` is a message id the person can open in Mail from the receipt; `proposal` is a write to one of their apps waiting for their tap (N26). */
+export const ActionOutcomeSchema = z.object({ type: z.string(), ok: z.boolean(), message: z.string(), undo: UndoSchema.optional(), document: z.string().optional(), file: z.enum(DOCUMENT_FILES).optional(), mail: z.string().optional(), proposal: AppWriteSchema.optional() });
 
 export const ParkedIdeaSchema = z.object({ id: z.string(), idea: z.string(), createdAt: z.number() });
 export const ParkedListSchema = z.object({ parked: z.array(ParkedIdeaSchema) });
@@ -175,7 +177,7 @@ export type SpendResultDto = z.output<typeof SpendResultSchema>;
 
 /* Conversation history (survives a restart) */
 
-export const ReceiptSchema = z.object({ ok: z.boolean(), text: z.string(), undo: UndoSchema.nullable(), undone: z.boolean(), document: z.string().optional(), file: z.enum(DOCUMENT_FILES).optional(), mail: z.string().optional() });
+export const ReceiptSchema = z.object({ ok: z.boolean(), text: z.string(), undo: UndoSchema.nullable(), undone: z.boolean(), document: z.string().optional(), file: z.enum(DOCUMENT_FILES).optional(), mail: z.string().optional(), proposal: AppWriteSchema.optional() });
 
 /** A message the panel keeps. A turn still waiting for the AI ("pending") is never stored. */
 export const StoredMessageSchema = z.discriminatedUnion("role", [
@@ -280,3 +282,4 @@ export const SplitResultSchema = z.object({ parent: TaskSchema, children: z.arra
 export type SplitResultDto = z.output<typeof SplitResultSchema>;
 export const UnsplitResultSchema = z.object({ count: z.number().int() });
 export * from "./skills";
+export * from "./apps";

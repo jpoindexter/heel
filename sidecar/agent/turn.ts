@@ -1,4 +1,6 @@
 import type { HistoryMessage } from "../../shared/api";
+import { appsWanted, CALENDAR_USED, calendarSection, NOTES_USED, notesSection, REMINDERS_USED, remindersSection } from "../apps/sections";
+import type { AppsRead } from "../apps/source";
 import type { MailSource } from "../mail/source";
 import type { Store } from "../store/store";
 import { parseAgentReply } from "./actions";
@@ -25,6 +27,8 @@ export type TurnDeps = {
   skills?: SkillsService;
   /** Apple Mail: draft_email, and reading unread mail when the person asks about their email. Absent = those fail with a sentence. */
   mail?: Pick<MailSource, "draft" | "candidates">;
+  /** Calendar, Reminders and Notes, read when the person asks about them. Absent = never read. */
+  apps?: AppsRead;
   /** The PDF printer, for make_pdf. Absent = that action fails with a sentence. */
   makePdf?: SideEffects["makePdf"];
   /** When it aborts the turn stops and nothing is written. */
@@ -43,6 +47,18 @@ async function readUnread(mail: Pick<MailSource, "candidates">): Promise<{ ok: t
 
 const turnError = (code: TurnError["code"], message: string): TurnResult => ({ ok: false, error: { code, message } });
 
+/** The apps the message is about, read side by side (each read only), as prompt sections plus what to name in "Used:". */
+async function readApps(apps: AppsRead | undefined, text: string, now: number): Promise<{ sections: string[]; used: string[] }> {
+  const wanted = appsWanted(text, apps);
+  type Read = Promise<[section: string, used: string]>;
+  const reads: Read[] = [];
+  if (wanted.calendar) reads.push(apps!.events(now).then((r) => [calendarSection(r), CALENDAR_USED]));
+  if (wanted.reminders) reads.push(apps!.reminders().then((r) => [remindersSection(r), REMINDERS_USED]));
+  if (wanted.notes) reads.push(apps!.notes().then((r) => [notesSection(r), NOTES_USED]));
+  const done = await Promise.all(reads);
+  return { sections: done.map(([section]) => section), used: done.map(([, used]) => used) };
+}
+
 /**
  * One conversational turn: build state + nd-skills prompt, ask the provider, validate the reply,
  * then apply only validated actions. Model proposes, app disposes: nothing is written before parsing succeeds.
@@ -56,10 +72,11 @@ export async function runTurn(deps: TurnDeps, userText: string, history: readonl
 
   const skills = selectSkills(text, deps.skills?.forSelection());
   const system = buildSystemPrompt(skills, deps.loadSkill ?? deps.skills?.load ?? loadSkill);
-  const mailRead = wantsMail(text) && deps.mail ? await readUnread(deps.mail) : null;
-  const snapshot = buildSnapshot(deps.store, mailRead ? [mailSection(mailRead)] : []);
+  const [mailRead, apps] = await Promise.all([wantsMail(text) && deps.mail ? readUnread(deps.mail) : null, readApps(deps.apps, text, Date.now())]);
+  const snapshot = buildSnapshot(deps.store, [...(mailRead ? [mailSection(mailRead)] : []), ...apps.sections]);
   const mailRefs = mailRead?.ok ? new Map(mailRead.items.map((m, i) => [`m${i + 1}`, { id: m.id, from: m.from, subject: m.subject }])) : undefined;
   if (mailRead) skills.push(MAIL_USED);
+  skills.push(...apps.used);
   const basePrompt = buildUserPrompt(snapshot, text, history);
 
   let prompt = basePrompt;
