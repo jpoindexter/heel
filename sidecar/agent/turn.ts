@@ -2,10 +2,11 @@ import type { HistoryMessage } from "../../shared/api";
 import { appsWanted, CALENDAR_USED, calendarSection, NOTES_USED, notesSection, REMINDERS_USED, remindersSection } from "../apps/sections";
 import type { AppsRead } from "../apps/source";
 import type { MailSource } from "../mail/source";
+import { WEEK_DAYS } from "../store/history";
 import type { Store } from "../store/store";
 import { parseAgentReply } from "./actions";
 import { executeActions, type ActionOutcome, type SideEffects } from "./execute";
-import { buildSnapshot, buildSystemPrompt, buildUserPrompt, loadSkill, mailSection, selectSkills, wantsMail, wantsWeb, type MailLine, type SkillLoader } from "./prompt";
+import { buildSnapshot, buildSystemPrompt, buildUserPrompt, loadSkill, mailSection, selectSkills, wantsMail, wantsWeb, wantsWeek, WEEK_USED, weekSection, type MailLine, type SkillLoader } from "./prompt";
 import type { Provider, ProviderErrorCode, ProviderId } from "./providers/types";
 import type { SkillsService } from "./skills";
 
@@ -73,9 +74,11 @@ export async function runTurn(deps: TurnDeps, userText: string, history: readonl
   const skills = selectSkills(text, deps.skills?.forSelection());
   const system = buildSystemPrompt(skills, deps.loadSkill ?? deps.skills?.load ?? loadSkill);
   const [mailRead, apps] = await Promise.all([wantsMail(text) && deps.mail ? readUnread(deps.mail) : null, readApps(deps.apps, text, Date.now())]);
-  const snapshot = buildSnapshot(deps.store, [...(mailRead ? [mailSection(mailRead)] : []), ...apps.sections]);
+  const week = wantsWeek(text) ? weekSection(deps.store.history.list(WEEK_DAYS)) : null;
+  const snapshot = buildSnapshot(deps.store, [...(mailRead ? [mailSection(mailRead)] : []), ...apps.sections, ...(week ? [week] : [])]);
   const mailRefs = mailRead?.ok ? new Map(mailRead.items.map((m, i) => [`m${i + 1}`, { id: m.id, from: m.from, subject: m.subject }])) : undefined;
   if (mailRead) skills.push(MAIL_USED);
+  if (week) skills.push(WEEK_USED);
   skills.push(...apps.used);
   const basePrompt = buildUserPrompt(snapshot, text, history);
 

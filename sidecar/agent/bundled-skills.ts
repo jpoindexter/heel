@@ -10,6 +10,7 @@ export const TRIGGER_WORDS: Readonly<Record<string, readonly string[]>> = {
   "nd-time-blindness": ["how long", "estimate", "deadline", "minutes", "hours", "time box"],
   "nd-task-decomposition": ["plan", "break it down", "huge", "big project", "schedule", "today", "week"],
   writer: ["look into", "research", "write up", "brief", "summary", "report", "notes on"],
+  "biz-weekly-review": ["weekly review", "review my week", "what did I ship"],
 };
 
 /** The skills the agent can use out of the box: the router (always), each one a signal can choose, and the fallback. */

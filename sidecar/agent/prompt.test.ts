@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 import { testStore } from "../store/test-helpers";
-import { buildSnapshot, buildSystemPrompt, buildUserPrompt, loadSkill, mailSection, selectSkills, wantsMail } from "./prompt";
+import { buildSnapshot, buildSystemPrompt, buildUserPrompt, loadSkill, mailSection, selectSkills, wantsMail, wantsWeek, weekSection } from "./prompt";
 
 describe("selectSkills", () => {
   it("always leads with the router and never loads more than three skills", () => {
@@ -157,5 +157,25 @@ describe("mail in a turn", () => {
     expect(mailSection({ ok: false, message: "nope" })).toContain("could not be read (nope)");
     const long = mailSection({ ok: true, items: [{ id: "x", from: "A", subject: "S", date: "d", snippet: "x".repeat(500) }] });
     expect(long.split("\n")[1]!.length).toBeLessThan(220);
+  });
+});
+
+describe("weekly review (V1-2)", () => {
+  it("picks the coach skill for a review ask, ahead of task decomposition's 'week'", () => {
+    expect(selectSkills("Weekly review, please")[1]).toBe("biz-weekly-review");
+    expect(selectSkills("what did I ship this week?")[1]).toBe("biz-weekly-review");
+    expect(selectSkills("plan my week")[1]).toBe("nd-task-decomposition");
+    expect(wantsWeek("review my week")).toBe(true);
+    expect(wantsWeek("plan my week")).toBe(false);
+  });
+
+  it("lays the week out by day with the total, and says plainly when nothing was finished", () => {
+    const days = [
+      { date: "2026-10-28", count: 2, tasks: [{ title: "Ship V1-7" }, { title: "Reply to Aoi" }] },
+      { date: "2026-10-27", count: 0, tasks: [] },
+      { date: "2026-10-26", count: 1, tasks: [{ title: "Read the Tauri docs" }] },
+    ];
+    expect(weekSection({ days })).toBe("Finished this week (last 7 days, 3 in all, newest day first):\n2026-10-28: Ship V1-7; Reply to Aoi\n2026-10-26: Read the Tauri docs");
+    expect(weekSection({ days: [] })).toBe("Finished this week (last 7 days): nothing marked done.");
   });
 });
