@@ -34,7 +34,7 @@ Captured: 2026-10-15. Why parked: seen in the real window: with the panel open G
 Captured: 2026-10-15. Why parked: PRD v0 = one real workday (S9) not done yet; this is platform work before a user day. X1 spike proved pairing + one chat turn, not approvals, and showed Vanta acts without asking in some modes. Cost to revisit: X1 finish ~2h (needs a way to raise a real approval), then X2–X6 each 1–3 days. Promote when: S9 is done and Jason names the one thing he missed most.
 
 ## Settings items from N4 that need the shell or their own card (2026-10-27)
-Captured: launch at login + Dock toggle (N10), global hotkey change, panel size reset, "show Greg on start", Node/Claude/Codex detection sentences in plain words, daily nudge budget, quiet hours, chat retention number (30 days is a constant), a "what was sent" log, settings search (flow-settings says search once past ~15 settings).
+Captured: launch at login + Dock toggle (N10), global hotkey change (built 2026-10-28: Settings › Startup › Panel shortcut, with Off), panel size reset, "show Greg on start", Node/Claude/Codex detection sentences in plain words, daily nudge budget, quiet hours, chat retention number (30 days is a constant), a "what was sent" log, settings search (flow-settings says search once past ~15 settings).
 Why parked: each touches src-tauri or a helper feature another card owns; N4's slice was the two-level layout plus Privacy & data (backup, wipe with preview and typed confirm).
 Cost to revisit: small each (a switch in its group, a shell command); search is a half day.
 
