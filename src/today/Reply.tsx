@@ -13,12 +13,14 @@ type Props = {
   onOpenDocument?: (documentId: string, file: "md" | "pdf") => void;
   onOpenMail?: (messageId: string) => void;
   onConfirm?: (id: number, index: number) => void;
-  /** Close the reply (clears the conversation, with Undo). */
+  /** Clear the conversation (with Undo): after the fade, or at once when the layer goes away under it. */
   onDismiss: () => void;
+  /** Pop the layer once the fade ends. Not called when something else (Esc) already closed it. */
+  onClosed: () => void;
 };
 
 /** Closing fades the reply out first, then clears it. Esc during the fade unmounts the layer: the clear still runs, from the cleanup, or the conversation is back on the next open. */
-function useLeave(onDismiss: () => void) {
+function useLeave(onDismiss: () => void, onClosed: () => void) {
   const [leaving, setLeaving] = useState(false);
   const leave = useRef<Leave>({});
   const timer = useRef<number | undefined>(undefined);
@@ -35,15 +37,16 @@ function useLeave(onDismiss: () => void) {
     timer.current = window.setTimeout(() => {
       setLeaving(false);
       endLeave(leave.current);
+      onClosed();
     }, LEAVE_MS);
   };
   return { leaving, dismiss };
 }
 
 /** The latest exchange, above the tasks: what was asked as a small bubble on the right, Heel's answer on the left, one cross to put it away. */
-export function Reply({ messages, onRetry, onOpenSettings, onUndo, onOpenDocument, onOpenMail, onConfirm, onDismiss }: Props) {
+export function Reply({ messages, onRetry, onOpenSettings, onUndo, onOpenDocument, onOpenMail, onConfirm, onDismiss, onClosed }: Props) {
   const exchange = latestExchange(messages);
-  const { leaving, dismiss } = useLeave(onDismiss);
+  const { leaving, dismiss } = useLeave(onDismiss, onClosed);
   if (!exchange) return null;
   const { asked, heel } = exchange;
   return (

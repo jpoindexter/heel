@@ -49,7 +49,7 @@ function useLayerFollows(state: State) {
 
 type ReplyLayerProps = { thread: State["thread"]; onOpenSettings: () => void; onOpenDocument: (id: string, file: "md" | "pdf") => void; onOpenMail: (messageId: string) => void; onClosed: () => void };
 
-/** The latest exchange in its layer; closing it clears the conversation (with Undo) and pops the layer. */
+/** The latest exchange in its layer; closing it clears the conversation (with Undo) and pops the layer. Esc mid-fade pops it already, so the clear runs alone then. */
 function ReplyLayer({ thread, onOpenSettings, onOpenDocument, onOpenMail, onClosed }: ReplyLayerProps) {
   return (
     <Reply
@@ -60,10 +60,8 @@ function ReplyLayer({ thread, onOpenSettings, onOpenDocument, onOpenMail, onClos
       onOpenMail={onOpenMail}
       onConfirm={(id, index) => void thread.confirmReceipt(id, index)}
       onUndo={(id, index) => void thread.undoReceipt(id, index)}
-      onDismiss={() => {
-        void thread.clear();
-        onClosed();
-      }}
+      onDismiss={() => void thread.clear()}
+      onClosed={onClosed}
     />
   );
 }

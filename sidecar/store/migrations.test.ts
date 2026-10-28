@@ -3,7 +3,7 @@ import { tmpdir } from "node:os";
 import { join } from "node:path";
 import { DatabaseSync } from "node:sqlite";
 import { afterEach, describe, expect, it } from "vitest";
-import { currentVersion, migrateDown, migrateUp } from "./migrations";
+import { currentVersion, inTransaction, migrateDown, migrateUp } from "./migrations";
 import { openStore } from "./store";
 
 const dirs: string[] = [];
@@ -28,6 +28,20 @@ describe("migrations", () => {
     expect(tableNames(db)).toEqual(["schema_migrations"]);
     expect(migrateUp(db, now)).toBe(6);
     expect(currentVersion(db)).toBe(6);
+  });
+
+  it("undoes a whole wipe when a step inside it fails, keeping the data", () => {
+    const db = new DatabaseSync(":memory:");
+    migrateUp(db, () => 1);
+    db.exec("INSERT INTO tasks (id, title, status, source, position, created_at, updated_at) VALUES ('t1', 'Keep me', 'todo', 'manual', 0, 1, 1)");
+    expect(() =>
+      inTransaction(db, () => {
+        migrateDown(db, 0);
+        throw new Error("disk full");
+      }),
+    ).toThrow("disk full");
+    expect(currentVersion(db)).toBe(6);
+    expect(db.prepare("SELECT count(*) AS n FROM tasks").get()?.n).toBe(1);
   });
 
   it("is idempotent: running up twice does not re-apply", () => {

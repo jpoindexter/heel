@@ -148,13 +148,18 @@ export function currentVersion(db: DatabaseSync): number {
   return Number(row?.version ?? 0);
 }
 
-function inTransaction(db: DatabaseSync, run: () => void): void {
-  db.exec("BEGIN");
+let savepoints = 0;
+
+/** Run `run` atomically. Savepoints nest, so a caller can wrap several migrations as one unit (the wipe). */
+export function inTransaction(db: DatabaseSync, run: () => void): void {
+  const name = `sp${(savepoints += 1)}`;
+  db.exec(`SAVEPOINT ${name}`);
   try {
     run();
-    db.exec("COMMIT");
+    db.exec(`RELEASE ${name}`);
   } catch (error) {
-    db.exec("ROLLBACK");
+    db.exec(`ROLLBACK TO ${name}`);
+    db.exec(`RELEASE ${name}`);
     throw error;
   }
 }

@@ -17,7 +17,7 @@ export function TaskBadges({ task, method, onPatch, onSplit }: Props) {
     <span className="task-badges">
       {showBucket && (
         <Badge asChild size="1" variant={task.bucket ? "soft" : "outline"} color="gray" radius="full">
-          <button type="button" aria-label={`Bucket: ${bucketLabel(task.bucket)}. Change`} onClick={() => onPatch(task, { bucket: nextBucket(method.structure, task.bucket) })}>
+          <button type="button" aria-label={`Section: ${bucketLabel(task.bucket)}. Change`} onClick={() => onPatch(task, { bucket: nextBucket(method.structure, task.bucket) })}>
             {bucketLabel(task.bucket)}
           </button>
         </Badge>

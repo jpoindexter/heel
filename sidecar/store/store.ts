@@ -1,7 +1,7 @@
 import { randomUUID } from "node:crypto";
 import { DatabaseSync } from "node:sqlite";
 import type { Ctx } from "./context";
-import { currentVersion, migrateDown, migrateUp } from "./migrations";
+import { currentVersion, inTransaction, migrateDown, migrateUp } from "./migrations";
 import { documentsRepository } from "./documents";
 import { systemRepositories, todayRepositories } from "./repositories";
 
@@ -34,8 +34,11 @@ export function openStore(options: StoreOptions = {}) {
     backupTo: (path: string) => void db.prepare("VACUUM INTO ?").run(path),
     /** Every table emptied and rebuilt at the latest version: the wipe (N4). The file stays, shrunk. */
     reset: () => {
-      migrateDown(db, 0);
-      migrateUp(db, ctx.now);
+      // One unit: a failure halfway leaves the data as it was, never half-dropped.
+      inTransaction(db, () => {
+        migrateDown(db, 0);
+        migrateUp(db, ctx.now);
+      });
       db.exec("VACUUM");
     },
     rollbackTo: (version: number) => migrateDown(db, version),

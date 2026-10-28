@@ -48,4 +48,4 @@ export function nextBucket(structure: Structure, current: string | null): string
 }
 
 export const sizeLabel = (size: Size | null): string => (size ? SIZE_LABELS[size] : "Size");
-export const bucketLabel = (bucket: string | null): string => (bucket ? (BUCKET_LABELS[bucket] ?? bucket) : "Bucket");
+export const bucketLabel = (bucket: string | null): string => (bucket ? (BUCKET_LABELS[bucket] ?? bucket) : "Section");
