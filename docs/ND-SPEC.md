@@ -33,6 +33,7 @@ Source: four screenshots of a friend's Bunny/Owl desktop companion, plus [nd-ski
 | "Plan" chip (day or evening) | nd-task-decomposition, nd-goal-persistence | terminal condition stays visible until done or dropped |
 | End of day / switching tasks | nd-closuregate, nd-working-memory | surfaces >50%-done items; writes re-entry line for tomorrow |
 | Inbox digest (v0 read-only) | nd-task-initiation, nd-sensory-load | <=3 actions, literal one-line summary, "Add as task" |
+| "What do they mean / do I need to reply / how do I say it" (V1-3, built 2026-10-28) | autism-layer (literal four lines, scripts with a Tone line, invitations not orders, special interests parked with a play slot, masking → Low capacity) | the skill in skills/nd-skills/autism-layer; transition warnings 10/5/1 parked under D4 |
 | Interrupt budget + Off | nd-sensory-load, nd-selfmonitor | silent default, no sound, 3/day, Off removes all optional UI |
 
 Default chips (fixed positions, max 3): **Plan**, **Stuck**, **Park it**. Evening swaps labels only (Plan -> Wind down). Other actions via a "More" chip.

@@ -43,3 +43,6 @@ Captured: 2026-10-28. Why parked: a line on the panel needs a Calendar read on e
 
 ## Two-way task sync with Trello and GitHub (V1-6 leftover)
 Captured: 2026-10-28. Why parked: needs Jason's Trello API key + token and a GitHub token in the Keychain (the V1-9 key path can hold them), a chosen board and repo, and a conflict rule for edits on both sides. Drafts (the other half of V1-6) shipped in N11 through Apple Mail. Cost to revisit: 1–2 days once the tokens exist.
+
+## Transition warnings 10 / 5 / 1 min before an event or a box ends (V1-3 leftover)
+Captured: 2026-10-28. Why parked: an optional interrupt under D4 (budget 3/day, silent by default); needs a shell timer against the next calendar event (a Calendar read, see the V1-5 entry) and the box clock, and an opt-in switch. The box's end check-in already exists. Cost to revisit: small-medium (a timer, a switch, three notices).

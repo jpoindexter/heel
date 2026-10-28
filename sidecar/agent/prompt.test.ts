@@ -179,3 +179,17 @@ describe("weekly review (V1-2)", () => {
     expect(weekSection({ days: [] })).toBe("Finished this week (last 7 days): nothing marked done.");
   });
 });
+
+describe("autism layer (V1-3)", () => {
+  it("picks the layer for a what-do-they-mean, a reply question, a script ask and a masking line", () => {
+    expect(selectSkills("Aoi wrote this. What does she actually want?")[1]).toBe("autism-layer");
+    expect(selectSkills("do I need to reply to this?")[1]).toBe("autism-layer");
+    expect(selectSkills("how do I say no to the Thursday call")[1]).toBe("autism-layer");
+    expect(selectSkills("I'm peopled out after three meetings")[1]).toBe("autism-layer");
+    expect(selectSkills("add milk to the list")).not.toContain("autism-layer");
+  });
+
+  it("tells every reply to invite, never order", () => {
+    expect(buildSystemPrompt([], () => null)).toContain("never orders");
+  });
+});
