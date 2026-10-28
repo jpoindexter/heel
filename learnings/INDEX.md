@@ -41,3 +41,4 @@
 - [A cleanup that reuses the close callback closes twice](2026-10-28-a-cleanup-that-reuses-the-close-callback-closes-twice.md) — split state-clear from surface-close when an outside path can close first
 - [A card closes on its own Done line, not on code](2026-10-28-a-card-closes-on-its-own-done-line-not-on-code.md) — read the description's tail for the Done line; a person-only check means Blocked, not Done
 - [A storage event never reaches the window that wrote](2026-10-28-a-storage-event-never-reaches-the-window-that-wrote.md) — same-window readers need a shared store; a storage listener only hears other windows
+- [Check a secret before keeping it](2026-10-28-check-a-secret-before-keeping-it.md) — verify with the provider's cheapest read-only call inside the save; a refused key is never written
