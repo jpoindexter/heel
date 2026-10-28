@@ -5,6 +5,8 @@ import { BAR_TRAY, type TrayAction } from "./bar-model";
 import "./bar.css";
 
 type Props = {
+  /** A Low or Off day: no +, no quick actions; the pill stays. */
+  chips: boolean;
   trayOpen: boolean;
   trayClosing: boolean;
   /** Heel is thinking: the pill says so and offers Stop. */
@@ -17,13 +19,15 @@ type Props = {
 };
 
 /** The folded bar: + and one pill. + pushes four round buttons out across the bar in the pill's place. */
-export function Bar({ trayOpen, trayClosing, thinking, emailReady, onToggleTray, onAction, onOpenChat, onStop }: Props) {
+export function Bar({ chips, trayOpen, trayClosing, thinking, emailReady, onToggleTray, onAction, onOpenChat, onStop }: Props) {
   return (
     <div className="bar">
-      <IconButton type="button" size="3" radius="full" variant="soft" color="gray" className="plus" aria-label="More" aria-expanded={trayOpen} onClick={onToggleTray}>
-        <PlusIcon aria-hidden="true" />
-      </IconButton>
-      {trayOpen ? (
+      {chips && (
+        <IconButton type="button" size="3" radius="full" variant="soft" color="gray" className="plus" aria-label="More" aria-expanded={trayOpen} onClick={onToggleTray}>
+          <PlusIcon aria-hidden="true" />
+        </IconButton>
+      )}
+      {chips && trayOpen ? (
         <ActionTray actions={BAR_TRAY} closing={trayClosing} emailReady={emailReady} onAction={onAction} />
       ) : thinking ? (
         <div className="pill-row thinking">

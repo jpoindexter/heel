@@ -11,6 +11,9 @@ import { useSplit } from "./useSplit";
 import { client } from "../api/default-client";
 import type { useTodayState } from "./useTodayState";
 import { useMethod } from "../ui/method";
+import { isReduced } from "../ui/capacity";
+import { CapacityLine } from "../ui/CapacityLine";
+import { useCapacity } from "../ui/useCapacity";
 import { JarMeter } from "./JarMeter";
 import { dropsOnBucket } from "./eisenhower-model";
 import { bucketPatches } from "./method-model";
@@ -58,16 +61,10 @@ function useRowEditing(tasks: ReturnType<typeof useTodayState>["tasks"]) {
   };
 }
 
-/** Now, the rest, and the parked ideas. Starting a time-box opens its small form right under the Now row. */
-export function TaskSection({ state, foundId = null }: { state: ReturnType<typeof useTodayState>; foundId?: string | null }) {
-  const { tasks, ready, now, focus, pomodoro, thread } = state;
-  const [starting, setStarting] = useState(false);
-  const loading = useLoadingLine(tasks.state.phase);
-  const rows = useLeavingRow((task, action) => void (action === "complete" ? tasks.complete(task) : tasks.remove(task)));
-  const { method, numbers } = useMethod();
-  const ask = (prompt: string, label: string) => void thread.send(prompt, label);
-  const split = useSplit({ client, refresh: tasks.refresh, notify: (notice) => tasks.showNotice(notice.message, notice.tone, notice.undo) });
-  const marks = {
+/** What every row gets: the method, the bucket tap (which may write two tasks, or remove one), split, and editing. */
+function useRowMarks(state: ReturnType<typeof useTodayState>, method: ReturnType<typeof useMethod>["method"], split: ReturnType<typeof useSplit>) {
+  const { tasks, ready } = state;
+  return {
     method,
     onPatch: async (task: TaskDto, change: Parameters<typeof tasks.patch>[1]) => {
       if (change.bucket === undefined) return tasks.patch(task, change);
@@ -80,9 +77,23 @@ export function TaskSection({ state, foundId = null }: { state: ReturnType<typeo
     open: ready?.tasks ?? [],
     ...useRowEditing(tasks),
   };
+}
+
+/** Now, the rest, and the parked ideas. Starting a time-box opens its small form right under the Now row. */
+export function TaskSection({ state, foundId = null }: { state: ReturnType<typeof useTodayState>; foundId?: string | null }) {
+  const { tasks, ready, now, focus, pomodoro, thread } = state;
+  const [starting, setStarting] = useState(false);
+  const loading = useLoadingLine(tasks.state.phase);
+  const rows = useLeavingRow((task, action) => void (action === "complete" ? tasks.complete(task) : tasks.remove(task)));
+  const { method, numbers } = useMethod();
+  const [capacity, setCapacity] = useCapacity();
+  const reduced = isReduced(capacity);
+  const ask = (prompt: string, label: string) => void thread.send(prompt, label);
+  const split = useSplit({ client, refresh: tasks.refresh, notify: (notice) => tasks.showNotice(notice.message, notice.tone, notice.undo) });
+  const marks = useRowMarks(state, method, split);
   return (
     <>
-      <JarMeter tasks={ready?.tasks ?? []} method={method} numbers={numbers} onAsk={ask} />
+      {!reduced && <JarMeter tasks={ready?.tasks ?? []} method={method} numbers={numbers} onAsk={ask} />}
       <NowRow
         now={now}
         nowParent={now?.task.parentId ? ready?.tasks.find((task) => task.id === now.task.parentId) ?? null : null}
@@ -102,10 +113,14 @@ export function TaskSection({ state, foundId = null }: { state: ReturnType<typeo
           onStart={(goal, realisticMin) => void focus.start({ goal, taskId: now.task.id, realisticMin }).then((started) => started && setStarting(false))}
         />
       )}
-      <LaterList tasks={ready ? ready.tasks.filter((task) => task.id !== now?.task.id) : []} leavingId={rows.leavingId} foundId={foundId} onComplete={rows.complete} onRemove={rows.remove} {...marks} />
+      {reduced && now ? (
+        <CapacityLine capacity={capacity} waiting={(ready?.tasks.length ?? 1) - 1} onNormal={() => setCapacity("normal")} />
+      ) : (
+        <LaterList tasks={ready ? ready.tasks.filter((task) => task.id !== now?.task.id) : []} leavingId={rows.leavingId} foundId={foundId} onComplete={rows.complete} onRemove={rows.remove} {...marks} />
+      )}
       {loading && <Text size="2" color="gray" role="status" className="tasks-empty pulse">Loading your day…</Text>}
       {ready && ready.tasks.length === 0 && <Text size="2" color="gray" className="tasks-empty in">{emptyListLine(ready.doneToday)}</Text>}
-      <ParkedList parked={ready?.parked ?? []} onPromote={(idea) => void tasks.promote(idea)} />
+      {!reduced && <ParkedList parked={ready?.parked ?? []} onPromote={(idea) => void tasks.promote(idea)} />}
     </>
   );
 }

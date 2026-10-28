@@ -1,4 +1,5 @@
 import { describe, expect, it } from "vitest";
+import { workSummary } from "./settings-model";
 import { numberToCommit, parseWanderList } from "./settings-model";
 
 describe("numberToCommit", () => {
@@ -15,5 +16,14 @@ describe("parseWanderList", () => {
   it("takes one bundle id per line and drops blanks and edges", () => {
     expect(parseWanderList(" com.a \n\n com.b\n")).toEqual(["com.a", "com.b"]);
     expect(parseWanderList("")).toEqual([]);
+  });
+});
+
+describe("workSummary", () => {
+  const method = { timer: "timebox", structure: "pickle-jar", sizing: "none" } as const;
+  it("leads with the capacity when the day is Low or Off, and says nothing about it on a Normal day", () => {
+    expect(workSummary(method)).toBe("Time-box · Pickle jar");
+    expect(workSummary(method, "low")).toBe("Low capacity · Time-box · Pickle jar");
+    expect(workSummary(method, "off")).toBe("Off capacity · Time-box · Pickle jar");
   });
 });

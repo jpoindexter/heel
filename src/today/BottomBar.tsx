@@ -3,6 +3,8 @@ import { Compose } from "./Compose";
 import type { useBarActions } from "./useBarActions";
 import type { useTodayState } from "./useTodayState";
 import { useTypingSignal } from "./useTypingSignal";
+import { isReduced } from "../ui/capacity";
+import { useCapacity } from "../ui/useCapacity";
 
 type Props = {
   state: ReturnType<typeof useTodayState>;
@@ -21,6 +23,8 @@ export function BottomBar({
   emailReady,
 }: Props) {
   const { thread, chat } = state;
+  const [capacity] = useCapacity();
+  const chips = !isReduced(capacity);
   useTypingSignal(bar.composerOpen ? chat.draft : "");
   return (
     <div className="bar-slot">
@@ -30,6 +34,7 @@ export function BottomBar({
           focusSignal={focusSignal}
           draft={chat.draft}
           thinking={thread.busy}
+          chips={chips}
           trayOpen={bar.trayOpen}
           trayClosing={bar.trayClosing}
           emailReady={emailReady}
@@ -45,6 +50,7 @@ export function BottomBar({
         />
       ) : (
         <Bar
+          chips={chips}
           trayOpen={bar.trayOpen}
           trayClosing={bar.trayClosing}
           thinking={thread.busy}

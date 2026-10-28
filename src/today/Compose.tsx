@@ -16,6 +16,8 @@ type Props = {
   focusSignal: number;
   draft: string;
   thinking: boolean;
+  /** A Low or Off day: no + in the card either. */
+  chips: boolean;
   trayOpen: boolean;
   trayClosing: boolean;
   emailReady: boolean;
@@ -42,16 +44,18 @@ function SendOrStop({ thinking, empty, onStop }: { thinking: boolean; empty: boo
   );
 }
 
-type RowProps = Pick<Props, "thinking" | "trayOpen" | "trayClosing" | "emailReady" | "onStop" | "onToggleTray" | "onAction"> & { empty: boolean };
+type RowProps = Pick<Props, "thinking" | "chips" | "trayOpen" | "trayClosing" | "emailReady" | "onStop" | "onToggleTray" | "onAction"> & { empty: boolean };
 
 /** Under the text: +, then the key hint (or the four buttons in its place), then Send (Stop while Heel thinks). */
-function ComposeRow({ thinking, trayOpen, trayClosing, emailReady, onStop, onToggleTray, onAction, empty }: RowProps) {
+function ComposeRow({ thinking, chips, trayOpen, trayClosing, emailReady, onStop, onToggleTray, onAction, empty }: RowProps) {
   return (
     <div className="compose-row">
-      <IconButton type="button" size="2" radius="full" variant="surface" color="gray" className="plus" aria-label="More" aria-expanded={trayOpen} onClick={onToggleTray}>
-        <PlusIcon aria-hidden="true" />
-      </IconButton>
-      {trayOpen ? (
+      {chips && (
+        <IconButton type="button" size="2" radius="full" variant="surface" color="gray" className="plus" aria-label="More" aria-expanded={trayOpen} onClick={onToggleTray}>
+          <PlusIcon aria-hidden="true" />
+        </IconButton>
+      )}
+      {chips && trayOpen ? (
         <ActionTray actions={CARD_TRAY} closing={trayClosing} emailReady={emailReady} onAction={onAction} />
       ) : (
         <Text size="1" color="gray" className="grow hint">{barHint(empty, thinking)}</Text>

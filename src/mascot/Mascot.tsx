@@ -7,7 +7,9 @@ import "../design/tokens.css";
 import "./mascot.css";
 import { useFocusPresence } from "../focus/useFocusPresence";
 import { useAppearance } from "../theme/useAppearance";
+import { useCapacity } from "../ui/useCapacity";
 import { useActivity } from "./life/useActivity";
+import { useCapacityRest } from "./life/useCapacityRest";
 import { MOTIONS } from "./life/config";
 import { useFollowPanel } from "./life/useFollowPanel";
 import { useIdleLife } from "./life/useIdleLife";
@@ -48,7 +50,10 @@ function useAskedMotion() {
 function Greg() {
   const { base, oneShot, setOneShot } = useAskedMotion();
   const [lifeMotion, setLifeMotion] = useState<MotionId | null>(null);
-  const [activity, setActivity] = useActivity();
+  const [chosen, setActivity] = useActivity();
+  const [capacity] = useCapacity();
+  // An Off day stills him whatever his activity says; a Low day only sends him to rest (useCapacityRest).
+  const activity = capacity === "off" ? "off" : chosen;
   useFocusPresence(activity);
   const fadeStyle = useFade();
   const panelOpen = usePanelOpen();
@@ -61,6 +66,7 @@ function Greg() {
   const life = useIdleLife({ activity, panelOpen, busy, setLifeMotion });
   const running = useRunEvents(life.touch, life.greet);
   useLifeCommands(activity, life.asleep, { nap: life.nap, wake: life.wake, walk: life.walk, play: life.playBall, setActivity });
+  useCapacityRest(capacity, life);
   useFollowPanel({ panelOpen, follow: life.follow });
   useEffect(() => {
     if (panelOpen) life.touch();

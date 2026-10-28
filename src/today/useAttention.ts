@@ -8,6 +8,7 @@ import { ATTENTION_EVENT } from "../events";
 import { useActivity } from "../mascot/life/useActivity";
 import { nudge } from "../mascot/motion-events";
 import { useAttentionSettings } from "../ui/attention";
+import { useCapacity } from "../ui/useCapacity";
 import type { Layers } from "../ui/layers";
 import { useMethod } from "../ui/method";
 import { useNotices } from "../ui/notices";
@@ -46,8 +47,11 @@ export function useAttention(deps: Deps): void {
   const { method } = useMethod();
   const notices = useNotices();
   const [activity] = useActivity();
-  const latest = useRef({ deps, quiet: activity === "off", pomodoroTimer: method.timer === "pomodoro" });
-  latest.current = { deps, quiet: activity === "off", pomodoroTimer: method.timer === "pomodoro" };
+  const [capacity] = useCapacity();
+  // An Off day is quiet like Greg's Off: the helper counts no nudge against it.
+  const quiet = activity === "off" || capacity === "off";
+  const latest = useRef({ deps, quiet, pomodoroTimer: method.timer === "pomodoro" });
+  latest.current = { deps, quiet, pomodoroTimer: method.timer === "pomodoro" };
 
   useEffect(() => {
     if (!settings.enabled) return;

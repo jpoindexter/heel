@@ -58,7 +58,7 @@ Built per slice, not as one big slice: each feature ships its own setting. Defau
 | Brain | Agent/provider: Claude (subscription CLI), Codex (subscription CLI), Local (Ollama), API key. Model picker filled from what the provider reports (Ollama list, API models list; CLI default otherwise). "Test connection" button. Shows signed-in / not installed / sign-in required per provider. | S4 (v0, minimal) |
 | Privacy | "What was sent" log, per-source toggles (Inbox on/off), Data location, Export, Delete all | S7 / v1 |
 | Quiet | Interrupt budget (default 3/day), quiet hours, sound (default off), Off mode | S8 |
-| Capacity | Normal / Low / Off, set by user only | v1 |
+| Capacity | Normal / Low / Off, set by user only | built (V1-7, 2026-10-28): Settings › Ways of working › Today's capacity |
 | Mascot | Character (Riff now, Greg when ready), size, reset position, launch at login, hotkey | S1 follow-up |
 | Skills | List of vendored nd-skills, on/off each, read text. Transparency, not tuning | v1 |
 

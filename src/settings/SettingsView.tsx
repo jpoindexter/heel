@@ -6,6 +6,7 @@ import { EmailSettings } from "../inbox/EmailSettings";
 import { useActivity } from "../mascot/life/useActivity";
 import type { Density } from "../theme/density";
 import { useAttentionSettings } from "../ui/attention";
+import { useCapacity } from "../ui/useCapacity";
 import { useMethod } from "../ui/method";
 import { setSystemToasts, systemToastsOn } from "../ui/system-toasts";
 import { ActivitySettings } from "./ActivitySettings";
@@ -15,6 +16,7 @@ import { NoticeSettings } from "./NoticeSettings";
 import { SkillsSettings } from "./SkillsSettings";
 import { StartupSettings } from "./StartupSettings";
 import { BrainSettings } from "./BrainSettings";
+import { CapacitySettings } from "./CapacitySettings";
 import { DataSettings } from "./DataSettings";
 import { DebugSettings } from "./DebugSettings";
 import { DensitySettings } from "./DensitySettings";
@@ -38,6 +40,7 @@ export function SettingsView({ active, onSaved, preference, onPreference, densit
   const [activity] = useActivity();
   const { settings: attention } = useAttentionSettings();
   const { method } = useMethod();
+  const [capacity, setCapacity] = useCapacity();
   // Held here, not in NoticeSettings: the group row reads it at rest and must change with the switch.
   const [noticesOn, setNoticesOn] = useState(systemToastsOn);
   const changeNotices = (on: boolean) => (setNoticesOn(on), setSystemToasts(on));
@@ -53,7 +56,8 @@ export function SettingsView({ active, onSaved, preference, onPreference, densit
         <NoticeSettings on={noticesOn} onChange={changeNotices} />
         <AttentionSettings />
       </SettingsGroup>
-      <SettingsGroup title="Ways of working" summary={workSummary(method)}>
+      <SettingsGroup title="Ways of working" summary={workSummary(method, capacity)}>
+        <CapacitySettings capacity={capacity} onCapacity={setCapacity} />
         <MethodSettings />
       </SettingsGroup>
       <SettingsGroup title="Brain" summary="AI and skills">
