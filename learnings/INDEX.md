@@ -39,3 +39,4 @@
 - [2026-10-27 vitest-runs-every-nested-worktree](2026-10-27-vitest-runs-every-nested-worktree.md) — vitest from the parent checkout executes every worktree under it; exclude the worktree folder and compare the file count to `git ls-files`.
 - [2026-10-27 fan-out-by-area-merge-in-series](2026-10-27-fan-out-by-area-merge-in-series.md) — Partition agents by folder with a do-not-touch list and one shared gate line; merge serially with a full gate per merge; "findings NOT fixed" becomes the next cards.
 - [A cleanup that reuses the close callback closes twice](2026-10-28-a-cleanup-that-reuses-the-close-callback-closes-twice.md) — split state-clear from surface-close when an outside path can close first
+- [A card closes on its own Done line, not on code](2026-10-28-a-card-closes-on-its-own-done-line-not-on-code.md) — read the description's tail for the Done line; a person-only check means Blocked, not Done
