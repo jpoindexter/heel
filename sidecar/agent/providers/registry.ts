@@ -1,11 +1,14 @@
 import { mkdirSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
+import { macKeychain } from "../../inbox/keychain";
 import { PROVIDER_IDS } from "../../store/settings";
+import { anthropicProvider } from "./anthropic";
 import { claudeProvider } from "./claude";
 import { codexProvider } from "./codex";
 import { findExecutable } from "./find-executable";
 import { ollamaProvider } from "./ollama";
+import { openaiProvider } from "./openai";
 import { runCommand } from "./process";
 import type { Provider, ProviderDeps, ProviderId, ProviderStatus } from "./types";
 
@@ -20,11 +23,12 @@ export function defaultDeps(): ProviderDeps {
     fetch,
     workdir,
     ollamaUrl: process.env.HEEL_OLLAMA_URL ?? DEFAULT_OLLAMA_URL,
+    secrets: macKeychain(runCommand),
   };
 }
 
 export function createProviders(deps: ProviderDeps = defaultDeps()): Record<ProviderId, Provider> {
-  return { claude: claudeProvider(deps), codex: codexProvider(deps), ollama: ollamaProvider(deps) };
+  return { claude: claudeProvider(deps), codex: codexProvider(deps), ollama: ollamaProvider(deps), anthropic: anthropicProvider(deps), openai: openaiProvider(deps) };
 }
 
 /** Status of every provider, for Settings > Brain. */

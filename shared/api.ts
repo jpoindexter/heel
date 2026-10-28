@@ -2,7 +2,7 @@ import { z } from "zod";
 import { SIZES } from "./method";
 import { PHASES, PomodoroConfigSchema, PomodoroStateSchema } from "./pomodoro";
 import { FOCUS_OUTCOMES } from "./focus";
-import { PROVIDER_IDS } from "./providers";
+import { KEYED_PROVIDER_IDS, PROVIDER_IDS } from "./providers";
 import { AppWriteSchema } from "./apps";
 
 /** Wire contract between the sidecar server and the panel. Both sides validate with these. */
@@ -26,6 +26,10 @@ export const BrainStateSchema = z.object({
 });
 
 export const ModelsSchema = z.object({ models: z.array(z.string()) });
+
+/** PUT /brain/key: the key is checked against the provider before it is kept; it never comes back in a response. */
+export const ProviderKeyInputSchema = z.object({ provider: z.enum(KEYED_PROVIDER_IDS), key: z.string().trim().min(8, "Paste the whole key.") });
+export const ProviderKeyForgetSchema = z.object({ provider: z.enum(KEYED_PROVIDER_IDS) });
 
 export const TestResultSchema = z.object({ detail: z.string() });
 

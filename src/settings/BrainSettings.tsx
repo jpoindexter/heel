@@ -3,6 +3,7 @@ import { client } from "../api/default-client";
 import { modelControl } from "./brain-model";
 import { ModelField } from "./ModelField";
 import { ProviderCards } from "./ProviderCards";
+import { ProviderKeys } from "./ProviderKeys";
 import { useBrain } from "./useBrain";
 
 type Props = { active: boolean; onSaved?: () => void };
@@ -27,6 +28,7 @@ export function BrainSettings({ active, onSaved }: Props) {
       {ready && (
         <>
           <ProviderCards state={ready.state} onChoose={(id) => void brain.choose(id)} />
+          <ProviderKeys state={ready.state} onSave={brain.saveKey} onForget={(id) => void brain.forgetKey(id)} />
           {control && control.kind !== "none" && (
             <ModelField key={`${ready.state.settings.provider}-${ready.state.settings.model}`} control={control} onCommit={(model) => void brain.setModel(model)} />
           )}

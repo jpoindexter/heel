@@ -1,3 +1,4 @@
+import { memorySecrets } from "../../inbox/keychain";
 import type { RunCommand, RunOptions, RunResult } from "./process";
 import type { ProviderDeps } from "./types";
 
@@ -10,6 +11,8 @@ type Overrides = {
   answers?: Record<string, RunResult>;
   found?: boolean;
   fetch?: typeof fetch;
+  /** Keys already in the (fake) Keychain, by secret name. */
+  secrets?: Record<string, string>;
 };
 
 export const OK = (stdout: string): RunResult => ({ ok: true, stdout, stderr: "" });
@@ -29,6 +32,7 @@ export function fakeDeps(overrides: Overrides = {}): FakeDeps {
     fetch: overrides.fetch ?? (async () => new Response("{}", { status: 200 })),
     workdir: "/fake/workdir",
     ollamaUrl: "http://127.0.0.1:11434",
+    secrets: memorySecrets(overrides.secrets),
   };
 }
 

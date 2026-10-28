@@ -1,3 +1,4 @@
+import type { SecretStore } from "../../inbox/keychain";
 import type { ProviderId } from "../../store/settings";
 import type { FindExecutable } from "./find-executable";
 import type { RunCommand } from "./process";
@@ -40,6 +41,14 @@ export interface Provider {
   complete(request: CompleteRequest): Promise<ProviderResult<string>>;
 }
 
+/** A provider that runs on an API key the person pastes (V1-9). The key is checked before it is kept, and lives in the Keychain only. */
+export interface KeyedProvider extends Provider {
+  saveKey(key: string): Promise<ProviderResult<ProviderStatus>>;
+  forgetKey(): Promise<ProviderStatus>;
+}
+
+export const isKeyedProvider = (provider: Provider): provider is KeyedProvider => "saveKey" in provider;
+
 export type ProviderDeps = {
   run: RunCommand;
   find: FindExecutable;
@@ -47,6 +56,8 @@ export type ProviderDeps = {
   /** Empty scratch directory so CLIs never read project files. */
   workdir: string;
   ollamaUrl: string;
+  /** Where API keys live: the macOS Keychain, or a Map in tests. */
+  secrets: SecretStore;
 };
 
 export const DEFAULT_COMPLETE_TIMEOUT_MS = 90_000;

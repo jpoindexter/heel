@@ -27,15 +27,19 @@ export type ModelControl =
   | { kind: "select"; options: string[]; value: string | null; required: boolean }
   | { kind: "text"; value: string };
 
+/** Providers Heel can run with no model chosen (the CLIs pick their own; Anthropic has a current default). Ollama and OpenAI need a pick. */
+const HAS_DEFAULT_MODEL: readonly ProviderId[] = ["claude", "codex", "anthropic"];
+
 /**
- * Local models must be picked from what Ollama reports. CLI providers report nothing, so the model
+ * Local and API-key models must be picked from what the provider reports. CLI providers report nothing, so the model
  * is optional free text (empty = the provider's default). A saved model that is no longer reported stays visible.
  */
 export function modelControl(provider: ProviderId | null, models: string[] | null, current: string | null): ModelControl {
   if (!provider || models === null) return { kind: "none" };
-  if (provider === "ollama" || models.length > 0) {
+  const required = !HAS_DEFAULT_MODEL.includes(provider);
+  if (required || models.length > 0) {
     const options = current && !models.includes(current) ? [current, ...models] : models;
-    return { kind: "select", options, value: current, required: provider === "ollama" };
+    return { kind: "select", options, value: current, required };
   }
   return { kind: "text", value: current ?? "" };
 }

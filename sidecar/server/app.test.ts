@@ -45,6 +45,8 @@ describe("GET /brain", () => {
       ["claude", true],
       ["codex", false],
       ["ollama", true],
+      ["anthropic", false],
+      ["openai", false],
     ]);
   });
 });

@@ -6,6 +6,7 @@ import { useNotices } from "../ui/notices";
 import { useFocusRefresh } from "../ui/useFocusRefresh";
 import { changeMessage } from "./brain-model";
 import { useBrainView } from "./useBrainView";
+import { useProviderKeys } from "./useProviderKeys";
 
 export type { BrainView } from "./useBrainView";
 export type TestState = { phase: "idle" } | { phase: "running" } | { phase: "done"; ok: boolean; message: string };
@@ -15,6 +16,7 @@ export function useBrain(client: Client, active: boolean, onSaved?: () => void) 
   const { show: notify } = useNotices();
   const [test, setTest] = useState<TestState>({ phase: "idle" });
   const { view, ready, show, fetchModels, load } = useBrainView(client, notify);
+  const keys = useProviderKeys({ client, ready, show, notify });
   useFocusRefresh(load, active);
 
   const save = useCallback(
@@ -42,6 +44,7 @@ export function useBrain(client: Client, active: boolean, onSaved?: () => void) 
   return {
     view,
     test,
+    ...keys,
     refresh: load,
     runTest,
     choose: (provider: ProviderId) => save({ provider, model: null }),
