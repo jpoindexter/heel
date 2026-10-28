@@ -31,3 +31,20 @@ export function createProviders(deps: ProviderDeps = defaultDeps()): Record<Prov
 export function detectAll(providers: Record<ProviderId, Provider>): Promise<ProviderStatus[]> {
   return Promise.all(PROVIDER_IDS.map((id) => providers[id].status()));
 }
+
+export const STATUS_KEEP_MS = 30_000;
+
+/**
+ * detectAll, with one answer kept for STATUS_KEEP_MS: every Settings open asks, and each ask spawns the
+ * claude and codex CLIs (V1-10). `forget` after a sign-in test or a provider change so the next ask is fresh.
+ */
+export function cachedDetectAll(providers: Record<ProviderId, Provider>, now: () => number = Date.now) {
+  let kept: { at: number; value: Promise<ProviderStatus[]> } | null = null;
+  return {
+    all: (): Promise<ProviderStatus[]> => {
+      if (!kept || now() - kept.at >= STATUS_KEEP_MS) kept = { at: now(), value: detectAll(providers) };
+      return kept.value;
+    },
+    forget: (): void => void (kept = null),
+  };
+}

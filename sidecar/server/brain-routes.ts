@@ -1,7 +1,7 @@
 import type { Hono } from "hono";
 import { z } from "zod";
 import { PROVIDER_IDS } from "../../shared/providers";
-import { detectAll } from "../agent/providers/registry";
+import { cachedDetectAll } from "../agent/providers/registry";
 import { BrainSettingsInput } from "../store/settings";
 import type { AppDeps } from "./app";
 import { fail, ok, readJson } from "./respond";
@@ -10,7 +10,8 @@ const ProviderQuery = z.enum(PROVIDER_IDS);
 
 /** Which AI Heel uses: the provider list, its models, saving the choice, and a connection test. */
 export function registerBrainRoutes(app: Hono, deps: AppDeps): void {
-  app.get("/brain", async (c) => ok(c, { settings: deps.store.settings.getBrain(), providers: await detectAll(deps.providers) }));
+  const statuses = cachedDetectAll(deps.providers);
+  app.get("/brain", async (c) => ok(c, { settings: deps.store.settings.getBrain(), providers: await statuses.all() }));
 
   app.get("/brain/models", async (c) => {
     const id = ProviderQuery.safeParse(c.req.query("provider"));
@@ -23,6 +24,7 @@ export function registerBrainRoutes(app: Hono, deps: AppDeps): void {
     const body = BrainSettingsInput.safeParse(await readJson(c));
     if (!body.success) return fail(c, "invalid", body.error.issues[0]?.message ?? "Settings are not valid.");
     if (body.data.provider) {
+      statuses.forget();
       const status = await deps.providers[body.data.provider].status();
       if (!status.ready) return fail(c, "not_ready", status.detail);
     }
@@ -33,6 +35,7 @@ export function registerBrainRoutes(app: Hono, deps: AppDeps): void {
   app.post("/brain/test", async (c) => {
     const { provider, model } = deps.store.settings.getBrain();
     if (!provider) return fail(c, "not_ready", "Choose a provider first.");
+    statuses.forget();
     const status = await deps.providers[provider].status();
     if (!status.ready) return fail(c, "not_ready", status.detail);
     if (provider === "ollama" && !model) return fail(c, "not_ready", "Choose a local model first.");

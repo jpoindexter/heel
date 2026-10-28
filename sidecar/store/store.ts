@@ -1,4 +1,5 @@
 import { randomUUID } from "node:crypto";
+import { chmodSync, existsSync } from "node:fs";
 import { DatabaseSync } from "node:sqlite";
 import type { Ctx } from "./context";
 import { currentVersion, inTransaction, migrateDown, migrateUp } from "./migrations";
@@ -14,6 +15,11 @@ export type StoreOptions = {
   documentsDir?: string;
 };
 
+/** The file holds the person's tasks and mail: readable by this user only (V1-10). SQLite gives -wal/-shm the main file's mode. */
+function ownerOnly(path: string): void {
+  for (const file of [path, `${path}-wal`, `${path}-shm`]) if (existsSync(file)) chmodSync(file, 0o600);
+}
+
 /**
  * The one place that touches SQLite. node:sqlite is marked experimental by Node, so it stays
  * behind this file: swapping to better-sqlite3 later changes this file, repositories.ts and migrations.ts only.
@@ -22,6 +28,7 @@ export function openStore(options: StoreOptions = {}) {
   const db = new DatabaseSync(options.path ?? ":memory:");
   db.exec("PRAGMA foreign_keys = ON");
   db.exec("PRAGMA journal_mode = WAL");
+  if (options.path) ownerOnly(options.path);
   const ctx: Ctx = { db, now: options.now ?? Date.now, newId: options.newId ?? randomUUID };
   migrateUp(db, ctx.now);
 
