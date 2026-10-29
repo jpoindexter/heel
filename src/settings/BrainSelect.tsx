@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { Select, Text } from "@radix-ui/themes";
 import type { BrainStateDto } from "../../shared/api";
 import type { ProviderId } from "../../shared/providers";
@@ -8,6 +9,13 @@ type Props = { state: BrainStateDto; onChoose: (provider: ProviderId, model: str
 /** One selector for every AI: the subscriptions Heel detects, local models, and API keys, each provider's models as its options. */
 export function BrainSelect({ state, onChoose }: Props) {
   const { provider, model } = state.settings;
+  const [open, setOpen] = useState(false);
+  // A toast that appears while the list is open becomes Radix's top layer and takes Esc; close the list ourselves and mark the key handled.
+  const onKeyDown = (event: React.KeyboardEvent) => {
+    if (event.key !== "Escape") return;
+    event.preventDefault();
+    setOpen(false);
+  };
   const choose = (value: string) => {
     const next = parseOption(value);
     if (next) onChoose(next.provider, next.model);
@@ -15,9 +23,9 @@ export function BrainSelect({ state, onChoose }: Props) {
   return (
     <div className="field">
       <Text as="label" size="2" weight="medium" id="brain-label">AI</Text>
-      <Select.Root value={provider ? optionValue(provider, model) : ""} onValueChange={choose}>
+      <Select.Root value={provider ? optionValue(provider, model) : ""} onValueChange={choose} open={open} onOpenChange={setOpen}>
         <Select.Trigger id="brain-select" aria-labelledby="brain-label" aria-describedby="brain-help" placeholder="Choose an AI" style={{ width: "100%" }} />
-        <Select.Content position="popper" className="brain-select">
+        <Select.Content position="popper" className="brain-select" onKeyDown={onKeyDown}>
           {brainGroups(state).map((group) => (
             <Select.Group key={group.id}>
               <Select.Label>{`${group.label} · ${group.ready ? group.detail : "Needs setup"}`}</Select.Label>

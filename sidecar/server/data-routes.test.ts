@@ -97,7 +97,8 @@ describe("POST /data/wipe", () => {
       expect(result.data.rows).toBe(5);
       expect(result.data.files).toBe(1);
       expect(result.data.failed.map((f) => f.name)).toEqual(["pdf"]);
-      expect(result.data.failed[0]!.reason).toMatch(/EACCES|EPERM|permission/i);
+      // macOS reports the locked folder as EACCES on one run and ENOTEMPTY (its children survived) on another; both name the same problem.
+      expect(result.data.failed[0]!.reason).toMatch(/EACCES|EPERM|ENOTEMPTY|permission|not empty/i);
       const after = preview.parse(await json("/data/preview"));
       expect(after.ok && after.data.counts.tasks).toBe(0);
     } finally {

@@ -1,4 +1,5 @@
 import { Button, Callout, Flex, Heading, Text } from "@radix-ui/themes";
+import { isKeyedProvider } from "../../shared/providers";
 import { client } from "../api/default-client";
 import { modelText } from "./brain-model";
 import { BrainSelect } from "./BrainSelect";
@@ -13,6 +14,8 @@ export function BrainSettings({ active, onSaved }: Props) {
   const { view, test } = brain;
   const ready = view.phase === "ready" ? view : null;
   const text = ready ? modelText(ready.state) : null;
+  // Open on first paint when the chosen provider wants a key, so its field is right there; the person can still fold it.
+  const keyedChosen = !!ready && isKeyedProvider(ready.state.settings.provider ?? "") && !ready.state.providers.find((p) => p.id === ready.state.settings.provider)?.ready;
 
   return (
     <section aria-labelledby="brain-heading" className="settings-section">
@@ -28,7 +31,12 @@ export function BrainSettings({ active, onSaved }: Props) {
       {ready && (
         <>
           <BrainSelect state={ready.state} onChoose={(provider, model) => void brain.choose(provider, model)} />
-          <ProviderKeys state={ready.state} onSave={brain.saveKey} onForget={(id) => void brain.forgetKey(id)} />
+          <details className="brain-keys" open={keyedChosen}>
+            <summary>
+              <Text size="2" weight="medium">API keys</Text> <Text size="1" color="gray">Anthropic, OpenAI, Mistral</Text>
+            </summary>
+            <ProviderKeys state={ready.state} onSave={brain.saveKey} onForget={(id) => void brain.forgetKey(id)} />
+          </details>
           {text !== null && (
             <ModelField key={`${ready.state.settings.provider}-${ready.state.settings.model}`} value={text} onCommit={(model) => void brain.setModel(model)} />
           )}

@@ -192,3 +192,7 @@
   padding-block: var(--space-1);
   white-space: normal;
 }
+
+.brain-keys > summary {
+  cursor: pointer;
+}

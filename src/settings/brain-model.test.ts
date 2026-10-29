@@ -20,6 +20,7 @@ const state = (provider: BrainStateDto["settings"]["provider"], model: string | 
     { id: "codex", label: "Codex (subscription)", installed: true, ready: false, detail: "Not signed in. Run codex login in a terminal.", models: [] },
     { id: "ollama", label: "Local (Ollama)", installed: true, ready: true, detail: "2 local chat models", models: ["qwen2.5:14b", "llama3:8b"] },
     { id: "openai", label: "OpenAI (API key)", installed: true, ready: true, detail: "API key in the Keychain", models: [] },
+    { id: "mistral", label: "Mistral (API key)", installed: true, ready: true, detail: "API key in the Keychain", models: ["mistral-large-latest"] },
   ],
 });
 
@@ -31,6 +32,7 @@ describe("brainGroups", () => {
       ["codex", false, [["Not signed in. Run codex login in a terminal.", true]]],
       ["ollama", true, [["Local (Ollama) · qwen2.5:14b", false], ["Local (Ollama) · llama3:8b", false]]],
       ["openai", true, [["No models reported yet", true]]],
+      ["mistral", true, [["Mistral (API key) · default model", false], ["Mistral (API key) · mistral-large-latest", false]]],
     ]);
   });
 

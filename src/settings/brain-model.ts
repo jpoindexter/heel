@@ -20,7 +20,8 @@ export function parseOption(value: string): { provider: ProviderId; model: strin
 function optionsOf(group: BrainStateDto["providers"][number], chosen: ProviderId | null, saved: string | null): BrainOption[] {
   if (!group.ready) return [{ value: optionValue(group.id, null), label: group.detail, disabled: true }];
   const options: BrainOption[] = [];
-  if (HAS_DEFAULT_MODEL.includes(group.id)) options.push({ value: optionValue(group.id, null), label: group.label });
+  // With a list to pick from, the default entry says so; without one (the CLIs) the provider's name is the whole entry.
+  if (HAS_DEFAULT_MODEL.includes(group.id)) options.push({ value: optionValue(group.id, null), label: group.models.length ? `${group.label} · default model` : group.label });
   // A saved model the provider no longer reports (or a typed CLI model) stays visible, so the selector never shows nothing.
   if (chosen === group.id && saved && !group.models.includes(saved)) options.push({ value: optionValue(group.id, saved), label: `${group.label} · ${saved}` });
   for (const model of group.models) options.push({ value: optionValue(group.id, model), label: `${group.label} · ${model}` });
