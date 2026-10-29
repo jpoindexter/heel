@@ -18,7 +18,7 @@ import { LayersProvider, useLayers, type Layers } from "../ui/layers";
 import { AttentionProvider } from "../ui/attention";
 import { MethodProvider } from "../ui/method";
 import { useSwipe } from "../ui/useSwipe";
-import { opensSearch, shouldCloseOnKey } from "./escape";
+import { OPEN_POPOVER, opensSearch, shouldCloseOnKey } from "./escape";
 import { PanelHeader } from "./PanelHeader";
 import { usePanelAnchor } from "./usePanelAnchor";
 import { SettingsView } from "../settings/SettingsView";
@@ -54,7 +54,7 @@ function useEscape(layers: Layers): void {
         event.preventDefault();
         return latest.current.push("search");
       }
-      if (!shouldCloseOnKey(event)) return;
+      if (!shouldCloseOnKey(event, document.querySelector(OPEN_POPOVER) !== null)) return;
       if (latest.current.top === "today") void invoke("toggle_panel_command");
       else latest.current.back();
     };

@@ -487,3 +487,10 @@ Why: B1's hypothesis H2 (the ⌘⇧H shortcut colliding with the Claude and Code
 Verified: cargo tests (parse: empty → off, the default and ⌃⌥Space parse, nonsense names itself; settings round-trip with the new field and an older file without it); the panel model test (an older shell's answer without `hotkey` gets the default); the Startup section renders with the Select (the headings test, now under a Theme); gate 142 files / 737 tests, typecheck clean.
 Not verified: the real app registering a changed shortcut and toggling the panel with it, and the refusal when another app holds one (the plugin path is the same `register` the old code used, with the string parsed by the plugin's parser; a key press needs a hand).
 Reversible? Yes (one field, one module, one Select).
+
+## 2026-10-29 — One AI selector; Mistral as the third API-key provider; Test connection completes
+
+**Choice:** Settings › Brain is one Radix Select: a group per provider (Claude and Codex subscriptions detected on the Mac, Local, Anthropic / OpenAI / Mistral by key), each ready provider's models as its options, so one pick sets provider and model. A provider that isn't ready stays listed, disabled, with its reason as the entry text. GET /brain now carries each provider's models (one 30 s cache, `?fresh=1` for "Check again"); `/brain/models` and the six RadioCards are gone. "Test connection" sends a real one-word completion and reports the time, instead of only checking sign-in. Mistral: `api.mistral.ai/v1`, bearer key, chat-capable models not past their deprecation date, default `mistral-large-latest`.
+**Alternatives:** keep the cards and add a seventh (long scroll at 300 px wide; two steps to pick a model); a combobox with search (no Radix Themes combobox; more code than the list needs today).
+**Why:** Jason asked for "pick any model or it detects a subscription" in one control; the cards hid the model pick below three key forms, "Check again" answered from the cache for 30 s, and a green test could still fail on the first real ask.
+**Reversible?** Yes: the server shape is additive (models on each card) and the selector is one component.

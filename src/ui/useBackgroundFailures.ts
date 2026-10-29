@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { backgroundFailureNotice, crashLine } from "./crash-model";
+import { backgroundFailureNotice, crashLine, isBenignBackgroundError } from "./crash-model";
 import { logDebug } from "./debug-log";
 import type { Notices } from "./notices";
 
@@ -12,6 +12,7 @@ export function useBackgroundFailures(notices: Pick<Notices, "show">): void {
       notices.show({ message: backgroundFailureNotice(event.reason), tone: "error" });
     };
     const onError = (event: ErrorEvent) => {
+      if (isBenignBackgroundError(event.error ?? event.message)) return;
       console.error("[heel:panel] uncaught error:", event.error ?? event.message);
       logDebug("error", "panel", `uncaught error: ${crashLine(event.error ?? event.message)}`);
       notices.show({ message: backgroundFailureNotice(event.error ?? event.message), tone: "error" });

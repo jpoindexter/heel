@@ -13,6 +13,8 @@ export const ProviderStatusSchema = z.object({
   installed: z.boolean(),
   ready: z.boolean(),
   detail: z.string(),
+  /** What the provider reports once ready; empty for the CLIs, which pick their own. */
+  models: z.array(z.string()).default([]),
 });
 
 export const BrainSettingsSchema = z.object({
@@ -25,7 +27,6 @@ export const BrainStateSchema = z.object({
   providers: z.array(ProviderStatusSchema),
 });
 
-export const ModelsSchema = z.object({ models: z.array(z.string()) });
 
 /** PUT /brain/key: the key is checked against the provider before it is kept; it never comes back in a response. */
 export const ProviderKeyInputSchema = z.object({ provider: z.enum(KEYED_PROVIDER_IDS), key: z.string().trim().min(8, "Paste the whole key.") });

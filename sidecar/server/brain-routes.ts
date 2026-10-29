@@ -1,26 +1,23 @@
 import type { Hono } from "hono";
-import { z } from "zod";
 import { ProviderKeyForgetSchema, ProviderKeyInputSchema } from "../../shared/api";
-import { PROVIDER_IDS } from "../../shared/providers";
-import { cachedDetectAll } from "../agent/providers/registry";
+import { cachedDetectAll, withModels } from "../agent/providers/registry";
 import { isKeyedProvider } from "../agent/providers/types";
 import { BrainSettingsInput } from "../store/settings";
 import type { AppDeps } from "./app";
 import { fail, ok, readJson } from "./respond";
 
-const ProviderQuery = z.enum(PROVIDER_IDS);
+/** Long enough for a CLI to start and answer one word; the panel shows "Testing…" meanwhile. */
+const TEST_TIMEOUT_MS = 60_000;
+const TEST_SYSTEM = "This is a connection test. Reply with the single word OK and nothing else.";
 
-/** Which AI Heel uses: the provider list, its models, saving the choice, and a connection test. */
+/** Which AI Heel uses: the provider list with each one's models, saving the choice, and a connection test. */
 export function registerBrainRoutes(app: Hono, deps: AppDeps): void {
   const statuses = cachedDetectAll(deps.providers);
   registerKeyRoutes(app, deps, statuses);
-  app.get("/brain", async (c) => ok(c, { settings: deps.store.settings.getBrain(), providers: await statuses.all() }));
-
-  app.get("/brain/models", async (c) => {
-    const id = ProviderQuery.safeParse(c.req.query("provider"));
-    if (!id.success) return fail(c, "invalid", `provider must be one of: ${PROVIDER_IDS.join(", ")}.`);
-    const models = await deps.providers[id.data].models();
-    return models.ok ? ok(c, { models: models.value }) : fail(c, models.error.code, models.error.message);
+  // ?fresh=1 is the panel's "Check again": skip the 30 s cache so a sign-in just done shows at once.
+  app.get("/brain", async (c) => {
+    if (c.req.query("fresh")) statuses.forget();
+    return ok(c, { settings: deps.store.settings.getBrain(), providers: await statuses.all() });
   });
 
   app.put("/brain", async (c) => {
@@ -42,7 +39,11 @@ export function registerBrainRoutes(app: Hono, deps: AppDeps): void {
     const status = await deps.providers[provider].status();
     if (!status.ready) return fail(c, "not_ready", status.detail);
     if (provider === "ollama" && !model) return fail(c, "not_ready", "Choose a local model first.");
-    return ok(c, { detail: `${status.label} is ready: ${status.detail}.` });
+    // A real one-word completion: "signed in" alone has let a broken model name or a dead key pass as green.
+    const started = Date.now();
+    const reply = await deps.providers[provider].complete({ system: TEST_SYSTEM, prompt: "OK?", model, timeoutMs: TEST_TIMEOUT_MS });
+    if (!reply.ok) return fail(c, reply.error.code, reply.error.message);
+    return ok(c, { detail: `${status.label} answered in ${((Date.now() - started) / 1000).toFixed(1)} s.` });
   });
 }
 
@@ -55,7 +56,7 @@ function registerKeyRoutes(app: Hono, deps: AppDeps, statuses: ReturnType<typeof
     if (!isKeyedProvider(provider)) return fail(c, "invalid", `${provider.label} doesn't take an API key.`);
     const saved = await provider.saveKey(body.data.key);
     statuses.forget();
-    return saved.ok ? ok(c, saved.value) : fail(c, saved.error.code, saved.error.message);
+    return saved.ok ? ok(c, await withModels(provider, saved.value)) : fail(c, saved.error.code, saved.error.message);
   });
 
   app.post("/brain/key/forget", async (c) => {
@@ -64,6 +65,6 @@ function registerKeyRoutes(app: Hono, deps: AppDeps, statuses: ReturnType<typeof
     const provider = deps.providers[body.data.provider];
     if (!isKeyedProvider(provider)) return fail(c, "invalid", `${provider.label} doesn't take an API key.`);
     statuses.forget();
-    return ok(c, await provider.forgetKey());
+    return ok(c, await withModels(provider, await provider.forgetKey()));
   });
 }

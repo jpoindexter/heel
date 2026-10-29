@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { backgroundFailureNotice, crashLine } from "./crash-model";
+import { backgroundFailureNotice, crashLine, isBenignBackgroundError } from "./crash-model";
 import { ErrorBoundary } from "./ErrorBoundary";
 
 describe("crashLine", () => {
@@ -18,6 +18,12 @@ describe("crashLine", () => {
 describe("ErrorBoundary", () => {
   it("turns a thrown render error into recovery state, never a blank root", () => {
     expect(ErrorBoundary.getDerivedStateFromError(new Error("Reply exploded"))).toEqual({ crashed: "Reply exploded" });
+  });
+
+  it("lets the browser's ResizeObserver housekeeping pass without a toast, and nothing else", () => {
+    expect(isBenignBackgroundError("ResizeObserver loop completed with undelivered notifications.")).toBe(true);
+    expect(isBenignBackgroundError(new Error("ResizeObserver loop limit exceeded"))).toBe(true);
+    expect(isBenignBackgroundError(new Error("fetch failed"))).toBe(false);
   });
 
   it("words a background failure as a toast", () => {

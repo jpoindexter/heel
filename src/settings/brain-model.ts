@@ -1,47 +1,43 @@
 import type { BrainStateDto } from "../../shared/api";
-import type { ProviderId } from "../../shared/providers";
+import { PROVIDER_IDS, type ProviderId } from "../../shared/providers";
 
-export type ProviderRow = {
-  id: ProviderId;
-  label: string;
-  detail: string;
-  ready: boolean;
-  selected: boolean;
-  /** Words as well as an icon, so state never depends on colour alone. */
-  statusText: "Ready" | "Needs setup";
-};
+/** Providers Heel can run with no model chosen (the CLIs pick their own; Anthropic and Mistral have a current default). Ollama and OpenAI need a pick. */
+const HAS_DEFAULT_MODEL: readonly ProviderId[] = ["claude", "codex", "anthropic", "mistral"];
+const SEP = ":";
 
-export function providerRows(state: BrainStateDto): ProviderRow[] {
-  return state.providers.map((provider) => ({
-    id: provider.id,
-    label: provider.label,
-    detail: provider.detail,
-    ready: provider.ready,
-    selected: state.settings.provider === provider.id,
-    statusText: provider.ready ? "Ready" : "Needs setup",
-  }));
+export type BrainOption = { value: string; label: string; disabled?: boolean };
+export type BrainGroup = { id: ProviderId; label: string; ready: boolean; detail: string; options: BrainOption[] };
+
+/** One selector value for a provider and its model (empty model = the provider's default). */
+export const optionValue = (provider: ProviderId, model: string | null): string => `${provider}${SEP}${model ?? ""}`;
+
+export function parseOption(value: string): { provider: ProviderId; model: string | null } | null {
+  const at = value.indexOf(SEP);
+  const provider = value.slice(0, at) as ProviderId;
+  return at > 0 && PROVIDER_IDS.includes(provider) ? { provider, model: value.slice(at + 1) || null } : null;
 }
 
-export type ModelControl =
-  | { kind: "none" }
-  | { kind: "select"; options: string[]; value: string | null; required: boolean }
-  | { kind: "text"; value: string };
+function optionsOf(group: BrainStateDto["providers"][number], chosen: ProviderId | null, saved: string | null): BrainOption[] {
+  if (!group.ready) return [{ value: optionValue(group.id, null), label: group.detail, disabled: true }];
+  const options: BrainOption[] = [];
+  if (HAS_DEFAULT_MODEL.includes(group.id)) options.push({ value: optionValue(group.id, null), label: group.label });
+  // A saved model the provider no longer reports (or a typed CLI model) stays visible, so the selector never shows nothing.
+  if (chosen === group.id && saved && !group.models.includes(saved)) options.push({ value: optionValue(group.id, saved), label: `${group.label} · ${saved}` });
+  for (const model of group.models) options.push({ value: optionValue(group.id, model), label: `${group.label} · ${model}` });
+  if (options.length === 0) options.push({ value: optionValue(group.id, null), label: "No models reported yet", disabled: true });
+  return options;
+}
 
-/** Providers Heel can run with no model chosen (the CLIs pick their own; Anthropic has a current default). Ollama and OpenAI need a pick. */
-const HAS_DEFAULT_MODEL: readonly ProviderId[] = ["claude", "codex", "anthropic"];
+/** One group per provider for the selector: a provider that isn't ready keeps its place, disabled, with what to do. */
+export function brainGroups(state: BrainStateDto): BrainGroup[] {
+  const { provider, model } = state.settings;
+  return state.providers.map((p) => ({ id: p.id, label: p.label, ready: p.ready, detail: p.detail, options: optionsOf(p, provider, model) }));
+}
 
-/**
- * Local and API-key models must be picked from what the provider reports. CLI providers report nothing, so the model
- * is optional free text (empty = the provider's default). A saved model that is no longer reported stays visible.
- */
-export function modelControl(provider: ProviderId | null, models: string[] | null, current: string | null): ModelControl {
-  if (!provider || models === null) return { kind: "none" };
-  const required = !HAS_DEFAULT_MODEL.includes(provider);
-  if (required || models.length > 0) {
-    const options = current && !models.includes(current) ? [current, ...models] : models;
-    return { kind: "select", options, value: current, required };
-  }
-  return { kind: "text", value: current ?? "" };
+/** The optional free-text model for a chosen provider that reports no list (the CLIs); null hides the field. */
+export function modelText(state: BrainStateDto): string | null {
+  const chosen = state.providers.find((p) => p.id === state.settings.provider);
+  return chosen?.ready && chosen.models.length === 0 ? (state.settings.model ?? "") : null;
 }
 
 /** What a typed model name means on blur: the new name, null for "provider default", or undefined when nothing changed (so Tab through the field writes nothing). */

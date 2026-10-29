@@ -16,13 +16,13 @@ describe("cachedDetectAll", () => {
   it("asks each provider once within the keep window, again after it, and at once after forget", async () => {
     const calls: Record<string, number> = {};
     let t = 0;
-    const providers = { claude: counting("claude", calls), codex: counting("codex", calls), ollama: counting("ollama", calls), anthropic: counting("anthropic", calls), openai: counting("openai", calls) };
+    const providers = { claude: counting("claude", calls), codex: counting("codex", calls), ollama: counting("ollama", calls), anthropic: counting("anthropic", calls), openai: counting("openai", calls), mistral: counting("mistral", calls) };
     const statuses = cachedDetectAll(providers, () => t);
 
     await statuses.all();
     t = STATUS_KEEP_MS - 1;
     await statuses.all();
-    expect(calls).toEqual({ claude: 1, codex: 1, ollama: 1, anthropic: 1, openai: 1 });
+    expect(calls).toEqual({ claude: 1, codex: 1, ollama: 1, anthropic: 1, openai: 1, mistral: 1 });
 
     t = STATUS_KEEP_MS;
     await statuses.all();

@@ -15,7 +15,7 @@ export type TestState = { phase: "idle" } | { phase: "running" } | { phase: "don
 export function useBrain(client: Client, active: boolean, onSaved?: () => void) {
   const { show: notify } = useNotices();
   const [test, setTest] = useState<TestState>({ phase: "idle" });
-  const { view, ready, show, fetchModels, load } = useBrainView(client, notify);
+  const { view, ready, show, load } = useBrainView(client);
   const keys = useProviderKeys({ client, ready, show, notify });
   useFocusRefresh(load, active);
 
@@ -26,13 +26,12 @@ export function useBrain(client: Client, active: boolean, onSaved?: () => void) 
       const result = await client.put("/brain", BrainSettingsSchema, next);
       if (!result.ok) return notify({ message: result.error.message, tone: "error" });
       const previous = current.state.settings;
-      const models = result.data.provider ? await fetchModels(result.data.provider) : null;
-      show({ phase: "ready", state: { ...current.state, settings: result.data }, models });
+      show({ phase: "ready", state: { ...current.state, settings: result.data } });
       onSaved?.();
       setTest({ phase: "idle" });
       notify({ message: changeMessage(current.state, result.data), tone: "info", undo: withUndo ? () => void save(previous, false) : undefined });
     },
-    [client, fetchModels, notify, onSaved, ready, show],
+    [client, notify, onSaved, ready, show],
   );
 
   const runTest = useCallback(async () => {
@@ -45,9 +44,9 @@ export function useBrain(client: Client, active: boolean, onSaved?: () => void) 
     view,
     test,
     ...keys,
-    refresh: load,
+    refresh: () => load(true),
     runTest,
-    choose: (provider: ProviderId) => save({ provider, model: null }),
+    choose: (provider: ProviderId, model: string | null) => save({ provider, model }),
     setModel: (model: string | null) => {
       const provider = ready.current?.state.settings.provider ?? null;
       return provider ? save({ provider, model }) : Promise.resolve();

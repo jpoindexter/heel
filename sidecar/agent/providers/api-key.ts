@@ -44,7 +44,8 @@ export async function forgetKey(secrets: SecretStore, id: string, base: Pick<Pro
   return keyStatus(base, null);
 }
 
-const ErrorBody = z.object({ error: z.object({ message: z.string() }) });
+// OpenAI/Anthropic nest the message under error; Mistral puts it at the top.
+const ErrorBody = z.object({ error: z.object({ message: z.string() }) }).or(z.object({ message: z.string() }).transform(({ message }) => ({ error: { message } })));
 
 /** One sentence for a non-2xx answer: a refused key is its own case, the rest quote the provider's message. */
 export async function httpFailure(response: Response, who: string): Promise<ProviderResult<never>> {

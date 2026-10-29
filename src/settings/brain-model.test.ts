@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 import type { BrainStateDto } from "../../shared/api";
-import { changeMessage, modelControl, modelToCommit, providerRows } from "./brain-model";
+import { brainGroups, changeMessage, modelText, modelToCommit, optionValue, parseOption } from "./brain-model";
 
 describe("modelToCommit", () => {
   it("writes nothing when the field is left as it was (empty stays the default, a name stays itself)", () => {
@@ -16,49 +16,48 @@ describe("modelToCommit", () => {
 const state = (provider: BrainStateDto["settings"]["provider"], model: string | null = null): BrainStateDto => ({
   settings: { provider, model },
   providers: [
-    { id: "claude", label: "Claude (subscription)", installed: true, ready: true, detail: "max subscription" },
-    { id: "codex", label: "Codex (subscription)", installed: true, ready: false, detail: "Not signed in. Run codex login in a terminal." },
-    { id: "ollama", label: "Local (Ollama)", installed: true, ready: true, detail: "3 local chat models" },
+    { id: "claude", label: "Claude (subscription)", installed: true, ready: true, detail: "max subscription", models: [] },
+    { id: "codex", label: "Codex (subscription)", installed: true, ready: false, detail: "Not signed in. Run codex login in a terminal.", models: [] },
+    { id: "ollama", label: "Local (Ollama)", installed: true, ready: true, detail: "2 local chat models", models: ["qwen2.5:14b", "llama3:8b"] },
+    { id: "openai", label: "OpenAI (API key)", installed: true, ready: true, detail: "API key in the Keychain", models: [] },
   ],
 });
 
-describe("providerRows", () => {
-  it("marks the selected provider and says Ready or Needs setup in words", () => {
-    const rows = providerRows(state("claude"));
-    expect(rows.map((r) => [r.id, r.selected, r.statusText])).toEqual([
-      ["claude", true, "Ready"],
-      ["codex", false, "Needs setup"],
-      ["ollama", false, "Ready"],
+describe("brainGroups", () => {
+  it("gives a CLI provider its default entry, a local provider its models only, and keeps a provider that needs setup listed but disabled", () => {
+    const groups = brainGroups(state("claude"));
+    expect(groups.map((g) => [g.id, g.ready, g.options.map((o) => [o.label, o.disabled ?? false])])).toEqual([
+      ["claude", true, [["Claude (subscription)", false]]],
+      ["codex", false, [["Not signed in. Run codex login in a terminal.", true]]],
+      ["ollama", true, [["Local (Ollama) · qwen2.5:14b", false], ["Local (Ollama) · llama3:8b", false]]],
+      ["openai", true, [["No models reported yet", true]]],
     ]);
   });
 
-  it("keeps the fix instruction for a provider that needs setup", () => {
-    expect(providerRows(state(null))[1]?.detail).toContain("codex login");
+  it("keeps the saved model visible when the provider no longer reports it, or when it was typed for a CLI", () => {
+    const ollama = brainGroups(state("ollama", "gone:1b"))[2]!;
+    expect(ollama.options[0]).toEqual({ value: optionValue("ollama", "gone:1b"), label: "Local (Ollama) · gone:1b" });
+    const claude = brainGroups(state("claude", "sonnet"))[0]!;
+    expect(claude.options.map((o) => o.label)).toEqual(["Claude (subscription)", "Claude (subscription) · sonnet"]);
   });
 });
 
-describe("modelControl", () => {
-  it("shows nothing until a provider is chosen and its models are known", () => {
-    expect(modelControl(null, [], null)).toEqual({ kind: "none" });
-    expect(modelControl("claude", null, null)).toEqual({ kind: "none" });
+describe("optionValue and parseOption", () => {
+  it("round-trips a provider with and without a model, and rejects anything else", () => {
+    expect(parseOption(optionValue("ollama", "qwen2.5:14b"))).toEqual({ provider: "ollama", model: "qwen2.5:14b" });
+    expect(parseOption(optionValue("claude", null))).toEqual({ provider: "claude", model: null });
+    expect(parseOption("gpt:x")).toBeNull();
+    expect(parseOption("")).toBeNull();
   });
+});
 
-  it("makes the CLI providers' model optional free text", () => {
-    expect(modelControl("codex", [], null)).toEqual({ kind: "text", value: "" });
-    expect(modelControl("claude", [], "sonnet")).toEqual({ kind: "text", value: "sonnet" });
-  });
-
-  it("requires a pick from the reported list for Ollama", () => {
-    expect(modelControl("ollama", ["qwen2.5:14b"], null)).toEqual({ kind: "select", options: ["qwen2.5:14b"], value: null, required: true });
-  });
-
-  it("keeps a saved model visible even if the provider no longer reports it", () => {
-    const control = modelControl("ollama", ["qwen2.5:14b"], "gone:1b");
-    expect(control).toMatchObject({ kind: "select", options: ["gone:1b", "qwen2.5:14b"], value: "gone:1b" });
-  });
-
-  it("offers a select when a CLI provider does report models, with the default allowed", () => {
-    expect(modelControl("claude", ["a", "b"], null)).toMatchObject({ kind: "select", required: false });
+describe("modelText", () => {
+  it("offers free text only for a ready provider that reports no models", () => {
+    expect(modelText(state("claude", "sonnet"))).toBe("sonnet");
+    expect(modelText(state("claude"))).toBe("");
+    expect(modelText(state("ollama"))).toBeNull();
+    expect(modelText(state("codex"))).toBeNull();
+    expect(modelText(state(null))).toBeNull();
   });
 });
 

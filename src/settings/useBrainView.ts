@@ -1,18 +1,13 @@
 import { useCallback, useRef, useState } from "react";
-import { BrainStateSchema, ModelsSchema, type BrainStateDto } from "../../shared/api";
-import type { ProviderId } from "../../shared/providers";
+import { BrainStateSchema, type BrainStateDto } from "../../shared/api";
 import type { Client } from "../api/client";
-import type { Notice } from "../ui/notice-model";
 
-export type BrainView =
-  | { phase: "loading" }
-  | { phase: "error"; message: string }
-  | { phase: "ready"; state: BrainStateDto; models: string[] | null };
+export type BrainView = { phase: "loading" } | { phase: "error"; message: string } | { phase: "ready"; state: BrainStateDto };
 
 export type ReadyBrain = Extract<BrainView, { phase: "ready" }>;
 
-/** What the Brain settings show: the provider list, and the models of the chosen provider. */
-export function useBrainView(client: Client, notify: (notice: Notice) => void) {
+/** What the Brain settings show: every provider with its models. `fresh` skips the helper's 30 s status cache ("Check again"). */
+export function useBrainView(client: Client) {
   const [view, setView] = useState<BrainView>({ phase: "loading" });
   const ready = useRef<ReadyBrain | null>(null);
 
@@ -21,22 +16,14 @@ export function useBrainView(client: Client, notify: (notice: Notice) => void) {
     setView(next);
   }, []);
 
-  const fetchModels = useCallback(
-    async (provider: ProviderId): Promise<string[]> => {
-      const result = await client.get(`/brain/models?provider=${provider}`, ModelsSchema);
-      if (result.ok) return result.data.models;
-      notify({ message: result.error.message, tone: "error" });
-      return [];
+  const load = useCallback(
+    async (fresh = false) => {
+      const result = await client.get(fresh ? "/brain?fresh=1" : "/brain", BrainStateSchema);
+      if (!result.ok) return show({ phase: "error", message: result.error.message });
+      show({ phase: "ready", state: result.data });
     },
-    [client, notify],
+    [client, show],
   );
 
-  const load = useCallback(async () => {
-    const result = await client.get("/brain", BrainStateSchema);
-    if (!result.ok) return show({ phase: "error", message: result.error.message });
-    const { provider } = result.data.settings;
-    show({ phase: "ready", state: result.data, models: provider ? await fetchModels(provider) : null });
-  }, [client, fetchModels, show]);
-
-  return { view, ready, show, fetchModels, load };
+  return { view, ready, show, load };
 }

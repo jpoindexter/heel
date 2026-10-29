@@ -10,6 +10,11 @@ export function crashLine(error: unknown): string {
   return (line || "an error with no message").slice(0, MAX_LINE);
 }
 
+/** Browser housekeeping that arrives as a window "error" with nothing failed: layout settling over two frames under a popover. */
+const BENIGN = [/^ResizeObserver loop/];
+
+export const isBenignBackgroundError = (reason: unknown): boolean => BENIGN.some((pattern) => pattern.test(crashLine(reason)));
+
 /** What a failed promise or an uncaught error in the background should say in a toast. */
 export function backgroundFailureNotice(reason: unknown): string {
   return `Something failed in the background: ${crashLine(reason)}`;

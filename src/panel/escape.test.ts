@@ -7,6 +7,7 @@ describe("shouldCloseOnKey", () => {
   it("closes on a plain Esc", () => expect(shouldCloseOnKey(key())).toBe(true));
   it("leaves Esc to an open select or menu that already used it", () => expect(shouldCloseOnKey(key({ defaultPrevented: true }))).toBe(false));
   it("ignores Esc pressed to cancel an IME composition", () => expect(shouldCloseOnKey(key({ isComposing: true }))).toBe(false));
+  it("leaves Esc to an open select even when a toast on top kept it from marking the key", () => expect(shouldCloseOnKey(key(), true)).toBe(false));
   it("ignores other keys", () => expect(shouldCloseOnKey(key({ key: "Enter" }))).toBe(false));
 });
 

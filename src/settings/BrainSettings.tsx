@@ -1,8 +1,8 @@
 import { Button, Callout, Flex, Heading, Text } from "@radix-ui/themes";
 import { client } from "../api/default-client";
-import { modelControl } from "./brain-model";
+import { modelText } from "./brain-model";
+import { BrainSelect } from "./BrainSelect";
 import { ModelField } from "./ModelField";
-import { ProviderCards } from "./ProviderCards";
 import { ProviderKeys } from "./ProviderKeys";
 import { useBrain } from "./useBrain";
 
@@ -12,7 +12,7 @@ export function BrainSettings({ active, onSaved }: Props) {
   const brain = useBrain(client, active, onSaved);
   const { view, test } = brain;
   const ready = view.phase === "ready" ? view : null;
-  const control = ready ? modelControl(ready.state.settings.provider, ready.models, ready.state.settings.model) : null;
+  const text = ready ? modelText(ready.state) : null;
 
   return (
     <section aria-labelledby="brain-heading" className="settings-section">
@@ -27,10 +27,10 @@ export function BrainSettings({ active, onSaved }: Props) {
       )}
       {ready && (
         <>
-          <ProviderCards state={ready.state} onChoose={(id) => void brain.choose(id)} />
+          <BrainSelect state={ready.state} onChoose={(provider, model) => void brain.choose(provider, model)} />
           <ProviderKeys state={ready.state} onSave={brain.saveKey} onForget={(id) => void brain.forgetKey(id)} />
-          {control && control.kind !== "none" && (
-            <ModelField key={`${ready.state.settings.provider}-${ready.state.settings.model}`} control={control} onCommit={(model) => void brain.setModel(model)} />
+          {text !== null && (
+            <ModelField key={`${ready.state.settings.provider}-${ready.state.settings.model}`} value={text} onCommit={(model) => void brain.setModel(model)} />
           )}
           <Flex gap="2" wrap="wrap">
             <Button size="2" variant="soft" loading={test.phase === "running"} onClick={() => void brain.runTest()}>

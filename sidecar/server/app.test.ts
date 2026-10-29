@@ -47,20 +47,29 @@ describe("GET /brain", () => {
       ["ollama", true],
       ["anthropic", false],
       ["openai", false],
+      ["mistral", false],
     ]);
-  });
-});
-
-describe("GET /brain/models", () => {
-  it("returns what the provider reports", async () => {
-    expect(await setup().json("/brain/models?provider=ollama")).toEqual({ ok: true, data: { models: ["qwen2.5:14b"] } });
+    expect(result.data.providers.map((p) => p.models)).toEqual([[], [], ["qwen2.5:14b"], [], [], []]);
   });
 
-  it("rejects an unknown provider and passes provider errors through", async () => {
+  it("keeps a model list the provider can't give as empty, not as an error", async () => {
     const down = fakeProvider("ollama", {}, { ok: false, error: { code: "not_ready", message: "Ollama isn't running." } });
-    const { json } = setup({ ollama: down });
-    expect(await json("/brain/models?provider=gpt")).toMatchObject({ ok: false, error: { code: "invalid" } });
-    expect(await json("/brain/models?provider=ollama")).toEqual({ ok: false, error: { code: "not_ready", message: "Ollama isn't running." } });
+    const result = envelope(BrainStateSchema).parse(await setup({ ollama: down }).json("/brain"));
+    expect(result.ok && result.data.providers.find((p) => p.id === "ollama")).toMatchObject({ ready: true, models: [] });
+  });
+
+  it("answers from the 30 s cache until ?fresh=1 (Check again)", async () => {
+    let ready = true;
+    const flaky: Provider = { ...fakeProvider("codex"), status: async () => ({ id: "codex", label: "Label codex", installed: true, ready, detail: ready ? "ChatGPT subscription" : "Signed out." }) };
+    const { json } = setup({ codex: flaky });
+    const codexReady = async (path: string) => {
+      const result = envelope(BrainStateSchema).parse(await json(path));
+      return result.ok && result.data.providers.find((p) => p.id === "codex")?.ready;
+    };
+    expect(await codexReady("/brain")).toBe(true);
+    ready = false;
+    expect(await codexReady("/brain")).toBe(true);
+    expect(await codexReady("/brain?fresh=1")).toBe(false);
   });
 });
 
@@ -100,10 +109,14 @@ describe("POST /brain/test", () => {
     expect(await setup().json("/brain/test", { method: "POST" })).toEqual({ ok: false, error: { code: "not_ready", message: "Choose a provider first." } });
   });
 
-  it("confirms a ready provider", async () => {
+  it("confirms a ready provider with a real one-word completion, and passes a failed completion through", async () => {
     const { put, json } = setup();
     await put({ provider: "claude", model: null });
-    expect(await json("/brain/test", { method: "POST" })).toEqual({ ok: true, data: { detail: "Label claude is ready: claude detail." } });
+    expect(await json("/brain/test", { method: "POST" })).toMatchObject({ ok: true, data: { detail: expect.stringMatching(/^Label claude answered in \d+\.\d s\.$/) } });
+    const mute = fakeProvider("claude", {}, { ok: true, value: [] }, { ok: false, error: { code: "failed", message: "Unknown model: sonnet-9." } });
+    const broken = setup({ claude: mute });
+    await broken.put({ provider: "claude", model: "sonnet-9" });
+    expect(await broken.json("/brain/test", { method: "POST" })).toEqual({ ok: false, error: { code: "failed", message: "Unknown model: sonnet-9." } });
   });
 
   it("needs a model for Ollama", async () => {

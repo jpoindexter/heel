@@ -5,8 +5,8 @@ import { summarizeBrain } from "./brain-summary";
 const state = (provider: BrainStateDto["settings"]["provider"], model: string | null, ready = true): BrainStateDto => ({
   settings: { provider, model },
   providers: [
-    { id: "claude", label: "Claude", installed: true, ready, detail: ready ? "Signed in" : "Run claude to sign in" },
-    { id: "ollama", label: "Local (Ollama)", installed: true, ready: true, detail: "Running" },
+    { id: "claude", label: "Claude", installed: true, ready, detail: ready ? "Signed in" : "Run claude to sign in", models: [] },
+    { id: "ollama", label: "Local (Ollama)", installed: true, ready: true, detail: "Running", models: [] },
   ],
 });
 

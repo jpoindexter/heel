@@ -1,4 +1,5 @@
 import { anthropicProvider } from "../agent/providers/anthropic";
+import { mistralProvider } from "../agent/providers/mistral";
 import { openaiProvider } from "../agent/providers/openai";
 import { fakeDeps } from "../agent/providers/test-deps";
 import type { Provider, ProviderId, ProviderResult, ProviderStatus } from "../agent/providers/types";
@@ -42,9 +43,10 @@ export function setup(overrides: Partial<Record<ProviderId, Provider>> = {}, inb
     claude: fakeProvider("claude"),
     codex: fakeProvider("codex", { ready: false, detail: "Not signed in. Run codex login in a terminal." }),
     ollama: fakeProvider("ollama", {}, { ok: true, value: ["qwen2.5:14b"] }),
-    // The two API-key providers are the real adapters on a fake Keychain and a fetch that answers nothing.
+    // The API-key providers are the real adapters on a fake Keychain and a fetch that answers nothing.
     anthropic: anthropicProvider(fakeDeps()),
     openai: openaiProvider(fakeDeps()),
+    mistral: mistralProvider(fakeDeps()),
     ...overrides,
   };
   const inbox = createInbox({ fetch: (async () => new Response("{}", { status: 500 })) as typeof fetch, secrets: memorySecrets(), now: () => 1_000_000, openUrl: async () => undefined, ...inboxDeps });

@@ -12,13 +12,12 @@ describe("PUT /brain/key and POST /brain/key/forget", () => {
     const deps = fakeDeps({ fetch: async () => models() });
     const { send, json } = setup({ anthropic: anthropicProvider(deps) });
     const saved = await send("PUT", "/brain/key", { provider: "anthropic", key: KEY });
-    expect(saved).toMatchObject({ ok: true, data: { id: "anthropic", ready: true } });
+    expect(saved).toMatchObject({ ok: true, data: { id: "anthropic", ready: true, models: ["claude-opus-5-5"] } });
     expect(JSON.stringify(saved)).not.toContain(KEY);
     const brain = envelope(BrainStateSchema).parse(await json("/brain"));
     expect(brain.ok && brain.data.providers.find((p) => p.id === "anthropic")?.ready).toBe(true);
-    expect(await json("/brain/models?provider=anthropic")).toMatchObject({ ok: true, data: { models: ["claude-opus-5-5"] } });
     const forgotten = await send("POST", "/brain/key/forget", { provider: "anthropic" });
-    expect(forgotten).toMatchObject({ ok: true, data: { ready: false } });
+    expect(forgotten).toMatchObject({ ok: true, data: { ready: false, models: [] } });
     expect(await deps.secrets.get("provider-key:anthropic")).toBeNull();
   });
 

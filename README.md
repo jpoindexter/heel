@@ -4,7 +4,7 @@ A quiet desktop companion for an autistic/ADHD brain: Greg, a small dog, sits on
 
 ## What it does today
 - **Tasks**: add (`⌘↩` in the chat card adds instantly, no AI), complete, remove, park ideas, split a task into steps, pick a method (Pomodoro, pickle jar, T-shirt sizes), a History layer of what got done (no streaks, no points).
-- **Heel (the AI)**: Enter in the card talks to Claude, Codex, Ollama, or Anthropic / OpenAI with your own API key. *Model proposes, app disposes*: every write is a typed action, validated, applied by the app, shown as a receipt with Undo.
+- **Heel (the AI)**: Enter in the card talks to Claude, Codex, Ollama, or Anthropic / OpenAI / Mistral with your own API key. *Model proposes, app disposes*: every write is a typed action, validated, applied by the app, shown as a receipt with Undo.
 - **Mail on this Mac** (Apple Mail): `+` › Email lists unread mail (7 days); Open shows it in Mail; Reply drafts with the AI and shows a **preview** — nothing is sent until you press Send; "draft an email to…" opens a filled-in draft in Mail, unsent.
 - **Focus**: a time-box with a check-in in your own words; an interrupt budget of 3 a day the helper enforces; Quiet mode and Off.
 - **Greg**: 34-clip puppy art, walks, naps, follows the pointer sometimes, shows when the AI is working, offers one way back when attention sense sees a rabbit hole (opt-in).
@@ -13,7 +13,7 @@ A quiet desktop companion for an autistic/ADHD brain: Greg, a small dog, sits on
 ## Requirements
 - macOS (developed and tested on macOS 26, Apple silicon). Not signed or notarized yet: Gatekeeper will ask once (`V1-10`).
 - **Node 22+** on the Mac (`node:sqlite`): the shell looks in `~/.local/bin`, Homebrew, `/usr/local/bin`, then your login shell; `HEEL_NODE=/path/to/node` overrides.
-- For the AI: the `claude` or `codex` CLI signed in, Ollama running, or an Anthropic / OpenAI API key pasted in Settings › Brain (kept in the macOS Keychain, sent only to that provider). Nothing else is sent anywhere.
+- For the AI: the `claude` or `codex` CLI signed in, Ollama running, or an Anthropic / OpenAI / Mistral API key pasted in Settings › Brain (kept in the macOS Keychain, sent only to that provider). Nothing else is sent anywhere.
 - Optional: Apple Mail set up (mail features), Xcode command line tools (`swiftc`, for PDFs).
 
 ## Run, build, test
