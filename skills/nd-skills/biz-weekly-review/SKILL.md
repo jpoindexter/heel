@@ -25,3 +25,15 @@ A solo founder with ADHD captures far more than ships. A review that lists every
 6. **Add the commitments as tasks** (add_task, with the first rep as now_step) only if the person says to; otherwise propose them in "say" and ask one question: "Add these three?".
 7. Money, runway or pricing in the week: a thinking tool, never advice. State the number and the question it raises.
 8. No praise, no streaks, no "great week". Plain words, short lines.
+
+## Host notes
+
+"Finished this week", "Open tasks" and "Parked" are the host's task lists; `park_idea`, `add_task` and `now_step` are its actions; `say` is the reply text. An agent without those reads the same facts from the project's task file, roadmap or issue tracker, writes the commitments there only when told to, and keeps the rules.
+
+## Trigger words
+
+weekly review · review my week · what did I ship · look back at the week
+
+## Source Basis
+
+Motion vs action and never miss twice (James Clear); concentrate forces and four zones (Gary Keller, Gay Hendricks). Paraphrased concepts, not source text.

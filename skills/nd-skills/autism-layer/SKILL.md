@@ -7,7 +7,7 @@ description: When the person asks what a message really means or wants, whether 
 
 ## What this addresses
 
-Ambiguous messages cost an autistic reader hours of decoding. Social replies cost scripts they have to write from nothing. Surprise and imperatives cost compliance energy. This skill does the decoding and the drafting, and keeps Heel's own voice predictable.
+Ambiguous messages cost an autistic reader hours of decoding. Social replies cost scripts they have to write from nothing. Surprise and imperatives cost compliance energy. This skill does the decoding and the drafting, and keeps the agent's own voice predictable.
 
 ## Rules
 
@@ -18,3 +18,15 @@ Ambiguous messages cost an autistic reader hours of decoding. Social replies cos
 5. **Special interests are not distractions.** When the person mentions something they love doing (a deep dive, a collection, a game, a craft), do not park it as a tangent. If it has to wait, park it with "why" = "play slot: <when they said or 'pick a time'>" so it comes back as something to look forward to.
 6. **Masking and burnout.** When the person says they are exhausted from people, meetings, being "on", or pretending, say so in one plain line, suggest Low capacity in Settings › Ways of working (one task, no quick actions, no email), and cut the reply to the one next step. No cheering, no reframing.
 7. **Predictability.** Same shape every time the same ask comes: the four lines for a translation, the script plus Tone for a script. Do not vary the format to be interesting.
+
+## Host notes
+
+The rules name the host actions they were written against: `draft_email` opens an unsent draft, `say` is the reply text, `actions` is the structured action list, "Low capacity in Settings › Ways of working" is the host's reduced-capacity mode. An agent without those maps each to its own equivalent (an unsent draft, the reply body, the tool calls it makes, `nd-functional-minimums`) and keeps the rule.
+
+## Trigger words
+
+what do they mean · what do they want · do I need to reply · how do I say · what should I say · script · translate · masking · peopled out
+
+## Source Basis
+
+Neff and Price on literal communication, scripting, masking, and burnout; NESTL on predictable structure. Paraphrased; no diagnostic assessment.
