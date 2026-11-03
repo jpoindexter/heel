@@ -45,3 +45,4 @@
 - [A storage event never reaches the window that wrote](2026-10-28-a-storage-event-never-reaches-the-window-that-wrote.md) — same-window readers need a shared store; a storage listener only hears other windows
 - [Check a secret before keeping it](2026-10-28-check-a-secret-before-keeping-it.md) — verify with the provider's cheapest read-only call inside the save; a refused key is never written
 - [A prompt-fragment feature is done on one real turn](2026-10-28-a-prompt-fragment-feature-is-done-on-one-real-turn.md) — run the real provider once from a scratch script and read the reply against the skill's numbered rules
+- [2026-11-03 a-disabled-entry-for-a-fixable-state-is-a-dead-end](2026-11-03-a-disabled-entry-for-a-fixable-state-is-a-dead-end.md) — When the person can fix a state from this screen, the disabled entry becomes the setup action and the server keeps the guard; drive a controlled `<details>` from one nullable state, never `derived || state`.
