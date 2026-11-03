@@ -1,5 +1,6 @@
 import { describe, expect, it } from "vitest";
 import type { BrainStateDto } from "../../shared/api";
+import { KEYED_PROVIDER_IDS } from "../../shared/providers";
 import { brainGroups, changeMessage, modelText, modelToCommit, optionValue, parseOption } from "./brain-model";
 
 describe("modelToCommit", () => {
@@ -25,6 +26,20 @@ const state = (provider: BrainStateDto["settings"]["provider"], model: string | 
 });
 
 describe("brainGroups", () => {
+  it.each(KEYED_PROVIDER_IDS)("lets a person choose %s to open its missing-key setup", (id) => {
+    const missingKey = state("claude");
+    missingKey.providers = [{ id, label: id, installed: true, ready: false, detail: "No API key yet", models: [] }];
+    expect(brainGroups(missingKey)[0]!.options).toEqual([
+      { value: optionValue(id, null), label: `${id} · Add API key…`, disabled: false },
+    ]);
+  });
+
+  it("keeps an unavailable local provider disabled", () => {
+    const local = state("ollama");
+    local.providers = [{ id: "ollama", label: "Local", installed: true, ready: false, detail: "Ollama isn't running", models: [] }];
+    expect(brainGroups(local)[0]!.options[0]!.disabled).toBe(true);
+  });
+
   it("gives a CLI provider its default entry, a local provider its models only, and keeps a provider that needs setup listed but disabled", () => {
     const groups = brainGroups(state("claude"));
     expect(groups.map((g) => [g.id, g.ready, g.options.map((o) => [o.label, o.disabled ?? false])])).toEqual([

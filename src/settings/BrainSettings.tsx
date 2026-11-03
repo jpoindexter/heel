@@ -1,4 +1,5 @@
 import { Button, Callout, Flex, Heading, Text } from "@radix-ui/themes";
+import { useState } from "react";
 import { isKeyedProvider } from "../../shared/providers";
 import { client } from "../api/default-client";
 import { modelText } from "./brain-model";
@@ -11,6 +12,7 @@ type Props = { active: boolean; onSaved?: () => void };
 
 export function BrainSettings({ active, onSaved }: Props) {
   const brain = useBrain(client, active, onSaved);
+  const [keysOpen, setKeysOpen] = useState(false);
   const { view, test } = brain;
   const ready = view.phase === "ready" ? view : null;
   const text = ready ? modelText(ready.state) : null;
@@ -30,8 +32,11 @@ export function BrainSettings({ active, onSaved }: Props) {
       )}
       {ready && (
         <>
-          <BrainSelect state={ready.state} onChoose={(provider, model) => void brain.choose(provider, model)} />
-          <details className="brain-keys" open={keyedChosen}>
+          <BrainSelect state={ready.state} onSetup={() => setKeysOpen(true)} onChoose={(provider, model) => {
+            setKeysOpen(false);
+            void brain.choose(provider, model);
+          }} />
+          <details className="brain-keys" open={keyedChosen || keysOpen} onToggle={(event) => setKeysOpen(event.currentTarget.open)}>
             <summary>
               <Text size="2" weight="medium">API keys</Text> <Text size="1" color="gray">Anthropic, OpenAI, Mistral</Text>
             </summary>

@@ -1,5 +1,5 @@
 import type { BrainStateDto } from "../../shared/api";
-import { PROVIDER_IDS, type ProviderId } from "../../shared/providers";
+import { isKeyedProvider, PROVIDER_IDS, type ProviderId } from "../../shared/providers";
 
 /** Providers Heel can run with no model chosen (the CLIs pick their own; Anthropic and Mistral have a current default). Ollama and OpenAI need a pick. */
 const HAS_DEFAULT_MODEL: readonly ProviderId[] = ["claude", "codex", "anthropic", "mistral"];
@@ -18,7 +18,10 @@ export function parseOption(value: string): { provider: ProviderId; model: strin
 }
 
 function optionsOf(group: BrainStateDto["providers"][number], chosen: ProviderId | null, saved: string | null): BrainOption[] {
-  if (!group.ready) return [{ value: optionValue(group.id, null), label: group.detail, disabled: true }];
+  if (!group.ready) {
+    const keyed = isKeyedProvider(group.id);
+    return [{ value: optionValue(group.id, null), label: keyed ? `${group.label} · Add API key…` : group.detail, disabled: !keyed }];
+  }
   const options: BrainOption[] = [];
   // With a list to pick from, the default entry says so; without one (the CLIs) the provider's name is the whole entry.
   if (HAS_DEFAULT_MODEL.includes(group.id)) options.push({ value: optionValue(group.id, null), label: group.models.length ? `${group.label} · default model` : group.label });
@@ -29,7 +32,7 @@ function optionsOf(group: BrainStateDto["providers"][number], chosen: ProviderId
   return options;
 }
 
-/** One group per provider for the selector: a provider that isn't ready keeps its place, disabled, with what to do. */
+/** Missing-key entries open setup; unavailable subscriptions and local servers stay disabled. */
 export function brainGroups(state: BrainStateDto): BrainGroup[] {
   const { provider, model } = state.settings;
   return state.providers.map((p) => ({ id: p.id, label: p.label, ready: p.ready, detail: p.detail, options: optionsOf(p, provider, model) }));

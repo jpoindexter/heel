@@ -1,15 +1,17 @@
 import { useState } from "react";
 import { Select, Text } from "@radix-ui/themes";
 import type { BrainStateDto } from "../../shared/api";
-import type { ProviderId } from "../../shared/providers";
-import { brainGroups, optionValue, parseOption } from "./brain-model";
+import { isKeyedProvider, type ProviderId } from "../../shared/providers";
+import { useNotices } from "../ui/notices";
+import { brainGroups, labelFor, optionValue, parseOption } from "./brain-model";
 
-type Props = { state: BrainStateDto; onChoose: (provider: ProviderId, model: string | null) => void };
+type Props = { state: BrainStateDto; onChoose: (provider: ProviderId, model: string | null) => void; onSetup: () => void };
 
 /** One selector for every AI: the subscriptions Heel detects, local models, and API keys, each provider's models as its options. */
-export function BrainSelect({ state, onChoose }: Props) {
+export function BrainSelect({ state, onChoose, onSetup }: Props) {
   const { provider, model } = state.settings;
   const [open, setOpen] = useState(false);
+  const { show: notify } = useNotices();
   // A toast that appears while the list is open becomes Radix's top layer and takes Esc; close the list ourselves and mark the key handled.
   const onKeyDown = (event: React.KeyboardEvent) => {
     if (event.key !== "Escape") return;
@@ -18,7 +20,11 @@ export function BrainSelect({ state, onChoose }: Props) {
   };
   const choose = (value: string) => {
     const next = parseOption(value);
-    if (next) onChoose(next.provider, next.model);
+    if (!next) return;
+    if (isKeyedProvider(next.provider) && !state.providers.find((p) => p.id === next.provider)?.ready) {
+      onSetup();
+      notify({ message: `${labelFor(state, next.provider)} needs a key. Add it below; your selected AI is unchanged.`, tone: "info" });
+    } else onChoose(next.provider, next.model);
   };
   return (
     <div className="field">
@@ -36,7 +42,7 @@ export function BrainSelect({ state, onChoose }: Props) {
           ))}
         </Select.Content>
       </Select.Root>
-      <Text as="p" id="brain-help" size="1" color="gray">Subscriptions signed in on this Mac show as ready. Greyed entries say what they need.</Text>
+      <Text as="p" id="brain-help" size="1" color="gray">Subscriptions signed in on this Mac show as ready. API-key entries open setup; greyed entries say what they need.</Text>
     </div>
   );
 }
