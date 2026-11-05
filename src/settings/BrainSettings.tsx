@@ -12,7 +12,8 @@ type Props = { active: boolean; onSaved?: () => void };
 
 export function BrainSettings({ active, onSaved }: Props) {
   const brain = useBrain(client, active, onSaved);
-  const [keysOpen, setKeysOpen] = useState(false);
+  // null = follow the chosen provider; true/false = the person (or a setup pick) decided.
+  const [keysOpen, setKeysOpen] = useState<boolean | null>(null);
   const { view, test } = brain;
   const ready = view.phase === "ready" ? view : null;
   const text = ready ? modelText(ready.state) : null;
@@ -33,10 +34,10 @@ export function BrainSettings({ active, onSaved }: Props) {
       {ready && (
         <>
           <BrainSelect state={ready.state} onSetup={() => setKeysOpen(true)} onChoose={(provider, model) => {
-            setKeysOpen(false);
+            setKeysOpen(null);
             void brain.choose(provider, model);
           }} />
-          <details className="brain-keys" open={keyedChosen || keysOpen} onToggle={(event) => setKeysOpen(event.currentTarget.open)}>
+          <details className="brain-keys" open={keysOpen ?? keyedChosen} onToggle={(event) => setKeysOpen(event.currentTarget.open)}>
             <summary>
               <Text size="2" weight="medium">API keys</Text> <Text size="1" color="gray">Anthropic, OpenAI, Mistral</Text>
             </summary>
