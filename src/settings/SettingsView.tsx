@@ -20,6 +20,7 @@ import { CapacitySettings } from "./CapacitySettings";
 import { DataSettings } from "./DataSettings";
 import { DebugSettings } from "./DebugSettings";
 import { FeedbackSettings } from "./FeedbackSettings";
+import { HelpSettings } from "./HelpSettings";
 import { DensitySettings } from "./DensitySettings";
 import { PanelSettings } from "./PanelSettings";
 import { MethodSettings } from "./MethodSettings";
@@ -36,7 +37,7 @@ type Props = {
   onDensity: (next: Density) => void;
 };
 
-/** Two levels (N4): eight groups with their values at rest, each opening to its controls. One group open at a time. */
+/** Two levels (N4): nine groups with their values at rest, each opening to its controls. One group open at a time. */
 export function SettingsView({ active, onSaved, preference, onPreference, density, onDensity }: Props) {
   const [activity] = useActivity();
   const { settings: attention } = useAttentionSettings();
@@ -47,6 +48,9 @@ export function SettingsView({ active, onSaved, preference, onPreference, densit
   const changeNotices = (on: boolean) => (setNoticesOn(on), setSystemToasts(on));
   return (
     <div className="settings">
+      <SettingsGroup title="Help" summary="How Heel works">
+        <HelpSettings />
+      </SettingsGroup>
       <SettingsGroup title="Look" summary={lookSummary(preference, density)}>
         <AppearanceSettings preference={preference} onPreference={onPreference} />
         <DensitySettings density={density} onDensity={onDensity} />

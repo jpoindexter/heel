@@ -196,3 +196,11 @@
 .brain-keys > summary {
   cursor: pointer;
 }
+
+/* Settings › Help: numbered steps, a little air between them for reading. */
+.help-steps {
+  display: grid;
+  gap: var(--space-1);
+  margin: 0 0 var(--space-2);
+  padding-inline-start: var(--space-5);
+}
