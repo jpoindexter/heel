@@ -11,6 +11,7 @@ Heel is a desk companion for ADHD and autistic brains: Greg the dog sits on your
 1. Download `Heel_<version>_aarch64.dmg` from the latest release and drag Heel to Applications.
 2. Open it. If macOS says it can't verify Heel, open **System Settings › Privacy & Security**, scroll down, and click **Open Anyway** (once; until the build is notarized).
 3. Greg appears. Click him for the panel. Settings is the gear.
+4. **Settings › Help** (the first group) explains every part in short steps.
 
 ## Tell Jason what happened
 **Settings › About › Send feedback.** Pick *Something broke* or *An idea*, write one line and a few sentences, and press **Write the email…**. Heel opens an email to jason@theft.studio in your mail app with the version and logs attached; read it over and press Send. Heel never sends anything by itself.
