@@ -1,6 +1,6 @@
 [package]
 name = "heel"
-version = "0.1.1"
+version = "0.1.2"
 description = "Heel: calm desktop companion"
 authors = ["Jason Poindexter"]
 edition = "2024"
