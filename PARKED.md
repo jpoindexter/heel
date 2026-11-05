@@ -46,3 +46,6 @@ Captured: 2026-10-28. Why parked: needs Jason's Trello API key + token and a Git
 
 ## Transition warnings 10 / 5 / 1 min before an event or a box ends (V1-3 leftover)
 Captured: 2026-10-28. Why parked: an optional interrupt under D4 (budget 3/day, silent by default); needs a shell timer against the next calendar event (a Calendar read, see the V1-5 entry) and the box clock, and an opt-in switch. The box's end check-in already exists. Cost to revisit: small-medium (a timer, a switch, three notices).
+
+## Break the Rust window-module cycles (modularity audit 2026-11-05)
+Captured: 2026-11-05. Why parked: `panel_window.rs`, `dock.rs`, `undock.rs`, `window_level.rs`, `appear.rs` and `mascot_menu.rs` import each other (4 cycles; B5 and B9 grew them). It compiles and every hard size and boundary rule passes; the cycles are coupling, not a bug, and the window behaviour was verified natively on 2026-10-30, which a refactor would void. Soft-limit debt at the same time: 10 files over 200 lines, 86 functions over 30, six at exactly 50. Cost to revisit: medium (one `window_state` module owning the dock/park/level state, the six files calling it; then a native re-run of the B9/N10 checks).

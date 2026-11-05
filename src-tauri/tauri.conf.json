@@ -82,7 +82,8 @@
       "resources/sidecar/**/*"
     ],
     "macOS": {
-      "signingIdentity": "-"
+      "signingIdentity": "-",
+      "entitlements": "Entitlements.plist"
     }
   }
 }

@@ -15,7 +15,8 @@
     "secrets:scan": "gitleaks detect --source . --redact --no-banner --config .gitleaks.toml",
     "dev:all": "concurrently -k -n vite,sidecar \"npm:dev\" \"npm:sidecar\"",
     "bundle:sidecar": "node scripts/bundle-sidecar.mjs",
-    "smoke": "tsx sidecar/scripts/smoke.ts"
+    "smoke": "tsx sidecar/scripts/smoke.ts",
+    "release:signed": "sh scripts/release-signed.sh"
   },
   "dependencies": {
     "@hono/node-server": "^2.1.5",
