@@ -31,6 +31,7 @@ docs/ DECISIONS.md PARKED.md ROADMAP.md PRD.md ERRORS.md learnings/
 | Agent loop | `sidecar/agent/` | prompt, actions (Zod), executor, providers |
 | Persistence | `sidecar/store/` | SQLite behind `store.ts`; reversible migrations |
 | HTTP | `sidecar/server/` | token + Host + CORS guards, routes |
+| Windows: panel, dock, park, level | `src-tauri/src/panel_window.rs` (show/hide/toggle), `dock.rs` (panel follows Greg), `undock.rs` (parked panel, B5), `window_level.rs` (who floats, B9), `appear.rs` + `mascot_menu.rs` (Greg show/hide, his menu) | these six import each other on purpose (one window state, Rust allows module cycles in a crate); `lib.rs` wires them; `placement.rs` holds the pure geometry |
 
 ## Rules (all enforced by `npm test`)
 
