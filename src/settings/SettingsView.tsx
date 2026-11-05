@@ -19,6 +19,7 @@ import { BrainSettings } from "./BrainSettings";
 import { CapacitySettings } from "./CapacitySettings";
 import { DataSettings } from "./DataSettings";
 import { DebugSettings } from "./DebugSettings";
+import { FeedbackSettings } from "./FeedbackSettings";
 import { DensitySettings } from "./DensitySettings";
 import { PanelSettings } from "./PanelSettings";
 import { MethodSettings } from "./MethodSettings";
@@ -73,7 +74,8 @@ export function SettingsView({ active, onSaved, preference, onPreference, densit
       <SettingsGroup title="Privacy & data" summary="Back up, wipe">
         <DataSettings />
       </SettingsGroup>
-      <SettingsGroup title="About" summary={`Heel ${APP_VERSION}`}>
+      <SettingsGroup title="About" summary={`Heel ${APP_VERSION} · send feedback`}>
+        <FeedbackSettings />
         <DebugSettings active={active} />
       </SettingsGroup>
     </div>
