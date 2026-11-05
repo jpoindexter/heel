@@ -9,7 +9,7 @@ Heel is a desk companion for ADHD and autistic brains: Greg the dog sits on your
 
 ## Install
 1. Download `Heel_<version>_aarch64.dmg` from the latest release and drag Heel to Applications.
-2. Open it. If macOS says it can't verify Heel, open **System Settings › Privacy & Security**, scroll down, and click **Open Anyway** (once; until the build is notarized).
+2. Open Heel. The v0.1.2 tester build is Developer ID–signed and notarized by Apple.
 3. Greg appears. Click him for the panel. Settings is the gear.
 4. **Settings › Help** (the first group) explains every part in short steps.
 
@@ -22,3 +22,7 @@ Logs never contain your tasks, messages or mail. You can read exactly what is in
 
 ## Your data
 Everything stays on your Mac in `~/Library/Application Support/studio.theft.heel`. Settings › Privacy & data backs it up or wipes it. What you type goes to the AI you chose in Settings › Brain; choose Ollama to keep it on your Mac.
+
+## Known findings in v0.1.2
+- The keyboard focus outline is missing from Help topics, although Tab and Space/Enter operate them.
+- Send feedback uses your Mac’s configured email-link handler. If that handler is a browser without a working email service, Heel may report that an email is open even though no draft appeared.

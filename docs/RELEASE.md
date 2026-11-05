@@ -1,6 +1,6 @@
 # Release: a signed, notarized Heel.app (V1-10)
 
-Today's builds are ad-hoc signed (`"signingIdentity": "-"` in `src-tauri/tauri.conf.json`): fine on this Mac, "unidentified developer" on any other. A build other people can open needs a Developer ID certificate and notarization. Everything below is one-time setup by Jason, then one command per release.
+Local builds are ad-hoc signed (`"signingIdentity": "-"` in `src-tauri/tauri.conf.json`): fine on this Mac, "unidentified developer" on any other. A build other people can open needs a Developer ID certificate and notarization. Everything below is one-time setup by Jason, then one command per release.
 
 ## One-time (Jason)
 1. An Apple Developer Program membership (paid; a free account cannot notarize).
@@ -34,4 +34,10 @@ APPLE_SIGNING_IDENTITY=<sha-1> HEEL_NOTARY_PROFILE=heel npm run release:signed
 `scripts/release-signed.sh` builds with the Developer ID through a config override (local `npm run release` stays ad-hoc), signs the DMG, checks both signatures, then notarizes the DMG, staples the DMG and the app, and asks Gatekeeper. Without `HEEL_NOTARY_PROFILE` it stops after signing. `src-tauri/Entitlements.plist` grants Apple Events under the hardened runtime (Mail, Calendar, Reminders, Notes).
 
 ## Status (2026-11-05)
-Developer ID signing ran on Jason's Mac. Notarization did not: the existing `vanta` notary profile answers HTTP 401 (its app-specific password is no longer valid). A signed, un-notarized build opens on another Mac only after System Settings › Privacy & Security › Open Anyway.
+Heel v0.1.2 was Developer ID–signed and notarized using the validated `heel` Keychain profile and identity `F146F8A6C9E1BC060AE312AA6F4C6D75522C8D75` (team `5352PXMNV5`). Apple submission `16e264a2-6cc9-430d-a648-d7e1b693220c` returned **Accepted**. Both the DMG and app were stapled; `stapler validate` passed and Gatekeeper reported `accepted`, `source=Notarized Developer ID` for each.
+
+DMG SHA-256: `f6026c77a0ce2c36ed8adcab4b3a295fb4c6f361891b267e6b62bce9127ab976`. Test release: https://github.com/jpoindexter/heel/releases/tag/v0.1.2.
+
+Before spending time on a signed release build, validate the existing profile with `xcrun notarytool history --keychain-profile heel`. No password is read into the build shell. The old Vanta profile's rejected authentication was separate from the valid Developer ID signing identity.
+
+Native checks exposed two follow-up findings: Help's focus-ring width token is undefined, and the test Mac's Brave mailto handler accepted the feedback link without creating a draft. See the local handback `handoffs/codex-to-claude-notarize-release-2026-11-05.md` for bounded evidence. Install on another Mac remains unverified.
