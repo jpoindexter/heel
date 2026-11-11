@@ -1,0 +1,25 @@
+{
+  "version": "0.1.3",
+  "date": "2026-11-11T23:34:59.043Z",
+  "artifact": "src-tauri/target/release/bundle/dmg/Heel_0.1.3_aarch64.dmg",
+  "bytes": 44560525,
+  "sha256": "a9ae38b3523e0be86aa6980f86f80455a229752d389ce458429a50dd1ec2fde4",
+  "sourceCodeCommit": "4e8b85f43fbadc7570760aa200799661e6fbe4a2",
+  "identifier": "studio.theft.heel",
+  "team": "5352PXMNV5",
+  "hardenedRuntime": true,
+  "notarization": {
+    "id": "de11164c-559a-4b12-9725-0dc6bddb026a",
+    "status": "Accepted"
+  },
+  "staplerValidate": {
+    "app": true,
+    "dmg": true
+  },
+  "gatekeeper": {
+    "app": "Notarized Developer ID",
+    "dmg": "Notarized Developer ID"
+  },
+  "helperSha256": "3e380110afdc476eab94e814595eeee25f1606e61caaf50e0dca34f8f2e444d0",
+  "helperMatchesNativeTestBundle": true
+}

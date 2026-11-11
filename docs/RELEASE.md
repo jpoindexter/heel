@@ -33,7 +33,17 @@ APPLE_SIGNING_IDENTITY=<sha-1> HEEL_NOTARY_PROFILE=heel npm run release:signed
 ```
 `scripts/release-signed.sh` builds with the Developer ID through a config override (local `npm run release` stays ad-hoc), signs the DMG, checks both signatures, then notarizes the DMG, staples the DMG and the app, and asks Gatekeeper. Without `HEEL_NOTARY_PROFILE` it stops after signing. `src-tauri/Entitlements.plist` grants Apple Events under the hardened runtime (Mail, Calendar, Reminders, Notes).
 
-## Status (2026-11-05)
+## 0.1.3 release verification (2026-11-12)
+
+The 0.1.3 app and Apple silicon DMG were built with the Developer ID identity below and the hardened runtime. Apple submission `de11164c-559a-4b12-9725-0dc6bddb026a` returned **Accepted**. Both app and DMG were stapled; `stapler validate` passed for each, and Gatekeeper accepted each with `source=Notarized Developer ID`.
+
+DMG SHA-256: `a9ae38b3523e0be86aa6980f86f80455a229752d389ce458429a50dd1ec2fde4`.
+
+The compiled native panel was tested with an isolated bundle identifier and real Codex: fill, correction, native CV picker, zero final submissions before approval, exactly one approved submission, and the visible destination confirmation. The native release test bundle also automatically started its packaged production helper and opened a public HTTPS page. The helper SHA-256 matches between the native test bundle and signed production app: `3e380110afdc476eab94e814595eeee25f1606e61caaf50e0dca34f8f2e444d0`. See [application proof and limits](APPLICATIONS.md). Full suite: 154 files / 785 tests passed; typecheck and staged secret scan passed. The history-only secret scan identified the existing synthetic API-key fixture, not a real credential.
+
+Distribution: [v0.1.3](https://github.com/jpoindexter/heel/releases/tag/v0.1.3). Publishing and downloaded-asset verification are recorded separately in the release proof. The old Help focus/feedback findings and other-Mac acceptance were not rechecked in this release.
+
+## Previous release (2026-11-05)
 Heel v0.1.2 was Developer ID–signed and notarized using the validated `heel` Keychain profile and identity `F146F8A6C9E1BC060AE312AA6F4C6D75522C8D75` (team `5352PXMNV5`). Apple submission `16e264a2-6cc9-430d-a648-d7e1b693220c` returned **Accepted**. Both the DMG and app were stapled; `stapler validate` passed and Gatekeeper reported `accepted`, `source=Notarized Developer ID` for each.
 
 DMG SHA-256: `f6026c77a0ce2c36ed8adcab4b3a295fb4c6f361891b267e6b62bce9127ab976`. Test release: https://github.com/jpoindexter/heel/releases/tag/v0.1.2.
