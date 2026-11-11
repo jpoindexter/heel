@@ -1,0 +1,20 @@
+{
+  "date": "2026-11-11T23:32:04.799Z",
+  "nativeBundle": "studio.theft.heel.native-proof",
+  "mode": "Release native app automatically spawned its own bundled production helper; no HEEL_NO_SIDECAR and no test harness",
+  "health": {
+    "ok": true,
+    "data": {
+      "status": "ok"
+    }
+  },
+  "opened": "Example Domain",
+  "cancelled": true,
+  "checks": [
+    "Native Rust resolved bundled helper and Node",
+    "App-specific data directory used",
+    "Bundled Playwright loaded and launched installed Chrome",
+    "Public HTTPS page opened",
+    "Cancellation returned successfully"
+  ]
+}

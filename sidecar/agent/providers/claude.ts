@@ -1,4 +1,5 @@
 import { z } from "zod";
+import { anthropicContent } from "./image";
 import { mapRunFailure } from "./run-failure";
 import {
   DEFAULT_COMPLETE_TIMEOUT_MS,
@@ -17,27 +18,28 @@ const LABEL = "Claude (subscription)";
 const CLI = "The Claude CLI";
 
 /** Claude through the user's own `claude` login. No API key is stored by Heel. */
-export function claudeProvider(deps: ProviderDeps): Provider {
-  async function status(): Promise<ProviderStatus> {
-    const base = { id: ID, label: LABEL };
-    const executable = await deps.find("claude");
-    if (!executable) return { ...base, installed: false, ready: false, detail: "Claude CLI isn't installed." };
+async function status(deps: ProviderDeps): Promise<ProviderStatus> {
+  const base = { id: ID, label: LABEL };
+  const executable = await deps.find("claude");
+  if (!executable) return { ...base, installed: false, ready: false, detail: "Claude CLI isn't installed." };
 
-    // `auth status` can exit non-zero when signed out, so read stdout either way.
-    const run = await deps.run(executable, ["auth", "status"], { timeoutMs: STATUS_TIMEOUT_MS, cwd: deps.workdir });
-    const parsed = AuthStatus.safeParse(safeJson(run.stdout));
-    if (!parsed.success) {
-      return { ...base, installed: true, ready: false, detail: "Couldn't check sign-in. Run claude auth status in a terminal." };
-    }
-    return parsed.data.loggedIn
-      ? { ...base, installed: true, ready: true, detail: `${parsed.data.subscriptionType ?? "Claude"} subscription` }
-      : { ...base, installed: true, ready: false, detail: "Not signed in. Run claude auth login in a terminal." };
+  // `auth status` can exit non-zero when signed out, so read stdout either way.
+  const run = await deps.run(executable, ["auth", "status"], { timeoutMs: STATUS_TIMEOUT_MS, cwd: deps.workdir });
+  const parsed = AuthStatus.safeParse(safeJson(run.stdout));
+  if (!parsed.success) {
+    return { ...base, installed: true, ready: false, detail: "Couldn't check sign-in. Run claude auth status in a terminal." };
   }
+  return parsed.data.loggedIn
+    ? { ...base, installed: true, ready: true, detail: `${parsed.data.subscriptionType ?? "Claude"} subscription` }
+    : { ...base, installed: true, ready: false, detail: "Not signed in. Run claude auth login in a terminal." };
+}
 
+/** Claude through the signed-in CLI, with tools off unless research was requested. */
+export function claudeProvider(deps: ProviderDeps): Provider {
   return {
     id: ID,
     label: LABEL,
-    status,
+    status: () => status(deps),
     // The CLI does not report a model list; an empty list means "default, or type a model name".
     models: async () => okResult([]),
     async complete(request) {
@@ -52,12 +54,13 @@ export function claudeProvider(deps: ProviderDeps): Provider {
         "--no-session-persistence",
         "--output-format",
         "text",
+        ...(request.image ? ["--input-format", "stream-json"] : []),
         "--system-prompt",
         request.system,
         ...(request.model ? ["--model", request.model] : []),
       ];
       const run = await deps.run(executable, args, {
-        input: request.prompt,
+        input: request.image ? JSON.stringify({ type: "user", message: { role: "user", content: anthropicContent(request) } }) + "\n" : request.prompt,
         timeoutMs: request.timeoutMs ?? DEFAULT_COMPLETE_TIMEOUT_MS,
         cwd: deps.workdir,
         signal: request.signal,

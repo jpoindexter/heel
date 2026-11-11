@@ -1,3 +1,4 @@
+import { Applications } from "../applications/service";
 import { randomBytes } from "node:crypto";
 import { mkdirSync } from "node:fs";
 import { homedir } from "node:os";
@@ -41,6 +42,7 @@ const store = openStore({ path: join(dir, DB_FILE), documentsDir: join(dir, DOCU
 /** macOS `open`: the file in its default app, or revealed in Finder. */
 const OPEN_TIMEOUT_MS = 10_000;
 const openFile = async (path: string, reveal: boolean): Promise<boolean> => (await runCommand("open", reveal ? ["-R", path] : [path], { timeoutMs: OPEN_TIMEOUT_MS })).ok;
+const applications = new Applications({ dir: join(dir, "applications") });
 const token = randomBytes(TOKEN_BYTES).toString("hex");
 const inbox = createInbox({ fetch, secrets: macKeychain(runCommand), now: Date.now, openUrl });
 const mail = appleMail(osascriptJxa(runCommand), runCommand);
@@ -49,7 +51,7 @@ const pdf = createPdfRenderer({ run: runCommand, dir: join(dir, "pdf") });
 const skills = createSkillsService({ bundledDir: SKILLS_DIR, bundled: BUNDLED_SKILLS, userDir: join(dir, "skills"), off: store.settings.getSkillsOff, setOff: store.settings.setSkillsOff });
 // HEEL_DEV_ORIGIN: a second dev panel on another Vite port (a worktree beside the main checkout) may call this helper.
 let port: number | null = null;
-const app = createApp({ store, providers: createProviders(), inbox, mail, mailAvailable: mailAppExists(), apps, token, allowedOrigins: [DEV_ORIGIN, ...TAURI_ORIGINS, ...(process.env.HEEL_DEV_ORIGIN ? [process.env.HEEL_DEV_ORIGIN] : [])], openFile, renderPdf: pdf.render, skills, debug: { dataDir: dir, port: () => port, exportDir: join(homedir(), "Desktop") } });
+const app = createApp({ applications, store, providers: createProviders(), inbox, mail, mailAvailable: mailAppExists(), apps, token, allowedOrigins: [DEV_ORIGIN, ...TAURI_ORIGINS, ...(process.env.HEEL_DEV_ORIGIN ? [process.env.HEEL_DEV_ORIGIN] : [])], openFile, renderPdf: pdf.render, skills, debug: { dataDir: dir, port: () => port, exportDir: join(homedir(), "Desktop") } });
 
 // Port 0 = let the OS pick a free port; the panel finds it in the connection file.
 const server = serve({ fetch: app.fetch, hostname: HOST, port: 0 }, (info) => {
@@ -59,11 +61,12 @@ const server = serve({ fetch: app.fetch, hostname: HOST, port: 0 }, (info) => {
 });
 
 let stopping = false;
-function shutdown(): void {
+async function shutdown(): Promise<void> {
   if (stopping) return;
   stopping = true;
   removeConnectionFile(dir, token);
   server.close();
+  await applications.close();
   store.close();
   process.exit(0);
 }

@@ -1,3 +1,4 @@
+import { imageDataUrl } from "./image";
 import { z } from "zod";
 import { forgetKey, httpFailure, keyStatus, NO_KEY, readKey, saveKey, thrownFailure, withStop } from "./api-key";
 import { DEFAULT_COMPLETE_TIMEOUT_MS, STATUS_TIMEOUT_MS, failResult, okResult, type CompleteRequest, type KeyedProvider, type ProviderDeps, type ProviderResult } from "./types";
@@ -27,7 +28,7 @@ async function listModels(deps: ProviderDeps, key: string): Promise<ProviderResu
 }
 
 function body(model: string, request: CompleteRequest): string {
-  return JSON.stringify({ model, messages: [{ role: "system", content: request.system }, { role: "user", content: request.prompt }] });
+  return JSON.stringify({ model, messages: [{ role: "system", content: request.system }, { role: "user", content: request.image ? [{ type: "image_url", image_url: { url: imageDataUrl(request.image) } }, { type: "text", text: request.prompt }] : request.prompt }] });
 }
 
 async function complete(deps: ProviderDeps, request: CompleteRequest): Promise<ProviderResult<string>> {

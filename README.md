@@ -9,6 +9,7 @@ A quiet desktop companion for an autistic/ADHD brain: Greg, a small dog, sits on
 - **Focus**: a time-box with a check-in in your own words; an interrupt budget of 3 a day the helper enforces; Quiet mode and Off.
 - **Greg**: 34-clip puppy art, walks, naps, follows the pointer sometimes, shows when the AI is working, offers one way back when attention sense sees a rabbit hole (opt-in).
 - **Work products**: research notes saved as documents, "make that a PDF" (WebKit, on this Mac).
+- **Job applications (local 0.1.3 candidate)**: a visible browser fills supplied facts and CVs; review/correct the form, then approve the exact outgoing request once. [Workflow, limitations and executed proof](docs/APPLICATIONS.md).
 
 ## Requirements
 - macOS (developed and tested on macOS 26, Apple silicon). Not signed or notarized yet: Gatekeeper will ask once (`V1-10`).

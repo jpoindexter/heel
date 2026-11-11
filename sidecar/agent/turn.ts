@@ -21,6 +21,7 @@ export type TurnResult =
 
 export type TurnDeps = {
   store: Store;
+  applications?: SideEffects["applications"];
   provider: Provider;
   model: string | null;
   loadSkill?: SkillLoader;
@@ -90,7 +91,7 @@ export async function runTurn(deps: TurnDeps, userText: string, history: readonl
 
     const parsed = parseAgentReply(response.value);
     if (parsed.ok) {
-      const applied = await executeActions(deps.store, parsed.reply.actions, snapshot.refs, { mail: deps.mail, makePdf: deps.makePdf, mailRefs });
+      const applied = await executeActions(deps.store, parsed.reply.actions, snapshot.refs, { mail: deps.mail, makePdf: deps.makePdf, mailRefs, applications: deps.applications });
       return { ok: true, say: parsed.reply.say, applied, skills, provider: deps.provider.id };
     }
     prompt = `${basePrompt}\n\nYour previous reply was rejected: ${parsed.error}. Reply again with ONLY the JSON object.`;

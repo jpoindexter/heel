@@ -1,0 +1,19 @@
+{
+  "date": "2026-11-11T23:00:20.282Z",
+  "provider": "fixture",
+  "checks": [
+    "French destination acceptance remained uncertain until the person supplied its observed quote",
+    "explicit confirmation recorded through Heel's UI; no duplicate submission"
+  ],
+  "received": [
+    {
+      "path": "/french-confirm",
+      "fields": {
+        "name": "Iris Test"
+      },
+      "files": []
+    }
+  ],
+  "confirmation": "Votre candidature a été reçue.",
+  "evidenceDir": "/var/folders/rj/nj_9qs2s7zs52nsc90yl2q700000gn/T/heel-application-e2e-WOxUG6"
+}

@@ -1,0 +1,13 @@
+{
+  "date": "2026-11-11T21:47:41.414Z",
+  "ok": true,
+  "version": "0.1.3",
+  "entry": "/Users/jasonpoindexter/Documents/GitHub/Greg agent/src-tauri/target/release/bundle/macos/Heel.app/Contents/Resources/resources/sidecar/sidecar.mjs",
+  "helperSha256": "00434a81c0bbd1f280fc29895dfef4558578b379cdbc5bca15c5ed4e6b4cb616",
+  "checks": [
+    "final packaged helper loads copied Playwright runtime",
+    "installed browser opens public HTTPS page",
+    "cancel closes controlled browser"
+  ],
+  "title": "Example Domain"
+}

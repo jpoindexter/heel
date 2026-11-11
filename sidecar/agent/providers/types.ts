@@ -23,6 +23,8 @@ export type ProviderResult<T> = { ok: true; value: T } | { ok: false; error: Pro
 export type CompleteRequest = {
   system: string;
   prompt: string;
+  /** One current browser screenshot, only on an explicitly requested visual-assistance step. */
+  image?: { data: string; mimeType: "image/png" };
   /** null = let the provider choose its default model. */
   model: string | null;
   timeoutMs?: number;

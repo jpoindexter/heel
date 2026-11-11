@@ -1,5 +1,6 @@
 import { z } from "zod";
 import { AppWriteSchema } from "../../shared/api";
+import { ApplicationStartSchema } from "../../shared/applications";
 import { SIZES } from "../../shared/method";
 
 export const MAX_ACTIONS_PER_REPLY = 8;
@@ -12,6 +13,7 @@ const taskRef = z.string().regex(/^t\d+$/, 'task must be a ref like "t1" from th
  * in Mail for the person to read and send themselves (autonomy L2: one-click confirm happens in Mail). Nothing here sends or deletes.
  */
 export const ActionSchema = z.discriminatedUnion("type", [
+  z.object({ type: z.literal("prepare_application") }).extend(ApplicationStartSchema.shape),
   z.object({ type: z.literal("add_task"), title: z.string(), now_step: z.string().optional(), size: z.enum(SIZES).optional(), bucket: z.string().optional() }),
   z.object({ type: z.literal("complete_task"), task: taskRef }),
   z.object({ type: z.literal("drop_task"), task: taskRef }),

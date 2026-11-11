@@ -1,3 +1,4 @@
+import { ApplicationsPanel } from "../applications/ApplicationsPanel";
 import { useCallback, useEffect, type ReactNode } from "react";
 import { Button, Callout } from "@radix-ui/themes";
 import { FocusStatus } from "../focus/FocusStatus";
@@ -66,6 +67,20 @@ function ReplyLayer({ thread, onOpenSettings, onOpenDocument, onOpenMail, onClos
   );
 }
 
+/** Today keeps its entry points together; the layers handle the focused workflows. */
+function TodayBase({ state, foundId }: { state: State; foundId: ReturnType<typeof useSearchLayer>["foundId"] }) {
+  const layers = useLayers();
+  const { tasks, thread } = state;
+  return (
+          <div className="today-scroll" aria-busy={tasks.state.phase === "loading" || undefined}>
+            <Button size="1" variant="ghost" onClick={() => layers.push("applications")}>Job applications</Button>
+            <ReplyRow messages={thread.messages} onOpen={() => layers.push("reply")} />
+            <TaskSection state={state} foundId={foundId} />
+            {state.ready && <DoneRow doneToday={state.ready.doneToday} onOpen={() => layers.push("history")} />}
+          </div>
+  );
+}
+
 /** The whole panel body: the tasks as the base, Settings / Email / the reply as layers over them, and the one bar at the bottom. */
 export function TodayView({ showing, summary, reloadKey, settings }: Props) {
   const layers = useLayers();
@@ -91,13 +106,10 @@ export function TodayView({ showing, summary, reloadKey, settings }: Props) {
       <FocusStatus focus={state.focus} pomodoro={state.pomodoro} onTaskDone={(id) => { const task = state.ready?.tasks.find((t) => t.id === id); if (task) void tasks.complete(task); }} />
       <LayerHost
         base={
-          <div className="today-scroll" aria-busy={tasks.state.phase === "loading" || undefined}>
-            <ReplyRow messages={thread.messages} onOpen={() => layers.push("reply")} />
-            <TaskSection state={state} foundId={found.foundId} />
-            {state.ready && <DoneRow doneToday={state.ready.doneToday} onOpen={() => layers.push("history")} />}
-          </div>
+          <TodayBase state={state} foundId={found.foundId} />
         }
       >
+        <Layer name="applications" label="Job applications"><ApplicationsPanel /></Layer>
         <Layer name="settings" label="Settings">{settings}</Layer>
         <Layer name="history" label="History">
           <HistoryLayer history={history} documents={documents} today={todayKey()} />

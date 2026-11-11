@@ -1,0 +1,38 @@
+{
+  "date": "2026-11-11T21:39:01.285Z",
+  "provider": "real Codex",
+  "checks": [
+    "natural-language request produced prepare_application and opened its review workspace",
+    "real Codex filled applicant facts through Heel's UI",
+    "correction reached the site only after one approval",
+    "CV bytes, corrected name and cover letter submitted once; confirmation receipt observed",
+    "300×420 layout has no horizontal page overflow"
+  ],
+  "received": [
+    {
+      "path": "/step",
+      "fields": {
+        "name": "Iris Corrected",
+        "email": "iris@example.test",
+        "location": "ES"
+      },
+      "files": []
+    },
+    {
+      "path": "/submit",
+      "fields": {
+        "name": "Iris Corrected",
+        "cover": "I conduct research. Synthetic test application only.",
+        "accurate": "on"
+      },
+      "files": [
+        {
+          "name": "iris-synthetic-cv.txt",
+          "text": "Iris Corrected\nSynthetic research CV. Not a real application.\n"
+        }
+      ]
+    }
+  ],
+  "confirmation": "Application received. Reference HEEL-TEST-001.",
+  "evidenceDir": "/var/folders/rj/nj_9qs2s7zs52nsc90yl2q700000gn/T/heel-application-e2e-27900p"
+}

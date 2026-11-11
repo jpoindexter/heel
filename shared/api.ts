@@ -119,7 +119,7 @@ export const DocumentResultSchema = z.object({ document: DocumentSchema });
 export const OpenedSchema = z.object({ opened: z.boolean() });
 
 /** `mail` is a message id the person can open in Mail from the receipt; `proposal` is a write to one of their apps waiting for their tap (N26). */
-export const ActionOutcomeSchema = z.object({ type: z.string(), ok: z.boolean(), message: z.string(), undo: UndoSchema.optional(), document: z.string().optional(), file: z.enum(DOCUMENT_FILES).optional(), mail: z.string().optional(), proposal: AppWriteSchema.optional() });
+export const ActionOutcomeSchema = z.object({ type: z.string(), ok: z.boolean(), message: z.string(), undo: UndoSchema.optional(), document: z.string().optional(), file: z.enum(DOCUMENT_FILES).optional(), mail: z.string().optional(), proposal: AppWriteSchema.optional(), application: z.string().optional() });
 
 export const ParkedIdeaSchema = z.object({ id: z.string(), idea: z.string(), createdAt: z.number() });
 export const ParkedListSchema = z.object({ parked: z.array(ParkedIdeaSchema) });
@@ -182,7 +182,7 @@ export type SpendResultDto = z.output<typeof SpendResultSchema>;
 
 /* Conversation history (survives a restart) */
 
-export const ReceiptSchema = z.object({ ok: z.boolean(), text: z.string(), undo: UndoSchema.nullable(), undone: z.boolean(), document: z.string().optional(), file: z.enum(DOCUMENT_FILES).optional(), mail: z.string().optional(), proposal: AppWriteSchema.optional() });
+export const ReceiptSchema = z.object({ ok: z.boolean(), text: z.string(), undo: UndoSchema.nullable(), undone: z.boolean(), document: z.string().optional(), file: z.enum(DOCUMENT_FILES).optional(), mail: z.string().optional(), proposal: AppWriteSchema.optional(), application: z.string().optional() });
 
 /** A message the panel keeps. A turn still waiting for the AI ("pending") is never stored. */
 export const StoredMessageSchema = z.discriminatedUnion("role", [

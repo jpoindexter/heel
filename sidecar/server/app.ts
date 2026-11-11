@@ -1,3 +1,5 @@
+import type { Applications } from "../applications/service";
+import { registerApplicationRoutes } from "./application-routes";
 import { Hono } from "hono";
 import { ok } from "./respond";
 import type { Provider, ProviderId } from "../agent/providers/types";
@@ -27,6 +29,7 @@ import { registerTodayRoutes, registerTurnRoute } from "./today-routes";
 
 export type AppDeps = {
   store: Store;
+  applications?: Applications;
   providers: Record<ProviderId, Provider>;
   inbox: InboxService;
   /** Apple Mail on this Mac. */
@@ -56,6 +59,7 @@ export function createApp(deps: AppDeps) {
   applyGuards(app, { token: deps.token, allowedOrigins: deps.allowedOrigins });
   app.get("/health", (c) => ok(c, { status: "ok" }));
   registerBrainRoutes(app, deps);
+  registerApplicationRoutes(app, deps);
   // Before the today routes: their `/tasks/:id/:action` would otherwise swallow `/tasks/:id/split` and `/unsplit`.
   registerSplitRoutes(app, deps);
   registerTodayRoutes(app, deps);

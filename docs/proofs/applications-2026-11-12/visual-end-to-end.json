@@ -1,0 +1,26 @@
+{
+  "date": "2026-11-11T23:00:54.834Z",
+  "provider": "real Codex",
+  "checks": [
+    "standard Fill action automatically switched to real screenshot-based control for a custom canvas",
+    "agent operated its custom CV chooser and final submit control",
+    "zero requests sent before approval; one application and CV received after approval",
+    "new destination confirmation observed"
+  ],
+  "received": [
+    {
+      "path": "/submit",
+      "fields": {
+        "name": "Iris Test"
+      },
+      "files": [
+        {
+          "name": "iris-visual-cv.txt",
+          "text": "Synthetic visual-browser test CV. Not a real application."
+        }
+      ]
+    }
+  ],
+  "confirmation": "Application received. Reference HEEL-TEST-001.",
+  "evidenceDir": "/var/folders/rj/nj_9qs2s7zs52nsc90yl2q700000gn/T/heel-application-e2e-Is6Me0"
+}

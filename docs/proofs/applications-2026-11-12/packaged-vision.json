@@ -1,0 +1,15 @@
+{
+  "date": "2026-11-11T23:21:05.822Z",
+  "ok": true,
+  "version": "0.1.3",
+  "entry": "/Users/jasonpoindexter/Documents/GitHub/Greg agent/src-tauri/target/release/bundle/macos/Heel.app/Contents/Resources/resources/sidecar/sidecar.mjs",
+  "helperSha256": "3e380110afdc476eab94e814595eeee25f1606e61caaf50e0dca34f8f2e444d0",
+  "checks": [
+    "final packaged helper loads browser and screenshot dependencies",
+    "installed browser opens public HTTPS page",
+    "no-field Fill invokes real Codex screenshot assistance",
+    "non-application remains in review with no approved requests",
+    "cancel closes controlled browser"
+  ],
+  "message": "This is an Example Domain page with no application form. The supplied facts confirm there is no real applicant or job application to prepare."
+}

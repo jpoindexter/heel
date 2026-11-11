@@ -1,3 +1,4 @@
+import { anthropicContent } from "./image";
 import { z } from "zod";
 import { forgetKey, httpFailure, keyStatus, NO_KEY, readKey, saveKey, thrownFailure, withStop } from "./api-key";
 import { DEFAULT_COMPLETE_TIMEOUT_MS, STATUS_TIMEOUT_MS, failResult, okResult, type CompleteRequest, type KeyedProvider, type ProviderDeps, type ProviderResult } from "./types";
@@ -35,7 +36,7 @@ async function listModels(deps: ProviderDeps, key: string): Promise<ProviderResu
 }
 
 function body(request: CompleteRequest): string {
-  return JSON.stringify({ model: request.model ?? DEFAULT_MODEL, max_tokens: MAX_TOKENS, system: request.system, messages: [{ role: "user", content: request.prompt }] });
+  return JSON.stringify({ model: request.model ?? DEFAULT_MODEL, max_tokens: MAX_TOKENS, system: request.system, messages: [{ role: "user", content: anthropicContent(request) }] });
 }
 
 async function complete(deps: ProviderDeps, request: CompleteRequest): Promise<ProviderResult<string>> {

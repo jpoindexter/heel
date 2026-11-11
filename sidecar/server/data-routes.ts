@@ -14,7 +14,7 @@ import { fail, ok, readJson } from "./respond";
 const KEPT = new Set([CONNECTION_FILE, SIDECAR_LOG_FILE]);
 const DB_PREFIX = "heel.db";
 /** Folders copied whole into a backup, next to the database copy. */
-const COPIED_DIRS = ["documents", "skills"];
+const COPIED_DIRS = ["documents", "skills", "applications"];
 
 const isWiped = (name: string): boolean => !KEPT.has(name) && !name.startsWith(DB_PREFIX);
 
@@ -32,7 +32,7 @@ export function sizeOf(path: string): number {
 export const backupFolderName = (now: Date): string => `heel-backup-${now.toISOString().slice(0, 19).replace(/[:T]/g, "-")}`;
 
 /** Privacy & data (N4): what a wipe would remove, a backup folder on the Desktop, and the wipe itself behind a typed phrase. */
-export function registerDataRoutes(app: Hono, { store, skills, inbox, debug, openFile }: AppDeps): void {
+export function registerDataRoutes(app: Hono, { store, skills, inbox, debug, openFile, applications }: AppDeps): void {
   const counts = () => ({
     tasks: store.tasks.list(TASK_STATUSES).length,
     parked: store.parked.list(true).length,
@@ -54,11 +54,11 @@ export function registerDataRoutes(app: Hono, { store, skills, inbox, debug, ope
   app.post("/data/backup", async (c) => {
     const dest = join(debug.exportDir, backupFolderName(new Date()));
     try {
-      mkdirSync(dest, { recursive: true });
+      mkdirSync(dest, { recursive: true, mode: 0o700 });
       store.backupTo(join(dest, DB_PREFIX));
       const data = { exportedAt: new Date().toISOString(), version: APP_VERSION, tasks: store.tasks.list(TASK_STATUSES), parked: store.parked.list(true), messages: store.messages.list().messages, documents: store.documents.list() };
       writeFileSync(join(dest, "data.json"), JSON.stringify(data, null, 2), "utf8");
-      for (const dir of COPIED_DIRS) if (existsSync(join(debug.dataDir, dir))) cpSync(join(debug.dataDir, dir), join(dest, dir), { recursive: true });
+      for (const dir of COPIED_DIRS) if (existsSync(join(debug.dataDir, dir))) cpSync(join(debug.dataDir, dir), join(dest, dir), { recursive: true, filter: source => source !== join(debug.dataDir, "applications", "browser") });
     } catch (error) {
       return fail(c, "conflict", `Couldn't write the backup to ${dest}: ${error instanceof Error ? error.message : String(error)}`);
     }
@@ -71,6 +71,7 @@ export function registerDataRoutes(app: Hono, { store, skills, inbox, debug, ope
     const before = counts();
     const rows = before.tasks + before.parked + before.messages + before.documents + before.skills;
     const files = entries().filter(isWiped);
+    await applications?.forget();
     store.reset();
     const failed = removeEntries(debug.dataDir, files);
     await inbox.disconnect({ forgetClient: true });

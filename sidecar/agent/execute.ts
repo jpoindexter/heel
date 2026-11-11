@@ -1,3 +1,4 @@
+import type { Applications } from "../applications/service";
 import type { MailSource } from "../mail/source";
 import type { Store } from "../store/store";
 import type { Result } from "../store/result";
@@ -7,6 +8,7 @@ import { proposalText } from "../apps/preview";
 
 /** What an action may touch outside the store. Mail is absent in tests and on a Mac without Mail; the PDF printer needs this Mac. */
 export type SideEffects = {
+  applications?: Applications;
   mail?: Pick<MailSource, "draft">;
   makePdf?: (id: string) => Promise<Result<DocumentDto>>;
   /** The unread messages the model was shown, by ref (m1…): show_mail may only point at these. */
@@ -16,7 +18,7 @@ export type SideEffects = {
 /** How the panel can reverse a write: the route it calls and the id it calls it with. */
 export type Undo = { kind: "restore_task" | "drop_task" | "unpark" | "delete_document" | "delete_event" | "delete_reminder" | "delete_note"; id: string };
 
-export type ActionOutcome = { type: Action["type"]; ok: boolean; message: string; undo?: Undo; /** A document the person can open (N15), and which of its files. */ document?: string; file?: "md" | "pdf"; /** A message id the person can open in Mail (N26). */ mail?: string; /** A write to Calendar, Reminders or Notes that waits for the person's tap (N26). */ proposal?: AppWrite };
+export type ActionOutcome = { type: Action["type"]; ok: boolean; message: string; undo?: Undo; /** A document the person can open (N15), and which of its files. */ document?: string; file?: "md" | "pdf"; /** A message id the person can open in Mail (N26). */ mail?: string; /** A write to Calendar, Reminders or Notes that waits for the person's tap (N26). */ proposal?: AppWrite; application?: string };
 
 /** Short task refs (t1, t2) the model sees, mapped to real ids. The model never handles raw ids. */
 export type TaskRefs = ReadonlyMap<string, string>;
@@ -45,6 +47,13 @@ function titleOf(store: Store, id: string): string {
 }
 
 const HANDLERS: { [T in Action["type"]]: Handler<T> } = {
+  prepare_application: async (_store, action, _refs, side) => {
+    if (!side.applications) return failed(action.type, "The application browser is unavailable.");
+    try {
+      const state = await side.applications.exclusive(() => side.applications!.open(action));
+      return { type: action.type, ok: true, message: "Opened the job application for filling and review. Nothing was submitted.", application: state.application!.id };
+    } catch (error) { return failed(action.type, error instanceof Error ? error.message : String(error)); }
+  },
   add_task: (store, a) =>
     fromResult(
       a.type,

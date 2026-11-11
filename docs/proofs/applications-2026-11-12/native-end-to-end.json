@@ -1,0 +1,43 @@
+{
+  "date": "2026-11-11T23:31:24.914Z",
+  "nativeBundle": "studio.theft.heel.native-proof",
+  "version": "0.1.3",
+  "provider": "real Codex",
+  "interaction": "CUA accessibility actions in compiled Tauri native window; native macOS file picker",
+  "checks": [
+    "AI fills name, email and Spain",
+    "Manual correction saved to site form",
+    "Zero requests before first Allow once",
+    "Native file picker attaches synthetic CV",
+    "Zero final submissions before final Allow once",
+    "Exactly one final submission with corrected answers and CV bytes",
+    "Native panel displays Application received. Reference HEEL-TEST-001."
+  ],
+  "received": [
+    {
+      "path": "/step",
+      "fields": {
+        "name": "Iris Corrected",
+        "email": "iris@example.test",
+        "location": "ES"
+      },
+      "files": []
+    },
+    {
+      "path": "/submit",
+      "fields": {
+        "name": "Iris Corrected",
+        "cover": "I conduct research. Synthetic native test application only.",
+        "accurate": "on"
+      },
+      "files": [
+        {
+          "name": "iris-native-cv.txt",
+          "text": "Iris Corrected\nSynthetic research CV. Not a real application.\n"
+        }
+      ]
+    }
+  ],
+  "confirmation": "Application received. Reference HEEL-TEST-001.",
+  "limits": "Synthetic local destination injected only into test harness; test bundle identifier isolates user data. No real ATS or other Mac tested."
+}

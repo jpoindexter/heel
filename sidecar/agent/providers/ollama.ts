@@ -71,14 +71,14 @@ async function explain(response: Response, model: string): Promise<string> {
   return `Ollama couldn't use "${model}": ${detail}.`;
 }
 
-function chatBody(model: string, system: string, prompt: string): string {
+function chatBody(model: string, request: CompleteRequest): string {
   return JSON.stringify({
     model,
     stream: false,
     format: "json",
     messages: [
-      { role: "system", content: system },
-      { role: "user", content: prompt },
+      { role: "system", content: request.system },
+      { role: "user", content: request.prompt, ...(request.image ? { images: [request.image.data] } : {}) },
     ],
   });
 }
@@ -92,7 +92,7 @@ async function complete(deps: Deps, request: CompleteRequest): Promise<ProviderR
     const response = await deps.fetch(`${deps.ollamaUrl}/api/chat`, {
       method: "POST",
       headers: { "content-type": "application/json" },
-      body: chatBody(request.model, request.system, request.prompt),
+      body: chatBody(request.model, request),
       signal: withStop(AbortSignal.timeout(request.timeoutMs ?? DEFAULT_COMPLETE_TIMEOUT_MS), request.signal),
     });
     if (!response.ok) return failResult("failed", await explain(response, request.model));

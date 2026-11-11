@@ -1,0 +1,13 @@
+{
+  "date": "2026-11-11T23:29:30.844Z",
+  "received": [],
+  "pending": [
+    {
+      "id": "4505873e-2d46-4af7-b2d9-b41f20c9bb00",
+      "url": "http://127.0.0.1:49238/step",
+      "method": "POST",
+      "body": "name: Iris Corrected\nemail: iris@example.test\nlocation: ES",
+      "sha256": "e4139c75b925287c372c61581f2b47a5352f66bcad29d737bc8b39d10203f88e"
+    }
+  ]
+}

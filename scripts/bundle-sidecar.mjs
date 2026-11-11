@@ -19,9 +19,11 @@ await build({
   format: "esm",
   target: "node22",
   // node:sqlite and the other node: modules are built in; everything else (hono, zod) is bundled in.
+  external: ["playwright-core"],
   legalComments: "none",
   logLevel: "info",
 });
 
 await cp(join(root, "skills", "nd-skills"), join(out, "skills", "nd-skills"), { recursive: true });
+await cp(join(root, "node_modules", "playwright-core"), join(out, "node_modules", "playwright-core"), { recursive: true });
 console.log(`sidecar bundled → ${out}`);
