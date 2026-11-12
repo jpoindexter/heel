@@ -73,5 +73,20 @@
   "sha256": {
     "dmg": "bb0ec3ce63fc8e1ea8ded2305212347fcf2231ff22dcf0fd8a746aa3471c9299",
     "updateArchive": "6beab5d222db0e6c8afdf4d9d3f10f5e1a4090d0275938a375f214cf66771312"
+  },
+  "publication": {
+    "url": "https://github.com/jpoindexter/heel/releases/tag/v0.1.5",
+    "sourceCommit": "d87625f2b7722cdfd5c23008767210481ecb43e3",
+    "notarizationId": "20350d8c-0d9c-4347-ba56-9ec94d15921b",
+    "verifiedAt": "2026-11-12T09:26:15.863600+00:00",
+    "executed": [
+      "Public release is published with all four assets",
+      "Public HTTPS feed exactly matches local signed manifest",
+      "Downloaded DMG SHA-256 matches local notarized artifact",
+      "Downloaded DMG staple validates; mounted app is version 0.1.5; deep signature and Gatekeeper pass",
+      "Downloaded updater archive matches the locally verified signed bytes",
+      "Downloaded signature and latest.json exactly match local files",
+      "Read-only DMG volume detached after verification"
+    ]
   }
 }

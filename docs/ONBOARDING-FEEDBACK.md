@@ -8,7 +8,7 @@ Must: short skippable first-run guidance; persist progress; replay from Help; ex
 
 Must not: open a mail app, embed service credentials, upload tasks/chat/mail/CV contents as diagnostics, reset live user data, or claim delivery from an HTTP connection alone.
 
-Now: browser and isolated native flows have executed successfully. Next: publish the signed 0.1.5 assets and verify their public downloads.
+Now: 0.1.5 is published; browser and isolated native flows, private report receipts, public downloads and update feed have been verified. Next release: follow docs/RELEASE.md and preserve the signing key.
 
 Authority: requested onboarding and direct in-app debug sending. Existing maintainer destination is Jason; use a private feedback destination, without public debug issues or unrelated project changes.
 
