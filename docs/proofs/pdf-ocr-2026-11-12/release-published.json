@@ -1,0 +1,21 @@
+{
+  "date": "2026-11-12T07:36:55.741Z",
+  "version": "0.1.4",
+  "releaseUrl": "https://github.com/jpoindexter/heel/releases/tag/v0.1.4",
+  "draft": false,
+  "prerelease": true,
+  "downloadedSha256": "e58e294cc347919860e4ac6972498b78cabd945e8768d5e896e106b0477c38ca",
+  "githubDigestMatches": true,
+  "downloadedStaplerValidation": true,
+  "downloadedDmgGatekeeper": "Notarized Developer ID",
+  "mountedAppVersion": "0.1.4",
+  "mountedAppDeepStrictCodesign": true,
+  "mountedAppGatekeeper": "Notarized Developer ID",
+  "mountedReaderMatchesSignedTest": true,
+  "mountedReaderOcr": {
+    "developerDir": "/tmp/heel-no-apple-developer-tools",
+    "path": "/usr/bin:/bin",
+    "elapsedMs": 370,
+    "text": "Iris Synthetic Researcher\niris@example.test\nResearch experience in Spain\nExpérience en recherche\nSynthetic scan for OCR testing only"
+  }
+}
