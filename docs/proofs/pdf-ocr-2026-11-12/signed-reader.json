@@ -1,0 +1,25 @@
+{
+  "date": "2026-11-12T07:33:58.126Z",
+  "version": "0.1.4",
+  "reader": "Heel.app/Contents/MacOS/heel-cv-text",
+  "readerSha256": "53683facba63fa4fa85a21ca930debf019517406c586d42492dc1803d4ca98d4",
+  "developerDir": "/tmp/heel-no-apple-developer-tools",
+  "path": "/usr/bin:/bin",
+  "results": [
+    {
+      "fixture": "text.pdf",
+      "elapsedMs": 176,
+      "text": "Native page before scanned CV\nIris Synthetic Researcher"
+    },
+    {
+      "fixture": "scanned.pdf",
+      "elapsedMs": 28535,
+      "text": "Iris Synthetic Researcher\niris@example.test\nResearch experience in Spain\nExpérience en recherche\nSynthetic scan for OCR testing only"
+    },
+    {
+      "fixture": "mixed.pdf",
+      "elapsedMs": 275,
+      "text": "Native page before scanned CV\nIris Synthetic Researcher\nIris Synthetic Researcher\niris@example.test\nResearch experience in Spain\nExpérience en recherche\nSynthetic scan for OCR testing only"
+    }
+  ]
+}

@@ -1,0 +1,23 @@
+{
+  "date": "2026-11-12T07:35:14.596Z",
+  "version": "0.1.4",
+  "sourceCodeCommit": "26433dbc4eaad6a6b58c87cc338548de08af1ac7",
+  "artifact": "src-tauri/target/release/bundle/dmg/Heel_0.1.4_aarch64.dmg",
+  "sha256": "e58e294cc347919860e4ac6972498b78cabd945e8768d5e896e106b0477c38ca",
+  "bytes": 44590806,
+  "team": "5352PXMNV5",
+  "hardenedRuntime": true,
+  "nativeReaderSignatureVerified": true,
+  "notarization": {
+    "id": "45889f8f-6a1c-42bb-8e4a-6492b014fef9",
+    "status": "Accepted"
+  },
+  "staplerValidate": {
+    "app": true,
+    "dmg": true
+  },
+  "gatekeeper": {
+    "app": "Notarized Developer ID",
+    "dmg": "Notarized Developer ID"
+  }
+}

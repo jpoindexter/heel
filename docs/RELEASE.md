@@ -35,6 +35,16 @@ APPLE_SIGNING_IDENTITY=<sha-1> HEEL_NOTARY_PROFILE=heel npm run release:signed
 ```
 `scripts/release-signed.sh` builds with the Developer ID through a config override (local `npm run release` stays ad-hoc), signs the DMG, checks both signatures, then notarizes the DMG, staples the DMG and the app, and asks Gatekeeper. Without `HEEL_NOTARY_PROFILE` it stops after signing. `src-tauri/Entitlements.plist` grants Apple Events under the hardened runtime (Mail, Calendar, Reminders, Notes).
 
+## 0.1.4 release verification (2026-11-12)
+
+The app, bundled `heel-cv-text` executable and Apple silicon DMG are Developer ID signed with the hardened runtime. Apple submission `45889f8f-6a1c-42bb-8e4a-6492b014fef9` returned **Accepted**. App and DMG staple validation passed; Gatekeeper accepted both as `Notarized Developer ID`.
+
+DMG SHA-256: `e58e294cc347919860e4ac6972498b78cabd945e8768d5e896e106b0477c38ca`.
+
+The actual signed reader was executed from the production app with an invalid `DEVELOPER_DIR` and `PATH=/usr/bin:/bin`. Text, scanned and mixed PDFs all extracted successfully; the first signed scan took 28.5 seconds and the subsequent mixed PDF 275 ms. The native panel separately imported text/scanned PDFs through the macOS file picker using its automatically started production helper, preserving unsaved facts and requiring no AI. [Signed-reader proof](proofs/pdf-ocr-2026-11-12/signed-reader.json) · [native proof](proofs/pdf-ocr-2026-11-12/native-ocr.json).
+
+Full suite: 154 files / 792 tests, typecheck and staged secret scan passed. [0.1.4 release](https://github.com/jpoindexter/heel/releases/tag/v0.1.4). The reader requires no tester-side compiler or OCR package. Iris's real CV, other Macs and every job site's behavior remain unverified.
+
 ## 0.1.3 release verification (2026-11-12)
 
 The 0.1.3 app and Apple silicon DMG were built with the Developer ID identity below and the hardened runtime. Apple submission `de11164c-559a-4b12-9725-0dc6bddb026a` returned **Accepted**. Both app and DMG were stapled; `stapler validate` passed for each, and Gatekeeper accepted each with `source=Notarized Developer ID`.
