@@ -1,0 +1,21 @@
+{
+  "date": "2026-11-12T07:30:12.274Z",
+  "version": "0.1.4",
+  "bundle": "studio.theft.heel.pdf-proof",
+  "helper": "Bundled production helper automatically spawned by native app",
+  "developerDir": "/tmp/heel-no-apple-developer-tools",
+  "interaction": "Native macOS file picker then Use scanned.pdf as facts",
+  "facts": "Keep this applicant note.\n\nCV: text.pdf\nNative page before scanned CV\nIris Synthetic Researcher\n\nCV: scanned.pdf\nIris Synthetic Researcher\niris@example.test\nResearch experience in Spain\nExpérience en recherche\nSynthetic scan for OCR testing only",
+  "sentRequests": 0,
+  "aiConfigured": false,
+  "checks": [
+    "Native text PDF import",
+    "Native image-only PDF OCR import",
+    "Original unsaved note retained",
+    "English and French accents recognized",
+    "No compiler or OCR package installed at runtime",
+    "No AI provider needed for extraction",
+    "No outgoing site requests approved"
+  ],
+  "limits": "Synthetic fixtures on this Mac; developer-tool lookup disabled rather than uninstalling host developer tools. First packaged OCR invocation was slower than development tests, but completed within the 45-second process deadline."
+}

@@ -122,6 +122,21 @@ describe("real application browser", () => {
     } finally { await app.close(); }
   }, 20_000);
 
+  it("imports scanned CV text into facts and preserves those facts when another PDF is locked", async () => {
+    const app = make();
+    try {
+      await app.open({ url: `${fixture.url}/job`, facts: "Existing applicant note" });
+      const upload = (name: string) => app.upload({ name, base64: readFileSync(new URL(`./fixtures/${name}`, import.meta.url)).toString("base64") });
+      const scan = upload("scanned.pdf");
+      const view = (await app.readCv(scan.id, "Unsaved applicant note")).application!;
+      expect(view.facts).toContain("Unsaved applicant note");
+      expect(view.facts).toContain("Research experience in Spain");
+      const locked = upload("locked.pdf");
+      await expect(app.readCv(locked.id, "Do not overwrite facts on failure")).rejects.toThrow("could not read");
+      expect((await app.refresh()).application!.facts).toBe(view.facts);
+    } finally { await app.close(); }
+  }, 50_000);
+
   it("cancels an active model fill before it can write any form answers", async () => {
     const app = make(), provider = fakeProvider("codex");
     let release: () => void = () => {}, started: () => void = () => {};

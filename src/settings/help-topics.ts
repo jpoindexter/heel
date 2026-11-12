@@ -51,7 +51,7 @@ export const HELP_TOPICS: readonly HelpTopic[] = [
     title: "Apply for a job",
     steps: [
       "Open Job applications on Today, or ask Heel to apply with the exact job URL. Chrome, Brave or Edge must be installed.",
-      "Supply facts, fill the form, choose your CV and correct the answers. Sign in or complete human verification in the browser, then refresh.",
+      "Supply facts, fill the form, choose your CV and correct the answers. PDF reading and scan OCR are built in; review recognized text for mistakes. Sign in or complete human verification in the browser, then refresh.",
       "Choose the site's Next or Submit control and mark final submission when appropriate. Review its request and press Allow once; Deny and cancel stops waiting requests.",
       "When standard fields are unavailable, Fill uses a screenshot. Help with an unfamiliar page can handle custom controls. Site requests still wait for Allow once.",
       "A site confirmation becomes the receipt. For an unfamiliar message, copy its acceptance quote and affirm it. Uncertain results are never retried automatically.",

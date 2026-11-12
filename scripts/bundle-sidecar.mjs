@@ -4,6 +4,7 @@ import { build } from "esbuild";
 import { cp, mkdir, rm } from "node:fs/promises";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
+import "./build-cv-reader.mjs";
 
 const root = join(dirname(fileURLToPath(import.meta.url)), "..");
 const out = join(root, "src-tauri", "resources", "sidecar");

@@ -22,6 +22,8 @@ xcrun stapler validate src-tauri/target/release/bundle/macos/Heel.app
 ```
 Both must say accepted / "The validate action worked".
 
+Starting with 0.1.4, `bundle:sidecar` also compiles the PDFKit/Vision CV reader on the developer's Mac. Tauri packages it as `Contents/MacOS/heel-cv-text` through `externalBin`, so it is signed with the app. Testers never run a compiler or install OCR packages. `npm test` builds the development reader before executing its integration tests. When checking a release, verify the reader's signature and run it from the packaged app with an invalid `DEVELOPER_DIR` against the synthetic text and scanned PDF fixtures.
+
 ## What the shell already does for a shipped app
 The helper is bundled and starts and stops with the app (`src-tauri/src/sidecar_process.rs`); a crash restarts it with a new token and the panel retries once on 401; `heel.db` and its WAL files are mode 0600; the connection file is 0600 and removed on quit; provider status is kept 30 s so Settings does not spawn the CLIs on every open. Automation prompts (Mail, Calendar, Reminders, Notes) need `NSAppleEventsUsageDescription`, already in `src-tauri/Info.plist`.
 

@@ -10,7 +10,7 @@ Heel is a desk companion for ADHD and autistic brains: Greg the dog sits on your
 
 ## Install
 1. Download `Heel_<version>_aarch64.dmg` from the latest release and drag Heel to Applications.
-2. Open Heel. The [v0.1.3 tester build](https://github.com/jpoindexter/heel/releases/tag/v0.1.3) is Developer ID–signed and notarized by Apple.
+2. Open Heel. Use the [latest tester release](https://github.com/jpoindexter/heel/releases) for the current signed and notarized build.
 3. Greg appears. Click him for the panel. Settings is the gear.
 4. **Settings › Help** (the first group) explains every part in short steps.
 
@@ -24,10 +24,10 @@ Logs never contain your tasks, messages or mail. You can read exactly what is in
 ## Your data
 Heel stores its data on your Mac in `~/Library/Application Support/studio.theft.heel`. Settings › Privacy & data backs it up or wipes it. What you type goes to the AI you chose in Settings › Brain; choose Ollama to process it locally.
 
-## Job applications in 0.1.3
+## Job applications
 Open **Job applications** on Today, or ask Heel to prepare an application with its URL. Supply your facts/CV, fill and correct the form, then review and approve each outgoing site request with **Allow once**. Approval sends the displayed request and any attached document to that site. Filling sends facts/page content to your selected AI, including a screenshot when needed. Heel uses a separate browser profile; sign in or complete human verification in its visible browser yourself.
 
-Read the [application guide](APPLICATIONS.md) for supported controls and limits. PDF/DOC/DOCX/TXT attachments are supported; extracting PDF text currently needs Apple's command line tools, so paste facts if those are unavailable. An uncertain submission must be checked at the site before trying again. This release was exercised end to end in the native app against synthetic applications, including the macOS CV picker and approval boundaries. It has not been tested on every ATS or on another Mac.
+Read the [application guide](APPLICATIONS.md) for supported controls and limits. PDF/DOC/DOCX/TXT attachments are supported. Starting with 0.1.4, the PDF reader and scan OCR are bundled: no developer tools or extra OCR installation is needed. Review OCR text for errors; locked or illegible PDFs need an unlocked copy or pasted facts. An uncertain submission must be checked at the site before trying again. The application workflow was exercised end to end in the native app against synthetic applications, including the macOS CV picker and approval boundaries. It has not been tested on every ATS or on another Mac.
 
 ## Previously reported findings (not rechecked for 0.1.3)
 - The keyboard focus outline is missing from Help topics, although Tab and Space/Enter operate them.

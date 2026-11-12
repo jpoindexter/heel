@@ -1,0 +1,9 @@
+{
+  "date": "2026-11-12T07:28:13.896Z",
+  "version": "0.1.4",
+  "bundle": "studio.theft.heel.pdf-proof",
+  "developerDir": "/tmp/heel-no-apple-developer-tools",
+  "interaction": "Native macOS file picker then Use text.pdf as facts",
+  "facts": "Keep this applicant note.\n\nCV: text.pdf\nNative page before scanned CV\nIris Synthetic Researcher",
+  "sentRequests": 0
+}
