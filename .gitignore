@@ -1,4 +1,7 @@
 node_modules
+.cloudflare/
+.wrangler/
+.dev.vars*
 dist
 src-tauri/target
 src-tauri/binaries/

@@ -1,0 +1,10 @@
+import { readFileSync, writeFileSync } from "node:fs";
+import assert from "node:assert/strict";
+const [archive, destination] = process.argv.slice(2);
+assert(archive && destination, "Usage: node scripts/update-manifest.mjs ARCHIVE DESTINATION");
+const { version } = JSON.parse(readFileSync(new URL("../package.json", import.meta.url)));
+assert(/^\d+\.\d+\.\d+$/.test(version), "Release version must have three numeric components");
+const signature = readFileSync(`${archive}.sig`, "utf8").trim();
+assert(signature.length > 20, "Missing updater signature");
+const manifest = { version, notes: `Heel ${version}. See the release notes for details.`, pub_date: new Date().toISOString(), platforms: { "darwin-aarch64": { url: `https://github.com/jpoindexter/heel/releases/download/v${version}/Heel.app.tar.gz`, signature } } };
+writeFileSync(destination, JSON.stringify(manifest, null, 2) + "\n");

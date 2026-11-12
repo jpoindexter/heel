@@ -1,5 +1,6 @@
 import type { Applications } from "../applications/service";
 import { registerApplicationRoutes } from "./application-routes";
+import { registerOnboardingRoutes } from "./onboarding-routes";
 import { Hono } from "hono";
 import { ok } from "./respond";
 import type { Provider, ProviderId } from "../agent/providers/types";
@@ -59,6 +60,7 @@ export function createApp(deps: AppDeps) {
   applyGuards(app, { token: deps.token, allowedOrigins: deps.allowedOrigins });
   app.get("/health", (c) => ok(c, { status: "ok" }));
   registerBrainRoutes(app, deps);
+  registerOnboardingRoutes(app, deps);
   registerApplicationRoutes(app, deps);
   // Before the today routes: their `/tasks/:id/:action` would otherwise swallow `/tasks/:id/split` and `/unsplit`.
   registerSplitRoutes(app, deps);

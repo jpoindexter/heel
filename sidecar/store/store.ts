@@ -5,6 +5,7 @@ import type { Ctx } from "./context";
 import { currentVersion, inTransaction, migrateDown, migrateUp } from "./migrations";
 import { documentsRepository } from "./documents";
 import { systemRepositories, todayRepositories } from "./repositories";
+import { onboardingRepository } from "./onboarding";
 
 export type StoreOptions = {
   /** File path, or ":memory:" (default). */
@@ -36,6 +37,7 @@ export function openStore(options: StoreOptions = {}) {
     ...todayRepositories(ctx),
     documents: documentsRepository(ctx, options.documentsDir ?? null),
     ...systemRepositories(ctx),
+    onboarding: onboardingRepository(ctx),
     schemaVersion: () => currentVersion(db),
     /** A consistent copy of the whole database as one file, safe while open (WAL included). */
     backupTo: (path: string) => void db.prepare("VACUUM INTO ?").run(path),

@@ -1,0 +1,77 @@
+{
+  "version": "0.1.5",
+  "date": "2026-11-12T09:22:49.160176+00:00",
+  "browser": {
+    "date": "2026-11-12T09:21:15.965Z",
+    "checks": [
+      "First run created one real task and reached Today through three skippable steps",
+      "SQLite reopen retained dismissal; Help replay and skip did not duplicate the task",
+      "Direct report received; lost response and restart preserved draft; retry produced one stored report and one notification",
+      "Diagnostic payload excluded task text, raw errors, CV marker, paths and helper logs",
+      "Actual uncaught background error offered a report popup; opting out sent no diagnostic facts or logs",
+      "Actual React render failure exposed direct crash reporting, received once without transmitting the raw exception"
+    ],
+    "notifications": 3,
+    "evidenceDir": "/var/folders/rj/nj_9qs2s7zs52nsc90yl2q700000gn/T/heel-onboarding-feedback-Cw6I0s"
+  },
+  "native": {
+    "bundleId": "studio.theft.heel.update-proof",
+    "dataIsolation": true,
+    "firstTask": "Synthetic native onboarding reminder",
+    "onboardingAfterRestart": {
+      "step": 3,
+      "taskId": "3394acac-dc4d-4cec-8961-c9661655c957"
+    },
+    "executed": [
+      "First task captured and visible in native Today",
+      "Onboarding completion retained through restart and update",
+      "Help replay and skip retained one task",
+      "Invalid signature rejected after download; installed version stayed 0.1.0",
+      "Automatic valid download left installed version unchanged until Restart to update",
+      "Valid update installed and relaunched 0.1.0 to 0.1.5",
+      "Signed invalid archive failed without replacing 0.1.4; retry downloaded a replacement and relaunched 0.1.5",
+      "Feedback popup rendered with separate diagnostic facts and app events choices",
+      "Native popup report sent with diagnostics null, verified in private D1",
+      "SIGKILL of isolated app retained marker; next launch opened persistent crash report popup",
+      "Crash popup sent selected facts and 33 safe event categories, verified in D1",
+      "Clean native quit cleared session marker"
+    ],
+    "testKeySeparateFromReleaseKey": true
+  },
+  "reports": {
+    "feedback": "4145ef8b-3678-440d-ab47-55aad1ae6ff2",
+    "debug": "c80fd883-222e-4d99-957a-c9e3e27a39a7",
+    "popupNoDiagnostics": "7f447585-e4fc-49de-863c-bd2163127b4d",
+    "nativeCrash": "5d5e8da9-2db9-45d3-a0d1-f0fe73bf4211",
+    "notification": "Provider accepted; inbox arrival not independently observed"
+  },
+  "checks": {
+    "typecheck": "passed",
+    "vitest": {
+      "files": 159,
+      "tests": 795
+    },
+    "nativeSessionTest": "1 passed",
+    "extractedUpdateArchive": [
+      "deep code signature valid",
+      "notarization ticket valid",
+      "Gatekeeper accepted"
+    ],
+    "productionUpdaterSignature": [
+      "Verified against embedded production public key",
+      "Signed version matches 0.1.5",
+      "Tampered archive rejected"
+    ],
+    "stagedSecretScan": "passed"
+  },
+  "limits": [
+    "Not tested on another Mac",
+    "No OS crash dump upload; unexpected exit also covers force quit and power loss",
+    "0.1.4 and earlier require one manual install",
+    "Downloads retained only for the current running session"
+  ],
+  "sha256": {
+    "dmg": "bb0ec3ce63fc8e1ea8ded2305212347fcf2231ff22dcf0fd8a746aa3471c9299",
+    "updateArchive": "6beab5d222db0e6c8afdf4d9d3f10f5e1a4090d0275938a375f214cf66771312"
+  }
+}

@@ -1,0 +1,14 @@
+{
+  "name": "heel-feedback-service",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "cf build",
+    "dev": "cf dev",
+    "deploy": "cf deploy"
+  },
+  "devDependencies": {
+    "@cloudflare/vite-plugin": "2.0.0-beta.v.15",
+    "cf": "0.15.0"
+  }
+}

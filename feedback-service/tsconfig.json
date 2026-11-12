@@ -1,0 +1,6 @@
+{
+  "extends": "../tsconfig.json",
+  "compilerOptions": { "lib": ["ES2023", "DOM"], "composite": false },
+  "include": ["./*.ts", "../shared"],
+  "references": []
+}

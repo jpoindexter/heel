@@ -41,21 +41,22 @@ export function LayersProvider({ children }: { children: ReactNode }) {
 
   const leave = useCallback(
     (move: "back" | "home") => {
-      setStack((current) => {
-        if (atRoot(current) || pending.current) return current;
-        const top = topOf(current);
-        pending.current = move;
-        setLeaving(top);
-        timer.current = window.setTimeout(() => settle(top), LEAVE_FALLBACK_MS);
-        return current;
-      });
+      if (atRoot(stack) || pending.current) return;
+      const top = topOf(stack);
+      pending.current = move;
+      setLeaving(top);
+      timer.current = window.setTimeout(() => settle(top), LEAVE_FALLBACK_MS);
     },
-    [settle],
+    [stack, settle],
   );
 
   const push = useCallback((layer: Layer) => {
     openers.current.set(layer, openerOf(document.activeElement));
-    setStack((current) => pushOf(current, layer));
+    const move = pending.current;
+    pending.current = null;
+    window.clearTimeout(timer.current);
+    setLeaving(null);
+    setStack((current) => pushOf(move === "home" ? homeOf(current) : move === "back" ? backOf(current) : current, layer));
   }, []);
   const forward = useCallback(() => setStack((current) => forwardOf(current)), []);
   const back = useCallback(() => leave("back"), [leave]);

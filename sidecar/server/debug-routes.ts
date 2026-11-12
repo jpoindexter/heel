@@ -3,7 +3,6 @@ import { release } from "node:os";
 import { join } from "node:path";
 import type { Hono } from "hono";
 import { DebugExportInputSchema } from "../../shared/api";
-import { FEEDBACK_TO, FeedbackMailInputSchema, mailtoUrl } from "../../shared/feedback";
 import { APP_VERSION } from "../../shared/version";
 import type { AppDeps } from "./app";
 import { fail, ok, readJson } from "./respond";
@@ -67,10 +66,4 @@ export function registerDebugRoutes(app: Hono, { store, debug, openFile }: AppDe
     return ok(c, { path, revealed: await openFile(path, true) });
   });
 
-  // Testers' bug reports and ideas: a draft in their mail app, always to Jason. `open mailto:` sends nothing; they press Send.
-  app.post("/feedback/mail", async (c) => {
-    const body = FeedbackMailInputSchema.safeParse(await readJson(c));
-    if (!body.success) return fail(c, "invalid", "Write a one-line title and what happened, then try again.");
-    return ok(c, { opened: await openFile(mailtoUrl(FEEDBACK_TO, body.data), false) });
-  });
 }

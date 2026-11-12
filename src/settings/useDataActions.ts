@@ -37,6 +37,7 @@ export function useDataActions(client: Client) {
       const done = await client.post("/data/wipe", WipeResultSchema, { confirm });
       setBusy(false);
       if (!done.ok) return setSaid(refused(done.error.message));
+      try { for (const key of ["heel:feedback-draft-v1", "heel:report-pending:debug", "heel:report-pending:crash", "heel:onboarding-task-draft"]) localStorage.removeItem(key); } catch { /* storage may be unavailable */ }
       setPreview(null);
       setSaid(wipeSaid(done.data));
       window.setTimeout(() => window.location.reload(), RELOAD_AFTER_WIPE_MS);

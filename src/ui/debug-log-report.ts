@@ -1,4 +1,5 @@
-import type { DebugInfoDto } from "../../shared/api";
+import { DebugInfoSchema, type DebugInfoDto } from "../../shared/api";
+import type { Client } from "../api/client";
 import { APP_VERSION } from "../../shared/version";
 import { formatLog, type DebugEntry } from "./debug-log";
 
@@ -48,6 +49,13 @@ export function buildReport({ helper, log, crash = null, now = new Date() }: Rep
   lines.push("PANEL LOG (newest last)", log.length ? formatLog(log) : "(empty)", "");
   lines.push("HELPER LOG (last lines)", helper ? helper.sidecarLog.join("\n") || "(empty)" : "(helper not reached)");
   return lines.join("\n");
+}
+
+/** Full local copy/export only. Direct sending uses report-diagnostics.ts's restricted fields. */
+export async function reportNow(client: Client, crash: string | null = null): Promise<string> {
+  const helper = await client.get("/debug", DebugInfoSchema);
+  const { readDebugLog } = await import("./debug-log");
+  return buildReport({ helper: helper.ok ? helper.data : null, log: readDebugLog(), crash });
 }
 
 /** Put text on the clipboard. The async API first; the old selection trick when a webview refuses it. */

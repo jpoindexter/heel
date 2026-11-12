@@ -1,0 +1,11 @@
+{
+  "identifier": "updates",
+  "description": "Signed update checks, downloads and user-requested restart in the local panel",
+  "windows": [
+    "panel"
+  ],
+  "permissions": [
+    "updater:default",
+    "process:allow-restart"
+  ]
+}

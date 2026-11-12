@@ -5,6 +5,7 @@ import { APP_VERSION } from "../../shared/version";
 import { client } from "../api/default-client";
 import { formatLog } from "../ui/debug-log";
 import { useDebugReport } from "./useDebugReport";
+import { SendDiagnosticReport } from "../ui/SendDiagnosticReport";
 
 /** The shell restarts the helper; outside Tauri (a browser preview) there is nobody to ask. */
 const restartHelper = () => void invoke("restart_helper").catch(() => undefined);
@@ -42,6 +43,7 @@ export function DebugSettings({ active }: { active: boolean }) {
       <details className="debug-fold">
         <summary><Text size="2" weight="medium">Debug</Text></summary>
         <div className="settings-section">
+          <SendDiagnosticReport />
           <Text as="p" size="1" color="gray">What Heel noted about itself: where and when, never what you wrote. Hand it over when something breaks.</Text>
           <Text as="p" size="1" weight="medium" id="panel-log-label">Panel log</Text>
           <pre ref={panelLog} className="debug-log" tabIndex={0} aria-labelledby="panel-log-label">{log.length ? formatLog(log) : "Nothing noted yet."}</pre>

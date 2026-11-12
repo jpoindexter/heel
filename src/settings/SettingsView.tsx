@@ -1,3 +1,5 @@
+import type { Updates } from "../updates/useUpdates";
+import { UpdateStatus } from "../updates/UpdateStatus";
 import { useState } from "react";
 import type { Preference } from "../theme/appearance";
 import { APP_VERSION } from "../../shared/version";
@@ -29,8 +31,10 @@ import { gregSummary, lookSummary, workSummary } from "./settings-model";
 import "./settings.css";
 
 type Props = {
+  updates: Updates;
   active: boolean;
   onSaved: () => void;
+  onReplaySetup?: () => void;
   preference: Preference;
   onPreference: (next: Preference) => void;
   density: Density;
@@ -38,7 +42,7 @@ type Props = {
 };
 
 /** Two levels (N4): nine groups with their values at rest, each opening to its controls. One group open at a time. */
-export function SettingsView({ active, onSaved, preference, onPreference, density, onDensity }: Props) {
+export function SettingsView({ updates, active, onSaved, onReplaySetup, preference, onPreference, density, onDensity }: Props) {
   const [activity] = useActivity();
   const { settings: attention } = useAttentionSettings();
   const { method } = useMethod();
@@ -49,7 +53,7 @@ export function SettingsView({ active, onSaved, preference, onPreference, densit
   return (
     <div className="settings">
       <SettingsGroup title="Help" summary="How Heel works">
-        <HelpSettings />
+        <HelpSettings onSetup={onReplaySetup} />
       </SettingsGroup>
       <SettingsGroup title="Look" summary={lookSummary(preference, density)}>
         <AppearanceSettings preference={preference} onPreference={onPreference} />
@@ -79,6 +83,7 @@ export function SettingsView({ active, onSaved, preference, onPreference, densit
         <DataSettings />
       </SettingsGroup>
       <SettingsGroup title="About" summary={`Heel ${APP_VERSION} · send feedback`}>
+        <UpdateStatus updates={updates} />
         <FeedbackSettings />
         <DebugSettings active={active} />
       </SettingsGroup>

@@ -10,6 +10,7 @@ import { HelperNotice } from "../helper/HelperNotice";
 import { useHelperStatus } from "../helper/useHelperStatus";
 import { useActivity } from "../mascot/life/useActivity";
 import { OPEN_SETTINGS_EVENT } from "../events";
+import { SendDiagnosticReport } from "../ui/SendDiagnosticReport";
 import { Notifier } from "../ui/Notifier";
 import { NoticesProvider, useNotices } from "../ui/notices";
 import { useBackgroundFailures } from "../ui/useBackgroundFailures";
@@ -27,6 +28,9 @@ import { SCALING } from "../theme/density";
 import { useDensity } from "../theme/useDensity";
 import { useAppearance } from "../theme/useAppearance";
 import { TodayView } from "../today/TodayView";
+import { useUpdates } from "../updates/useUpdates";
+import { UpdateStatus } from "../updates/UpdateStatus";
+import { OnboardingProvider, useOnboarding } from "../onboarding/onboarding";
 
 /** "Settings…" in the menu bar: ask once at start (the panel may have loaded after the click) and again on each event. */
 function useOpenSettingsRequests(open: () => void): void {
@@ -79,13 +83,16 @@ function PanelToast() {
 }
 
 function PanelBody({ look, parked }: { look: ReturnType<typeof usePanelLook>; parked: boolean }) {
+  const updates = useUpdates();
   const layers = useLayers();
+  const setup = useOnboarding();
   const inSettings = layers.top === "settings";
   const { summary, refresh: refreshSummary } = useBrainSummary(client, inSettings ? "settings" : "chat");
   const notices = useNotices();
-  useBackgroundFailures(notices);
+  const failures = useBackgroundFailures(notices);
   const helper = useHelperStatus((from) => {
     void refreshSummary();
+    void setup.refresh();
     if (from !== "starting") notices.show({ message: "Heel's helper is back", tone: "info" });
   });
   useEffect(() => logDebug("info", "layers", layers.top), [layers.top]);
@@ -98,14 +105,17 @@ function PanelBody({ look, parked }: { look: ReturnType<typeof usePanelLook>; pa
       <span className="panel-tail" aria-hidden="true" />
       <PanelHeader onClose={closePanel} parked={parked} />
       <HelperNotice status={helper.status} error={helper.error} onRestart={() => void helper.restart()} />
+      <UpdateStatus updates={updates} compact />
       <TodayView
         showing={layers.top === "today"}
         summary={summary}
         reloadKey={helper.recoveries}
         settings={
           <SettingsView
+            updates={updates}
             active={inSettings}
             onSaved={() => void refreshSummary()}
+            onReplaySetup={() => void setup.move(0).then(ok => { if (ok) layers.push("onboarding"); })}
             preference={look.preference}
             onPreference={look.setPreference}
             density={look.density}
@@ -113,6 +123,7 @@ function PanelBody({ look, parked }: { look: ReturnType<typeof usePanelLook>; pa
           />
         }
       />
+      <SendDiagnosticReport kind="crash" open={failures.reportOpen} onOpenChange={failures.setReportOpen} />
       <PanelToast />
     </main>
   );
@@ -140,7 +151,7 @@ export function Panel() {
         <LayersProvider>
           <MethodProvider client={client}>
             <AttentionProvider client={client}>
-              <PanelBody look={look} parked={anchor.edge === "none"} />
+              <OnboardingProvider><PanelBody look={look} parked={anchor.edge === "none"} /></OnboardingProvider>
             </AttentionProvider>
           </MethodProvider>
         </LayersProvider>

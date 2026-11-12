@@ -1,7 +1,7 @@
 {
   "$schema": "https://schema.tauri.app/config/2",
   "productName": "Heel",
-  "version": "0.1.4",
+  "version": "0.1.5",
   "identifier": "studio.theft.heel",
   "build": {
     "beforeDevCommand": "npm run dev:all",
@@ -65,11 +65,13 @@
       }
     ],
     "security": {
-      "csp": "default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; font-src 'self' data:; connect-src 'self' ipc: http://ipc.localhost http://127.0.0.1:*; object-src 'none'; base-uri 'self'; form-action 'none'; frame-ancestors 'none'"
+      "csp": "default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; font-src 'self' data:; connect-src 'self' ipc: http://ipc.localhost http://127.0.0.1:* https://heel-feedback.jason-poindexter.workers.dev; object-src 'none'; base-uri 'self'; form-action 'none'; frame-ancestors 'none'"
     }
   },
   "bundle": {
-    "externalBin": ["binaries/heel-cv-text"],
+    "externalBin": [
+      "binaries/heel-cv-text"
+    ],
     "active": true,
     "targets": "all",
     "icon": [
@@ -85,6 +87,15 @@
     "macOS": {
       "signingIdentity": "-",
       "entitlements": "Entitlements.plist"
+    }
+  },
+  "plugins": {
+    "updater": {
+      "endpoints": [
+        "https://heel-feedback.jason-poindexter.workers.dev/updates/latest.json"
+      ],
+      "pubkey": "dW50cnVzdGVkIGNvbW1lbnQ6IG1pbmlzaWduIHB1YmxpYyBrZXk6IDIwRjY1QkJEMTNCQzI1MTgKUldRWUpid1R2VnYySUxoWEpVd1hlWGxuSnNVRmJnU1d4eWhCK05mNE5qM21lc2QwczhVVTFaUloK",
+      "requireSignedVersion": true
     }
   }
 }

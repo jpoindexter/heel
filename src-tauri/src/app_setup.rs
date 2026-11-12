@@ -9,6 +9,7 @@ use crate::hit_region;
 
 pub(crate) fn setup(app: &mut App) -> Result<(), Box<dyn std::error::Error>> {
     let handle = app.handle().clone();
+    crate::session_health::SessionHealth::start(&handle);
     crate::sidecar_process::start(&handle);
     restore_panel_size(&handle);
     let settings = crate::shell_settings::load(&handle);

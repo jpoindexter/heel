@@ -1,21 +1,28 @@
-import { useEffect } from "react";
+import { invoke, isTauri } from "@tauri-apps/api/core";
+import { useEffect, useState } from "react";
 import { backgroundFailureNotice, crashLine, isBenignBackgroundError } from "./crash-model";
 import { logDebug } from "./debug-log";
 import type { Notices } from "./notices";
 
 /** A promise nobody awaited, or an error outside React: say so in the usual toast instead of failing silently, and note it in the debug log. */
-export function useBackgroundFailures(notices: Pick<Notices, "show">): void {
+export function useBackgroundFailures(notices: Pick<Notices, "show">) {
+  const [reportOpen, setReportOpen] = useState(false);
   useEffect(() => {
+    const report = () => setReportOpen(true);
+    const failed = (message: string) => notices.show({ message, tone: "error", choices: [{ label: "Report", run: report }] });
+    if (isTauri()) void invoke<boolean>("previous_session_failed").then(previous => {
+      if (previous) report();
+    }).catch(() => {});
     const onRejection = (event: PromiseRejectionEvent) => {
       console.error("[heel:panel] unhandled rejection:", event.reason);
       logDebug("error", "panel", `unhandled rejection: ${crashLine(event.reason)}`);
-      notices.show({ message: backgroundFailureNotice(event.reason), tone: "error" });
+      failed(backgroundFailureNotice(event.reason));
     };
     const onError = (event: ErrorEvent) => {
       if (isBenignBackgroundError(event.error ?? event.message)) return;
       console.error("[heel:panel] uncaught error:", event.error ?? event.message);
       logDebug("error", "panel", `uncaught error: ${crashLine(event.error ?? event.message)}`);
-      notices.show({ message: backgroundFailureNotice(event.error ?? event.message), tone: "error" });
+      failed(backgroundFailureNotice(event.error ?? event.message));
     };
     window.addEventListener("unhandledrejection", onRejection);
     window.addEventListener("error", onError);
@@ -24,4 +31,5 @@ export function useBackgroundFailures(notices: Pick<Notices, "show">): void {
       window.removeEventListener("error", onError);
     };
   }, [notices]);
+  return { reportOpen, setReportOpen };
 }

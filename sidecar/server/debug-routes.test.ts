@@ -3,7 +3,6 @@ import { tmpdir } from "node:os";
 import { join } from "node:path";
 import { describe, expect, it } from "vitest";
 import { DebugExportResultSchema, DebugInfoSchema, envelope } from "../../shared/api";
-import { FeedbackMailResultSchema } from "../../shared/feedback";
 import { APP_VERSION } from "../../shared/version";
 import { SIDECAR_LOG_FILE, reportFileName, tailLines } from "./debug-routes";
 import { setup } from "./test-app";
@@ -50,28 +49,5 @@ describe("POST /debug/export", () => {
 
   it("names the file by the moment, safe for any file system", () => {
     expect(reportFileName(new Date("2026-10-27T09:05:03.000Z"))).toBe("heel-report-2026-10-27-09-05-03.txt");
-  });
-});
-
-describe("POST /feedback/mail", () => {
-  const result = envelope(FeedbackMailResultSchema);
-
-  it("opens a draft to Jason in the mail app, never anywhere else, and sends nothing", async () => {
-    const opened: [string, boolean][] = [];
-    const { post } = setup({}, {}, undefined, undefined, { openFile: async (target, reveal) => (opened.push([target, reveal]), true) });
-    const answer = result.parse(await post("/feedback/mail", { subject: "[Heel 0.1.0 bug] Esc", body: "WHAT HAPPENED\nit closed" }));
-    expect(answer).toEqual({ ok: true, data: { opened: true } });
-    expect(opened).toHaveLength(1);
-    const [url, reveal] = opened[0]!;
-    expect(reveal).toBe(false);
-    expect(url.startsWith("mailto:jason@theft.studio?subject=")).toBe(true);
-    expect(new URLSearchParams(url.split("?")[1]).get("body")).toBe("WHAT HAPPENED\r\nit closed");
-  });
-
-  it("says when the Mac would not open a mail app, and refuses an empty draft", async () => {
-    const { post } = setup({}, {}, undefined, undefined, { openFile: async () => false });
-    expect(result.parse(await post("/feedback/mail", { subject: "S", body: "B" }))).toEqual({ ok: true, data: { opened: false } });
-    expect(await post("/feedback/mail", { subject: "", body: "B" })).toMatchObject({ ok: false, error: { code: "invalid" } });
-    expect(await post("/feedback/mail", { to: "someone@else.test", subject: "S" })).toMatchObject({ ok: false, error: { code: "invalid" } });
   });
 });

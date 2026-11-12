@@ -4,6 +4,7 @@
 # notarized, stapled and checked by Gatekeeper. Local builds stay ad-hoc (`npm run release`).
 set -eu
 
+: "${TAURI_SIGNING_PRIVATE_KEY_PATH:?Set TAURI_SIGNING_PRIVATE_KEY_PATH to the Heel updater private key file outside the repository.}"
 : "${APPLE_SIGNING_IDENTITY:?Set APPLE_SIGNING_IDENTITY to your Developer ID Application identity (its SHA-1 from security find-identity -v -p codesigning when two share a name).}"
 BUNDLE=src-tauri/target/release/bundle
 APP="$BUNDLE/macos/Heel.app"
@@ -24,4 +25,9 @@ xcrun stapler staple "$DMG"
 xcrun stapler staple "$APP"
 spctl --assess --type open --context context:primary-signature -vv "$DMG"
 spctl --assess --type execute -vv "$APP"
-echo "Notarized: $DMG"
+# Package after stapling so automatic downloads carry the notarization ticket too.
+ARCHIVE="$BUNDLE/macos/Heel.app.tar.gz"
+COPYFILE_DISABLE=1 tar --no-mac-metadata --no-xattrs -czf "$ARCHIVE" -C "$BUNDLE/macos" Heel.app
+npx tauri signer sign --private-key-path "$TAURI_SIGNING_PRIVATE_KEY_PATH" --app-version "$VERSION" "$ARCHIVE"
+node scripts/update-manifest.mjs "$ARCHIVE" "$BUNDLE/macos/latest.json"
+echo "Notarized: $DMG; signed update: $ARCHIVE"

@@ -1,5 +1,7 @@
 import { ApplicationsPanel } from "../applications/ApplicationsPanel";
-import { useCallback, useEffect, type ReactNode } from "react";
+import { useCallback, useEffect, useRef, type ReactNode } from "react";
+import { OnboardingPanel } from "../onboarding/OnboardingPanel";
+import { useOnboarding } from "../onboarding/onboarding";
 import { Button, Callout } from "@radix-ui/themes";
 import { FocusStatus } from "../focus/FocusStatus";
 import { InboxPanel } from "../inbox/InboxPanel";
@@ -35,6 +37,17 @@ type Props = {
 };
 
 type State = ReturnType<typeof useTodayState>;
+
+function useFirstSetup() {
+  const setup = useOnboarding(), layers = useLayers();
+  const shown = useRef(false);
+  useEffect(() => {
+    if (setup.state && !shown.current) {
+      shown.current = true;
+      if (setup.state.step < 3) layers.push("onboarding");
+    }
+  }, [setup.state, layers.push]);
+}
 
 /** A sent question opens the reply layer; closing the email digest closes its layer. */
 function useLayerFollows(state: State) {
@@ -83,6 +96,7 @@ function TodayBase({ state, foundId }: { state: State; foundId: ReturnType<typeo
 
 /** The whole panel body: the tasks as the base, Settings / Email / the reply as layers over them, and the one bar at the bottom. */
 export function TodayView({ showing, summary, reloadKey, settings }: Props) {
+  useFirstSetup();
   const layers = useLayers();
   const state = useTodayState(showing, reloadKey);
   const { tasks, thread } = state;
@@ -110,6 +124,7 @@ export function TodayView({ showing, summary, reloadKey, settings }: Props) {
         }
       >
         <Layer name="applications" label="Job applications"><ApplicationsPanel /></Layer>
+        <Layer name="onboarding" label="Set up Heel"><OnboardingPanel onChanged={() => void tasks.refresh()} /></Layer>
         <Layer name="settings" label="Settings">{settings}</Layer>
         <Layer name="history" label="History">
           <HistoryLayer history={history} documents={documents} today={todayKey()} />
@@ -124,8 +139,8 @@ export function TodayView({ showing, summary, reloadKey, settings }: Props) {
           <SearchLayer search={found.search} active={layers.top === "search"} onPick={(hit) => void found.onPick(hit)} onAsk={found.onAsk} />
         </Layer>
       </LayerHost>
-      {summary?.kind === "setup" && <FirstRun summary={summary} onOpenSettings={openSettings} />}
-      <BottomBar state={state} bar={bar} showing={showing} focusSignal={focusSignal} emailReady={state.mail.available} />
+      {layers.top !== "onboarding" && summary?.kind === "setup" && <FirstRun summary={summary} onOpenSettings={openSettings} />}
+      {layers.top !== "onboarding" && <BottomBar state={state} bar={bar} showing={showing} focusSignal={focusSignal} emailReady={state.mail.available} />}
     </div>
   );
 }

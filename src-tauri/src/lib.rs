@@ -20,6 +20,7 @@ mod pointer_sense;
 mod panel_place;
 mod save_file;
 mod shell_settings;
+mod session_health;
 mod sidecar_process;
 mod startup;
 mod system_notice;
@@ -46,6 +47,7 @@ use shell_settings::{shell_settings, Shell};
 use window_level::set_always_on_top;
 use startup::{launch_at_login, reveal_data_folder, set_dock_icon, set_launch_at_login};
 use hotkey::set_hotkey;
+use session_health::previous_session_failed;
 use tauri_plugin_global_shortcut::ShortcutState;
 
 #[cfg_attr(mobile, tauri::mobile_entry_point)]
@@ -60,6 +62,8 @@ pub fn run() {
     }));
 
     builder
+        .plugin(tauri_plugin_updater::Builder::new().build())
+        .plugin(tauri_plugin_process::init())
         .manage(Attention::default())
         .manage(Dock::new())
         .manage(PendingView::new())
@@ -81,7 +85,7 @@ pub fn run() {
                 .build(),
         )
         .on_menu_event(|app, event| mascot_menu::on_menu_event(app, event.id().as_ref()))
-        .invoke_handler(tauri::generate_handler![toggle_panel_command, sidecar_info, take_pending_view, set_mascot_hit_region, set_mascot_pressed, show_mascot_menu, set_life_flags, start_walk, stop_walk, hide_greg, show_greg, panel_anchor, helper_status, restart_helper, panel_visible, show_notice, hide_notice, set_attention_enabled, dock_panel_command, panel_offset, system_notify, shell_settings, set_always_on_top, launch_at_login, set_launch_at_login, set_dock_icon, reveal_data_folder, set_hotkey])
+        .invoke_handler(tauri::generate_handler![toggle_panel_command, sidecar_info, take_pending_view, set_mascot_hit_region, set_mascot_pressed, show_mascot_menu, set_life_flags, start_walk, stop_walk, hide_greg, show_greg, panel_anchor, helper_status, restart_helper, panel_visible, show_notice, hide_notice, set_attention_enabled, dock_panel_command, panel_offset, system_notify, shell_settings, set_always_on_top, launch_at_login, set_launch_at_login, set_dock_icon, reveal_data_folder, set_hotkey, previous_session_failed])
         .setup(app_setup::setup)
         .build(tauri::generate_context!())
         .expect("error while building Heel")
@@ -93,6 +97,7 @@ fn on_run_event(app: &tauri::AppHandle, event: tauri::RunEvent) {
     if let tauri::RunEvent::Exit = event {
         undock::save_place(app);
         sidecar_process::stop(app);
+        session_health::SessionHealth::finish(app);
     }
     // Clicking the Dock icon opens the panel if it is hidden.
     #[cfg(target_os = "macos")]
