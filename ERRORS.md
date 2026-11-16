@@ -19,3 +19,12 @@ Why it failed: a destructive step before the source was proven; a glob where an 
 What failed: `gh release create v0.1.0 … --target de796f7` twice. First a network timeout on the upload (no release, no tag left behind); then "Release.target_commitish is invalid": the API takes a branch or a full 40-character SHA, not a short one.
 What worked: `--target "$(git rev-parse de796f7)"`, then `gh release view --json assets` and comparing the asset's sha256 digest with `shasum -a 256` of the local DMG.
 Why it failed: a short SHA works in git but not in the releases API; and a failed upload prints its error under a line that looks like success, so read the release back before reporting it.
+
+## 2026-11-16 — Codex subscription image output
+What failed: initially assumed image edits required the Images API; then asked Codex's final text response to supply its output path. A real built-in edit succeeded but its assistant reply reported no accessible path, so the application rejected a valid result.
+What worked: Codex 0.163.0 exposes image_generation using ChatGPT subscription login. Parse the engine's thread.started receipt and read the one fresh PNG from that thread's generated_images directory; validate the actual image natively. Do not trust or require a model-invented file path. Keep shell/view-image/apps tools disabled and restrict the worker's filesystem to its input and generated outputs.
+Why it failed: the built-in image tool's filesystem artifact and model-facing output hint are separate contracts. API credentials are not a prerequisite for this supported subscription tool path.
+
+## 2026-11-16 — First native photo OCR failure
+What failed: the first OCR request from the packaged Photos UI failed while import, rotate and undo worked. The packaged executable and running packaged helper both subsequently read the same normalized photo successfully; the underlying first-use failure did not reproduce.
+What worked: preserve the image, allow exactly one retry for local idempotent OCR, and never retry cancellation. Unit proof injects one failure then success and verifies a cancelled operation is attempted only once. This does not establish the original Apple Vision error's root cause.

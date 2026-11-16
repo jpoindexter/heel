@@ -4,6 +4,7 @@
  * these are the few things Heel needs on top, named for what they are.
  */
 .radix-themes {
+  --photo-thumb-size: 48px;
   --viewport-height: 100vh;
   --hit-target: 32px; /* a row; the smallest target Heel draws is 24px (WCAG 2.2), with space around it */
   --border-width: 1px;

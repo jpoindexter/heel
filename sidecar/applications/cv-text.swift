@@ -18,6 +18,12 @@ func recognize(_ page: PDFPage) throws -> String {
     return (request.results ?? []).compactMap { $0.topCandidates(1).first?.string }.joined(separator: "\n")
 }
 
+if CommandLine.arguments.count == 5, CommandLine.arguments[1] == "--photo" {
+    do { try runPhoto(input: CommandLine.arguments[2], output: CommandLine.arguments[3], optionsPath: CommandLine.arguments[4]) }
+    catch { exit(2) }
+    exit(0)
+}
+
 do {
     guard CommandLine.arguments.count == 2,
           let doc = PDFDocument(url: URL(fileURLWithPath: CommandLine.arguments[1])), !doc.isLocked,

@@ -4,6 +4,7 @@ import { mkdirSync } from "node:fs";
 import { homedir } from "node:os";
 import { join } from "node:path";
 import { serve } from "@hono/node-server";
+import { createPhotoEditor } from "../photos/editor";
 import { createProviders } from "../agent/providers/registry";
 import { runCommand } from "../agent/providers/process";
 import { macKeychain } from "../inbox/keychain";
@@ -51,7 +52,7 @@ const pdf = createPdfRenderer({ run: runCommand, dir: join(dir, "pdf") });
 const skills = createSkillsService({ bundledDir: SKILLS_DIR, bundled: BUNDLED_SKILLS, userDir: join(dir, "skills"), off: store.settings.getSkillsOff, setOff: store.settings.setSkillsOff });
 // HEEL_DEV_ORIGIN: a second dev panel on another Vite port (a worktree beside the main checkout) may call this helper.
 let port: number | null = null;
-const app = createApp({ applications, store, providers: createProviders(), inbox, mail, mailAvailable: mailAppExists(), apps, token, allowedOrigins: [DEV_ORIGIN, ...TAURI_ORIGINS, ...(process.env.HEEL_DEV_ORIGIN ? [process.env.HEEL_DEV_ORIGIN] : [])], openFile, renderPdf: pdf.render, skills, debug: { dataDir: dir, port: () => port, exportDir: join(homedir(), "Desktop") } });
+const app = createApp({ applications, photoEditor: createPhotoEditor(), store, providers: createProviders(), inbox, mail, mailAvailable: mailAppExists(), apps, token, allowedOrigins: [DEV_ORIGIN, ...TAURI_ORIGINS, ...(process.env.HEEL_DEV_ORIGIN ? [process.env.HEEL_DEV_ORIGIN] : [])], openFile, renderPdf: pdf.render, skills, debug: { dataDir: dir, port: () => port, exportDir: join(homedir(), "Desktop") } });
 
 // Port 0 = let the OS pick a free port; the panel finds it in the connection file.
 const server = serve({ fetch: app.fetch, hostname: HOST, port: 0 }, (info) => {

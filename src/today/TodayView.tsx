@@ -1,3 +1,5 @@
+import { PhotosPanel } from "../photos/PhotosPanel";
+import { usePhotos } from "../photos/usePhotos";
 import { ApplicationsPanel } from "../applications/ApplicationsPanel";
 import { useCallback, useEffect, useRef, type ReactNode } from "react";
 import { OnboardingPanel } from "../onboarding/OnboardingPanel";
@@ -87,6 +89,7 @@ function TodayBase({ state, foundId }: { state: State; foundId: ReturnType<typeo
   return (
           <div className="today-scroll" aria-busy={tasks.state.phase === "loading" || undefined}>
             <Button size="1" variant="ghost" onClick={() => layers.push("applications")}>Job applications</Button>
+            <Button size="1" variant="ghost" onClick={() => layers.push("photos")}>Photos</Button>
             <ReplyRow messages={thread.messages} onOpen={() => layers.push("reply")} />
             <TaskSection state={state} foundId={foundId} />
             {state.ready && <DoneRow doneToday={state.ready.doneToday} onOpen={() => layers.push("history")} />}
@@ -98,6 +101,7 @@ function TodayBase({ state, foundId }: { state: State; foundId: ReturnType<typeo
 export function TodayView({ showing, summary, reloadKey, settings }: Props) {
   useFirstSetup();
   const layers = useLayers();
+  const photos = usePhotos(layers.top === "photos");
   const state = useTodayState(showing, reloadKey);
   const { tasks, thread } = state;
   const openSettings = useCallback(() => layers.push("settings"), [layers]);
@@ -108,7 +112,6 @@ export function TodayView({ showing, summary, reloadKey, settings }: Props) {
   const documents = useDocuments(client, { active: layers.top === "history", notify: tasks.showNotice });
   const found = useSearchLayer({ state, layers, history, openDocument: documents.open });
   useAttention({ state, bar, layers });
-
   return (
     <div className="today" onPointerDownCapture={bar.onPointerOutside}>
       {tasks.state.phase === "error" && (
@@ -123,6 +126,7 @@ export function TodayView({ showing, summary, reloadKey, settings }: Props) {
           <TodayBase state={state} foundId={found.foundId} />
         }
       >
+        <Layer name="photos" label="Photos"><PhotosPanel photos={photos} /></Layer>
         <Layer name="applications" label="Job applications"><ApplicationsPanel /></Layer>
         <Layer name="onboarding" label="Set up Heel"><OnboardingPanel onChanged={() => void tasks.refresh()} /></Layer>
         <Layer name="settings" label="Settings">{settings}</Layer>
@@ -139,8 +143,8 @@ export function TodayView({ showing, summary, reloadKey, settings }: Props) {
           <SearchLayer search={found.search} active={layers.top === "search"} onPick={(hit) => void found.onPick(hit)} onAsk={found.onAsk} />
         </Layer>
       </LayerHost>
-      {layers.top !== "onboarding" && summary?.kind === "setup" && <FirstRun summary={summary} onOpenSettings={openSettings} />}
-      {layers.top !== "onboarding" && <BottomBar state={state} bar={bar} showing={showing} focusSignal={focusSignal} emailReady={state.mail.available} />}
+      {layers.top !== "onboarding" && layers.top !== "photos" && summary?.kind === "setup" && <FirstRun summary={summary} onOpenSettings={openSettings} />}
+      {layers.top !== "onboarding" && layers.top !== "photos" && <BottomBar state={state} bar={bar} showing={showing} focusSignal={focusSignal} emailReady={state.mail.available} />}
     </div>
   );
 }

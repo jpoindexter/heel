@@ -1,0 +1,85 @@
+import assert from "node:assert/strict";
+import { mkdtempSync, readFileSync, writeFileSync } from "node:fs";
+import { tmpdir } from "node:os";
+import { join } from "node:path";
+import { spawnSync } from "node:child_process";
+import type { AddressInfo } from "node:net";
+import { serve } from "@hono/node-server";
+import { createServer } from "vite";
+import { chromium } from "playwright-core";
+import { resolveChromiumExecutable } from "../sidecar/applications/launch";
+import { setup, fakeProvider, TOKEN } from "../sidecar/server/test-app";
+import { nativePhoto } from "../sidecar/photos/native";
+
+const dir = mkdtempSync(join(tmpdir(), "heel-photo-ui-")), source = join(dir, "original.png");
+assert.equal(spawnSync("/usr/bin/swift", ["scripts/fixtures/photo.swift", "make", source]).status, 0);
+const sourceBytes = readFileSync(source), normalized = await nativePhoto(sourceBytes.toString("base64"), { operation: "import" });
+let asks = 0, edits = 0;
+const provider = fakeProvider("codex");
+provider.complete = async request => { asks++; assert(request.image?.data.startsWith("iVBOR")); return { ok: true, value: "A blue circle, a red square and BLUE 7." }; };
+const test = setup({ codex: provider }, {}, undefined, undefined, { dataDir: dir, photoEditor: { ready: async () => true, edit: async input => { edits++; assert.equal(input.prompt, "Make the circle green"); return { ok: true, value: normalized.data }; } } });
+test.store.onboarding.move(3); test.store.settings.setBrain({ provider: "codex", model: null });
+const server = serve({ fetch: request => test.app.fetch(request), hostname: "127.0.0.1", port: 0 });
+await new Promise<void>(resolve => server.listening ? resolve() : server.once("listening", resolve));
+const vite = await createServer({ server: { host: "localhost", port: 1420, strictPort: true, hmr: false, watch: { ignored: ["**/*"] } }, clearScreen: false }); await vite.listen();
+const browser = await chromium.launch({ executablePath: resolveChromiumExecutable(chromium), headless: true });
+const page = await browser.newPage({ viewport: { width: 300, height: 420 } }); page.setDefaultTimeout(20_000);
+const dimensions = async (width: number, height: number) => page.waitForFunction(({ width, height }) => { const image = document.querySelector<HTMLImageElement>(".photo-preview"); return image?.naturalWidth === width && image.naturalHeight === height; }, { width, height });
+const checks: string[] = [];
+try {
+  await page.goto(`http://localhost:1420/?window=panel&sidecar=${(server.address() as AddressInfo).port}:${TOKEN}`);
+  await page.getByRole("button", { name: "Photos", exact: true }).click();
+  await page.getByLabel("Choose photos", { exact: true }).setInputFiles(source);
+  await dimensions(normalized.width, normalized.height); assert.equal(asks, 0);
+  await page.getByText("Resize", { exact: true }).click();
+  await page.getByLabel("Width in pixels", { exact: true }).fill("320");
+  await page.getByRole("button", { name: "Apply resize", exact: true }).click(); await dimensions(320, 240);
+  await page.getByRole("button", { name: "Undo edit", exact: true }).click(); await dimensions(normalized.width, normalized.height);
+  await page.getByRole("button", { name: "Rotate right", exact: true }).click(); await dimensions(normalized.height, normalized.width);
+  const rotationPixels = await page.locator(".photo-preview").evaluate(element => {
+    const image = element as HTMLImageElement, canvas = document.createElement("canvas"); canvas.width = image.naturalWidth; canvas.height = image.naturalHeight;
+    const context = canvas.getContext("2d")!; context.drawImage(image, 0, 0);
+    return { top: Array.from(context.getImageData(Math.floor(canvas.width * .5), Math.floor(canvas.height * .234375), 1, 1).data), bottom: Array.from(context.getImageData(Math.floor(canvas.width * .5), Math.floor(canvas.height * .703125), 1, 1).data) };
+  });
+  assert(rotationPixels.top[2]! > 150 && rotationPixels.top[0]! < 100 && rotationPixels.bottom[0]! > 150 && rotationPixels.bottom[2]! < 100, "Rotate right must put the blue circle above the red square");
+  await page.getByText("Crop", { exact: true }).click();
+  for (const [label, value] of [["Crop x", "10"], ["Crop y", "20"], ["Crop width", "100"], ["Crop height", "80"]]) await page.getByLabel(label!, { exact: true }).fill(value!);
+  await page.getByRole("button", { name: "Apply crop", exact: true }).click(); await dimensions(100, 80);
+  await page.getByRole("button", { name: "Reset to original", exact: true }).click(); await dimensions(normalized.width, normalized.height);
+  checks.push("Native-decoded preview, resize/proportions, rotate, crop, undo and reset produced the expected actual image dimensions");
+  await page.getByText("Ask about this photo", { exact: true }).click();
+  await page.getByRole("button", { name: "Read text on this Mac", exact: true }).click(); await page.getByText("BLUE 7", { exact: true }).waitFor(); assert.equal(asks, 0);
+  await page.getByLabel("Question", { exact: true }).fill("Describe the colors");
+  await page.getByRole("button", { name: "Ask AI", exact: true }).click(); await page.getByText("A blue circle, a red square and BLUE 7.", { exact: true }).waitFor(); assert.equal(asks, 1);
+  checks.push("Local OCR uploaded nothing; explicit Ask delivered image pixels through the real guarded helper/provider boundary");
+  await page.getByText("Make an AI edit", { exact: true }).click();
+  await page.getByLabel("Edit instruction", { exact: true }).fill("Make the circle green");
+  await page.getByRole("button", { name: "Generate edited copy", exact: true }).click();
+  await page.getByText("AI edit ready.", { exact: false }).waitFor(); assert.equal(edits, 1);
+  await page.getByRole("button", { name: "Save PNG copy to Desktop", exact: true }).click();
+  const received = await page.getByText("Saved a new PNG copy:", { exact: false }).textContent();
+  const path = received!.replace("Saved a new PNG copy: ", "");
+  assert(readFileSync(path).subarray(0, 8).equals(Buffer.from("89504e470d0a1a0a", "hex")));
+  assert(readFileSync(source).equals(sourceBytes));
+  checks.push("Generative UI request/validated-image response, explicit PNG copy export and unchanged source executed (generation adapter mocked here; live subscription tested separately)");
+  await page.evaluate(({ data }) => {
+    const bytes = Uint8Array.from(atob(data), c => c.charCodeAt(0)); const transfer = new DataTransfer();
+    transfer.items.add(new File([bytes], "pasted.png", { type: "image/png" }));
+    document.querySelector('[aria-label="Photos workspace"]')!.dispatchEvent(new ClipboardEvent("paste", { clipboardData: transfer, bubbles: true }));
+  }, { data: normalized.data });
+  await page.getByRole("button", { name: "Show pasted.png", exact: true }).waitFor();
+  await page.evaluate(({ data }) => {
+    const transfer = new DataTransfer(); transfer.items.add(new File([Uint8Array.from(atob(data), c => c.charCodeAt(0))], "dropped.png", { type: "image/png" }));
+    document.querySelector('[aria-label="Photos workspace"]')!.dispatchEvent(new DragEvent("drop", { dataTransfer: transfer, bubbles: true }));
+  }, { data: normalized.data });
+  await page.getByRole("button", { name: "Show dropped.png", exact: true }).waitFor();
+  await page.getByRole("button", { name: "Back", exact: true }).click();
+  await page.locator('.layer[aria-label="Photos"]').waitFor({ state: "hidden" });
+  await page.getByRole("button", { name: "Photos", exact: true }).click(); await page.getByRole("button", { name: "Show dropped.png", exact: true }).waitFor();
+  assert.equal(await page.evaluate(() => document.documentElement.scrollWidth > innerWidth), false);
+  checks.push("Clipboard paste, drag/drop, multiple photo selection and closing/reopening the layer retained the photos without horizontal overflow");
+  await page.screenshot({ path: join(dir, "photos.png"), fullPage: true });
+  writeFileSync(join(dir, "proof.json"), JSON.stringify({ date: new Date().toISOString(), checks, sourceUnchanged: true, saved: path }, null, 2));
+  process.stdout.write(`${JSON.stringify({ ok: true, checks, dir }, null, 2)}\n`);
+} catch (error) { await page.screenshot({ path: join(dir, "failure.png"), fullPage: true }).catch(() => {}); console.error(`Photo UI evidence: ${dir}`); throw error; }
+finally { await browser.close(); await vite.close(); server.closeAllConnections(); await new Promise<void>(resolve => server.close(() => resolve())); test.store.close(); }

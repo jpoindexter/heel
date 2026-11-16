@@ -1,0 +1,97 @@
+{
+  "date": "2026-11-16",
+  "branch": "codex/photo-support",
+  "distributionPublished": false,
+  "sourceVersion": "0.1.5",
+  "nativeProofBundle": {
+    "identifier": "studio.theft.heel.photos-proof",
+    "versionOverride": "0.1.6",
+    "build": "executed; packaged app built, not notarized",
+    "executed": [
+      "Native picker imported synthetic PNG",
+      "Clockwise rotation and undo updated dimensions",
+      "Codex ChatGPT subscription changed the blue circle to green with no API key",
+      "Save PNG copy to Desktop exported actual PNG",
+      "Quit/relaunch and picker reopened exported image at 1448x1086",
+      "Read text on this Mac returned BLUE 7 in final packaged UI"
+    ],
+    "exportPixels": {
+      "green": 160160,
+      "blue": 0,
+      "height": 1086,
+      "width": 1448,
+      "transparent": 0,
+      "red": 203401,
+      "opaque": 1572528
+    }
+  },
+  "checks": {
+    "typecheck": "executed; all three TS projects passed",
+    "vitest": {
+      "executed": true,
+      "files": 164,
+      "tests": 810
+    },
+    "workspace": {
+      "classification": "executed real React UI and helper/native image processing; vision and generation adapters mocked",
+      "proof": {
+        "date": "2026-11-16T22:26:42.887Z",
+        "checks": [
+          "Native-decoded preview, resize/proportions, rotate, crop, undo and reset produced the expected actual image dimensions",
+          "Local OCR uploaded nothing; explicit Ask delivered image pixels through the real guarded helper/provider boundary",
+          "Generative UI request/validated-image response, explicit PNG copy export and unchanged source executed (generation adapter mocked here; live subscription tested separately)",
+          "Clipboard paste, drag/drop, multiple photo selection and closing/reopening the layer retained the photos without horizontal overflow"
+        ],
+        "sourceUnchanged": true,
+        "saved": "/var/folders/rj/nj_9qs2s7zs52nsc90yl2q700000gn/T/heel-photo-ui-Xbjo9D/Desktop/Heel-photo-7da49e9e-a583-4d18-84c3-9582cdc70f50.png"
+      }
+    },
+    "liveSubscriptionAndLocalVision": {
+      "classification": "executed actual Codex subscription vision/generation and Apple Vision foreground removal/OCR",
+      "proof": {
+        "date": "2026-11-16T21:55:00.360Z",
+        "checks": [
+          {
+            "status": "fulfilled",
+            "value": {
+              "path": "actual subscription vision",
+              "answer": "A blue circle and a red square appear on a white background, with bold black text \u201cBLUE 7\u201d below."
+            }
+          },
+          {
+            "status": "fulfilled",
+            "value": {
+              "path": "actual app subscription editor",
+              "width": 1448,
+              "height": 1086
+            }
+          },
+          {
+            "status": "fulfilled",
+            "value": {
+              "path": "actual native foreground removal",
+              "height": 1600,
+              "transparent": 644709,
+              "opaque": 768541,
+              "width": 900,
+              "originalUnchanged": true
+            }
+          }
+        ],
+        "localOCR": {
+          "answer": "BLUE 7"
+        }
+      }
+    },
+    "filesystemBoundary": "executed; out-of-scope synthetic file read denied with Operation not permitted"
+  },
+  "limits": [
+    "No photo release published",
+    "One initial native OCR failure could not be reproduced; local OCR retries once, never on cancellation",
+    "Iris device and Intel hardware not tested",
+    "A Mac with developer tools absent not tested; production photo operations used the packaged executable",
+    "VoiceOver and every supported import format not tested; PNG and real HEIC exercised",
+    "Working copies fit 2048 pixels; up to four photos and three undo edits per photo; save before quitting",
+    "Codex retains generated image artifacts outside Heel data; account access and CLI tool availability may vary"
+  ]
+}

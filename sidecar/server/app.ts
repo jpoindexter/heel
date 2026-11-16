@@ -1,3 +1,5 @@
+import type { PhotoEditor } from "../photos/editor";
+import { registerPhotoRoutes } from "./photo-routes";
 import type { Applications } from "../applications/service";
 import { registerApplicationRoutes } from "./application-routes";
 import { registerOnboardingRoutes } from "./onboarding-routes";
@@ -31,6 +33,7 @@ import { registerTodayRoutes, registerTurnRoute } from "./today-routes";
 export type AppDeps = {
   store: Store;
   applications?: Applications;
+  photoEditor?: PhotoEditor;
   providers: Record<ProviderId, Provider>;
   inbox: InboxService;
   /** Apple Mail on this Mac. */
@@ -62,6 +65,7 @@ export function createApp(deps: AppDeps) {
   registerBrainRoutes(app, deps);
   registerOnboardingRoutes(app, deps);
   registerApplicationRoutes(app, deps);
+  registerPhotoRoutes(app, deps);
   // Before the today routes: their `/tasks/:id/:action` would otherwise swallow `/tasks/:id/split` and `/unsplit`.
   registerSplitRoutes(app, deps);
   registerTodayRoutes(app, deps);
