@@ -3,7 +3,7 @@
   "releaseDate": "2026-11-17",
   "sourceCommit": "6ff28d9",
   "sourceBranch": "codex/chat-attachments-layout",
-  "status": "built and Developer ID signed; notarization upload rejected; not published",
+  "status": "Apple notarization Accepted; stapled and verified; ready for publication",
   "checks": {
     "typecheck": "passed on 0.1.7",
     "vitestFiles": 166,
@@ -13,10 +13,19 @@
     "nativeAndBrowserEvidence": "chat-layout-2026-11-17.json",
     "productionBundleIdentifier": "studio.theft.heel",
     "productionBundleVersion": "0.1.7",
-    "secretScan": "staged commit hook passed"
+    "secretScan": "staged commit hook passed",
+    "dmgStaple": "executed; validate passed",
+    "updaterAppStaple": "executed; validate passed",
+    "dmgGatekeeper": "executed; accepted as Notarized Developer ID",
+    "updaterAppGatekeeper": "executed; accepted as Notarized Developer ID",
+    "productionUpdaterSignature": "executed; matches embedded public key, signed version 0.1.7; tampered bytes rejected"
   },
   "sha256": {
-    "signedDmgBeforeNotarization": "94ad224a8f558357896246f4b991277ad4b06c850d92971a659a76fd03143b8e"
+    "signedDmgBeforeNotarization": "94ad224a8f558357896246f4b991277ad4b06c850d92971a659a76fd03143b8e",
+    "dmg": "5c0c901c9d6085a74c728508126ea1e11f84a88e334cca7cdce0833543c7b5e1",
+    "updaterArchive": "043f59693a6d39e43c556ea15908996bda03975155b55c5cd89f6c8b98054dc7",
+    "updaterSignature": "12ade267ba0d39d7c36f754917ce21b9790eccc5c39192c43e35aa31134672bb",
+    "manifest": "30e0c4b609e3e680e6039519f742db7ae7c6076b701eb090d2798039ec2024df"
   },
   "notarization": {
     "profile": "heel",
@@ -30,11 +39,16 @@
       {
         "transport": "standard S3",
         "result": "HTTP 401 Unable to authenticate; no submission ID"
+      },
+      {
+        "transport": "default accelerated; user-requested retry",
+        "result": "Accepted",
+        "submissionId": "147ef6af-d91d-41e4-a483-21526f141d65"
       }
     ],
-    "submissionCreated": false,
-    "diagnosis": "Unknown; read authentication succeeds while new upload authentication fails. Account alerts could not be inspected without browser sign-in.",
-    "userInputPending": "None while the confirmed Apple sign-in incident is ongoing. Preserve existing credentials; retry the saved signed artifact after service recovery.",
+    "submissionCreated": true,
+    "diagnosis": "Retry of the identical signed DMG succeeded with existing credentials. Earlier HTTP 401 cause remains unconfirmed.",
+    "userInputPending": "None",
     "externalServiceIncident": {
       "source": "https://www.apple.com/support/systemstatus/",
       "service": "iCloud Account & Sign In",
@@ -43,18 +57,19 @@
       "officialPageLastUpdatedMadrid": "2026-11-17 18:48 CET",
       "message": "This service may be slow or unavailable.",
       "scope": "Observed on rendered official page; consistent with the user sign-in failure and notarization HTTP 401, without proving the notary upload endpoint is part of the incident."
-    }
+    },
+    "submissionId": "147ef6af-d91d-41e4-a483-21526f141d65",
+    "status": "Accepted"
   },
   "publication": {
     "published": false,
-    "notarized": false,
-    "signedUpdateArchivePrepared": false,
+    "notarized": true,
+    "signedUpdateArchivePrepared": true,
     "publicFeedVersion": "0.1.6",
     "releaseView": "v0.1.7 not found",
     "existingPublicAssetsModified": false
   },
   "limits": [
-    "No notarization ticket or Gatekeeper acceptance for 0.1.7 yet",
     "Native Finder physical drag and native OS bitmap paste not directly executed",
     "Iris device, Intel hardware and VoiceOver not tested",
     "Actual native update download/verification and ready prompt exercised; update installation/restart was not triggered"
