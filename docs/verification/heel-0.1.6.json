@@ -1,0 +1,78 @@
+{
+  "version": "0.1.6",
+  "releaseDate": "2026-11-17",
+  "status": "signed; notarization blocked by saved Apple credential rejection; not published",
+  "featureSourceCommit": "4f1b464",
+  "checks": {
+    "typecheck": "passed",
+    "vitest": {
+      "files": 164,
+      "tests": 810
+    },
+    "appSignature": "executed; deep strict code signature verification passed",
+    "nativeReaderSignature": "executed; strict code signature verification passed",
+    "dmgSignature": "executed; code signature verification passed",
+    "bundleVersion": "0.1.6",
+    "bundleIdentifier": "studio.theft.heel",
+    "packagedPhotoReader": {
+      "import": {
+        "width": 1280,
+        "height": 960,
+        "sourceWidth": 1280,
+        "sourceHeight": 960
+      },
+      "rotate": {
+        "sourceHeight": 960,
+        "sourceWidth": 1280,
+        "width": 960,
+        "height": 1280
+      },
+      "ocr": {
+        "answer": "BLUE 7"
+      },
+      "originalUnchanged": true,
+      "developerToolsPathDisabled": true
+    },
+    "packagedPDFReader": [
+      {
+        "fixture": "text.pdf",
+        "extracted": true,
+        "developerToolsPathDisabled": true
+      },
+      {
+        "fixture": "scanned.pdf",
+        "extracted": true,
+        "developerToolsPathDisabled": true
+      },
+      {
+        "fixture": "mixed.pdf",
+        "extracted": true,
+        "developerToolsPathDisabled": true
+      }
+    ]
+  },
+  "sha256": {
+    "signedDmgBeforeStapling": "cb2bf2baef0525a325cc377119e470b5372bf50e83bf8da8ea1c99a546b23844",
+    "packagedNativeReader": "ee4ace36cfd7e54ea4fc6181b42748dca11d669b6dbb71e1286b4297f9fe4f11"
+  },
+  "publication": {
+    "published": false,
+    "notarized": false,
+    "signedUpdateArchivePrepared": false,
+    "publicFeedVersion": "0.1.5",
+    "cloudflareD1ReadPreflight": "executed; current feed read successfully",
+    "githubReleaseVersionPreflight": "0.1.5 is latest published tester release"
+  },
+  "blocker": {
+    "command": "xcrun notarytool history --keychain-profile heel",
+    "result": "HTTP 401 Invalid credentials",
+    "required": "Renew heel notarization credentials locally; never paste the password in chat",
+    "uiAttempt": "Computer-use tool denied Terminal access"
+  },
+  "limits": [
+    "No notarization ticket, Gatekeeper acceptance or public asset verification for 0.1.6 yet",
+    "No update feed change until the notarized archive is signed and all release assets are uploaded",
+    "Iris device, Intel hardware and VoiceOver not tested",
+    "DEVELOPER_DIR was disabled for packaged-reader execution; this is not a fresh Mac without developer tools installed"
+  ]
+}

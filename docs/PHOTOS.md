@@ -4,11 +4,11 @@ Outcome: select, paste or drop a photo; see it; ask about it/read its text; crop
 
 Now: implemented and exercised in the React workspace, real helper, live Codex subscription and isolated packaged macOS app. Vanta's clipboard deduplication and bounded attachment patterns were adapted; Heel reuses its existing vision providers and bundled native reader. No reusable generative edit endpoint was found in the inspected Vanta checkout.
 
-Next: release only when requested. Source remains 0.1.5; the isolated native proof bundle used a 0.1.6 version override to avoid the production updater interfering with tests.
+Next: publish the authorized 0.1.6 release after notarization and public artifact/feed verification. The earlier isolated native proof bundle used a 0.1.6 version override; it is separate from the production release.
 
 Must: original files unchanged; explicit send before any provider upload; no credentials or private photo bytes in logs/reports; bounded image decoding/payloads; preserve the selected image on failures; edited output is a separate copy. Missing subscription sign-in/model support must be actionable and never reported as a successful edit.
 
-Authority: user requested all three photo feature groups and reuse from Vanta. No Vanta profiles, conversations, credentials or databases are copied. No release is published as part of this request unless instructed.
+Authority: user requested all three photo feature groups and reuse from Vanta, then explicitly authorized notarization, publication and the updater feed on 17 November 2026. No Vanta profiles, conversations, credentials or databases are copied.
 
 Done evidence: real photo pixels reach a vision provider; photo preview/paste/drop works; local transforms produce expected dimensions/pixels; native foreground removal returns transparent background; a generative edit returns a viewable image when the configured provider is available; save/reopen retains the edited image; original remains unchanged. Record gaps separately from mock/contract tests.
 

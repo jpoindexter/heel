@@ -25,6 +25,11 @@ What failed: initially assumed image edits required the Images API; then asked C
 What worked: Codex 0.163.0 exposes image_generation using ChatGPT subscription login. Parse the engine's thread.started receipt and read the one fresh PNG from that thread's generated_images directory; validate the actual image natively. Do not trust or require a model-invented file path. Keep shell/view-image/apps tools disabled and restrict the worker's filesystem to its input and generated outputs.
 Why it failed: the built-in image tool's filesystem artifact and model-facing output hint are separate contracts. API credentials are not a prerequisite for this supported subscription tool path.
 
+## 2026-11-17 — release and tests compiled the same helper concurrently
+What failed: running `npm test` and `release:signed` together caused the two native-reader compilers to collide at the same output executable; the release linker failed and native integration tests failed.
+What worked: run tests first, then the release build sequentially. The sequential suite passed all 810 tests.
+Why it failed: both commands run `build:cv-reader` and mutate the same ignored output. Keep these commands sequential; no production processing change was needed.
+
 ## 2026-11-16 — First native photo OCR failure
 What failed: the first OCR request from the packaged Photos UI failed while import, rotate and undo worked. The packaged executable and running packaged helper both subsequently read the same normalized photo successfully; the underlying first-use failure did not reproduce.
 What worked: preserve the image, allow exactly one retry for local idempotent OCR, and never retry cancellation. Unit proof injects one failure then success and verifies a cancelled operation is attempted only once. This does not establish the original Apple Vision error's root cause.

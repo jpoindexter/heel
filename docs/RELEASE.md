@@ -82,3 +82,18 @@ Run the existing signed release with `TAURI_SIGNING_PRIVATE_KEY_PATH` pointing t
 Publish these four assets together on the matching version tag: the DMG, `Heel.app.tar.gz`, `Heel.app.tar.gz.sig`, and `latest.json`. Run `npx tsx scripts/publish-release.ts RELEASE_NOTES_FILE` after committing and pushing the tested source. It creates a draft with all four assets, publishes it, then updates the hosted manifest through the authenticated Cloudflare CLI. If feed publication fails, the release is still published; use the emitted D1 body file to retry that exact feed write without recreating the release. The tag/version/manifest and archive URL must agree. Verify the public feed, download the published assets, compare hashes, and assess the extracted app with codesign, stapler and Gatekeeper. Do not replace assets of an already published release; ship a new version.
 
 Updater native proof uses a separately compiled `studio.theft.heel.update-proof` app, disposable signing key and loopback feed. Test bad signatures before the valid check → background download → user restart → newer process path. Production config must retain HTTPS and no insecure transport override. This test must not write to the normal Heel data directory.
+
+## 0.1.6 release preparation (17 November 2026)
+
+The photo update is authorized for publication. Version 0.1.6 app and DMG are built and Developer ID signed; deep signature verification passed. All 810 tests and typechecks passed. The packaged reader executed photo import/rotation/OCR and text/scanned/mixed PDF extraction with `DEVELOPER_DIR` pointing to a nonexistent directory and `PATH=/usr/bin:/bin`. See [release state and checks](verification/heel-0.1.6.json) and [release notes](releases/0.1.6.md).
+
+**Blocked:** Apple's saved `heel` notarization credential returned HTTP 401. The computer-use tool also denied Terminal access, so credential renewal must be completed locally. Run `xcrun notarytool store-credentials heel --team-id 5352PXMNV5` and enter the Apple ID and a valid app-specific password at its prompts; never put that password in chat or Git. Signing and updater keys are available; they are separate from this rejected Apple login.
+
+Resume without rebuilding after `xcrun notarytool history --keychain-profile heel` succeeds:
+
+1. Submit `src-tauri/target/release/bundle/dmg/Heel_0.1.6_aarch64.dmg` with `notarytool submit --keychain-profile heel --wait`. Require Accepted; staple and validate the DMG and production app, and assess both with Gatekeeper.
+2. Run the final archive/sign/manifest steps at the end of `scripts/release-signed.sh` against the stapled app, with signed version 0.1.6 and the existing updater private key. Verify the signature against the embedded public key, including version binding and rejection of tampering.
+3. Commit/push the tested source, then run `npx tsx scripts/publish-release.ts docs/releases/0.1.6.md`. Do not recreate or retry an uncertain published release; inspect the release and feed first.
+4. Download all four public assets, compare hashes, validate the downloaded DMG and extracted updater app, and require the HTTPS feed to match the signed manifest. Record the notarization ID, hashes and actual publication proof.
+
+The public release/feed still point to 0.1.5. The shared local `macos/Heel.app.tar.gz`, `.sig` and `latest.json` may still be previous-version files; do not publish them until step 2 recreates and verifies them. Run tests and the release build sequentially: both compile the same native-reader output.
