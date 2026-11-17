@@ -1,7 +1,7 @@
 {
   "version": "0.1.6",
   "releaseDate": "2026-11-17",
-  "status": "signed; notarization blocked by saved Apple credential rejection; not published",
+  "status": "published; notarized public installer and signed updater feed verified",
   "featureSourceCommit": "4f1b464",
   "checks": {
     "typecheck": "passed",
@@ -49,30 +49,120 @@
         "extracted": true,
         "developerToolsPathDisabled": true
       }
-    ]
+    ],
+    "productionUpdaterSignature": [
+      "Executed against embedded production public key using the updater library",
+      "Signed version matches 0.1.6",
+      "Tampered bytes rejected"
+    ],
+    "publicAppleChecks": [
+      {
+        "command": "xcrun stapler validate",
+        "result": "passed",
+        "output": "Processing: /var/folders/rj/nj_9qs2s7zs52nsc90yl2q700000gn/T/heel-016-public-mua3eudc/Heel_0.1.6_aarch64.dmg\nThe validate action worked!"
+      },
+      {
+        "command": "codesign --verify --verbose=2",
+        "result": "passed",
+        "output": "/var/folders/rj/nj_9qs2s7zs52nsc90yl2q700000gn/T/heel-016-public-mua3eudc/Heel_0.1.6_aarch64.dmg: valid on disk\n/var/folders/rj/nj_9qs2s7zs52nsc90yl2q700000gn/T/heel-016-public-mua3eudc/Heel_0.1.6_aarch64.dmg: satisfies its Designated Requirement"
+      },
+      {
+        "command": "spctl --assess --type",
+        "result": "passed",
+        "output": "/var/folders/rj/nj_9qs2s7zs52nsc90yl2q700000gn/T/heel-016-public-mua3eudc/Heel_0.1.6_aarch64.dmg: accepted\nsource=Notarized Developer ID\norigin=Developer ID Application: Jason Poindexter (5352PXMNV5)"
+      },
+      {
+        "command": "hdiutil attach -readonly",
+        "result": "passed",
+        "output": "expected   CRC32 $E4F3521B\n/dev/disk22         \tGUID_partition_scheme          \t\n/dev/disk22s1       \tApple_HFS                      \t/private/var/folders/rj/nj_9qs2s7zs52nsc90yl2q700000gn/T/heel-016-public-mua3eudc/volume\nhdiutil: WARNING: 'hdiutil attach -readonly -nobrowse -mountpoint ...' is deprecated. Please use 'diskutil image attach --readOnly --mountOptions nobrowse --mountPoint ...' instead."
+      },
+      {
+        "command": "codesign --verify --deep",
+        "result": "passed",
+        "output": "--prepared:/private/var/folders/rj/nj_9qs2s7zs52nsc90yl2q700000gn/T/heel-016-public-mua3eudc/volume/Heel.app/Contents/MacOS/heel-cv-text\n--validated:/private/var/folders/rj/nj_9qs2s7zs52nsc90yl2q700000gn/T/heel-016-public-mua3eudc/volume/Heel.app/Contents/MacOS/heel-cv-text\n/var/folders/rj/nj_9qs2s7zs52nsc90yl2q700000gn/T/heel-016-public-mua3eudc/volume/Heel.app: valid on disk\n/var/folders/rj/nj_9qs2s7zs52nsc90yl2q700000gn/T/heel-016-public-mua3eudc/volume/Heel.app: satisfies its Designated Requirement"
+      },
+      {
+        "command": "xcrun stapler validate",
+        "result": "not-present",
+        "output": "Processing: /var/folders/rj/nj_9qs2s7zs52nsc90yl2q700000gn/T/heel-016-public-mua3eudc/volume/Heel.app\nHeel.app does not have a ticket stapled to it."
+      },
+      {
+        "command": "spctl --assess --type",
+        "result": "passed",
+        "output": "/var/folders/rj/nj_9qs2s7zs52nsc90yl2q700000gn/T/heel-016-public-mua3eudc/volume/Heel.app: accepted\nsource=Notarized Developer ID\norigin=Developer ID Application: Jason Poindexter (5352PXMNV5)"
+      },
+      {
+        "command": "hdiutil detach /var/folders/rj/nj_9qs2s7zs52nsc90yl2q700000gn/T/heel-016-public-mua3eudc/volume",
+        "result": "passed",
+        "output": "\"disk22\" ejected.\nhdiutil: WARNING: 'hdiutil detach ...' is deprecated. Please use 'diskutil eject ...' instead."
+      },
+      {
+        "command": "tar -xzf /var/folders/rj/nj_9qs2s7zs52nsc90yl2q700000gn/T/heel-016-public-mua3eudc/Heel.app.tar.gz",
+        "result": "passed",
+        "output": ""
+      },
+      {
+        "command": "codesign --verify --deep",
+        "result": "passed",
+        "output": "--prepared:/private/var/folders/rj/nj_9qs2s7zs52nsc90yl2q700000gn/T/heel-016-public-mua3eudc/updater/Heel.app/Contents/MacOS/heel-cv-text\n--validated:/private/var/folders/rj/nj_9qs2s7zs52nsc90yl2q700000gn/T/heel-016-public-mua3eudc/updater/Heel.app/Contents/MacOS/heel-cv-text\n/var/folders/rj/nj_9qs2s7zs52nsc90yl2q700000gn/T/heel-016-public-mua3eudc/updater/Heel.app: valid on disk\n/var/folders/rj/nj_9qs2s7zs52nsc90yl2q700000gn/T/heel-016-public-mua3eudc/updater/Heel.app: satisfies its Designated Requirement"
+      },
+      {
+        "command": "xcrun stapler validate",
+        "result": "passed",
+        "output": "Processing: /var/folders/rj/nj_9qs2s7zs52nsc90yl2q700000gn/T/heel-016-public-mua3eudc/updater/Heel.app\nThe validate action worked!"
+      },
+      {
+        "command": "spctl --assess --type",
+        "result": "passed",
+        "output": "/var/folders/rj/nj_9qs2s7zs52nsc90yl2q700000gn/T/heel-016-public-mua3eudc/updater/Heel.app: accepted\nsource=Notarized Developer ID\norigin=Developer ID Application: Jason Poindexter (5352PXMNV5)"
+      }
+    ],
+    "nativeUpdaterInstallForThisRelease": "Not executed; 0.1.5 native updater install/restart proof is recorded separately in heel-0.1.5.json"
   },
   "sha256": {
     "signedDmgBeforeStapling": "cb2bf2baef0525a325cc377119e470b5372bf50e83bf8da8ea1c99a546b23844",
-    "packagedNativeReader": "ee4ace36cfd7e54ea4fc6181b42748dca11d669b6dbb71e1286b4297f9fe4f11"
+    "packagedNativeReader": "ee4ace36cfd7e54ea4fc6181b42748dca11d669b6dbb71e1286b4297f9fe4f11",
+    "dmg": "8599773f2f62612a4f0f93a27dd4f540aaf52cb30056208dff3bb39c5899c73f",
+    "updateArchive": "cce8c4f318f09d92f1c9db9dabc03820e26e5165221a3d5c8ce247fe234a43e0",
+    "updateSignature": "e62a16396e26942eeba1e29e30f725b0855c168d5d5b5dc06572c9132ad4bcc6",
+    "manifest": "a6a86a005f771ed8c92fb15cc7cec0b10dd98d4be951f6584d84e08419fd547f"
   },
   "publication": {
-    "published": false,
-    "notarized": false,
-    "signedUpdateArchivePrepared": false,
-    "publicFeedVersion": "0.1.5",
-    "cloudflareD1ReadPreflight": "executed; current feed read successfully",
-    "githubReleaseVersionPreflight": "0.1.5 is latest published tester release"
+    "published": true,
+    "notarized": true,
+    "signedUpdateArchivePrepared": true,
+    "url": "https://github.com/jpoindexter/heel/releases/tag/v0.1.6",
+    "sourceCommit": "ef2905d344e2a86abe0aadcb1df14f06986d3156",
+    "publishedAt": "2026-11-17T09:05:36Z",
+    "verifiedAt": "2026-11-17T09:09:40.504519+00:00",
+    "notarizationId": "d376b984-c728-41b8-a78d-f6687d1feeec",
+    "notarizationStatus": "Accepted",
+    "publicFeedVersion": "0.1.6",
+    "feedUrl": "https://heel-feedback.jason-poindexter.workers.dev/updates/latest.json",
+    "executed": [
+      "GitHub release published with all four assets",
+      "Public HTTPS feed exactly matches local signed manifest",
+      "All four downloaded asset hashes match local files",
+      "Downloaded updater archive signature verifies and is bound to 0.1.6; tampered bytes rejected",
+      "Downloaded DMG ticket/signature/Gatekeeper passed",
+      "Mounted production app is 0.1.6; deep signature and Gatekeeper passed",
+      "Extracted downloaded updater app is 0.1.6; deep signature, staple and Gatekeeper passed",
+      "Read-only DMG volume detached"
+    ],
+    "dmgTicketScope": "The DMG carries the notarization ticket. Its embedded app has no separate stapled ticket; Gatekeeper accepted it as Notarized Developer ID. The separate updater app carries its own validated ticket."
   },
-  "blocker": {
+  "limits": [
+    "Iris device, Intel hardware and VoiceOver not tested",
+    "0.1.5 to 0.1.6 install/restart was not executed on a running client; published bytes, signature, archive and feed verified",
+    "DEVELOPER_DIR was disabled for packaged-reader execution; this is not a fresh Mac without developer tools installed",
+    "0.1.4 and earlier need one manual DMG installation",
+    "Generative photo edits require current Codex CLI subscription access; save open photo edits before quitting"
+  ],
+  "resolvedBlocker": {
     "command": "xcrun notarytool history --keychain-profile heel",
     "result": "HTTP 401 Invalid credentials",
     "required": "Renew heel notarization credentials locally; never paste the password in chat",
-    "uiAttempt": "Computer-use tool denied Terminal access"
-  },
-  "limits": [
-    "No notarization ticket, Gatekeeper acceptance or public asset verification for 0.1.6 yet",
-    "No update feed change until the notarized archive is signed and all release assets are uploaded",
-    "Iris device, Intel hardware and VoiceOver not tested",
-    "DEVELOPER_DIR was disabled for packaged-reader execution; this is not a fresh Mac without developer tools installed"
-  ]
+    "uiAttempt": "Computer-use tool denied Terminal access",
+    "resolved": "User renewed heel credentials locally; notarytool history and notarization then succeeded"
+  }
 }

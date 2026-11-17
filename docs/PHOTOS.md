@@ -4,7 +4,7 @@ Outcome: select, paste or drop a photo; see it; ask about it/read its text; crop
 
 Now: implemented and exercised in the React workspace, real helper, live Codex subscription and isolated packaged macOS app. Vanta's clipboard deduplication and bounded attachment patterns were adapted; Heel reuses its existing vision providers and bundled native reader. No reusable generative edit endpoint was found in the inspected Vanta checkout.
 
-Next: publish the authorized 0.1.6 release after notarization and public artifact/feed verification. The earlier isolated native proof bundle used a 0.1.6 version override; it is separate from the production release.
+Next: tester feedback on [published 0.1.6](https://github.com/jpoindexter/heel/releases/tag/v0.1.6). The notarized installer and signed updater feed were independently downloaded and verified; see [release checks](verification/heel-0.1.6.json). The earlier isolated native proof bundle is separate from the production release.
 
 Must: original files unchanged; explicit send before any provider upload; no credentials or private photo bytes in logs/reports; bounded image decoding/payloads; preserve the selected image on failures; edited output is a separate copy. Missing subscription sign-in/model support must be actionable and never reported as a successful edit.
 
@@ -34,4 +34,4 @@ Saving explicitly creates a uniquely named, owner-only PNG on Desktop and reveal
 
 One initial packaged OCR attempt failed without a diagnostic cause. The same packaged binary and helper then succeeded; the final native UI also succeeded. Local OCR retries once on failure, preserving cancellation. This mitigation does not establish the cause of the first failure.
 
-Not exercised: Iris's Mac, Intel hardware, a host without developer tools installed, VoiceOver, every supported source format, or a new signed/notarized distribution. PNG and real HEIC imports were exercised. Subscription access and image-tool availability can differ between accounts and Codex versions; unavailable access returns an error and preserves the current photo.
+Not exercised: Iris's Mac, Intel hardware, a host without developer tools installed, VoiceOver or every supported source format. PNG and real HEIC imports were exercised. The production notarized distribution is covered by the separate release checks above. Subscription access and image-tool availability can differ between accounts and Codex versions; unavailable access returns an error and preserves the current photo.
