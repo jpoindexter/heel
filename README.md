@@ -11,6 +11,7 @@ A quiet desktop companion for an autistic/ADHD brain: Greg, a small dog, sits on
 - **Work products**: research notes saved as documents, "make that a PDF" (WebKit, on this Mac).
 - **Job applications (local 0.1.3 candidate)**: a visible browser fills supplied facts and CVs; review/correct the form, then approve the exact outgoing request once. [Workflow, limitations and executed proof](docs/APPLICATIONS.md).
 - **Photos (0.1.6)**: choose, paste or drop photos; preview, ask questions, read text, crop, rotate, resize, remove backgrounds and make generative edits through your Codex subscription. Save a new PNG copy; originals stay untouched. [Behavior, limits and executed proof](docs/PHOTOS.md).
+- **Screenshot chat and panel fixes (local 0.1.7 candidate)**: preview an image in chat before Send; retry it during the session; keep task content, active panels, update status and notices in separate readable areas. [Executed checks and release blocker](docs/BUG-2026-11-17-CHAT-AND-LAYERS.md).
 
 ## Requirements
 - macOS (developed and tested on Apple silicon). [Published installers](https://github.com/jpoindexter/heel/releases/tag/v0.1.6) are Developer ID signed and notarized; local builds use ad-hoc signing.

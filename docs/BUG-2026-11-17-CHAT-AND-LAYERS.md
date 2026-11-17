@@ -4,9 +4,9 @@ Outcome: dropping or pasting a screenshot into chat shows a removable preview, s
 
 Target: report 47e14566-1bbb-4563-ac44-470c803a0bcb (reported app 0.1.5, Codex, helper reached, no crash); current source 0.1.6.
 
-Now: reproduced screenshot rejection and composer overlap; implemented the image contract/importer, current-exchange image retention and explicit-send provider delivery. Browser and native checks executed; preparing the 0.1.7 bug-fix release.
+Now: reproduced screenshot rejection and composer overlap; implemented the image contract/importer, current-exchange image retention and explicit-send provider delivery. Browser and native checks executed. The 0.1.7 production app/DMG are built and signed; Apple rejects the notarization upload with HTTP 401, so publication is held.
 
-Next: sign/notarize 0.1.7, publish distinct immutable assets, update the existing feed, and independently download/verify them.
+Next: resolve the Apple upload authentication blocker, notarize the existing signed 0.1.7 artifact, then publish distinct immutable assets, update the existing feed, and independently download/verify them.
 
 Must: no image upload on drop/paste/import; no source overwrite; no private screenshots in tests, logs or reports; preserve task state, message history, failed-turn retries and explicit restart approval. Keep existing untracked assets/ and handoffs/ untouched.
 

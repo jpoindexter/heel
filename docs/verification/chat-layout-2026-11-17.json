@@ -4,7 +4,7 @@
   "report": "47e14566-1bbb-4563-ac44-470c803a0bcb",
   "reportedVersion": "0.1.5",
   "sourceBranch": "codex/chat-attachments-layout",
-  "status": "implementation and native/browser checks executed; release preparation in progress",
+  "status": "implemented and locally verified; signed 0.1.7 build; publication blocked by Apple upload HTTP 401",
   "rootCauses": [
     "Chat composer and /turn accepted text only; Photos used a separate importer",
     "Tauri native file-drop interception prevented delivery to HTML drop targets",
@@ -69,5 +69,6 @@
     "Native Finder physical drag and OS bitmap paste were not directly executed",
     "Iris device, Intel hardware and VoiceOver untested",
     "Native proof exercised actual update download/verification/ready prompt, without clicking install/restart"
-  ]
+  ],
+  "releaseEvidence": "heel-0.1.7.json"
 }

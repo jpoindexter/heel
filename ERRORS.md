@@ -30,6 +30,11 @@ What failed: running `npm test` and `release:signed` together caused the two nat
 What worked: run tests first, then the release build sequentially. The sequential suite passed all 810 tests.
 Why it failed: both commands run `build:cv-reader` and mutate the same ignored output. Keep these commands sequential; no production processing change was needed.
 
+## 2026-11-17 — chat file picker outlived the empty composer
+What failed: native attachment selection took longer than the empty-composer blur timer. The composer unmounted its hidden file input while the macOS dialog remained open, so the chosen screenshot did not reach React.
+What worked: count an open file picker as draft work; clear that state on file selection/cancel. A delayed chooser regression test holds the picker for three seconds; the corrected native picker returned a visible preview and the actual Codex subscription described its pixels.
+Why it failed: the empty-text check ignored an in-progress native interaction. The file picker and image import now both prevent idle collapse.
+
 ## 2026-11-16 — First native photo OCR failure
 What failed: the first OCR request from the packaged Photos UI failed while import, rotate and undo worked. The packaged executable and running packaged helper both subsequently read the same normalized photo successfully; the underlying first-use failure did not reproduce.
 What worked: preserve the image, allow exactly one retry for local idempotent OCR, and never retry cancellation. Unit proof injects one failure then success and verifies a cancelled operation is attempted only once. This does not establish the original Apple Vision error's root cause.

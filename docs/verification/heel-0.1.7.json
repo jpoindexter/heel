@@ -1,0 +1,53 @@
+{
+  "version": "0.1.7",
+  "releaseDate": "2026-11-17",
+  "sourceCommit": "6ff28d9",
+  "sourceBranch": "codex/chat-attachments-layout",
+  "status": "built and Developer ID signed; notarization upload rejected; not published",
+  "checks": {
+    "typecheck": "passed on 0.1.7",
+    "vitestFiles": 166,
+    "vitestTests": 812,
+    "appSignature": "executed; deep strict verification passed",
+    "dmgSignature": "executed; verification passed",
+    "nativeAndBrowserEvidence": "chat-layout-2026-11-17.json",
+    "productionBundleIdentifier": "studio.theft.heel",
+    "productionBundleVersion": "0.1.7",
+    "secretScan": "staged commit hook passed"
+  },
+  "sha256": {
+    "signedDmgBeforeNotarization": "94ad224a8f558357896246f4b991277ad4b06c850d92971a659a76fd03143b8e"
+  },
+  "notarization": {
+    "profile": "heel",
+    "readHistory": "succeeded",
+    "readPriorHeelSubmission": "succeeded; 0.1.6 remains Accepted",
+    "uploadAttempts": [
+      {
+        "transport": "default accelerated",
+        "result": "HTTP 401 Unable to authenticate; no submission ID"
+      },
+      {
+        "transport": "standard S3",
+        "result": "HTTP 401 Unable to authenticate; no submission ID"
+      }
+    ],
+    "submissionCreated": false,
+    "diagnosis": "Unknown; read authentication succeeds while new upload authentication fails. Account alerts could not be inspected without browser sign-in.",
+    "userInputPending": "Check Developer Account for any agreement, membership or account alert; no password requested in chat."
+  },
+  "publication": {
+    "published": false,
+    "notarized": false,
+    "signedUpdateArchivePrepared": false,
+    "publicFeedVersion": "0.1.6",
+    "releaseView": "v0.1.7 not found",
+    "existingPublicAssetsModified": false
+  },
+  "limits": [
+    "No notarization ticket or Gatekeeper acceptance for 0.1.7 yet",
+    "Native Finder physical drag and native OS bitmap paste not directly executed",
+    "Iris device, Intel hardware and VoiceOver not tested",
+    "Actual native update download/verification and ready prompt exercised; update installation/restart was not triggered"
+  ]
+}
