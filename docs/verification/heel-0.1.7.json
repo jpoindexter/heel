@@ -34,7 +34,16 @@
     ],
     "submissionCreated": false,
     "diagnosis": "Unknown; read authentication succeeds while new upload authentication fails. Account alerts could not be inspected without browser sign-in.",
-    "userInputPending": "Check Developer Account for any agreement, membership or account alert; no password requested in chat."
+    "userInputPending": "None while the confirmed Apple sign-in incident is ongoing. Preserve existing credentials; retry the saved signed artifact after service recovery.",
+    "externalServiceIncident": {
+      "source": "https://www.apple.com/support/systemstatus/",
+      "service": "iCloud Account & Sign In",
+      "status": "Issue; ongoing",
+      "incidentStartMadrid": "2026-11-17 17:45 CET",
+      "officialPageLastUpdatedMadrid": "2026-11-17 18:48 CET",
+      "message": "This service may be slow or unavailable.",
+      "scope": "Observed on rendered official page; consistent with the user sign-in failure and notarization HTTP 401, without proving the notary upload endpoint is part of the incident."
+    }
   },
   "publication": {
     "published": false,
