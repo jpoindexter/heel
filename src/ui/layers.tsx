@@ -114,7 +114,7 @@ function useLayerFocus(name: Layer, isTop: boolean, section: React.RefObject<HTM
         const tag = opener?.node?.tagName.toLowerCase() ?? "button";
         const node = opener?.node?.isConnected ? opener.node : opener?.label ? document.querySelector(`${tag}[aria-label="${opener.label}"]`) : null;
         const target = focusAfterLeave(node ? { connected: node.isConnected, covered: node.closest("[inert]") !== null } : null);
-        const fallback = document.querySelector<HTMLElement>(".layer:not([data-leaving]):last-of-type") ?? document.querySelector<HTMLElement>(".layer-base");
+        const fallback = document.querySelector<HTMLElement>(".layer:not([inert]):not([data-leaving])") ?? document.querySelector<HTMLElement>(".layer-base");
         (target === "opener" && node instanceof HTMLElement ? node : fallback)?.focus({ preventScroll: true });
       });
     };

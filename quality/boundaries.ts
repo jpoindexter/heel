@@ -12,7 +12,7 @@ export const PUBLIC_ENTRY_POINTS: Readonly<Record<string, readonly string[]>> = 
   focus: ["src/focus/FocusForm.tsx", "src/focus/FocusStatus.tsx", "src/focus/useFocus.ts", "src/focus/useFocusPresence.ts", "src/focus/usePomodoro.ts"],
   inbox: ["src/inbox/EmailSettings.tsx", "src/inbox/InboxPanel.tsx", "src/inbox/useInbox.ts", "src/inbox/useMail.ts"],
   helper: ["src/helper/HelperNotice.tsx", "src/helper/useHelperStatus.ts"],
-  photos: ["src/photos/PhotosPanel.tsx", "src/photos/usePhotos.ts"],
+  photos: ["src/photos/PhotosPanel.tsx", "src/photos/usePhotos.ts", "src/photos/import-photo.ts", "src/photos/input.ts"],
   panel: [],
 };
 

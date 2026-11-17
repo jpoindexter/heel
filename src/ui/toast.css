@@ -1,14 +1,16 @@
-/* The toast drops in from the panel's top edge and fades out. Radix waits for the exit animation before removing it. */
+/* Notices reserve a bounded row so they cannot cover navigation or the updater. */
 .toast-viewport {
-  position: absolute;
-  top: var(--toast-gap);
-  right: var(--space-3);
-  left: var(--space-3);
-  z-index: var(--z-toast);
+  position: relative;
+  flex: none;
+  min-height: 0;
+  max-height: 30%;
+  overflow-y: auto;
   margin: 0;
   padding: 0;
   list-style: none;
 }
+
+.toast-viewport:empty { display: none; }
 
 .toast {
   display: flex;

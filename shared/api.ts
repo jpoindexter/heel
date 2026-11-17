@@ -4,6 +4,7 @@ import { PHASES, PomodoroConfigSchema, PomodoroStateSchema } from "./pomodoro";
 import { FOCUS_OUTCOMES } from "./focus";
 import { KEYED_PROVIDER_IDS, PROVIDER_IDS } from "./providers";
 import { AppWriteSchema } from "./apps";
+import { PhotoSchema } from "./photos";
 
 /** Wire contract between the sidecar server and the panel. Both sides validate with these. */
 
@@ -130,6 +131,8 @@ export const MAX_HISTORY_MESSAGES = 6;
 export const HistoryMessageSchema = z.object({ role: z.enum(["user", "heel"]), text: z.string() });
 export const TurnInputSchema = z.object({
   text: z.string(),
+  /** shortcut: current-message image only; add bounded image history if follow-ups need prior pixels. */
+  image: PhotoSchema.optional(),
   history: z.array(HistoryMessageSchema).max(MAX_HISTORY_MESSAGES).default([]),
 });
 
@@ -196,6 +199,7 @@ export const StoredMessageSchema = z.discriminatedUnion("role", [
       message: z.string(),
       offerSettings: z.boolean(),
       retryText: z.string(),
+      imageRequired: z.boolean().optional(),
     }),
   ]),
 ]);

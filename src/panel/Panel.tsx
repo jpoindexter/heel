@@ -106,6 +106,7 @@ function PanelBody({ look, parked }: { look: ReturnType<typeof usePanelLook>; pa
       <PanelHeader onClose={closePanel} parked={parked} />
       <HelperNotice status={helper.status} error={helper.error} onRestart={() => void helper.restart()} />
       <UpdateStatus updates={updates} compact />
+      <PanelToast />
       <TodayView
         showing={layers.top === "today"}
         summary={summary}
@@ -124,7 +125,6 @@ function PanelBody({ look, parked }: { look: ReturnType<typeof usePanelLook>; pa
         }
       />
       <SendDiagnosticReport kind="crash" open={failures.reportOpen} onOpenChange={failures.setReportOpen} />
-      <PanelToast />
     </main>
   );
 }

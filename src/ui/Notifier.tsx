@@ -1,4 +1,5 @@
-import { Badge, Button, Text } from "@radix-ui/themes";
+import { Badge, Button, IconButton, Text } from "@radix-ui/themes";
+import { Cross2Icon } from "@radix-ui/react-icons";
 import { Toast } from "radix-ui";
 import type { ShownNotice } from "./notice-model";
 import "./toast.css";
@@ -61,6 +62,7 @@ export function Notifier({ notice, onDismiss, onHold, onRelease }: Props) {
             </Badge>
           )}
           <ToastButtons notice={notice} onDismiss={onDismiss} />
+          <IconButton size="1" variant="ghost" color="gray" aria-label="Dismiss notice" onClick={onDismiss}><Cross2Icon aria-hidden="true" /></IconButton>
         </Toast.Root>
       )}
       <Toast.Viewport className="toast-viewport" />

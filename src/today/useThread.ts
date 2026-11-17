@@ -1,5 +1,5 @@
 import { useCallback, type MutableRefObject } from "react";
-import { TurnResultSchema, type HistoryMessage } from "../../shared/api";
+import { StoredMessageSchema, TurnResultSchema, type HistoryMessage } from "../../shared/api";
 import type { Client } from "../api/client";
 import { beginWork, celebrate, settle, stumble } from "../mascot/motion-events";
 import type { Notice } from "../ui/notice-model";
@@ -9,6 +9,7 @@ import { useReceiptConfirm } from "./useReceiptConfirm";
 import { useReceiptUndo } from "./useReceiptUndo";
 import { useStoppable } from "./useStoppable";
 import { useThreadState } from "./useThreadState";
+import type { Photo } from "../../shared/photos";
 
 type Options = {
   /** Called after any turn or undo so tasks and parked ideas reload. */
@@ -20,21 +21,22 @@ type Options = {
   onAnswered: (notice: Notice) => void;
 };
 
-type Ask = (text: string, history: HistoryMessage[], pendingId: number) => Promise<boolean>;
-type RetryDeps = { ask: Ask; commit: (next: Message[]) => void; isBusy: () => boolean; latest: MutableRefObject<Message[]> };
+type Ask = (text: string, history: HistoryMessage[], pendingId: number, image?: Photo) => Promise<boolean>;
+type RetryDeps = { ask: Ask; notify: (message: string) => void; commit: (next: Message[]) => void; isBusy: () => boolean; latest: MutableRefObject<Message[]> };
 
 /** Ask again for a failed turn, in place: the person's words are already in the thread. */
-function useRetry({ ask, commit, isBusy, latest }: RetryDeps) {
+function useRetry({ ask, notify, commit, isBusy, latest }: RetryDeps) {
   return useCallback(
     (id: number) => {
       const index = latest.current.findIndex((m) => m.id === id);
       const failed = latest.current[index];
       if (!failed || failed.role !== "heel" || failed.status !== "failed" || isBusy()) return;
+      if (failed.imageRequired && !failed.retryImage) return notify("Reattach the screenshot and send the message again. Images are not kept after quitting Heel.");
       const history = historyFor(latest.current.slice(0, Math.max(0, index - 1)));
       commit(latest.current.map((m) => (m.id === id ? { id, role: "heel", status: "pending" } : m)));
-      void ask(failed.retryText, history, id);
+      void ask(failed.retryText, history, id, failed.retryImage);
     },
-    [ask, commit, isBusy, latest],
+    [ask, notify, commit, isBusy, latest],
   );
 }
 
@@ -45,12 +47,12 @@ export function useThread(client: Client, { onChanged, notify, onCleared, onAnsw
   const confirmReceipt = useReceiptConfirm({ client, latest, commit, notify, persist });
   const { begin, end, stop } = useStoppable();
   const ask = useCallback(
-    async (text: string, history: HistoryMessage[], pendingId: number): Promise<boolean> => {
+    async (text: string, history: HistoryMessage[], pendingId: number, image?: Photo): Promise<boolean> => {
       const endWork = beginWork("turn");
-      const result = await client.post("/turn", TurnResultSchema, { text, history }, begin());
+      const result = await client.post("/turn", TurnResultSchema, { text, history, ...(image ? { image } : {}) }, begin());
       end();
       endWork();
-      const answer = answerFrom(result, pendingId, text);
+      const answer = answerFrom(result, pendingId, text, image);
       commit(latest.current.map((m) => (m.id === pendingId ? answer : m)));
       persist(pendingId);
       void (result.ok ? celebrate() : result.error.code === "aborted" ? settle() : stumble());
@@ -63,20 +65,21 @@ export function useThread(client: Client, { onChanged, notify, onCleared, onAnsw
 
   /** Ask the AI. Returns true when it answered, so the caller can clear the ask box. */
   const send = useCallback(
-    async (text: string, label?: string): Promise<boolean> => {
+    async (text: string, label?: string, image?: Photo): Promise<boolean> => {
       const trimmed = text.trim();
       if (!trimmed || isBusy()) return false;
       const history = historyFor(latest.current);
       const pendingId = nextId.current + 1;
-      commit([...latest.current, { id: nextId.current, role: "user", text: trimmed, label }, { id: pendingId, role: "heel", status: "pending" }]);
+      // Only the current exchange needs image bytes; keep older conversation text without accumulating photos.
+      commit([...latest.current.map(message => StoredMessageSchema.parse(message)), { id: nextId.current, role: "user", text: trimmed, label, ...(image ? { image } : {}) }, { id: pendingId, role: "heel", status: "pending" }]);
       nextId.current += 2;
       persist(pendingId - 1);
-      return ask(trimmed, history, pendingId);
+      return ask(trimmed, history, pendingId, image);
     },
     [ask, commit, isBusy, latest, nextId, persist],
   );
 
-  const retry = useRetry({ ask, commit, isBusy, latest });
+  const retry = useRetry({ ask, notify, commit, isBusy, latest });
   const clear = useClearConversation({ client, commit, isBusy, latest, notify, onCleared });
 
   return { messages, clear, busy: messages.some((m) => m.role === "heel" && m.status === "pending"), send, retry, stop, undoReceipt, confirmReceipt };

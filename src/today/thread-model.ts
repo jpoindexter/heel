@@ -1,15 +1,16 @@
 import { MAX_HISTORY_MESSAGES, type ActionOutcomeDto, type ApiResult, type AppWrittenDto, type HistoryMessage, type ReceiptDto, type StoredMessage, type TurnResultDto } from "../../shared/api";
 import type { Notice } from "../ui/notice-model";
+import type { Photo } from "../../shared/photos";
 import { replyError } from "./today-model";
 
 /** One line of "what Heel did". `undo` is how to reverse it; `undone` once the person has. */
 export type Receipt = ReceiptDto;
 
 /**
- * What the thread shows. Everything but a turn still waiting for the AI is a `StoredMessage`, which is exactly what
- * is kept across a restart (`text` is what the model gets; a chip's `label` is what the thread shows instead).
+ * What the thread shows. Text and receipts survive a restart; image bytes stay in memory only.
+ * `text` is what the model gets; a chip's `label` is what the thread shows instead.
  */
-export type Message = StoredMessage | { id: number; role: "heel"; status: "pending" };
+export type Message = (StoredMessage & { image?: Photo; retryImage?: Photo }) | { id: number; role: "heel"; status: "pending" };
 
 export function toReceipts(applied: readonly ActionOutcomeDto[]): Receipt[] {
   return applied.map((o) => ({ ok: o.ok, text: o.ok ? o.message : `Couldn't: ${o.message}`, undo: o.undo ?? null, undone: false, ...(o.document ? { document: o.document, file: o.file ?? "md" } : {}), ...(o.mail ? { mail: o.mail } : {}), ...(o.proposal ? { proposal: o.proposal } : {}), ...(o.application ? { application: o.application } : {}) }));
@@ -33,19 +34,19 @@ export function historyFor(messages: readonly Message[]): HistoryMessage[] {
 }
 
 /** The message that replaces "Thinking…": what Heel said and did, or why it couldn't (with the words to retry). */
-export function answerFrom(result: ApiResult<TurnResultDto>, id: number, askedText: string): Message {
+export function answerFrom(result: ApiResult<TurnResultDto>, id: number, askedText: string, image?: Photo): Message {
   if (result.ok) return { id, role: "heel", status: "said", say: result.data.say, receipts: toReceipts(result.data.applied), skills: result.data.skills };
-  return { id, role: "heel", status: "failed", ...replyError(result.error.code, result.error.message), retryText: askedText };
+  return { id, role: "heel", status: "failed", ...replyError(result.error.code, result.error.message), retryText: askedText, ...(image ? { imageRequired: true, retryImage: image } : {}) };
 }
 
 export type HeelMessage = Extract<Message, { role: "heel" }>;
 
 /** The panel shows only the latest exchange: what was asked, and Heel's answer (older turns still feed the model's history). */
-export function latestExchange(messages: readonly Message[]): { asked: string | null; heel: HeelMessage } | null {
+export function latestExchange(messages: readonly Message[]): { asked: string | null; image?: Photo; heel: HeelMessage } | null {
   const last = messages.at(-1);
   if (!last || last.role !== "heel") return null;
   const before = messages.at(-2);
-  return { asked: before && before.role === "user" ? (before.label ?? before.text) : null, heel: last };
+  return { asked: before && before.role === "user" ? (before.label ?? before.text) : null, ...(before?.role === "user" && before.image ? { image: before.image } : {}), heel: last };
 }
 
 /** The same thread with one receipt marked undone (or put back). Anything else is returned unchanged. */

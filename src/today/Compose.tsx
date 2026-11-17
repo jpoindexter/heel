@@ -8,8 +8,11 @@ import { MAX_ASK_LENGTH } from "./quick-add";
 import { useAskFocus } from "./useAskFocus";
 import { useAutoGrow } from "./useAutoGrow";
 import "./bar.css";
+import { ChatAttachment } from "./ChatAttachment";
+import type { ChatPhoto } from "./useChatPhoto";
 
 type Props = {
+  attachment: ChatPhoto;
   /** The Today screen is the one showing. */
   active: boolean;
   /** Changes when something (Cmd+N) wants the box focused again. */
@@ -68,14 +71,12 @@ function ComposeRow({ thinking, chips, trayOpen, trayClosing, emailReady, onStop
 /** The open chat card: the text, then one row with +, the key hint (or the four buttons) and Send. Enter talks to Heel. */
 export function Compose(p: Props) {
   const box = useRef<HTMLTextAreaElement>(null);
-  const empty = p.draft.trim().length === 0;
-
+  const empty = (p.draft.trim().length === 0 && !p.attachment.item) || p.attachment.loading;
   useAskFocus(box, p.active);
   useAutoGrow(box, p.draft);
   useEffect(() => {
     box.current?.focus();
   }, [p.focusSignal]);
-
   const submit = (event: FormEvent) => {
     event.preventDefault();
     if (!empty && !p.thinking) p.onSend();
@@ -91,7 +92,9 @@ export function Compose(p: Props) {
   };
 
   return (
-    <form onSubmit={submit} className="compose pop">
+    <form onSubmit={submit} className="compose pop" onDrop={p.attachment.drop} onPaste={p.attachment.paste} onDragOver={event => { if (event.dataTransfer.types.includes("Files")) event.preventDefault(); }}>
+      <div className="compose-content">
+      <ChatAttachment attachment={p.attachment} disabled={p.thinking} />
       <VisuallyHidden.Root asChild><label htmlFor="compose">Tell Heel what's on your mind</label></VisuallyHidden.Root>
       <TextArea
         id="compose"
@@ -111,6 +114,7 @@ export function Compose(p: Props) {
       <VisuallyHidden.Root asChild>
         <p id="compose-help">Enter asks Heel. Command Enter adds it as a task. Escape closes. Command N brings you here.</p>
       </VisuallyHidden.Root>
+      </div>
       <ComposeRow {...p} empty={empty} />
     </form>
   );

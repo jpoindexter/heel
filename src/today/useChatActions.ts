@@ -3,30 +3,34 @@ import { titleFromInput } from "./quick-add";
 import { CHIPS } from "./today-model";
 import type { useTasks } from "./useTasks";
 import type { useThread } from "./useThread";
+import type { Photo } from "../../shared/photos";
+import { useChatPhoto } from "./useChatPhoto";
 
 type Deps = { thread: ReturnType<typeof useThread>; tasks: ReturnType<typeof useTasks> };
 
 /** What the box does: Enter talks to Heel; Add and Park act on the typed text at once, no AI. Plan and Stuck ask with a fixed prompt. */
 export function useChatActions({ thread, tasks }: Deps) {
   const [draft, setDraft] = useState("");
+  const attachment = useChatPhoto(thread.busy);
   const inFlight = useRef(false);
   const draftRef = useRef(draft);
   draftRef.current = draft;
 
-  const isDraftEmpty = useCallback(() => draftRef.current.trim().length === 0, []);
+  const isDraftEmpty = useCallback(() => draftRef.current.trim().length === 0 && attachment.isEmpty(), [attachment.isEmpty]);
 
-  const ask = (text: string, label?: string) => {
+  const ask = (text: string, label?: string, image?: Photo) => {
     if (!text.trim() || thread.busy) return false;
-    void thread.send(text, label);
+    void thread.send(text, label, image);
     return true;
   };
 
   /** Enter. Returns true when a turn started (the box then clears). */
   const send = (): boolean => {
-    if (isDraftEmpty() || thread.busy) return false;
-    const text = draftRef.current;
+    if (isDraftEmpty() || thread.busy || attachment.loading) return false;
+    const image = attachment.item?.photo, text = draftRef.current.trim() || "Describe this screenshot or photo.";
     setDraft("");
-    return ask(text);
+    attachment.remove();
+    return ask(text, undefined, image);
   };
 
   const askChip = (id: "plan" | "stuck") => {
@@ -51,5 +55,5 @@ export function useChatActions({ thread, tasks }: Deps) {
   const addTyped = () => settle((text) => tasks.add(titleFromInput(text) ?? ""), "Type the task, then press ⌘↩ or + › Add task.");
   const parkTyped = () => settle((text) => tasks.park(text), "Type the idea, then + › Park.");
 
-  return { draft, setDraft, isDraftEmpty, send, askChip, addTyped, parkTyped };
+  return { draft, setDraft, isDraftEmpty, send, askChip, addTyped, parkTyped, attachment };
 }

@@ -23,6 +23,12 @@
   opacity: var(--layer-dim);
 }
 
+/* Covered panels keep their state without painting over the active reading surface. */
+.layer-base[inert],
+.layer[inert]:not([data-leaving]) {
+  visibility: hidden;
+}
+
 .layer {
   position: absolute;
   inset: 0;
@@ -34,13 +40,8 @@
 }
 
 .layer[data-side="top"] {
-  inset: 0 0 auto 0;
-  max-height: var(--top-layer-max);
-  padding-bottom: var(--space-2);
-  border-end-start-radius: var(--radius-4);
-  border-end-end-radius: var(--radius-4);
-  /* A soft shadow only: Radix's shadow tokens start with a 1px ring, which drew a box around the layer. */
-  filter: drop-shadow(0 var(--space-2) var(--space-4) var(--black-a5));
+  inset: 0;
+  max-height: none;
   animation-name: layer-in-top;
 }
 

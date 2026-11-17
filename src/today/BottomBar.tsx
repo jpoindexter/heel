@@ -30,6 +30,7 @@ export function BottomBar({
     <div className="bar-slot">
       {bar.composerOpen ? (
         <Compose
+          attachment={chat.attachment}
           active={showing}
           focusSignal={focusSignal}
           draft={chat.draft}

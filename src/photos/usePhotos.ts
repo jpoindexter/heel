@@ -1,8 +1,8 @@
 import { useEffect, useRef, useState } from "react";
 import { z } from "zod";
-import { MAX_PHOTO_BYTES, PhotoAnswerSchema, PhotoImportResultSchema, PhotoSavedSchema, type Photo, type PhotoTransform } from "../../shared/photos";
+import { PhotoAnswerSchema, PhotoImportResultSchema, PhotoSavedSchema, type Photo, type PhotoTransform } from "../../shared/photos";
 import { client } from "../api/default-client";
-import { photoBase64 } from "./input";
+import { importPhoto } from "./import-photo";
 
 type Item = { id: string; name: string; photo: Photo; original: Photo; undo: Photo[]; answer: string; changed: boolean };
 const StatusSchema = z.object({ generativeReady: z.boolean(), provider: z.string().nullable() });
@@ -35,9 +35,7 @@ export function usePhotos(active: boolean) {
   const add = (files: File[]) => job.work(async signal => {
     if (files.length + items.length > 4) throw new Error("Keep up to four photos open. Remove one before adding more.");
     for (const file of files) {
-      if (file.size > MAX_PHOTO_BYTES) throw new Error(`${file.name} is larger than 20 MB. Choose a smaller copy.`);
-      if (!/^image\/(png|jpe?g|webp|tiff|gif|hei[cf])$/i.test(file.type) && !/\.(png|jpe?g|webp|tiff?|gif|hei[cf])$/i.test(file.name)) throw new Error("Choose PNG, JPEG, HEIC, WebP, TIFF or GIF photos.");
-      const photo = await post("import", PhotoImportResultSchema, { data: photoBase64(new Uint8Array(await file.arrayBuffer())) }, signal);
+      const photo = await importPhoto(client, file, signal);
       const id = crypto.randomUUID(); setItems(current => [...current, { id, name: file.name || "Pasted photo", photo, original: photo, undo: [], answer: "", changed: false }]); setSelected(id);
       setSaid(photo.sourceWidth > photo.width || photo.sourceHeight > photo.height ? "Working copy reduced to fit 2048 pixels. The original file is untouched." : "Photo ready. Original file untouched.");
     }

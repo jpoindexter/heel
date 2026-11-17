@@ -13,8 +13,8 @@ export function useBarActions(state: ReturnType<typeof useTodayState>) {
   const { closeTray, collapseSoon, openComposer, closeComposer } = bar;
 
   const send = useCallback(() => {
-    if (chat.send()) collapseSoon("sent");
-  }, [chat, collapseSoon]);
+    if (chat.send()) closeComposer();
+  }, [chat, closeComposer]);
 
   const add = useCallback(() => {
     void chat.addTyped().then((done) => done && collapseSoon("added"));

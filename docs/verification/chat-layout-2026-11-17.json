@@ -1,0 +1,73 @@
+{
+  "date": "2026-11-17",
+  "version": "0.1.7",
+  "report": "47e14566-1bbb-4563-ac44-470c803a0bcb",
+  "reportedVersion": "0.1.5",
+  "sourceBranch": "codex/chat-attachments-layout",
+  "status": "implementation and native/browser checks executed; release preparation in progress",
+  "rootCauses": [
+    "Chat composer and /turn accepted text only; Photos used a separate importer",
+    "Tauri native file-drop interception prevented delivery to HTML drop targets",
+    "Composer was absolutely positioned over task content; covered inert layers still painted in static DOM order",
+    "Global update status was verbose; toast viewport floated over navigation",
+    "The empty-composer idle timer could unmount the file input while the native picker was open"
+  ],
+  "browser": {
+    "classification": "actual React UI, guarded helper and native image processing; controlled vision provider and update-status hook",
+    "screenshotAccepted": true,
+    "composerOverlapsContent": false,
+    "activeSettingsPaintedAs": "Settings",
+    "providerCallsWithImage": [
+      true,
+      true,
+      true,
+      true
+    ],
+    "checks": [
+      "Reload preserves a reattach-required failure without persisting image bytes or sending an image-less retry; closed-chat drops open a preview; all compact update phases and Retry executed",
+      "Screenshot drop/paste/picker preview, removable attachment, no upload before Send, empty-text image Send, retained failed-image retry, original task list preserved",
+      "Active panel alone is painted; Settings remains scrollable without composer overlap at 280x320, 300x420 and 640x900; shared Photos import retained"
+    ],
+    "delayedPicker": "File chooser held for 3 seconds before setting the file; composer remained mounted",
+    "screenshotsFolder": "/var/folders/rj/nj_9qs2s7zs52nsc90yl2q700000gn/T/heel-chat-layout-jIzRny"
+  },
+  "native": {
+    "bundle": "studio.theft.heel.chat-proof",
+    "bundleVersionOverride": "0.1.5",
+    "sourceVersionBeforeRelease": "0.1.6",
+    "classification": "executed native UI and actual Codex subscription",
+    "isolatedData": true,
+    "executed": [
+      "Production HTTPS updater downloaded and verified 0.1.6, then offered Restart; installation was not triggered",
+      "Native file picker remained open beyond the idle timeout and returned a visible attachment",
+      "Explicit Send passed the synthetic screenshot through the packaged helper and actual Codex ChatGPT subscription",
+      "Actual vision answer identified blue circle, red square and BLUE 7",
+      "Native Settings opened over Reply via Cmd+, without the old reply/composer painting over it; Back restored the reply",
+      "Native app quit; process exit observed"
+    ],
+    "answer": "The screenshot has a white background, a large blue circle on the left, and a large red square on the right. Below the shapes is bold black text reading \u201cBLUE 7\u201d.",
+    "nativeFinderPhysicalDrop": "Not executed; browser drop event and native file picker exercised separately",
+    "nativeOSBitmapPaste": "Not executed; browser image-paste path exercised",
+    "nativeUpdateInstall": "Not triggered; actual download/signature verification and ready prompt observed"
+  },
+  "tests": {
+    "typecheck": "passed on release version 0.1.7",
+    "vitestFiles": 166,
+    "vitestTests": 812
+  },
+  "privacy": [
+    "Drop/paste/import alone performs no AI call",
+    "Only explicit Send or Retry shares the selected image",
+    "Native decoding validates pixels and strips source metadata",
+    "Image bytes are not persisted in message storage; an image-required marker prevents blind retry after restart",
+    "Starting a new exchange releases the previous exchange image bytes",
+    "No new filesystem plugin or broad native file-read permission"
+  ],
+  "limits": [
+    "One image per message, up to 20 MB, normalized to fit 2048 pixels",
+    "Reattach images for follow-ups that need prior pixels or after quitting",
+    "Native Finder physical drag and OS bitmap paste were not directly executed",
+    "Iris device, Intel hardware and VoiceOver untested",
+    "Native proof exercised actual update download/verification/ready prompt, without clicking install/restart"
+  ]
+}

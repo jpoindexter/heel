@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { ClearedSchema, MessagesStateSchema } from "../../shared/api";
+import { ClearedSchema, MessagesStateSchema, StoredMessageSchema } from "../../shared/api";
 import type { Client } from "../api/client";
 import type { Message } from "./thread-model";
 
@@ -9,7 +9,9 @@ const Restored = z.object({ count: z.number() });
 /** Keep a message across restarts. A turn still waiting for the AI is not kept; a failure to save never interrupts the chat. */
 export function saveMessage(client: Client, message: Message): void {
   if (message.role === "heel" && message.status === "pending") return;
-  void client.put(`/messages/${message.id}`, Saved, { message });
+  // Photos are ephemeral: never put raw image bytes into conversation storage.
+  const stored = StoredMessageSchema.safeParse(message);
+  if (stored.success) void client.put(`/messages/${message.id}`, Saved, { message: stored.data });
 }
 
 /** What was kept, and the next free id. Null when the helper can't say (the thread then just starts empty). */

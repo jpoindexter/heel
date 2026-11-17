@@ -113,7 +113,7 @@ export function TodayView({ showing, summary, reloadKey, settings }: Props) {
   const found = useSearchLayer({ state, layers, history, openDocument: documents.open });
   useAttention({ state, bar, layers });
   return (
-    <div className="today" onPointerDownCapture={bar.onPointerOutside}>
+    <div className="today" onPointerDownCapture={bar.onPointerOutside} onDragOver={event => { if (event.dataTransfer.types.includes("Files")) event.preventDefault(); }} onDrop={event => { if (!event.dataTransfer.types.includes("Files")) return; event.preventDefault(); if (layers.top === "today" || layers.top === "reply") { state.chat.attachment.drop(event); bar.openComposer(); } }}>
       {tasks.state.phase === "error" && (
         <Callout.Root color="amber" role="alert" size="1" highContrast>
           <Callout.Text>{tasks.state.message}</Callout.Text>
@@ -143,8 +143,8 @@ export function TodayView({ showing, summary, reloadKey, settings }: Props) {
           <SearchLayer search={found.search} active={layers.top === "search"} onPick={(hit) => void found.onPick(hit)} onAsk={found.onAsk} />
         </Layer>
       </LayerHost>
-      {layers.top !== "onboarding" && layers.top !== "photos" && summary?.kind === "setup" && <FirstRun summary={summary} onOpenSettings={openSettings} />}
-      {layers.top !== "onboarding" && layers.top !== "photos" && <BottomBar state={state} bar={bar} showing={showing} focusSignal={focusSignal} emailReady={state.mail.available} />}
+      {(layers.top === "today" || layers.top === "reply") && summary?.kind === "setup" && <FirstRun summary={summary} onOpenSettings={openSettings} />}
+      {(layers.top === "today" || layers.top === "reply") && <BottomBar state={state} bar={bar} showing={showing} focusSignal={focusSignal} emailReady={state.mail.available} />}
     </div>
   );
 }

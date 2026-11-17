@@ -1,4 +1,7 @@
 import type { Hono } from "hono";
+import { bodyLimit } from "hono/body-limit";
+import { MAX_PHOTO_BYTES } from "../../shared/photos";
+import { nativePhoto } from "../photos/native";
 import { AddTaskInputSchema, TextInputSchema, TurnInputSchema } from "../../shared/api";
 import { runTurn } from "../agent/turn";
 import { makePdf } from "../pdf/make-pdf";
@@ -82,19 +85,22 @@ export function registerTodayRoutes(app: Hono, deps: AppDeps): void {
 /** The conversation turn: ask the chosen AI, apply only what validates. */
 export function registerTurnRoute(app: Hono, deps: AppDeps): void {
   const { store } = deps;
-
+  app.use("/turn", bodyLimit({ maxSize: Math.ceil(MAX_PHOTO_BYTES / 3) * 4 + 100_000, onError: c => fail(c, "invalid", "Choose a photo up to 20 MB.") }));
   app.post("/turn", async (c) => {
     const body = TurnInputSchema.safeParse(await readJson(c));
     if (!body.success) return fail(c, "invalid", TEXT_HINT);
     const { provider, model } = store.settings.getBrain();
     if (!provider) return fail(c, "not_ready", "Choose an AI provider in Settings first.");
+    let image;
+    try { image = body.data.image ? await nativePhoto(body.data.image.data, { operation: "normalize", limit: 2048 }, c.req.raw.signal) : undefined; }
+    catch { return fail(c, "invalid", "Could not read the attached image. Reattach a valid photo or screenshot."); }
     // "Make that a PDF" opens it too, as the PDF route does: the person asked to see it.
     const makeAndOpenPdf = async (id: string) => {
       const made = await makePdf(store, deps.renderPdf, id);
       if (made.ok && made.value.pdfPath) await deps.openFile(made.value.pdfPath, false);
       return made;
     };
-    const result = await runTurn({ applications: deps.applications, store, provider: deps.providers[provider], model, mail: deps.mail, apps: deps.apps, skills: deps.skills, makePdf: makeAndOpenPdf, signal: c.req.raw.signal }, body.data.text, body.data.history);
+    const result = await runTurn({ image, applications: deps.applications, store, provider: deps.providers[provider], model, mail: deps.mail, apps: deps.apps, skills: deps.skills, makePdf: makeAndOpenPdf, signal: c.req.raw.signal }, body.data.text, body.data.history);
     if (!result.ok) return fail(c, result.error.code, result.error.message);
     return ok(c, { say: result.say, applied: result.applied, skills: result.skills, provider: result.provider });
   });
