@@ -3,7 +3,7 @@
   "releaseDate": "2026-11-17",
   "sourceCommit": "6ff28d9",
   "sourceBranch": "codex/chat-attachments-layout",
-  "status": "Apple notarization Accepted; stapled and verified; ready for publication",
+  "status": "published; Apple notarization Accepted; public assets and updater feed independently verified",
   "checks": {
     "typecheck": "passed on 0.1.7",
     "vitestFiles": 166,
@@ -62,12 +62,55 @@
     "status": "Accepted"
   },
   "publication": {
-    "published": false,
+    "published": true,
     "notarized": true,
     "signedUpdateArchivePrepared": true,
-    "publicFeedVersion": "0.1.6",
-    "releaseView": "v0.1.7 not found",
-    "existingPublicAssetsModified": false
+    "publicFeedVersion": "0.1.7",
+    "releaseView": "https://github.com/jpoindexter/heel/releases/tag/v0.1.7",
+    "existingPublicAssetsModified": false,
+    "releaseTagCommit": "08239fdb2a37840276918b682a9297971f9633f9",
+    "publicDownloadVerification": {
+      "version": "0.1.7",
+      "release": "https://github.com/jpoindexter/heel/releases/tag/v0.1.7",
+      "sourceCommit": "08239fdb2a37840276918b682a9297971f9633f9",
+      "downloadedAssets": [
+        "Heel_0.1.7_aarch64.dmg",
+        "Heel.app.tar.gz",
+        "Heel.app.tar.gz.sig",
+        "latest.json"
+      ],
+      "sha256": {
+        "Heel_0.1.7_aarch64.dmg": "5c0c901c9d6085a74c728508126ea1e11f84a88e334cca7cdce0833543c7b5e1",
+        "Heel.app.tar.gz": "043f59693a6d39e43c556ea15908996bda03975155b55c5cd89f6c8b98054dc7",
+        "Heel.app.tar.gz.sig": "12ade267ba0d39d7c36f754917ce21b9790eccc5c39192c43e35aa31134672bb",
+        "latest.json": "30e0c4b609e3e680e6039519f742db7ae7c6076b701eb090d2798039ec2024df"
+      },
+      "publicFeedMatchesManifest": true,
+      "signature": "Production signature verified; signed version 0.1.7 matches; tampering rejected",
+      "checks": {
+        "dmgTicket": "Processing: /var/folders/rj/nj_9qs2s7zs52nsc90yl2q700000gn/T/heel-017-public-li82aslm/Heel_0.1.7_aarch64.dmg\nThe validate action worked!",
+        "dmgSignature": "",
+        "dmgGatekeeper": "/var/folders/rj/nj_9qs2s7zs52nsc90yl2q700000gn/T/heel-017-public-li82aslm/Heel_0.1.7_aarch64.dmg: accepted\nsource=Notarized Developer ID\norigin=Developer ID Application: Jason Poindexter (5352PXMNV5)",
+        "mountedDmgAppMetadata": {
+          "version": "0.1.7",
+          "identifier": "studio.theft.heel"
+        },
+        "mountedDmgAppSignature": "",
+        "mountedDmgAppGatekeeper": "/Volumes/Heel/Heel.app: accepted\nsource=Notarized Developer ID\norigin=Developer ID Application: Jason Poindexter (5352PXMNV5)",
+        "updaterAppMetadata": {
+          "version": "0.1.7",
+          "identifier": "studio.theft.heel"
+        },
+        "updaterAppSignature": "",
+        "updaterAppGatekeeper": "/var/folders/rj/nj_9qs2s7zs52nsc90yl2q700000gn/T/heel-017-public-li82aslm/updater/Heel.app: accepted\nsource=Notarized Developer ID\norigin=Developer ID Application: Jason Poindexter (5352PXMNV5)",
+        "updaterAppTicket": "Processing: /var/folders/rj/nj_9qs2s7zs52nsc90yl2q700000gn/T/heel-017-public-li82aslm/updater/Heel.app\nThe validate action worked!"
+      },
+      "readOnlyVolumeDetached": true,
+      "limits": [
+        "Mounted DMG app has no separate stapled ticket; DMG ticket and mounted app Gatekeeper checked.",
+        "Client install/restart, Iris device and VoiceOver were not repeated."
+      ]
+    }
   },
   "limits": [
     "Native Finder physical drag and native OS bitmap paste not directly executed",

@@ -96,7 +96,7 @@ All 810 tests and typechecks passed before packaging. The packaged reader execut
 
 Iris's Mac, Intel hardware and VoiceOver remain untested. This release verified the public update bytes/signature/feed, without repeating an actual client install/restart; the earlier native updater install/restart proof is in [0.1.5 evidence](verification/heel-0.1.5.json). 0.1.4 and earlier still require a manual DMG install once. Run tests and release builds sequentially: both compile the same native-reader output.
 
-## 0.1.7 notarization (17 November 2026)
+## 0.1.7 release verification (17 November 2026)
 
 The screenshot-chat and panel-readability fixes are committed on `codex/chat-attachments-layout` (`6ff28d9`). All 812 tests and typechecks passed on version 0.1.7. Native picker, actual subscription vision, Settings/Reply navigation and the real updater download/verification/ready prompt were exercised in an isolated app. [Feature checks](verification/chat-layout-2026-11-17.json), [release evidence](verification/heel-0.1.7.json), [release notes](releases/0.1.7.md).
 
@@ -104,4 +104,4 @@ After earlier upload HTTP 401 failures, the user-requested retry of the identica
 
 The earlier authentication failure's cause remains unconfirmed. Apple's official status page reported an ongoing iCloud Account & Sign In incident from 17:45 CET on 17 November, last updated at 18:48 CET when inspected. This did not independently establish notarization service impact. No credentials were changed for this retry.
 
-Publication and public-download verification follow notarization. The release evidence records their current state. Native Finder physical drag and OS bitmap paste, Iris's Mac, Intel hardware and VoiceOver remain untested. This release does not repeat a client install/restart; the isolated native app exercised download, verification and the ready prompt.
+[Heel 0.1.7](https://github.com/jpoindexter/heel/releases/tag/v0.1.7) is published with all four immutable assets, tagged to `08239fd`. All four independently downloaded assets match their local SHA-256 hashes. The live HTTPS updater feed exactly matches the 0.1.7 manifest. The downloaded updater signature, signed version and tampering rejection pass. Downloaded DMG ticket/signature/Gatekeeper, read-only mounted app version/identifier/deep signature/Gatekeeper, and extracted updater app ticket/signature/Gatekeeper pass; the test volume was detached. The DMG carries the ticket; its contained app has no separate stapled ticket. The separately packaged updater app carries a validated ticket. Previous 0.1.6 assets were not changed. Native Finder physical drag and OS bitmap paste, Iris's Mac, Intel hardware and VoiceOver remain untested. This release does not repeat a client install/restart; the isolated native app exercised download, verification and the ready prompt.
