@@ -1,0 +1,48 @@
+{
+  "pass": true,
+  "frontmost": "com.apple.TextEdit",
+  "windows": [
+    {
+      "bounds": {
+        "Height": 622,
+        "Width": 412,
+        "X": 897,
+        "Y": 88
+      },
+      "id": 44720,
+      "layer": 5,
+      "order": 17,
+      "owner": "Heel",
+      "pid": 84328,
+      "title": "Heel panel"
+    },
+    {
+      "bounds": {
+        "Height": 208,
+        "Width": 192,
+        "X": 1147,
+        "Y": 702
+      },
+      "id": 44719,
+      "layer": 5,
+      "order": 18,
+      "owner": "Heel",
+      "pid": 84328,
+      "title": "Heel"
+    },
+    {
+      "bounds": {
+        "Height": 949,
+        "Width": 1512,
+        "X": 0,
+        "Y": 33
+      },
+      "id": 44660,
+      "layer": 0,
+      "order": 20,
+      "owner": "TextEdit",
+      "pid": 83003,
+      "title": "Untitled 12.txt"
+    }
+  ]
+}

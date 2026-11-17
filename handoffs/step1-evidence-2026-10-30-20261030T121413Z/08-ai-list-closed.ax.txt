@@ -1,0 +1,123 @@
+The following is a diff from the previous accessibility tree for Window: "Heel panel" with ~ and + representing changed and added elements, respectively. Removed elements are summarized by ID range.
+Removed element IDs: 67-69, 71-77
+~			65 container
+~				66 button Back
++				67 heading Settings, Value: 1
++					68 text Settings
++				69 button Back to Greg
+~				70 button Close panel
++				71 container Settings
++					72 summary Look System · Comfortable, Value: off
++						73 heading Look, Value: 2
++							74 text Look
++						75 text System · Comfortable
++					76 summary Greg Lively · notices on · attention off, Value: off
++						77 heading Greg, Value: 2
++							78 text Greg
++						79 text Lively · notices on · attention off
++					80 container (collapsed) Secondary Actions: Expand
++						81 summary Ways of working Time-box · Pickle jar, Value: off
++							82 heading Ways of working, Value: 2
++								83 text Ways of working
++							84 text Time-box · Pickle jar
++						85 stepper 0
++							86 unknown
++							87 unknown
++						88 stepper 0
++							89 unknown
++							90 unknown
++					91 container (expanded) Secondary Actions: Collapse
++						92 summary Brain AI and skills, Value: on
++							93 heading Brain, Value: 2
++								94 text Brain
++							95 text AI and skills
++						96 container Brain
++							97 heading Brain, Value: 3
++								98 text Brain
++							99 text Pick the AI Heel uses. What you type goes to that provider. Local keeps it on this Mac.
++							100 text AI
++							101 combo box (collapsed, settable) Description: AI, Secondary Actions: Expand, Value: Claude (subscription)
+
++								102 text Claude (subscription)
++							103 text Subscriptions signed in on this Mac show as ready. Greyed entries say what they need.
++							104 summary API keys Anthropic, OpenAI, Mistral, Value: off
++								105 text API keys
++								106 text Anthropic, OpenAI, Mistral
++							107 text Model (optional)
++							108 text field (settable) Model (optional)
++							109 text Leave empty to use the provider's default.
++							110 button Test connection
++							111 button Check again
++						112 container Skills
++							113 heading Skills, Value: 3
++								114 text Skills
++							115 text Short instructions Heel reads before answering. They are plain text: nothing here runs. Your own are chosen by the words you give them.
++							116 container
++								117 text executive function router Always on Route work to the least intrusive executive-function support based on explicit signals about current capacity, activation, memory load, emotional intensity, sensory or language load, environmental friction, and time or transitions. Use when a task feels stuck, overwhelming, difficult to hold in mind, or when the user asks for neurodivergent-friendly support without wanting an intake or coaching ritual.
++								118 button Read
++								119 text functional minimums
++								120 switch (settable, boolean) functional minimums on, Value: on
++								121 text Reduce work to the smallest safe and useful outcome when the user explicitly reports low capacity, depletion, burnout, overwhelm, or asks for the minimum viable version. Preserve safety and function while deferring polish, and execute the reduced outcome when permissions allow.
++								122 text When you say: overwhelmed, too much, exhausted, burned out, low energy
++								123 button Read
++								124 text emotion regulation
++								125 switch (settable, boolean) emotion regulation on, Value: on
++								126 text Stabilize task execution when the user explicitly reports frustration, shame, panic, anger, rejection, or overwhelm that is affecting decisions. Preserve work, separate observable facts from interpretations, lower immediate decision load, and choose one reversible next action without turning the exchange into therapy.
++								127 text When you say: panic, angry, ashamed, anxious, meltdown
++								128 button Read
++								129 text task initiation
++								130 switch (settable, boolean) task initiation on, Value: on
++								131 text When a user faces a blank page, explicitly says they are stuck or avoiding a known task, or does not know where to start, create the smallest concrete first action and, when needed, add one truthful interest, novelty, challenge, feedback, or body-doubling bridge. Never invent urgency or use shame.
++								132 text When you say: stuck, can't start, avoiding, procrastinating, (also when nothing else fits)
++								133 button Read
++								134 text hyperfocus guard
++								135 switch (settable, boolean) hyperfocus guard on, Value: on
++								136 text Detect and name hyperfocus sessions that have gone deep on a rabbit hole. Surface the original goal and offer a structured way back.
++								137 text When you say: rabbit hole, tangent, distracted, park
++								138 button Read
++								139 text time blindness
++								140 switch (settable, boolean) time blindness on, Value: on
++								141 text Externalize uncertain time with calibrated best, realistic, and worst ranges, hidden costs, checkpoints, and stopping rules. Use for estimates, open-ended research or refinement, work likely to expand, and tasks where elapsed-time feedback should revise the forecast.
++								142 text When you say: how long, estimate, deadline, minutes, hours, time box
++								143 button Read
++								144 text biz weekly review
++								145 switch (settable, boolean) biz weekly review on, Value: on
++								146 text When the person asks for a weekly review, a look back at the week, or what they shipped, run a short business-coach review from the "Finished this week" list and the open tasks: motion vs action, concentrate forces, four zones, never miss twice. Output is at most three commitments and one hard recommendation, never an options list.
++								147 text When you say: weekly review, review my week, what did I ship
++								148 button Read
++								149 text autism layer
++								150 switch (settable, boolean) autism layer on, Value: on
++								151 text When the person asks what a message really means or wants, whether they need to reply, what to say or how to say it, or shows masking or burnout, read literally for them, draft the script, phrase everything as an invitation, and keep a special interest as something to protect, not a distraction.
++								152 text When you say: what do they mean, do I need to reply, how do I say, what should I say, script, translate, masking, peopled out
++								153 button Read
++								154 text task decomposition
++								155 switch (settable, boolean) task decomposition on, Value: on
++								156 text Turn a vague, oversized, dependency-heavy, or initiation-resistant outcome into independently verifiable units with a visible first action and observable definition of done. Use when the user cannot identify where to begin, hidden dependencies block action, or a complex request needs execution structure after planning is accepted.
++								157 text When you say: plan, break it down, huge, big project, schedule, today, week
++								158 button Read
++								159 text writer
++								160 switch (settable, boolean) writer on, Value: on
++								161 text When the person asks Heel to look into, research, write up, draft or summarise something, produce a saved document (write_document) rather than a wall of chat: short, structured, sourced, honest about what could not be checked.
++								162 text When you say: look into, research, write up, brief, summary, report, notes on
++								163 button Read
++							164 button Add a skill
++					165 summary Email Gmail, read-only, Value: off
++						166 heading Email, Value: 2
++							167 text Email
++						168 text Gmail, read-only
++					169 summary Startup Login, Dock, Value: off
++						170 heading Startup, Value: 2
++							171 text Startup
++						172 text Login, Dock
++					173 summary Privacy & data Back up, wipe, Value: off
++						174 heading Privacy & data, Value: 2
++							175 text Privacy & data
++						176 text Back up, wipe
++					177 summary About Heel 0.1.0, Value: off
++						178 heading About, Value: 2
++							179 text About
++						180 text Heel 0.1.0
++				181 button (collapsed) More, Secondary Actions: Expand
++				182 button What's on your mind?
++				183 container Notifications (F8)
+The focused UI element is 101 combo box (collapsed, settable) Description: AI, Secondary Actions: Expand, Value: Claude (subscription)

@@ -1,0 +1,99 @@
+Window: "Heel panel", App: Heel.
+0 standard window Heel panel, Secondary Actions: Raise
+	1 scroll area
+		2 HTML content Description: Heel, URL: tauri://localhost
+			3 container
+				4 button Back
+				5 heading Settings, Value: 1
+					6 text Settings
+				7 button Back to Greg
+				8 button Close panel
+				9 container Settings
+					10 container (expanded) Secondary Actions: Collapse
+						11 summary Help How Heel works, Value: on
+							12 heading Help, Value: 2
+								13 text Help
+							14 text How Heel works
+						15 container How Heel works
+							16 heading How Heel works, Value: 3
+								17 text How Heel works
+							18 summary Open Heel and find your way, Value: off
+								19 text Open Heel and find your way
+							20 summary Choose the AI Heel uses, Value: off
+								21 text Choose the AI Heel uses
+							22 summary Add, finish and park tasks, Value: off
+								23 text Add, finish and park tasks
+							24 container (expanded) Secondary Actions: Collapse
+								25 summary Run a focus time-box, Value: on
+									26 text Run a focus time-box
+								27 content list
+									28 container On the task marked Now, press the clock: Start a time-box on this.
+										29 list marker 1
+										30 text On the task marked Now, press the clock: Start a time-box on this.
+									31 container Greg stays quiet while it runs. When it ends, Heel asks: Done, Keep going, or Park something and go back.
+										32 list marker 2
+										33 text Greg stays quiet while it runs. When it ends, Heel asks: Done, Keep going, or Park something and go back.
+									34 container Done ticks the task. Park saves what pulled you away to Parked.
+										35 list marker 3
+										36 text Done ticks the task. Park saves what pulled you away to Parked.
+							37 summary Read your email with Heel, Value: off
+								38 text Read your email with Heel
+							39 summary Find anything, Value: off
+								40 text Find anything
+							41 summary Report a bug or suggest an idea, Value: off
+								42 text Report a bug or suggest an idea
+							43 summary Your data, Value: off
+								44 text Your data
+							45 summary When something is off, Value: off
+								46 text When something is off
+					47 summary Look Dark · Comfortable, Value: off
+						48 heading Look, Value: 2
+							49 text Look
+						50 text Dark · Comfortable
+					51 summary Greg Lively · notices on · attention off, Value: off
+						52 heading Greg, Value: 2
+							53 text Greg
+						54 text Lively · notices on · attention off
+					55 container (collapsed) Secondary Actions: Expand
+						56 summary Ways of working Time-box · Pickle jar, Value: off
+							57 heading Ways of working, Value: 2
+								58 text Ways of working
+							59 text Time-box · Pickle jar
+						60 stepper 0
+							61 unknown
+							62 unknown
+						63 stepper 0
+							64 unknown
+							65 unknown
+					66 summary Brain AI and skills, Value: off
+						67 heading Brain, Value: 2
+							68 text Brain
+						69 text AI and skills
+					70 summary Email Gmail, read-only, Value: off
+						71 heading Email, Value: 2
+							72 text Email
+						73 text Gmail, read-only
+					74 summary Startup Login, Dock, Value: off
+						75 heading Startup, Value: 2
+							76 text Startup
+						77 text Login, Dock
+					78 summary Privacy & data Back up, wipe, Value: off
+						79 heading Privacy & data, Value: 2
+							80 text Privacy & data
+						81 text Back up, wipe
+					82 summary About Heel 0.1.2 · send feedback, Value: off
+						83 heading About, Value: 2
+							84 text About
+						85 text Heel 0.1.2 · send feedback
+				86 button (collapsed) More, Secondary Actions: Expand
+				87 button What's on your mind?
+				88 container Notifications (F8)
+89 menu bar
+	90 Heel
+	91 File
+	92 Edit
+	93 View
+	94 Window
+	95 Help
+
+The focused UI element is 25 summary Run a focus time-box, Value: on

@@ -1,0 +1,19 @@
+{
+  "pass": true,
+  "panelVisibleAfterBodyClick": true,
+  "frontmost": "studio.theft.heel",
+  "probe": {
+    "interactiveWindow": "Heel",
+    "interactivePid": 84328,
+    "cursorRestoreScheduled": true,
+    "originalCursor": [
+      1128.2578125,
+      956.3125
+    ],
+    "globalPoint": [
+      690,
+      880
+    ],
+    "mode": "body"
+  }
+}

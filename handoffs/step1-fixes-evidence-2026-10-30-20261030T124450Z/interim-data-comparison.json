@@ -1,0 +1,88 @@
+{
+  "tables": [
+    {
+      "table": "documents",
+      "rowsBefore": 0,
+      "rowsAfter": 0,
+      "beforeSha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "afterSha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "unchanged": true
+    },
+    {
+      "table": "focus_sessions",
+      "rowsBefore": 0,
+      "rowsAfter": 0,
+      "beforeSha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "afterSha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "unchanged": true
+    },
+    {
+      "table": "ledger",
+      "rowsBefore": 0,
+      "rowsAfter": 0,
+      "beforeSha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "afterSha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "unchanged": true
+    },
+    {
+      "table": "messages",
+      "rowsBefore": 8,
+      "rowsAfter": 8,
+      "beforeSha256": "0f40b44e14c6ebd6ba2dd77d1240657a6441f22b48af4797df2e857bf8d15df9",
+      "afterSha256": "0f40b44e14c6ebd6ba2dd77d1240657a6441f22b48af4797df2e857bf8d15df9",
+      "unchanged": true
+    },
+    {
+      "table": "parked",
+      "rowsBefore": 0,
+      "rowsAfter": 0,
+      "beforeSha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "afterSha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "unchanged": true
+    },
+    {
+      "table": "schema_migrations",
+      "rowsBefore": 6,
+      "rowsAfter": 6,
+      "beforeSha256": "ecf6a4e2cc8795198d382460a96c09c4042e848a211f39e3a1b15bf77c79a49e",
+      "afterSha256": "ecf6a4e2cc8795198d382460a96c09c4042e848a211f39e3a1b15bf77c79a49e",
+      "unchanged": true
+    },
+    {
+      "table": "settings",
+      "rowsBefore": 2,
+      "rowsAfter": 2,
+      "beforeSha256": "9f43c3d66798dde80a4fb6eeb2aaa6389fb6303c960ebb2bc0daa3fc1e344c76",
+      "afterSha256": "9f43c3d66798dde80a4fb6eeb2aaa6389fb6303c960ebb2bc0daa3fc1e344c76",
+      "unchanged": true
+    },
+    {
+      "table": "tasks",
+      "rowsBefore": 2,
+      "rowsAfter": 2,
+      "beforeSha256": "0131bc5d00e2e50b4ce33ebf8317d1717ea73d6cf794bd3d810b732a7fcb5cef",
+      "afterSha256": "0131bc5d00e2e50b4ce33ebf8317d1717ea73d6cf794bd3d810b732a7fcb5cef",
+      "unchanged": true
+    }
+  ],
+  "preferences": [
+    {
+      "file": "panel-place.json",
+      "unchanged": true
+    },
+    {
+      "file": "panel-size-v2.json",
+      "unchanged": true
+    },
+    {
+      "file": "mascot-hidden.json",
+      "unchanged": true
+    },
+    {
+      "file": "shell-settings.json",
+      "unchanged": true
+    }
+  ],
+  "allTablesUnchanged": true,
+  "pid": "84328 /Users/jasonpoindexter/Documents/GitHub/Greg agent/src-tauri/target/release/bundle/macos/Heel.app/Contents/MacOS/heel"
+}

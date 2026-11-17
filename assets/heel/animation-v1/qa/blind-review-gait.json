@@ -1,0 +1,88 @@
+{
+  "pairs": [
+    {
+      "pair": "horizontal-1",
+      "A": "screen-right",
+      "B": "screen-left",
+      "reason": "A nose and lifted muzzle point toward screen-right; B nose and lifted muzzle point screen-left."
+    },
+    {
+      "pair": "horizontal-2",
+      "A": "screen-right",
+      "B": "screen-left",
+      "reason": "A nose projects to the right of its head with rightward eyes; B projects left with leftward eyes."
+    },
+    {
+      "pair": "horizontal-3",
+      "A": "screen-right",
+      "B": "screen-left",
+      "reason": "A raised muzzle extends right of the head and B extends left."
+    },
+    {
+      "pair": "horizontal-4",
+      "A": "screen-left",
+      "B": "screen-right",
+      "reason": "A has a clear left-facing profile with nose left of neck; B has the opposite right-facing profile."
+    },
+    {
+      "pair": "horizontal-5",
+      "A": "screen-left",
+      "B": "screen-right",
+      "reason": "A lowered muzzle projects screen-left; B muzzle and visible eye are directed screen-right."
+    },
+    {
+      "pair": "horizontal-6",
+      "A": "screen-right",
+      "B": "screen-left",
+      "reason": "A bowed head has the nose to screen-right of head center; B bowed head nose projects screen-left."
+    },
+    {
+      "pair": "horizontal-7",
+      "A": "screen-right",
+      "B": "screen-left",
+      "reason": "A downward nose is subtly right of head and neck center, while B nose is visibly left of head and neck center."
+    },
+    {
+      "pair": "vertical-1",
+      "A": "up",
+      "B": "down",
+      "reason": "A muzzle is raised, showing chin and underside while eyes look upward; B crown is exposed and muzzle/eyes angle toward paws."
+    },
+    {
+      "pair": "vertical-2",
+      "A": "down",
+      "B": "up",
+      "reason": "A head bows with crown visible and eyes/nose toward chest; B chin and muzzle tilt upward with raised gaze."
+    },
+    {
+      "pair": "vertical-3",
+      "A": "up",
+      "B": "down",
+      "reason": "A muzzle tilts up exposing chin and upper gaze; B head tilts down with eyes lowered and nose below eye line toward paws."
+    },
+    {
+      "pair": "vertical-4",
+      "A": "up",
+      "B": "down",
+      "reason": "A muzzle is slightly elevated with visible chin underneath and raised gaze; B muzzle slopes slightly downward, with nose below a nearly horizontal eye line and eyes lowered."
+    },
+    {
+      "pair": "vertical-5",
+      "A": "up",
+      "B": "down",
+      "reason": "A nose points upward and exposes chin/underside; B head bows with crown visible and nose aimed down-left."
+    },
+    {
+      "pair": "vertical-6",
+      "A": "up",
+      "B": "down",
+      "reason": "A muzzle and eyes angle upward, showing chin; B lowered head exposes crown and aims nose toward paws."
+    },
+    {
+      "pair": "vertical-7",
+      "A": "down",
+      "B": "up",
+      "reason": "A muzzle and gaze slope down-left with upper head visible; B lifted muzzle exposes chin and gaze angles up-left."
+    }
+  ]
+}

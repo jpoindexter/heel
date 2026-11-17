@@ -1,0 +1,13 @@
+{
+  "resolved": 4,
+  "checks": {
+    "mistralSetup": "Pass - fixed and native verified",
+    "dockIcon": "Pass - actual tile1/0/1; same PID",
+    "windowStacking": "Pass - floating and parked variants",
+    "transparentClickThrough": "Pass - real mouse plus opaque-body control"
+  },
+  "buildSha256": "16cab434b1691081a0c9f84f37eb557bc22b40da774f939eda290ed979d9526a",
+  "dataTablesUnchanged": true,
+  "savedPreferencesRestored": true,
+  "handoff": "/Users/jasonpoindexter/Documents/GitHub/Greg agent/handoffs/codex-to-claude-step1-followup-2026-10-30.md"
+}

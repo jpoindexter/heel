@@ -1,0 +1,1824 @@
+{
+  "format": "Heel custom extra behaviours v1; not standard Dot",
+  "image": "greg-extras.png",
+  "width": 3072,
+  "height": 3536,
+  "cellWidth": 192,
+  "cellHeight": 208,
+  "columns": 16,
+  "rootMotionInterpolation": "linear between per-frame translateX anchors; hold during turns",
+  "animations": [
+    {
+      "name": "pacing",
+      "label": "Pace back and forth",
+      "loop": true,
+      "defaultEnabled": false,
+      "explicitPlayOnly": false,
+      "cooldownMs": 90000,
+      "trigger": "Explicit roam command or occasional non-focus idle stroll",
+      "returnState": "idle",
+      "durationMs": 7580,
+      "provenance": {
+        "generatedDrawings": 23,
+        "derivedMirrors": 18,
+        "playbackReuse": "two walking cycles per direction, reversed turn poses for return"
+      },
+      "frames": [
+        {
+          "x": 0,
+          "y": 0,
+          "durationMs": 90,
+          "translateX": -160.0
+        },
+        {
+          "x": 192,
+          "y": 0,
+          "durationMs": 90,
+          "translateX": -150.86
+        },
+        {
+          "x": 384,
+          "y": 0,
+          "durationMs": 90,
+          "translateX": -141.71
+        },
+        {
+          "x": 576,
+          "y": 0,
+          "durationMs": 90,
+          "translateX": -132.57
+        },
+        {
+          "x": 768,
+          "y": 0,
+          "durationMs": 90,
+          "translateX": -123.43
+        },
+        {
+          "x": 960,
+          "y": 0,
+          "durationMs": 90,
+          "translateX": -114.29
+        },
+        {
+          "x": 1152,
+          "y": 0,
+          "durationMs": 90,
+          "translateX": -105.14
+        },
+        {
+          "x": 1344,
+          "y": 0,
+          "durationMs": 90,
+          "translateX": -96.0
+        },
+        {
+          "x": 1536,
+          "y": 0,
+          "durationMs": 90,
+          "translateX": -86.86
+        },
+        {
+          "x": 1728,
+          "y": 0,
+          "durationMs": 90,
+          "translateX": -77.71
+        },
+        {
+          "x": 1920,
+          "y": 0,
+          "durationMs": 90,
+          "translateX": -68.57
+        },
+        {
+          "x": 2112,
+          "y": 0,
+          "durationMs": 90,
+          "translateX": -59.43
+        },
+        {
+          "x": 2304,
+          "y": 0,
+          "durationMs": 90,
+          "translateX": -50.29
+        },
+        {
+          "x": 2496,
+          "y": 0,
+          "durationMs": 90,
+          "translateX": -41.14
+        },
+        {
+          "x": 2688,
+          "y": 0,
+          "durationMs": 90,
+          "translateX": -32.0
+        },
+        {
+          "x": 2880,
+          "y": 0,
+          "durationMs": 90,
+          "translateX": -22.86
+        },
+        {
+          "x": 0,
+          "y": 208,
+          "durationMs": 90,
+          "translateX": -13.71
+        },
+        {
+          "x": 192,
+          "y": 208,
+          "durationMs": 90,
+          "translateX": -4.57
+        },
+        {
+          "x": 384,
+          "y": 208,
+          "durationMs": 90,
+          "translateX": 4.57
+        },
+        {
+          "x": 576,
+          "y": 208,
+          "durationMs": 90,
+          "translateX": 13.71
+        },
+        {
+          "x": 768,
+          "y": 208,
+          "durationMs": 90,
+          "translateX": 22.86
+        },
+        {
+          "x": 960,
+          "y": 208,
+          "durationMs": 90,
+          "translateX": 32.0
+        },
+        {
+          "x": 1152,
+          "y": 208,
+          "durationMs": 90,
+          "translateX": 41.14
+        },
+        {
+          "x": 1344,
+          "y": 208,
+          "durationMs": 90,
+          "translateX": 50.29
+        },
+        {
+          "x": 1536,
+          "y": 208,
+          "durationMs": 90,
+          "translateX": 59.43
+        },
+        {
+          "x": 1728,
+          "y": 208,
+          "durationMs": 90,
+          "translateX": 68.57
+        },
+        {
+          "x": 1920,
+          "y": 208,
+          "durationMs": 90,
+          "translateX": 77.71
+        },
+        {
+          "x": 2112,
+          "y": 208,
+          "durationMs": 90,
+          "translateX": 86.86
+        },
+        {
+          "x": 2304,
+          "y": 208,
+          "durationMs": 90,
+          "translateX": 96.0
+        },
+        {
+          "x": 2496,
+          "y": 208,
+          "durationMs": 90,
+          "translateX": 105.14
+        },
+        {
+          "x": 2688,
+          "y": 208,
+          "durationMs": 90,
+          "translateX": 114.29
+        },
+        {
+          "x": 2880,
+          "y": 208,
+          "durationMs": 90,
+          "translateX": 123.43
+        },
+        {
+          "x": 0,
+          "y": 416,
+          "durationMs": 90,
+          "translateX": 132.57
+        },
+        {
+          "x": 192,
+          "y": 416,
+          "durationMs": 90,
+          "translateX": 141.71
+        },
+        {
+          "x": 384,
+          "y": 416,
+          "durationMs": 90,
+          "translateX": 150.86
+        },
+        {
+          "x": 576,
+          "y": 416,
+          "durationMs": 90,
+          "translateX": 160.0
+        },
+        {
+          "x": 768,
+          "y": 416,
+          "durationMs": 110,
+          "translateX": 160
+        },
+        {
+          "x": 960,
+          "y": 416,
+          "durationMs": 110,
+          "translateX": 160
+        },
+        {
+          "x": 1152,
+          "y": 416,
+          "durationMs": 110,
+          "translateX": 160
+        },
+        {
+          "x": 1344,
+          "y": 416,
+          "durationMs": 110,
+          "translateX": 160
+        },
+        {
+          "x": 1536,
+          "y": 416,
+          "durationMs": 110,
+          "translateX": 160
+        },
+        {
+          "x": 1728,
+          "y": 416,
+          "durationMs": 90,
+          "translateX": 160.0
+        },
+        {
+          "x": 1920,
+          "y": 416,
+          "durationMs": 90,
+          "translateX": 150.86
+        },
+        {
+          "x": 2112,
+          "y": 416,
+          "durationMs": 90,
+          "translateX": 141.71
+        },
+        {
+          "x": 2304,
+          "y": 416,
+          "durationMs": 90,
+          "translateX": 132.57
+        },
+        {
+          "x": 2496,
+          "y": 416,
+          "durationMs": 90,
+          "translateX": 123.43
+        },
+        {
+          "x": 2688,
+          "y": 416,
+          "durationMs": 90,
+          "translateX": 114.29
+        },
+        {
+          "x": 2880,
+          "y": 416,
+          "durationMs": 90,
+          "translateX": 105.14
+        },
+        {
+          "x": 0,
+          "y": 624,
+          "durationMs": 90,
+          "translateX": 96.0
+        },
+        {
+          "x": 192,
+          "y": 624,
+          "durationMs": 90,
+          "translateX": 86.86
+        },
+        {
+          "x": 384,
+          "y": 624,
+          "durationMs": 90,
+          "translateX": 77.71
+        },
+        {
+          "x": 576,
+          "y": 624,
+          "durationMs": 90,
+          "translateX": 68.57
+        },
+        {
+          "x": 768,
+          "y": 624,
+          "durationMs": 90,
+          "translateX": 59.43
+        },
+        {
+          "x": 960,
+          "y": 624,
+          "durationMs": 90,
+          "translateX": 50.29
+        },
+        {
+          "x": 1152,
+          "y": 624,
+          "durationMs": 90,
+          "translateX": 41.14
+        },
+        {
+          "x": 1344,
+          "y": 624,
+          "durationMs": 90,
+          "translateX": 32.0
+        },
+        {
+          "x": 1536,
+          "y": 624,
+          "durationMs": 90,
+          "translateX": 22.86
+        },
+        {
+          "x": 1728,
+          "y": 624,
+          "durationMs": 90,
+          "translateX": 13.71
+        },
+        {
+          "x": 1920,
+          "y": 624,
+          "durationMs": 90,
+          "translateX": 4.57
+        },
+        {
+          "x": 2112,
+          "y": 624,
+          "durationMs": 90,
+          "translateX": -4.57
+        },
+        {
+          "x": 2304,
+          "y": 624,
+          "durationMs": 90,
+          "translateX": -13.71
+        },
+        {
+          "x": 2496,
+          "y": 624,
+          "durationMs": 90,
+          "translateX": -22.86
+        },
+        {
+          "x": 2688,
+          "y": 624,
+          "durationMs": 90,
+          "translateX": -32.0
+        },
+        {
+          "x": 2880,
+          "y": 624,
+          "durationMs": 90,
+          "translateX": -41.14
+        },
+        {
+          "x": 0,
+          "y": 832,
+          "durationMs": 90,
+          "translateX": -50.29
+        },
+        {
+          "x": 192,
+          "y": 832,
+          "durationMs": 90,
+          "translateX": -59.43
+        },
+        {
+          "x": 384,
+          "y": 832,
+          "durationMs": 90,
+          "translateX": -68.57
+        },
+        {
+          "x": 576,
+          "y": 832,
+          "durationMs": 90,
+          "translateX": -77.71
+        },
+        {
+          "x": 768,
+          "y": 832,
+          "durationMs": 90,
+          "translateX": -86.86
+        },
+        {
+          "x": 960,
+          "y": 832,
+          "durationMs": 90,
+          "translateX": -96.0
+        },
+        {
+          "x": 1152,
+          "y": 832,
+          "durationMs": 90,
+          "translateX": -105.14
+        },
+        {
+          "x": 1344,
+          "y": 832,
+          "durationMs": 90,
+          "translateX": -114.29
+        },
+        {
+          "x": 1536,
+          "y": 832,
+          "durationMs": 90,
+          "translateX": -123.43
+        },
+        {
+          "x": 1728,
+          "y": 832,
+          "durationMs": 90,
+          "translateX": -132.57
+        },
+        {
+          "x": 1920,
+          "y": 832,
+          "durationMs": 90,
+          "translateX": -141.71
+        },
+        {
+          "x": 2112,
+          "y": 832,
+          "durationMs": 90,
+          "translateX": -150.86
+        },
+        {
+          "x": 2304,
+          "y": 832,
+          "durationMs": 90,
+          "translateX": -160.0
+        },
+        {
+          "x": 2496,
+          "y": 832,
+          "durationMs": 110,
+          "translateX": -160
+        },
+        {
+          "x": 2688,
+          "y": 832,
+          "durationMs": 110,
+          "translateX": -160
+        },
+        {
+          "x": 2880,
+          "y": 832,
+          "durationMs": 110,
+          "translateX": -160
+        },
+        {
+          "x": 0,
+          "y": 1040,
+          "durationMs": 110,
+          "translateX": -160
+        },
+        {
+          "x": 192,
+          "y": 1040,
+          "durationMs": 110,
+          "translateX": -160
+        }
+      ],
+      "reducedMotion": "show first frame, no root travel",
+      "integrationStatus": "not integrated; preview export only"
+    },
+    {
+      "name": "ball-play",
+      "label": "Play with a ball",
+      "loop": false,
+      "defaultEnabled": false,
+      "explicitPlayOnly": false,
+      "cooldownMs": 90000,
+      "trigger": "Play command or break activity",
+      "returnState": "idle",
+      "durationMs": 2840,
+      "provenance": {
+        "generatedDrawings": 16,
+        "derivedMirrors": 0,
+        "playbackReuse": "none"
+      },
+      "frames": [
+        {
+          "x": 384,
+          "y": 1040,
+          "durationMs": 650,
+          "translateX": 0
+        },
+        {
+          "x": 576,
+          "y": 1040,
+          "durationMs": 110,
+          "translateX": 0
+        },
+        {
+          "x": 768,
+          "y": 1040,
+          "durationMs": 110,
+          "translateX": 0
+        },
+        {
+          "x": 960,
+          "y": 1040,
+          "durationMs": 110,
+          "translateX": 0
+        },
+        {
+          "x": 1152,
+          "y": 1040,
+          "durationMs": 110,
+          "translateX": 0
+        },
+        {
+          "x": 1344,
+          "y": 1040,
+          "durationMs": 110,
+          "translateX": 0
+        },
+        {
+          "x": 1536,
+          "y": 1040,
+          "durationMs": 110,
+          "translateX": 0
+        },
+        {
+          "x": 1728,
+          "y": 1040,
+          "durationMs": 110,
+          "translateX": 0
+        },
+        {
+          "x": 1920,
+          "y": 1040,
+          "durationMs": 110,
+          "translateX": 0
+        },
+        {
+          "x": 2112,
+          "y": 1040,
+          "durationMs": 110,
+          "translateX": 0
+        },
+        {
+          "x": 2304,
+          "y": 1040,
+          "durationMs": 110,
+          "translateX": 0
+        },
+        {
+          "x": 2496,
+          "y": 1040,
+          "durationMs": 110,
+          "translateX": 0
+        },
+        {
+          "x": 2688,
+          "y": 1040,
+          "durationMs": 110,
+          "translateX": 0
+        },
+        {
+          "x": 2880,
+          "y": 1040,
+          "durationMs": 110,
+          "translateX": 0
+        },
+        {
+          "x": 0,
+          "y": 1248,
+          "durationMs": 110,
+          "translateX": 0
+        },
+        {
+          "x": 192,
+          "y": 1248,
+          "durationMs": 650,
+          "translateX": 0
+        }
+      ],
+      "reducedMotion": "show first frame, no root travel",
+      "integrationStatus": "not integrated; preview export only"
+    },
+    {
+      "name": "fetch-offer",
+      "label": "Offer the ball",
+      "loop": false,
+      "defaultEnabled": false,
+      "explicitPlayOnly": false,
+      "cooldownMs": 90000,
+      "trigger": "Play/fetch command; invitation to interact",
+      "returnState": "idle",
+      "durationMs": 2840,
+      "provenance": {
+        "generatedDrawings": 16,
+        "derivedMirrors": 0,
+        "playbackReuse": "none"
+      },
+      "frames": [
+        {
+          "x": 384,
+          "y": 1248,
+          "durationMs": 650,
+          "translateX": 0
+        },
+        {
+          "x": 576,
+          "y": 1248,
+          "durationMs": 110,
+          "translateX": 0
+        },
+        {
+          "x": 768,
+          "y": 1248,
+          "durationMs": 110,
+          "translateX": 0
+        },
+        {
+          "x": 960,
+          "y": 1248,
+          "durationMs": 110,
+          "translateX": 0
+        },
+        {
+          "x": 1152,
+          "y": 1248,
+          "durationMs": 110,
+          "translateX": 0
+        },
+        {
+          "x": 1344,
+          "y": 1248,
+          "durationMs": 110,
+          "translateX": 0
+        },
+        {
+          "x": 1536,
+          "y": 1248,
+          "durationMs": 110,
+          "translateX": 0
+        },
+        {
+          "x": 1728,
+          "y": 1248,
+          "durationMs": 110,
+          "translateX": 0
+        },
+        {
+          "x": 1920,
+          "y": 1248,
+          "durationMs": 110,
+          "translateX": 0
+        },
+        {
+          "x": 2112,
+          "y": 1248,
+          "durationMs": 110,
+          "translateX": 0
+        },
+        {
+          "x": 2304,
+          "y": 1248,
+          "durationMs": 110,
+          "translateX": 0
+        },
+        {
+          "x": 2496,
+          "y": 1248,
+          "durationMs": 110,
+          "translateX": 0
+        },
+        {
+          "x": 2688,
+          "y": 1248,
+          "durationMs": 110,
+          "translateX": 0
+        },
+        {
+          "x": 2880,
+          "y": 1248,
+          "durationMs": 110,
+          "translateX": 0
+        },
+        {
+          "x": 0,
+          "y": 1456,
+          "durationMs": 110,
+          "translateX": 0
+        },
+        {
+          "x": 192,
+          "y": 1456,
+          "durationMs": 650,
+          "translateX": 0
+        }
+      ],
+      "reducedMotion": "show first frame, no root travel",
+      "integrationStatus": "not integrated; preview export only"
+    },
+    {
+      "name": "play-bow",
+      "label": "Play bow",
+      "loop": false,
+      "defaultEnabled": false,
+      "explicitPlayOnly": false,
+      "cooldownMs": 90000,
+      "trigger": "Play invitation or greeting variant",
+      "returnState": "idle",
+      "durationMs": 2950,
+      "provenance": {
+        "generatedDrawings": 17,
+        "derivedMirrors": 0,
+        "playbackReuse": "none"
+      },
+      "frames": [
+        {
+          "x": 384,
+          "y": 1456,
+          "durationMs": 650,
+          "translateX": 0
+        },
+        {
+          "x": 576,
+          "y": 1456,
+          "durationMs": 110,
+          "translateX": 0
+        },
+        {
+          "x": 768,
+          "y": 1456,
+          "durationMs": 110,
+          "translateX": 0
+        },
+        {
+          "x": 960,
+          "y": 1456,
+          "durationMs": 110,
+          "translateX": 0
+        },
+        {
+          "x": 1152,
+          "y": 1456,
+          "durationMs": 110,
+          "translateX": 0
+        },
+        {
+          "x": 1344,
+          "y": 1456,
+          "durationMs": 110,
+          "translateX": 0
+        },
+        {
+          "x": 1536,
+          "y": 1456,
+          "durationMs": 110,
+          "translateX": 0
+        },
+        {
+          "x": 1728,
+          "y": 1456,
+          "durationMs": 110,
+          "translateX": 0
+        },
+        {
+          "x": 1920,
+          "y": 1456,
+          "durationMs": 110,
+          "translateX": 0
+        },
+        {
+          "x": 2112,
+          "y": 1456,
+          "durationMs": 110,
+          "translateX": 0
+        },
+        {
+          "x": 2304,
+          "y": 1456,
+          "durationMs": 110,
+          "translateX": 0
+        },
+        {
+          "x": 2496,
+          "y": 1456,
+          "durationMs": 110,
+          "translateX": 0
+        },
+        {
+          "x": 2688,
+          "y": 1456,
+          "durationMs": 110,
+          "translateX": 0
+        },
+        {
+          "x": 2880,
+          "y": 1456,
+          "durationMs": 110,
+          "translateX": 0
+        },
+        {
+          "x": 0,
+          "y": 1664,
+          "durationMs": 110,
+          "translateX": 0
+        },
+        {
+          "x": 192,
+          "y": 1664,
+          "durationMs": 110,
+          "translateX": 0
+        },
+        {
+          "x": 384,
+          "y": 1664,
+          "durationMs": 650,
+          "translateX": 0
+        }
+      ],
+      "reducedMotion": "show first frame, no root travel",
+      "integrationStatus": "not integrated; preview export only"
+    },
+    {
+      "name": "chew-stick",
+      "label": "Chew a stick",
+      "loop": true,
+      "defaultEnabled": false,
+      "explicitPlayOnly": false,
+      "cooldownMs": 90000,
+      "trigger": "Optional quiet break behaviour",
+      "returnState": "idle",
+      "durationMs": 3260,
+      "provenance": {
+        "generatedDrawings": 16,
+        "derivedMirrors": 0,
+        "playbackReuse": "none"
+      },
+      "frames": [
+        {
+          "x": 576,
+          "y": 1664,
+          "durationMs": 650,
+          "translateX": 0
+        },
+        {
+          "x": 768,
+          "y": 1664,
+          "durationMs": 140,
+          "translateX": 0
+        },
+        {
+          "x": 960,
+          "y": 1664,
+          "durationMs": 140,
+          "translateX": 0
+        },
+        {
+          "x": 1152,
+          "y": 1664,
+          "durationMs": 140,
+          "translateX": 0
+        },
+        {
+          "x": 1344,
+          "y": 1664,
+          "durationMs": 140,
+          "translateX": 0
+        },
+        {
+          "x": 1536,
+          "y": 1664,
+          "durationMs": 140,
+          "translateX": 0
+        },
+        {
+          "x": 1728,
+          "y": 1664,
+          "durationMs": 140,
+          "translateX": 0
+        },
+        {
+          "x": 1920,
+          "y": 1664,
+          "durationMs": 140,
+          "translateX": 0
+        },
+        {
+          "x": 2112,
+          "y": 1664,
+          "durationMs": 140,
+          "translateX": 0
+        },
+        {
+          "x": 2304,
+          "y": 1664,
+          "durationMs": 140,
+          "translateX": 0
+        },
+        {
+          "x": 2496,
+          "y": 1664,
+          "durationMs": 140,
+          "translateX": 0
+        },
+        {
+          "x": 2688,
+          "y": 1664,
+          "durationMs": 140,
+          "translateX": 0
+        },
+        {
+          "x": 2880,
+          "y": 1664,
+          "durationMs": 140,
+          "translateX": 0
+        },
+        {
+          "x": 0,
+          "y": 1872,
+          "durationMs": 140,
+          "translateX": 0
+        },
+        {
+          "x": 192,
+          "y": 1872,
+          "durationMs": 140,
+          "translateX": 0
+        },
+        {
+          "x": 384,
+          "y": 1872,
+          "durationMs": 650,
+          "translateX": 0
+        }
+      ],
+      "reducedMotion": "show first frame, no root travel",
+      "integrationStatus": "not integrated; preview export only"
+    },
+    {
+      "name": "scratch-ear",
+      "label": "Scratch an ear",
+      "loop": false,
+      "defaultEnabled": false,
+      "explicitPlayOnly": false,
+      "cooldownMs": 90000,
+      "trigger": "Rare idle variation outside focus",
+      "returnState": "idle",
+      "durationMs": 2840,
+      "provenance": {
+        "generatedDrawings": 16,
+        "derivedMirrors": 0,
+        "playbackReuse": "none"
+      },
+      "frames": [
+        {
+          "x": 576,
+          "y": 1872,
+          "durationMs": 650,
+          "translateX": 0
+        },
+        {
+          "x": 768,
+          "y": 1872,
+          "durationMs": 110,
+          "translateX": 0
+        },
+        {
+          "x": 960,
+          "y": 1872,
+          "durationMs": 110,
+          "translateX": 0
+        },
+        {
+          "x": 1152,
+          "y": 1872,
+          "durationMs": 110,
+          "translateX": 0
+        },
+        {
+          "x": 1344,
+          "y": 1872,
+          "durationMs": 110,
+          "translateX": 0
+        },
+        {
+          "x": 1536,
+          "y": 1872,
+          "durationMs": 110,
+          "translateX": 0
+        },
+        {
+          "x": 1728,
+          "y": 1872,
+          "durationMs": 110,
+          "translateX": 0
+        },
+        {
+          "x": 1920,
+          "y": 1872,
+          "durationMs": 110,
+          "translateX": 0
+        },
+        {
+          "x": 2112,
+          "y": 1872,
+          "durationMs": 110,
+          "translateX": 0
+        },
+        {
+          "x": 2304,
+          "y": 1872,
+          "durationMs": 110,
+          "translateX": 0
+        },
+        {
+          "x": 2496,
+          "y": 1872,
+          "durationMs": 110,
+          "translateX": 0
+        },
+        {
+          "x": 2688,
+          "y": 1872,
+          "durationMs": 110,
+          "translateX": 0
+        },
+        {
+          "x": 2880,
+          "y": 1872,
+          "durationMs": 110,
+          "translateX": 0
+        },
+        {
+          "x": 0,
+          "y": 2080,
+          "durationMs": 110,
+          "translateX": 0
+        },
+        {
+          "x": 192,
+          "y": 2080,
+          "durationMs": 110,
+          "translateX": 0
+        },
+        {
+          "x": 384,
+          "y": 2080,
+          "durationMs": 650,
+          "translateX": 0
+        }
+      ],
+      "reducedMotion": "show first frame, no root travel",
+      "integrationStatus": "not integrated; preview export only"
+    },
+    {
+      "name": "yawn",
+      "label": "Sleepy yawn",
+      "loop": false,
+      "defaultEnabled": false,
+      "explicitPlayOnly": false,
+      "cooldownMs": 90000,
+      "trigger": "Low-energy transition or wind-down",
+      "returnState": "idle",
+      "durationMs": 3260,
+      "provenance": {
+        "generatedDrawings": 16,
+        "derivedMirrors": 0,
+        "playbackReuse": "none"
+      },
+      "frames": [
+        {
+          "x": 576,
+          "y": 2080,
+          "durationMs": 650,
+          "translateX": 0
+        },
+        {
+          "x": 768,
+          "y": 2080,
+          "durationMs": 140,
+          "translateX": 0
+        },
+        {
+          "x": 960,
+          "y": 2080,
+          "durationMs": 140,
+          "translateX": 0
+        },
+        {
+          "x": 1152,
+          "y": 2080,
+          "durationMs": 140,
+          "translateX": 0
+        },
+        {
+          "x": 1344,
+          "y": 2080,
+          "durationMs": 140,
+          "translateX": 0
+        },
+        {
+          "x": 1536,
+          "y": 2080,
+          "durationMs": 140,
+          "translateX": 0
+        },
+        {
+          "x": 1728,
+          "y": 2080,
+          "durationMs": 140,
+          "translateX": 0
+        },
+        {
+          "x": 1920,
+          "y": 2080,
+          "durationMs": 140,
+          "translateX": 0
+        },
+        {
+          "x": 2112,
+          "y": 2080,
+          "durationMs": 140,
+          "translateX": 0
+        },
+        {
+          "x": 2304,
+          "y": 2080,
+          "durationMs": 140,
+          "translateX": 0
+        },
+        {
+          "x": 2496,
+          "y": 2080,
+          "durationMs": 140,
+          "translateX": 0
+        },
+        {
+          "x": 2688,
+          "y": 2080,
+          "durationMs": 140,
+          "translateX": 0
+        },
+        {
+          "x": 2880,
+          "y": 2080,
+          "durationMs": 140,
+          "translateX": 0
+        },
+        {
+          "x": 0,
+          "y": 2288,
+          "durationMs": 140,
+          "translateX": 0
+        },
+        {
+          "x": 192,
+          "y": 2288,
+          "durationMs": 140,
+          "translateX": 0
+        },
+        {
+          "x": 384,
+          "y": 2288,
+          "durationMs": 650,
+          "translateX": 0
+        }
+      ],
+      "reducedMotion": "show first frame, no root travel",
+      "integrationStatus": "not integrated; preview export only"
+    },
+    {
+      "name": "sniff-search",
+      "label": "Sniff around",
+      "loop": false,
+      "defaultEnabled": false,
+      "explicitPlayOnly": false,
+      "cooldownMs": 90000,
+      "trigger": "Optional curiosity/searching transition",
+      "returnState": "idle",
+      "durationMs": 3260,
+      "provenance": {
+        "generatedDrawings": 8,
+        "derivedMirrors": 0,
+        "playbackReuse": "forward/reverse sniff half-cycle"
+      },
+      "frames": [
+        {
+          "x": 576,
+          "y": 2288,
+          "durationMs": 650,
+          "translateX": 0
+        },
+        {
+          "x": 768,
+          "y": 2288,
+          "durationMs": 140,
+          "translateX": 0
+        },
+        {
+          "x": 960,
+          "y": 2288,
+          "durationMs": 140,
+          "translateX": 0
+        },
+        {
+          "x": 1152,
+          "y": 2288,
+          "durationMs": 140,
+          "translateX": 0
+        },
+        {
+          "x": 1344,
+          "y": 2288,
+          "durationMs": 140,
+          "translateX": 0
+        },
+        {
+          "x": 1536,
+          "y": 2288,
+          "durationMs": 140,
+          "translateX": 0
+        },
+        {
+          "x": 1728,
+          "y": 2288,
+          "durationMs": 140,
+          "translateX": 0
+        },
+        {
+          "x": 1920,
+          "y": 2288,
+          "durationMs": 140,
+          "translateX": 0
+        },
+        {
+          "x": 2112,
+          "y": 2288,
+          "durationMs": 140,
+          "translateX": 0
+        },
+        {
+          "x": 2304,
+          "y": 2288,
+          "durationMs": 140,
+          "translateX": 0
+        },
+        {
+          "x": 2496,
+          "y": 2288,
+          "durationMs": 140,
+          "translateX": 0
+        },
+        {
+          "x": 2688,
+          "y": 2288,
+          "durationMs": 140,
+          "translateX": 0
+        },
+        {
+          "x": 2880,
+          "y": 2288,
+          "durationMs": 140,
+          "translateX": 0
+        },
+        {
+          "x": 0,
+          "y": 2496,
+          "durationMs": 140,
+          "translateX": 0
+        },
+        {
+          "x": 192,
+          "y": 2496,
+          "durationMs": 140,
+          "translateX": 0
+        },
+        {
+          "x": 384,
+          "y": 2496,
+          "durationMs": 650,
+          "translateX": 0
+        }
+      ],
+      "reducedMotion": "show first frame, no root travel",
+      "integrationStatus": "not integrated; preview export only"
+    },
+    {
+      "name": "stretch",
+      "label": "Post-nap stretch",
+      "loop": false,
+      "defaultEnabled": false,
+      "explicitPlayOnly": false,
+      "cooldownMs": 90000,
+      "trigger": "Wake-up or end-of-focus break",
+      "returnState": "idle",
+      "durationMs": 3400,
+      "provenance": {
+        "generatedDrawings": 17,
+        "derivedMirrors": 0,
+        "playbackReuse": "none"
+      },
+      "frames": [
+        {
+          "x": 576,
+          "y": 2496,
+          "durationMs": 650,
+          "translateX": 0
+        },
+        {
+          "x": 768,
+          "y": 2496,
+          "durationMs": 140,
+          "translateX": 0
+        },
+        {
+          "x": 960,
+          "y": 2496,
+          "durationMs": 140,
+          "translateX": 0
+        },
+        {
+          "x": 1152,
+          "y": 2496,
+          "durationMs": 140,
+          "translateX": 0
+        },
+        {
+          "x": 1344,
+          "y": 2496,
+          "durationMs": 140,
+          "translateX": 0
+        },
+        {
+          "x": 1536,
+          "y": 2496,
+          "durationMs": 140,
+          "translateX": 0
+        },
+        {
+          "x": 1728,
+          "y": 2496,
+          "durationMs": 140,
+          "translateX": 0
+        },
+        {
+          "x": 1920,
+          "y": 2496,
+          "durationMs": 140,
+          "translateX": 0
+        },
+        {
+          "x": 2112,
+          "y": 2496,
+          "durationMs": 140,
+          "translateX": 0
+        },
+        {
+          "x": 2304,
+          "y": 2496,
+          "durationMs": 140,
+          "translateX": 0
+        },
+        {
+          "x": 2496,
+          "y": 2496,
+          "durationMs": 140,
+          "translateX": 0
+        },
+        {
+          "x": 2688,
+          "y": 2496,
+          "durationMs": 140,
+          "translateX": 0
+        },
+        {
+          "x": 2880,
+          "y": 2496,
+          "durationMs": 140,
+          "translateX": 0
+        },
+        {
+          "x": 0,
+          "y": 2704,
+          "durationMs": 140,
+          "translateX": 0
+        },
+        {
+          "x": 192,
+          "y": 2704,
+          "durationMs": 140,
+          "translateX": 0
+        },
+        {
+          "x": 384,
+          "y": 2704,
+          "durationMs": 140,
+          "translateX": 0
+        },
+        {
+          "x": 576,
+          "y": 2704,
+          "durationMs": 650,
+          "translateX": 0
+        }
+      ],
+      "reducedMotion": "show first frame, no root travel",
+      "integrationStatus": "not integrated; preview export only"
+    },
+    {
+      "name": "error-facepalm",
+      "label": "Oops, paw over face",
+      "loop": false,
+      "defaultEnabled": false,
+      "explicitPlayOnly": false,
+      "cooldownMs": 90000,
+      "trigger": "Friendly recoverable error; keep actionable error text visible",
+      "returnState": "idle",
+      "durationMs": 2950,
+      "provenance": {
+        "generatedDrawings": 17,
+        "derivedMirrors": 0,
+        "playbackReuse": "none"
+      },
+      "frames": [
+        {
+          "x": 768,
+          "y": 2704,
+          "durationMs": 650,
+          "translateX": 0
+        },
+        {
+          "x": 960,
+          "y": 2704,
+          "durationMs": 110,
+          "translateX": 0
+        },
+        {
+          "x": 1152,
+          "y": 2704,
+          "durationMs": 110,
+          "translateX": 0
+        },
+        {
+          "x": 1344,
+          "y": 2704,
+          "durationMs": 110,
+          "translateX": 0
+        },
+        {
+          "x": 1536,
+          "y": 2704,
+          "durationMs": 110,
+          "translateX": 0
+        },
+        {
+          "x": 1728,
+          "y": 2704,
+          "durationMs": 110,
+          "translateX": 0
+        },
+        {
+          "x": 1920,
+          "y": 2704,
+          "durationMs": 110,
+          "translateX": 0
+        },
+        {
+          "x": 2112,
+          "y": 2704,
+          "durationMs": 110,
+          "translateX": 0
+        },
+        {
+          "x": 2304,
+          "y": 2704,
+          "durationMs": 110,
+          "translateX": 0
+        },
+        {
+          "x": 2496,
+          "y": 2704,
+          "durationMs": 110,
+          "translateX": 0
+        },
+        {
+          "x": 2688,
+          "y": 2704,
+          "durationMs": 110,
+          "translateX": 0
+        },
+        {
+          "x": 2880,
+          "y": 2704,
+          "durationMs": 110,
+          "translateX": 0
+        },
+        {
+          "x": 0,
+          "y": 2912,
+          "durationMs": 110,
+          "translateX": 0
+        },
+        {
+          "x": 192,
+          "y": 2912,
+          "durationMs": 110,
+          "translateX": 0
+        },
+        {
+          "x": 384,
+          "y": 2912,
+          "durationMs": 110,
+          "translateX": 0
+        },
+        {
+          "x": 576,
+          "y": 2912,
+          "durationMs": 110,
+          "translateX": 0
+        },
+        {
+          "x": 768,
+          "y": 2912,
+          "durationMs": 650,
+          "translateX": 0
+        }
+      ],
+      "reducedMotion": "show first frame, no root travel",
+      "integrationStatus": "not integrated; preview export only"
+    },
+    {
+      "name": "poop-gag",
+      "label": "Cheeky poop",
+      "loop": false,
+      "defaultEnabled": false,
+      "explicitPlayOnly": true,
+      "cooldownMs": 300000,
+      "trigger": "Explicit playful error/gag command; never automatically on serious errors",
+      "returnState": "idle",
+      "durationMs": 2840,
+      "provenance": {
+        "generatedDrawings": 16,
+        "derivedMirrors": 0,
+        "playbackReuse": "none"
+      },
+      "frames": [
+        {
+          "x": 960,
+          "y": 2912,
+          "durationMs": 650,
+          "translateX": 0
+        },
+        {
+          "x": 1152,
+          "y": 2912,
+          "durationMs": 110,
+          "translateX": 0
+        },
+        {
+          "x": 1344,
+          "y": 2912,
+          "durationMs": 110,
+          "translateX": 0
+        },
+        {
+          "x": 1536,
+          "y": 2912,
+          "durationMs": 110,
+          "translateX": 0
+        },
+        {
+          "x": 1728,
+          "y": 2912,
+          "durationMs": 110,
+          "translateX": 0
+        },
+        {
+          "x": 1920,
+          "y": 2912,
+          "durationMs": 110,
+          "translateX": 0
+        },
+        {
+          "x": 2112,
+          "y": 2912,
+          "durationMs": 110,
+          "translateX": 0
+        },
+        {
+          "x": 2304,
+          "y": 2912,
+          "durationMs": 110,
+          "translateX": 0
+        },
+        {
+          "x": 2496,
+          "y": 2912,
+          "durationMs": 110,
+          "translateX": 0
+        },
+        {
+          "x": 2688,
+          "y": 2912,
+          "durationMs": 110,
+          "translateX": 0
+        },
+        {
+          "x": 2880,
+          "y": 2912,
+          "durationMs": 110,
+          "translateX": 0
+        },
+        {
+          "x": 0,
+          "y": 3120,
+          "durationMs": 110,
+          "translateX": 0
+        },
+        {
+          "x": 192,
+          "y": 3120,
+          "durationMs": 110,
+          "translateX": 0
+        },
+        {
+          "x": 384,
+          "y": 3120,
+          "durationMs": 110,
+          "translateX": 0
+        },
+        {
+          "x": 576,
+          "y": 3120,
+          "durationMs": 110,
+          "translateX": 0
+        },
+        {
+          "x": 768,
+          "y": 3120,
+          "durationMs": 650,
+          "translateX": 0
+        }
+      ],
+      "reducedMotion": "show first frame, no root travel",
+      "integrationStatus": "not integrated; preview export only"
+    },
+    {
+      "name": "pee-gag",
+      "label": "Mark the rock",
+      "loop": false,
+      "defaultEnabled": false,
+      "explicitPlayOnly": true,
+      "cooldownMs": 300000,
+      "trigger": "Explicit playful gag command; never target actual files/windows/content",
+      "returnState": "idle",
+      "durationMs": 2950,
+      "provenance": {
+        "generatedDrawings": 17,
+        "derivedMirrors": 0,
+        "playbackReuse": "none"
+      },
+      "frames": [
+        {
+          "x": 960,
+          "y": 3120,
+          "durationMs": 650,
+          "translateX": 0
+        },
+        {
+          "x": 1152,
+          "y": 3120,
+          "durationMs": 110,
+          "translateX": 0
+        },
+        {
+          "x": 1344,
+          "y": 3120,
+          "durationMs": 110,
+          "translateX": 0
+        },
+        {
+          "x": 1536,
+          "y": 3120,
+          "durationMs": 110,
+          "translateX": 0
+        },
+        {
+          "x": 1728,
+          "y": 3120,
+          "durationMs": 110,
+          "translateX": 0
+        },
+        {
+          "x": 1920,
+          "y": 3120,
+          "durationMs": 110,
+          "translateX": 0
+        },
+        {
+          "x": 2112,
+          "y": 3120,
+          "durationMs": 110,
+          "translateX": 0
+        },
+        {
+          "x": 2304,
+          "y": 3120,
+          "durationMs": 110,
+          "translateX": 0
+        },
+        {
+          "x": 2496,
+          "y": 3120,
+          "durationMs": 110,
+          "translateX": 0
+        },
+        {
+          "x": 2688,
+          "y": 3120,
+          "durationMs": 110,
+          "translateX": 0
+        },
+        {
+          "x": 2880,
+          "y": 3120,
+          "durationMs": 110,
+          "translateX": 0
+        },
+        {
+          "x": 0,
+          "y": 3328,
+          "durationMs": 110,
+          "translateX": 0
+        },
+        {
+          "x": 192,
+          "y": 3328,
+          "durationMs": 110,
+          "translateX": 0
+        },
+        {
+          "x": 384,
+          "y": 3328,
+          "durationMs": 110,
+          "translateX": 0
+        },
+        {
+          "x": 576,
+          "y": 3328,
+          "durationMs": 110,
+          "translateX": 0
+        },
+        {
+          "x": 768,
+          "y": 3328,
+          "durationMs": 110,
+          "translateX": 0
+        },
+        {
+          "x": 960,
+          "y": 3328,
+          "durationMs": 650,
+          "translateX": 0
+        }
+      ],
+      "reducedMotion": "show first frame, no root travel",
+      "integrationStatus": "not integrated; preview export only"
+    }
+  ]
+}

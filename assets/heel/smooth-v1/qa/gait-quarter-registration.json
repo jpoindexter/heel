@@ -1,0 +1,209 @@
+{
+  "method": "One uniform scale per quarter from shared opaque area, constrained for cell padding, then whole-frame translation matching anchor head-top and nose-right bounds; no raster warps or invented pixels.",
+  "quarters": [
+    {
+      "quarter": 0,
+      "shared_scale": 0.9438202247191011,
+      "frames": [
+        {
+          "frame": 1,
+          "scale": 0.9438202247191011,
+          "translation": [
+            2,
+            27
+          ],
+          "bbox": [
+            7,
+            64,
+            178,
+            183
+          ],
+          "source": "/Users/jasonpoindexter/Documents/GitHub/Greg agent/assets/heel/smooth-v1/quarter-frames/gait-inbetweens-0/00.png"
+        },
+        {
+          "frame": 2,
+          "scale": 0.9438202247191011,
+          "translation": [
+            2,
+            27
+          ],
+          "bbox": [
+            9,
+            64,
+            176,
+            183
+          ],
+          "source": "/Users/jasonpoindexter/Documents/GitHub/Greg agent/assets/heel/smooth-v1/quarter-frames/gait-inbetweens-0/01.png"
+        },
+        {
+          "frame": 3,
+          "scale": 0.9438202247191011,
+          "translation": [
+            -1,
+            27
+          ],
+          "bbox": [
+            6,
+            64,
+            173,
+            185
+          ],
+          "source": "/Users/jasonpoindexter/Documents/GitHub/Greg agent/assets/heel/smooth-v1/quarter-frames/gait-inbetweens-0/02.png"
+        }
+      ]
+    },
+    {
+      "quarter": 1,
+      "shared_scale": 0.8608408508083517,
+      "frames": [
+        {
+          "frame": 5,
+          "scale": 0.8608408508083517,
+          "translation": [
+            10,
+            42
+          ],
+          "bbox": [
+            15,
+            64,
+            170,
+            198
+          ],
+          "source": "/Users/jasonpoindexter/Documents/GitHub/Greg agent/assets/heel/smooth-v1/quarter-frames/gait-inbetweens-1/00.png"
+        },
+        {
+          "frame": 6,
+          "scale": 0.8608408508083517,
+          "translation": [
+            11,
+            43
+          ],
+          "bbox": [
+            16,
+            65,
+            171,
+            197
+          ],
+          "source": "/Users/jasonpoindexter/Documents/GitHub/Greg agent/assets/heel/smooth-v1/quarter-frames/gait-inbetweens-1/01.png"
+        },
+        {
+          "frame": 7,
+          "scale": 0.8608408508083517,
+          "translation": [
+            12,
+            44
+          ],
+          "bbox": [
+            17,
+            66,
+            172,
+            193
+          ],
+          "source": "/Users/jasonpoindexter/Documents/GitHub/Greg agent/assets/heel/smooth-v1/quarter-frames/gait-inbetweens-1/02.png"
+        }
+      ]
+    },
+    {
+      "quarter": 2,
+      "shared_scale": 0.9266832438349019,
+      "frames": [
+        {
+          "frame": 9,
+          "scale": 0.9266832438349019,
+          "translation": [
+            5,
+            35
+          ],
+          "bbox": [
+            13,
+            66,
+            174,
+            193
+          ],
+          "source": "/Users/jasonpoindexter/Documents/GitHub/Greg agent/assets/heel/smooth-v1/quarter-frames/gait-inbetweens-2/00.png"
+        },
+        {
+          "frame": 10,
+          "scale": 0.9266832438349019,
+          "translation": [
+            5,
+            35
+          ],
+          "bbox": [
+            12,
+            66,
+            176,
+            193
+          ],
+          "source": "/Users/jasonpoindexter/Documents/GitHub/Greg agent/assets/heel/smooth-v1/quarter-frames/gait-inbetweens-2/01.png"
+        },
+        {
+          "frame": 11,
+          "scale": 0.9266832438349019,
+          "translation": [
+            5,
+            37
+          ],
+          "bbox": [
+            10,
+            66,
+            178,
+            200
+          ],
+          "source": "/Users/jasonpoindexter/Documents/GitHub/Greg agent/assets/heel/smooth-v1/quarter-frames/gait-inbetweens-2/02.png"
+        }
+      ]
+    },
+    {
+      "quarter": 3,
+      "shared_scale": 0.9777777777777777,
+      "frames": [
+        {
+          "frame": 13,
+          "scale": 0.9777777777777777,
+          "translation": [
+            4,
+            25
+          ],
+          "bbox": [
+            15,
+            66,
+            180,
+            187
+          ],
+          "source": "/Users/jasonpoindexter/Documents/GitHub/Greg agent/assets/heel/smooth-v1/quarter-frames/gait-inbetweens-3/00.png"
+        },
+        {
+          "frame": 14,
+          "scale": 0.9777777777777777,
+          "translation": [
+            2,
+            24
+          ],
+          "bbox": [
+            12,
+            65,
+            180,
+            186
+          ],
+          "source": "/Users/jasonpoindexter/Documents/GitHub/Greg agent/assets/heel/smooth-v1/quarter-frames/gait-inbetweens-3/01.png"
+        },
+        {
+          "frame": 15,
+          "scale": 0.9777777777777777,
+          "translation": [
+            -2,
+            23
+          ],
+          "bbox": [
+            3,
+            64,
+            181,
+            181
+          ],
+          "source": "/Users/jasonpoindexter/Documents/GitHub/Greg agent/assets/heel/smooth-v1/quarter-frames/gait-inbetweens-3/02.png"
+        }
+      ]
+    }
+  ]
+}

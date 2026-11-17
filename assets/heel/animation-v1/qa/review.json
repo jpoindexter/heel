@@ -1,0 +1,973 @@
+{
+  "ok": true,
+  "frames_root": "/Users/jasonpoindexter/Documents/GitHub/Greg agent/assets/heel/animation-v1/frames",
+  "states": [
+    "idle",
+    "running-right",
+    "running-left",
+    "waving",
+    "jumping",
+    "failed",
+    "waiting",
+    "running",
+    "review"
+  ],
+  "errors": [],
+  "warnings": [],
+  "rows": [
+    {
+      "state": "idle",
+      "expected_frames": 6,
+      "actual_frames": 6,
+      "extraction_method": null,
+      "ok": true,
+      "errors": [],
+      "warnings": [],
+      "frames": [
+        {
+          "index": 0,
+          "file": "/Users/jasonpoindexter/Documents/GitHub/Greg agent/assets/heel/animation-v1/frames/idle/00.png",
+          "width": 192,
+          "height": 208,
+          "nontransparent_pixels": 13598,
+          "bbox": [
+            35,
+            35,
+            155,
+            204
+          ],
+          "edge_pixels": 0,
+          "chroma_adjacent_pixels": 84
+        },
+        {
+          "index": 1,
+          "file": "/Users/jasonpoindexter/Documents/GitHub/Greg agent/assets/heel/animation-v1/frames/idle/01.png",
+          "width": 192,
+          "height": 208,
+          "nontransparent_pixels": 13629,
+          "bbox": [
+            35,
+            35,
+            155,
+            204
+          ],
+          "edge_pixels": 0,
+          "chroma_adjacent_pixels": 86
+        },
+        {
+          "index": 2,
+          "file": "/Users/jasonpoindexter/Documents/GitHub/Greg agent/assets/heel/animation-v1/frames/idle/02.png",
+          "width": 192,
+          "height": 208,
+          "nontransparent_pixels": 13657,
+          "bbox": [
+            35,
+            35,
+            155,
+            204
+          ],
+          "edge_pixels": 0,
+          "chroma_adjacent_pixels": 96
+        },
+        {
+          "index": 3,
+          "file": "/Users/jasonpoindexter/Documents/GitHub/Greg agent/assets/heel/animation-v1/frames/idle/03.png",
+          "width": 192,
+          "height": 208,
+          "nontransparent_pixels": 13582,
+          "bbox": [
+            35,
+            35,
+            155,
+            204
+          ],
+          "edge_pixels": 0,
+          "chroma_adjacent_pixels": 88
+        },
+        {
+          "index": 4,
+          "file": "/Users/jasonpoindexter/Documents/GitHub/Greg agent/assets/heel/animation-v1/frames/idle/04.png",
+          "width": 192,
+          "height": 208,
+          "nontransparent_pixels": 13616,
+          "bbox": [
+            35,
+            35,
+            155,
+            204
+          ],
+          "edge_pixels": 0,
+          "chroma_adjacent_pixels": 81
+        },
+        {
+          "index": 5,
+          "file": "/Users/jasonpoindexter/Documents/GitHub/Greg agent/assets/heel/animation-v1/frames/idle/05.png",
+          "width": 192,
+          "height": 208,
+          "nontransparent_pixels": 13590,
+          "bbox": [
+            35,
+            35,
+            155,
+            204
+          ],
+          "edge_pixels": 0,
+          "chroma_adjacent_pixels": 92
+        }
+      ]
+    },
+    {
+      "state": "running-right",
+      "expected_frames": 8,
+      "actual_frames": 8,
+      "extraction_method": null,
+      "ok": true,
+      "errors": [],
+      "warnings": [],
+      "frames": [
+        {
+          "index": 0,
+          "file": "/Users/jasonpoindexter/Documents/GitHub/Greg agent/assets/heel/animation-v1/frames/running-right/00.png",
+          "width": 192,
+          "height": 208,
+          "nontransparent_pixels": 12207,
+          "bbox": [
+            8,
+            62,
+            183,
+            196
+          ],
+          "edge_pixels": 0,
+          "chroma_adjacent_pixels": 210
+        },
+        {
+          "index": 1,
+          "file": "/Users/jasonpoindexter/Documents/GitHub/Greg agent/assets/heel/animation-v1/frames/running-right/01.png",
+          "width": 192,
+          "height": 208,
+          "nontransparent_pixels": 10668,
+          "bbox": [
+            20,
+            62,
+            172,
+            202
+          ],
+          "edge_pixels": 0,
+          "chroma_adjacent_pixels": 151
+        },
+        {
+          "index": 2,
+          "file": "/Users/jasonpoindexter/Documents/GitHub/Greg agent/assets/heel/animation-v1/frames/running-right/02.png",
+          "width": 192,
+          "height": 208,
+          "nontransparent_pixels": 10194,
+          "bbox": [
+            18,
+            64,
+            174,
+            200
+          ],
+          "edge_pixels": 0,
+          "chroma_adjacent_pixels": 135
+        },
+        {
+          "index": 3,
+          "file": "/Users/jasonpoindexter/Documents/GitHub/Greg agent/assets/heel/animation-v1/frames/running-right/03.png",
+          "width": 192,
+          "height": 208,
+          "nontransparent_pixels": 12794,
+          "bbox": [
+            10,
+            64,
+            182,
+            203
+          ],
+          "edge_pixels": 0,
+          "chroma_adjacent_pixels": 233
+        },
+        {
+          "index": 4,
+          "file": "/Users/jasonpoindexter/Documents/GitHub/Greg agent/assets/heel/animation-v1/frames/running-right/04.png",
+          "width": 192,
+          "height": 208,
+          "nontransparent_pixels": 12408,
+          "bbox": [
+            5,
+            65,
+            187,
+            198
+          ],
+          "edge_pixels": 0,
+          "chroma_adjacent_pixels": 201
+        },
+        {
+          "index": 5,
+          "file": "/Users/jasonpoindexter/Documents/GitHub/Greg agent/assets/heel/animation-v1/frames/running-right/05.png",
+          "width": 192,
+          "height": 208,
+          "nontransparent_pixels": 10808,
+          "bbox": [
+            18,
+            64,
+            174,
+            203
+          ],
+          "edge_pixels": 0,
+          "chroma_adjacent_pixels": 172
+        },
+        {
+          "index": 6,
+          "file": "/Users/jasonpoindexter/Documents/GitHub/Greg agent/assets/heel/animation-v1/frames/running-right/06.png",
+          "width": 192,
+          "height": 208,
+          "nontransparent_pixels": 10216,
+          "bbox": [
+            18,
+            64,
+            174,
+            200
+          ],
+          "edge_pixels": 0,
+          "chroma_adjacent_pixels": 142
+        },
+        {
+          "index": 7,
+          "file": "/Users/jasonpoindexter/Documents/GitHub/Greg agent/assets/heel/animation-v1/frames/running-right/07.png",
+          "width": 192,
+          "height": 208,
+          "nontransparent_pixels": 12345,
+          "bbox": [
+            7,
+            63,
+            185,
+            198
+          ],
+          "edge_pixels": 0,
+          "chroma_adjacent_pixels": 199
+        }
+      ]
+    },
+    {
+      "state": "running-left",
+      "expected_frames": 8,
+      "actual_frames": 8,
+      "extraction_method": "components",
+      "ok": true,
+      "errors": [],
+      "warnings": [],
+      "frames": [
+        {
+          "index": 0,
+          "file": "/Users/jasonpoindexter/Documents/GitHub/Greg agent/assets/heel/animation-v1/frames/running-left/00.png",
+          "width": 192,
+          "height": 208,
+          "nontransparent_pixels": 11356,
+          "bbox": [
+            6,
+            74,
+            186,
+            200
+          ],
+          "edge_pixels": 0,
+          "chroma_adjacent_pixels": 206
+        },
+        {
+          "index": 1,
+          "file": "/Users/jasonpoindexter/Documents/GitHub/Greg agent/assets/heel/animation-v1/frames/running-left/01.png",
+          "width": 192,
+          "height": 208,
+          "nontransparent_pixels": 9290,
+          "bbox": [
+            21,
+            75,
+            171,
+            203
+          ],
+          "edge_pixels": 0,
+          "chroma_adjacent_pixels": 140
+        },
+        {
+          "index": 2,
+          "file": "/Users/jasonpoindexter/Documents/GitHub/Greg agent/assets/heel/animation-v1/frames/running-left/02.png",
+          "width": 192,
+          "height": 208,
+          "nontransparent_pixels": 9123,
+          "bbox": [
+            21,
+            75,
+            170,
+            201
+          ],
+          "edge_pixels": 0,
+          "chroma_adjacent_pixels": 144
+        },
+        {
+          "index": 3,
+          "file": "/Users/jasonpoindexter/Documents/GitHub/Greg agent/assets/heel/animation-v1/frames/running-left/03.png",
+          "width": 192,
+          "height": 208,
+          "nontransparent_pixels": 11571,
+          "bbox": [
+            10,
+            75,
+            182,
+            201
+          ],
+          "edge_pixels": 0,
+          "chroma_adjacent_pixels": 226
+        },
+        {
+          "index": 4,
+          "file": "/Users/jasonpoindexter/Documents/GitHub/Greg agent/assets/heel/animation-v1/frames/running-left/04.png",
+          "width": 192,
+          "height": 208,
+          "nontransparent_pixels": 11519,
+          "bbox": [
+            5,
+            75,
+            187,
+            200
+          ],
+          "edge_pixels": 0,
+          "chroma_adjacent_pixels": 205
+        },
+        {
+          "index": 5,
+          "file": "/Users/jasonpoindexter/Documents/GitHub/Greg agent/assets/heel/animation-v1/frames/running-left/05.png",
+          "width": 192,
+          "height": 208,
+          "nontransparent_pixels": 9444,
+          "bbox": [
+            20,
+            74,
+            171,
+            202
+          ],
+          "edge_pixels": 0,
+          "chroma_adjacent_pixels": 181
+        },
+        {
+          "index": 6,
+          "file": "/Users/jasonpoindexter/Documents/GitHub/Greg agent/assets/heel/animation-v1/frames/running-left/06.png",
+          "width": 192,
+          "height": 208,
+          "nontransparent_pixels": 8963,
+          "bbox": [
+            23,
+            75,
+            169,
+            202
+          ],
+          "edge_pixels": 0,
+          "chroma_adjacent_pixels": 144
+        },
+        {
+          "index": 7,
+          "file": "/Users/jasonpoindexter/Documents/GitHub/Greg agent/assets/heel/animation-v1/frames/running-left/07.png",
+          "width": 192,
+          "height": 208,
+          "nontransparent_pixels": 11914,
+          "bbox": [
+            5,
+            75,
+            187,
+            199
+          ],
+          "edge_pixels": 0,
+          "chroma_adjacent_pixels": 211
+        }
+      ]
+    },
+    {
+      "state": "waving",
+      "expected_frames": 4,
+      "actual_frames": 4,
+      "extraction_method": null,
+      "ok": true,
+      "errors": [],
+      "warnings": [],
+      "frames": [
+        {
+          "index": 0,
+          "file": "/Users/jasonpoindexter/Documents/GitHub/Greg agent/assets/heel/animation-v1/frames/waving/00.png",
+          "width": 192,
+          "height": 208,
+          "nontransparent_pixels": 13794,
+          "bbox": [
+            34,
+            35,
+            157,
+            204
+          ],
+          "edge_pixels": 0,
+          "chroma_adjacent_pixels": 37
+        },
+        {
+          "index": 1,
+          "file": "/Users/jasonpoindexter/Documents/GitHub/Greg agent/assets/heel/animation-v1/frames/waving/01.png",
+          "width": 192,
+          "height": 208,
+          "nontransparent_pixels": 13731,
+          "bbox": [
+            34,
+            35,
+            157,
+            204
+          ],
+          "edge_pixels": 0,
+          "chroma_adjacent_pixels": 40
+        },
+        {
+          "index": 2,
+          "file": "/Users/jasonpoindexter/Documents/GitHub/Greg agent/assets/heel/animation-v1/frames/waving/02.png",
+          "width": 192,
+          "height": 208,
+          "nontransparent_pixels": 13769,
+          "bbox": [
+            34,
+            35,
+            157,
+            204
+          ],
+          "edge_pixels": 0,
+          "chroma_adjacent_pixels": 30
+        },
+        {
+          "index": 3,
+          "file": "/Users/jasonpoindexter/Documents/GitHub/Greg agent/assets/heel/animation-v1/frames/waving/03.png",
+          "width": 192,
+          "height": 208,
+          "nontransparent_pixels": 13699,
+          "bbox": [
+            34,
+            35,
+            157,
+            204
+          ],
+          "edge_pixels": 0,
+          "chroma_adjacent_pixels": 45
+        }
+      ]
+    },
+    {
+      "state": "jumping",
+      "expected_frames": 5,
+      "actual_frames": 5,
+      "extraction_method": null,
+      "ok": true,
+      "errors": [],
+      "warnings": [],
+      "frames": [
+        {
+          "index": 0,
+          "file": "/Users/jasonpoindexter/Documents/GitHub/Greg agent/assets/heel/animation-v1/frames/jumping/00.png",
+          "width": 192,
+          "height": 208,
+          "nontransparent_pixels": 14380,
+          "bbox": [
+            33,
+            36,
+            158,
+            203
+          ],
+          "edge_pixels": 0,
+          "chroma_adjacent_pixels": 76
+        },
+        {
+          "index": 1,
+          "file": "/Users/jasonpoindexter/Documents/GitHub/Greg agent/assets/heel/animation-v1/frames/jumping/01.png",
+          "width": 192,
+          "height": 208,
+          "nontransparent_pixels": 13607,
+          "bbox": [
+            33,
+            52,
+            159,
+            203
+          ],
+          "edge_pixels": 0,
+          "chroma_adjacent_pixels": 65
+        },
+        {
+          "index": 2,
+          "file": "/Users/jasonpoindexter/Documents/GitHub/Greg agent/assets/heel/animation-v1/frames/jumping/02.png",
+          "width": 192,
+          "height": 208,
+          "nontransparent_pixels": 13182,
+          "bbox": [
+            40,
+            5,
+            152,
+            171
+          ],
+          "edge_pixels": 0,
+          "chroma_adjacent_pixels": 60
+        },
+        {
+          "index": 3,
+          "file": "/Users/jasonpoindexter/Documents/GitHub/Greg agent/assets/heel/animation-v1/frames/jumping/03.png",
+          "width": 192,
+          "height": 208,
+          "nontransparent_pixels": 12748,
+          "bbox": [
+            40,
+            31,
+            151,
+            192
+          ],
+          "edge_pixels": 0,
+          "chroma_adjacent_pixels": 68
+        },
+        {
+          "index": 4,
+          "file": "/Users/jasonpoindexter/Documents/GitHub/Greg agent/assets/heel/animation-v1/frames/jumping/04.png",
+          "width": 192,
+          "height": 208,
+          "nontransparent_pixels": 14388,
+          "bbox": [
+            33,
+            36,
+            159,
+            203
+          ],
+          "edge_pixels": 0,
+          "chroma_adjacent_pixels": 87
+        }
+      ]
+    },
+    {
+      "state": "failed",
+      "expected_frames": 8,
+      "actual_frames": 8,
+      "extraction_method": null,
+      "ok": true,
+      "errors": [],
+      "warnings": [],
+      "frames": [
+        {
+          "index": 0,
+          "file": "/Users/jasonpoindexter/Documents/GitHub/Greg agent/assets/heel/animation-v1/frames/failed/00.png",
+          "width": 192,
+          "height": 208,
+          "nontransparent_pixels": 13279,
+          "bbox": [
+            39,
+            36,
+            151,
+            203
+          ],
+          "edge_pixels": 0,
+          "chroma_adjacent_pixels": 113
+        },
+        {
+          "index": 1,
+          "file": "/Users/jasonpoindexter/Documents/GitHub/Greg agent/assets/heel/animation-v1/frames/failed/01.png",
+          "width": 192,
+          "height": 208,
+          "nontransparent_pixels": 13257,
+          "bbox": [
+            39,
+            36,
+            151,
+            203
+          ],
+          "edge_pixels": 0,
+          "chroma_adjacent_pixels": 99
+        },
+        {
+          "index": 2,
+          "file": "/Users/jasonpoindexter/Documents/GitHub/Greg agent/assets/heel/animation-v1/frames/failed/02.png",
+          "width": 192,
+          "height": 208,
+          "nontransparent_pixels": 12622,
+          "bbox": [
+            39,
+            46,
+            152,
+            203
+          ],
+          "edge_pixels": 0,
+          "chroma_adjacent_pixels": 83
+        },
+        {
+          "index": 3,
+          "file": "/Users/jasonpoindexter/Documents/GitHub/Greg agent/assets/heel/animation-v1/frames/failed/03.png",
+          "width": 192,
+          "height": 208,
+          "nontransparent_pixels": 12196,
+          "bbox": [
+            39,
+            51,
+            151,
+            203
+          ],
+          "edge_pixels": 0,
+          "chroma_adjacent_pixels": 94
+        },
+        {
+          "index": 4,
+          "file": "/Users/jasonpoindexter/Documents/GitHub/Greg agent/assets/heel/animation-v1/frames/failed/04.png",
+          "width": 192,
+          "height": 208,
+          "nontransparent_pixels": 12281,
+          "bbox": [
+            39,
+            50,
+            152,
+            203
+          ],
+          "edge_pixels": 0,
+          "chroma_adjacent_pixels": 103
+        },
+        {
+          "index": 5,
+          "file": "/Users/jasonpoindexter/Documents/GitHub/Greg agent/assets/heel/animation-v1/frames/failed/05.png",
+          "width": 192,
+          "height": 208,
+          "nontransparent_pixels": 12651,
+          "bbox": [
+            39,
+            44,
+            152,
+            203
+          ],
+          "edge_pixels": 0,
+          "chroma_adjacent_pixels": 110
+        },
+        {
+          "index": 6,
+          "file": "/Users/jasonpoindexter/Documents/GitHub/Greg agent/assets/heel/animation-v1/frames/failed/06.png",
+          "width": 192,
+          "height": 208,
+          "nontransparent_pixels": 13214,
+          "bbox": [
+            39,
+            36,
+            151,
+            203
+          ],
+          "edge_pixels": 0,
+          "chroma_adjacent_pixels": 105
+        },
+        {
+          "index": 7,
+          "file": "/Users/jasonpoindexter/Documents/GitHub/Greg agent/assets/heel/animation-v1/frames/failed/07.png",
+          "width": 192,
+          "height": 208,
+          "nontransparent_pixels": 13279,
+          "bbox": [
+            39,
+            36,
+            151,
+            203
+          ],
+          "edge_pixels": 0,
+          "chroma_adjacent_pixels": 108
+        }
+      ]
+    },
+    {
+      "state": "waiting",
+      "expected_frames": 6,
+      "actual_frames": 6,
+      "extraction_method": null,
+      "ok": true,
+      "errors": [],
+      "warnings": [],
+      "frames": [
+        {
+          "index": 0,
+          "file": "/Users/jasonpoindexter/Documents/GitHub/Greg agent/assets/heel/animation-v1/frames/waiting/00.png",
+          "width": 192,
+          "height": 208,
+          "nontransparent_pixels": 13093,
+          "bbox": [
+            41,
+            38,
+            149,
+            204
+          ],
+          "edge_pixels": 0,
+          "chroma_adjacent_pixels": 53
+        },
+        {
+          "index": 1,
+          "file": "/Users/jasonpoindexter/Documents/GitHub/Greg agent/assets/heel/animation-v1/frames/waiting/01.png",
+          "width": 192,
+          "height": 208,
+          "nontransparent_pixels": 13057,
+          "bbox": [
+            41,
+            36,
+            148,
+            204
+          ],
+          "edge_pixels": 0,
+          "chroma_adjacent_pixels": 60
+        },
+        {
+          "index": 2,
+          "file": "/Users/jasonpoindexter/Documents/GitHub/Greg agent/assets/heel/animation-v1/frames/waiting/02.png",
+          "width": 192,
+          "height": 208,
+          "nontransparent_pixels": 12993,
+          "bbox": [
+            42,
+            35,
+            148,
+            204
+          ],
+          "edge_pixels": 0,
+          "chroma_adjacent_pixels": 49
+        },
+        {
+          "index": 3,
+          "file": "/Users/jasonpoindexter/Documents/GitHub/Greg agent/assets/heel/animation-v1/frames/waiting/03.png",
+          "width": 192,
+          "height": 208,
+          "nontransparent_pixels": 12908,
+          "bbox": [
+            42,
+            37,
+            148,
+            204
+          ],
+          "edge_pixels": 0,
+          "chroma_adjacent_pixels": 53
+        },
+        {
+          "index": 4,
+          "file": "/Users/jasonpoindexter/Documents/GitHub/Greg agent/assets/heel/animation-v1/frames/waiting/04.png",
+          "width": 192,
+          "height": 208,
+          "nontransparent_pixels": 12914,
+          "bbox": [
+            42,
+            37,
+            148,
+            204
+          ],
+          "edge_pixels": 0,
+          "chroma_adjacent_pixels": 56
+        },
+        {
+          "index": 5,
+          "file": "/Users/jasonpoindexter/Documents/GitHub/Greg agent/assets/heel/animation-v1/frames/waiting/05.png",
+          "width": 192,
+          "height": 208,
+          "nontransparent_pixels": 12941,
+          "bbox": [
+            41,
+            38,
+            148,
+            204
+          ],
+          "edge_pixels": 0,
+          "chroma_adjacent_pixels": 57
+        }
+      ]
+    },
+    {
+      "state": "running",
+      "expected_frames": 6,
+      "actual_frames": 6,
+      "extraction_method": null,
+      "ok": true,
+      "errors": [],
+      "warnings": [],
+      "frames": [
+        {
+          "index": 0,
+          "file": "/Users/jasonpoindexter/Documents/GitHub/Greg agent/assets/heel/animation-v1/frames/running/00.png",
+          "width": 192,
+          "height": 208,
+          "nontransparent_pixels": 11274,
+          "bbox": [
+            18,
+            99,
+            173,
+            204
+          ],
+          "edge_pixels": 0,
+          "chroma_adjacent_pixels": 77
+        },
+        {
+          "index": 1,
+          "file": "/Users/jasonpoindexter/Documents/GitHub/Greg agent/assets/heel/animation-v1/frames/running/01.png",
+          "width": 192,
+          "height": 208,
+          "nontransparent_pixels": 11186,
+          "bbox": [
+            18,
+            99,
+            173,
+            204
+          ],
+          "edge_pixels": 0,
+          "chroma_adjacent_pixels": 77
+        },
+        {
+          "index": 2,
+          "file": "/Users/jasonpoindexter/Documents/GitHub/Greg agent/assets/heel/animation-v1/frames/running/02.png",
+          "width": 192,
+          "height": 208,
+          "nontransparent_pixels": 11163,
+          "bbox": [
+            18,
+            99,
+            172,
+            204
+          ],
+          "edge_pixels": 0,
+          "chroma_adjacent_pixels": 81
+        },
+        {
+          "index": 3,
+          "file": "/Users/jasonpoindexter/Documents/GitHub/Greg agent/assets/heel/animation-v1/frames/running/03.png",
+          "width": 192,
+          "height": 208,
+          "nontransparent_pixels": 11190,
+          "bbox": [
+            18,
+            99,
+            172,
+            204
+          ],
+          "edge_pixels": 0,
+          "chroma_adjacent_pixels": 75
+        },
+        {
+          "index": 4,
+          "file": "/Users/jasonpoindexter/Documents/GitHub/Greg agent/assets/heel/animation-v1/frames/running/04.png",
+          "width": 192,
+          "height": 208,
+          "nontransparent_pixels": 11155,
+          "bbox": [
+            19,
+            99,
+            172,
+            204
+          ],
+          "edge_pixels": 0,
+          "chroma_adjacent_pixels": 70
+        },
+        {
+          "index": 5,
+          "file": "/Users/jasonpoindexter/Documents/GitHub/Greg agent/assets/heel/animation-v1/frames/running/05.png",
+          "width": 192,
+          "height": 208,
+          "nontransparent_pixels": 11114,
+          "bbox": [
+            19,
+            99,
+            172,
+            204
+          ],
+          "edge_pixels": 0,
+          "chroma_adjacent_pixels": 76
+        }
+      ]
+    },
+    {
+      "state": "review",
+      "expected_frames": 6,
+      "actual_frames": 6,
+      "extraction_method": null,
+      "ok": true,
+      "errors": [],
+      "warnings": [],
+      "frames": [
+        {
+          "index": 0,
+          "file": "/Users/jasonpoindexter/Documents/GitHub/Greg agent/assets/heel/animation-v1/frames/review/00.png",
+          "width": 192,
+          "height": 208,
+          "nontransparent_pixels": 13183,
+          "bbox": [
+            37,
+            35,
+            154,
+            204
+          ],
+          "edge_pixels": 0,
+          "chroma_adjacent_pixels": 79
+        },
+        {
+          "index": 1,
+          "file": "/Users/jasonpoindexter/Documents/GitHub/Greg agent/assets/heel/animation-v1/frames/review/01.png",
+          "width": 192,
+          "height": 208,
+          "nontransparent_pixels": 12752,
+          "bbox": [
+            37,
+            43,
+            153,
+            204
+          ],
+          "edge_pixels": 0,
+          "chroma_adjacent_pixels": 66
+        },
+        {
+          "index": 2,
+          "file": "/Users/jasonpoindexter/Documents/GitHub/Greg agent/assets/heel/animation-v1/frames/review/02.png",
+          "width": 192,
+          "height": 208,
+          "nontransparent_pixels": 13165,
+          "bbox": [
+            37,
+            36,
+            153,
+            204
+          ],
+          "edge_pixels": 0,
+          "chroma_adjacent_pixels": 87
+        },
+        {
+          "index": 3,
+          "file": "/Users/jasonpoindexter/Documents/GitHub/Greg agent/assets/heel/animation-v1/frames/review/03.png",
+          "width": 192,
+          "height": 208,
+          "nontransparent_pixels": 12727,
+          "bbox": [
+            38,
+            43,
+            153,
+            204
+          ],
+          "edge_pixels": 0,
+          "chroma_adjacent_pixels": 59
+        },
+        {
+          "index": 4,
+          "file": "/Users/jasonpoindexter/Documents/GitHub/Greg agent/assets/heel/animation-v1/frames/review/04.png",
+          "width": 192,
+          "height": 208,
+          "nontransparent_pixels": 13173,
+          "bbox": [
+            37,
+            36,
+            154,
+            204
+          ],
+          "edge_pixels": 0,
+          "chroma_adjacent_pixels": 72
+        },
+        {
+          "index": 5,
+          "file": "/Users/jasonpoindexter/Documents/GitHub/Greg agent/assets/heel/animation-v1/frames/review/05.png",
+          "width": 192,
+          "height": 208,
+          "nontransparent_pixels": 13157,
+          "bbox": [
+            37,
+            35,
+            154,
+            204
+          ],
+          "edge_pixels": 0,
+          "chroma_adjacent_pixels": 80
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,1 @@
+{"interactiveWindow":"Untitled 12.txt","cursorRestoreScheduled":true,"mode":"corner","interactivePid":83003,"originalCursor":[1051.83984375,628.875],"globalPoint":[678,712]}

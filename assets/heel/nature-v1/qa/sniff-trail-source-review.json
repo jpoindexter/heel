@@ -1,0 +1,135 @@
+{
+  "source": "/Users/jasonpoindexter/Documents/GitHub/Greg agent/assets/heel/nature-v1/decoded/sniff-trail.png",
+  "sourceSize": [
+    2172,
+    724
+  ],
+  "actualFullBodyPoses": 18,
+  "countMethod": "bundled connected components at30percent largestarea",
+  "bounds": [
+    [
+      18,
+      325,
+      131,
+      390
+    ],
+    [
+      135,
+      324,
+      250,
+      390
+    ],
+    [
+      254,
+      324,
+      369,
+      390
+    ],
+    [
+      372,
+      324,
+      487,
+      390
+    ],
+    [
+      491,
+      324,
+      605,
+      390
+    ],
+    [
+      609,
+      324,
+      723,
+      390
+    ],
+    [
+      726,
+      324,
+      841,
+      390
+    ],
+    [
+      845,
+      324,
+      959,
+      390
+    ],
+    [
+      963,
+      324,
+      1077,
+      390
+    ],
+    [
+      1081,
+      324,
+      1195,
+      390
+    ],
+    [
+      1198,
+      324,
+      1312,
+      390
+    ],
+    [
+      1315,
+      324,
+      1430,
+      390
+    ],
+    [
+      1433,
+      324,
+      1547,
+      390
+    ],
+    [
+      1550,
+      323,
+      1663,
+      390
+    ],
+    [
+      1667,
+      323,
+      1781,
+      390
+    ],
+    [
+      1784,
+      324,
+      1899,
+      390
+    ],
+    [
+      1903,
+      324,
+      2017,
+      390
+    ],
+    [
+      2021,
+      323,
+      2137,
+      390
+    ]
+  ],
+  "visualReview": {
+    "screenDirection": "all screenright strictsideprofile",
+    "head": "nose remains near pawfloor throughout, nostandingheadup frames",
+    "gait": "alternatingfront/rearfoot positions visible acrossprogression, not staticheadnod",
+    "identity": "compactstockybody, broadlowhead, naturalfoldedears, darknosemuzzle, whitechin/chest only",
+    "background": "magenta no scenery/trailmarks/text/effects",
+    "clipping": "all18bodygroups complete with nose/feet/tail within source bounds"
+  },
+  "warnings": [
+    "DO NOT use this draft for finalpack or approvedappintegration; awaiting photo-grounded newprofilestanding/gaitanchors.",
+    "Actualoutput18 poses rather thanrequested16; no duplicatesinserted.",
+    "Small sourcebodygroups~114x66 require parentsharedscale extraction and nativeplayback review.",
+    "Native smoothness and footgait timing not yet established by stillsource review."
+  ],
+  "status": "UNAPPROVED_ANATOMY",
+  "approvalBlocker": "User corrected sideview body: requires real canineanatomy. Oldpacing-derived sideproportions are not accepted."
+}

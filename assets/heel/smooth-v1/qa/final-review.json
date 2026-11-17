@@ -1,0 +1,22 @@
+{
+  "executed": {
+    "structuralValidation": "96 populated cells; transparent 3072x1248 PNG, 16 columns, 6 rows; no blank or clipped cells under 2px margin check",
+    "browserPath": "http://127.0.0.1:8876/assets/heel/smooth-v1/final/preview.html",
+    "frameStepping": "All six states selected; 16 Next frame actions per state returned to frame 1 and original background position",
+    "autoplayObserved": [
+      "Done at frames 4,14,8,5",
+      "Focus at frames 1,9,11"
+    ],
+    "visualReview": "Final contact sheet reviewed. Native and 128px focus view, dark-background Done and Focus checked. Dark nose, chin/chest marking, complete paws and no opaque chroma background observed.",
+    "artifactGeneration": "GIFs and MP4 rendered from exact cleaned final atlas pixels; timing metadata explicit"
+  },
+  "reviewJudgment": "Denser calm motions and anchored bodies are ready for user review. Frame counts are not a guarantee of perceived smoothness.",
+  "knownLimits": [
+    "Small residual drawn outline/shape variation remains between generated frames.",
+    "Focus coat is slightly warmer/olive than seated idle; no white muzzle.",
+    "State-to-state transitions are direct pose switches; transition animations are not authored.",
+    "Heel app integration, device performance and user acceptance not executed."
+  ],
+  "provenance": "Five rows have 16 generated drawings; Done has 8 generated drawings in forward/reverse order over 16 timed cells. No optical flow or limb warping.",
+  "compatibleDotSha256": "4353761c6e78bdaf0a5673aac3c54025a61bd841af4d1fc9dcf673b1b3c5e68a"
+}

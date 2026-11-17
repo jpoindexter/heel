@@ -1,0 +1,20 @@
+{
+  "assets": [
+    {
+      "apiUrl": "https://api.github.com/repos/jpoindexter/heel/releases/assets/712982367",
+      "contentType": "application/x-apple-diskimage",
+      "createdAt": "2026-11-05T10:21:41Z",
+      "digest": "sha256:a8a306a4a5dc9071bbf03414fd75993bf36c4fef6001e0b05693101f8556da58",
+      "downloadCount": 1,
+      "id": "RA_kwDOVKkaKM4qfz9f",
+      "label": "",
+      "name": "Heel_0.1.1_aarch64.dmg",
+      "size": 41272208,
+      "state": "uploaded",
+      "updatedAt": "2026-11-05T10:21:44Z",
+      "url": "https://github.com/jpoindexter/heel/releases/download/v0.1.1/Heel_0.1.1_aarch64.dmg"
+    }
+  ],
+  "body": "Tester build of Heel, a desk companion for ADHD and autistic brains: Greg the dog holds your tasks, reads your mail with you, and runs one focus box at a time.\n\n**Read [docs/TESTERS.md](https://github.com/jpoindexter/heel/blob/main/docs/TESTERS.md) before installing.**\n\n## Before you install\n- Apple silicon Mac (tested on macOS 26).\n- **Node 22 or newer** (`brew install node`).\n- One AI: `claude` or `codex` signed in, Ollama running, or an Anthropic / OpenAI / Mistral API key.\n\n## Opening it\nThis build is **signed with a Developer ID (Jason Poindexter, 5352PXMNV5) but not yet notarized**. The first time, macOS will say it can't verify Heel: open **System Settings \u203a Privacy & Security**, scroll down, click **Open Anyway**. A notarized build will replace this one.\n\n## Help and feedback\n**Settings \u203a Help** explains every part in short steps. Settings \u203a About \u203a **Send feedback** opens an email to jason@theft.studio with the version and logs (never your tasks, messages or mail). The crash screen has **Email details**.\n\nSHA-256 of the DMG: `a8a306a4a5dc9071bbf03414fd75993bf36c4fef6001e0b05693101f8556da58`\n",
+  "url": "https://github.com/jpoindexter/heel/releases/tag/v0.1.1"
+}

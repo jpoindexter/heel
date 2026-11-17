@@ -1,0 +1,209 @@
+{
+  "ok": true,
+  "frames": 16,
+  "authoring": {
+    "originalSelected": 12,
+    "newInbetweens": 4,
+    "originalIndices": [
+      0,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15
+    ],
+    "replacementIndices": [
+      1,
+      2,
+      3,
+      4
+    ],
+    "originalSource": "/Users/jasonpoindexter/Documents/GitHub/Greg agent/assets/heel/smooth-v1/decoded/waving.png",
+    "inbetweenSource": "/Users/jasonpoindexter/Documents/GitHub/Greg agent/assets/heel/smooth-v1/decoded/waving-onset-tone-matched.png",
+    "originalFramesBackup": "/Users/jasonpoindexter/Documents/GitHub/Greg agent/assets/heel/smooth-v1/qa/waving-original-16-frames"
+  },
+  "registration": {
+    "uniformScale": 0.9795918367346939,
+    "dx": 1.448979591836732,
+    "dy": 2.1224489795918373,
+    "sharedAcrossAllNewFrames": true
+  },
+  "errors": [],
+  "geometry": [
+    {
+      "frame": 0,
+      "bbox": [
+        37,
+        8,
+        153,
+        200
+      ]
+    },
+    {
+      "frame": 1,
+      "bbox": [
+        36,
+        8,
+        154,
+        200
+      ]
+    },
+    {
+      "frame": 2,
+      "bbox": [
+        36,
+        8,
+        154,
+        200
+      ]
+    },
+    {
+      "frame": 3,
+      "bbox": [
+        36,
+        8,
+        154,
+        200
+      ]
+    },
+    {
+      "frame": 4,
+      "bbox": [
+        36,
+        8,
+        154,
+        200
+      ]
+    },
+    {
+      "frame": 5,
+      "bbox": [
+        38,
+        8,
+        153,
+        200
+      ]
+    },
+    {
+      "frame": 6,
+      "bbox": [
+        38,
+        8,
+        153,
+        200
+      ]
+    },
+    {
+      "frame": 7,
+      "bbox": [
+        38,
+        8,
+        152,
+        200
+      ]
+    },
+    {
+      "frame": 8,
+      "bbox": [
+        38,
+        8,
+        153,
+        200
+      ]
+    },
+    {
+      "frame": 9,
+      "bbox": [
+        38,
+        8,
+        153,
+        200
+      ]
+    },
+    {
+      "frame": 10,
+      "bbox": [
+        38,
+        8,
+        153,
+        200
+      ]
+    },
+    {
+      "frame": 11,
+      "bbox": [
+        38,
+        8,
+        153,
+        200
+      ]
+    },
+    {
+      "frame": 12,
+      "bbox": [
+        38,
+        8,
+        153,
+        200
+      ]
+    },
+    {
+      "frame": 13,
+      "bbox": [
+        37,
+        8,
+        153,
+        200
+      ]
+    },
+    {
+      "frame": 14,
+      "bbox": [
+        37,
+        8,
+        153,
+        200
+      ]
+    },
+    {
+      "frame": 15,
+      "bbox": [
+        37,
+        8,
+        154,
+        200
+      ]
+    }
+  ],
+  "adjacentChangedPixels": [
+    11131,
+    2400,
+    3240,
+    2107,
+    10112,
+    3052,
+    2972,
+    4659,
+    2822,
+    3324,
+    2435,
+    3227,
+    4049,
+    3385,
+    4025,
+    3663
+  ],
+  "seamChangedPixels": 3663,
+  "visualPlaybackRequired": true,
+  "warnings": [
+    "New inbetweens are separately generated and may have texture or outline differences; native playback review required.",
+    "Do not rerun extract_smooth.py waving over these assembled frames; it would restore the original source row.",
+    "Imagegen tone edit reduced but did not remove palette and texture change at inserted-frame boundaries."
+  ]
+}

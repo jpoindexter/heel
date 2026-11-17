@@ -1,0 +1,248 @@
+{
+  "name": "idle",
+  "source": "/Users/jasonpoindexter/Documents/GitHub/Greg agent/assets/heel/puppy-v1/decoded/idle.png",
+  "sourceSize": [
+    1205,
+    1306
+  ],
+  "actualFrames": 16,
+  "bodyComponents": 16,
+  "uniqueEncodedFrames": 16,
+  "logicalFrame": [
+    192,
+    208
+  ],
+  "density2xAvailable": true,
+  "sharedScale": 0.387097,
+  "calibration": {
+    "logicalScale": 0.387097,
+    "headHeightSourcePx": 124,
+    "headHeightLogicalTargetPx": 48,
+    "method": "manual approximate neutral-head calibration; one uniform scale per entire clip; visual comparison required"
+  },
+  "rowGroundRegistration": [
+    315.0,
+    314.5,
+    313.0,
+    312.5
+  ],
+  "sharedXOffset": -0.0,
+  "sourceBodyBoxes": [
+    [
+      62,
+      25,
+      266,
+      315
+    ],
+    [
+      365,
+      24,
+      568,
+      315
+    ],
+    [
+      664,
+      29,
+      868,
+      315
+    ],
+    [
+      966,
+      29,
+      1170,
+      315
+    ],
+    [
+      62,
+      355,
+      266,
+      641
+    ],
+    [
+      365,
+      354,
+      568,
+      641
+    ],
+    [
+      664,
+      348,
+      868,
+      641
+    ],
+    [
+      966,
+      348,
+      1170,
+      641
+    ],
+    [
+      62,
+      673,
+      266,
+      966
+    ],
+    [
+      365,
+      672,
+      568,
+      966
+    ],
+    [
+      664,
+      667,
+      868,
+      966
+    ],
+    [
+      966,
+      674,
+      1169,
+      966
+    ],
+    [
+      62,
+      1001,
+      266,
+      1292
+    ],
+    [
+      365,
+      1001,
+      568,
+      1292
+    ],
+    [
+      664,
+      1002,
+      867,
+      1292
+    ],
+    [
+      966,
+      1000,
+      1170,
+      1293
+    ]
+  ],
+  "boxes": [
+    [
+      56,
+      83,
+      136,
+      196
+    ],
+    [
+      56,
+      83,
+      135,
+      196
+    ],
+    [
+      56,
+      85,
+      136,
+      196
+    ],
+    [
+      56,
+      85,
+      136,
+      196
+    ],
+    [
+      56,
+      85,
+      136,
+      196
+    ],
+    [
+      56,
+      85,
+      135,
+      196
+    ],
+    [
+      56,
+      82,
+      136,
+      196
+    ],
+    [
+      56,
+      82,
+      136,
+      196
+    ],
+    [
+      56,
+      82,
+      136,
+      196
+    ],
+    [
+      56,
+      82,
+      135,
+      196
+    ],
+    [
+      56,
+      80,
+      136,
+      196
+    ],
+    [
+      56,
+      83,
+      135,
+      196
+    ],
+    [
+      56,
+      83,
+      136,
+      196
+    ],
+    [
+      56,
+      83,
+      135,
+      196
+    ],
+    [
+      56,
+      83,
+      135,
+      196
+    ],
+    [
+      56,
+      83,
+      136,
+      197
+    ]
+  ],
+  "adjacentChangedPixels": [
+    1665,
+    1614,
+    1010,
+    1187,
+    1805,
+    1769,
+    1024,
+    1481,
+    1728,
+    1288,
+    1414,
+    1548,
+    1665,
+    599,
+    1196,
+    1624
+  ],
+  "seamChangedPixels": 1624,
+  "ok": true,
+  "errors": [],
+  "visualPlaybackRequired": true
+}

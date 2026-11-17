@@ -1,0 +1,3 @@
+The following is a diff from the previous accessibility tree for Window: "Heel panel" with ~ and + representing changed and added elements, respectively. Removed elements are summarized by ID range.
++							72 text Backed up to your Desktop as heel-backup-2026-10-30-12-17-06.
+The focused UI element is 9 container Settings

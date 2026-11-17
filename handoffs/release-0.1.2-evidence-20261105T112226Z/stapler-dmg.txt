@@ -1,0 +1,2 @@
+Processing: /Users/jasonpoindexter/Documents/GitHub/Greg agent/src-tauri/target/release/bundle/dmg/Heel_0.1.2_aarch64.dmg
+The validate action worked!

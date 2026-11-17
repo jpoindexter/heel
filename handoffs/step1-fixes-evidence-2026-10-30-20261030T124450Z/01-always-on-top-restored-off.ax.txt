@@ -1,0 +1,84 @@
+Window: "Heel panel", App: Heel.
+0 standard window Heel panel, Secondary Actions: Raise
+	1 scroll area
+		2 HTML content Description: Heel, URL: tauri://localhost
+			3 container
+				4 button Back
+				5 heading Settings, Value: 1
+					6 text Settings
+				7 button Back to Greg
+				8 button Close panel
+				9 container Settings
+					10 container (expanded) Secondary Actions: Collapse
+						11 summary Look System · Comfortable, Value: on
+							12 heading Look, Value: 2
+								13 text Look
+							14 text System · Comfortable
+						15 container Appearance
+							16 heading Appearance, Value: 3
+								17 text Appearance
+							18 text System follows your Mac's light or dark setting.
+							19 (settable, unknown) Appearance
+								20 radio button System, Value: 1
+								21 radio button Light, Value: 0
+								22 radio button Dark, Value: 0
+						23 container Size
+							24 heading Size, Value: 3
+								25 text Size
+							26 (settable, unknown) Size
+								27 radio button Compact, Value: 0
+								28 radio button Comfortable, Value: 1
+						29 container Panel
+							30 heading Panel, Value: 3
+								31 text Panel
+							32 container
+								33 switch (settable, boolean) Always on top, Value: off
+								34 text Always on top
+							35 text Next to Greg the panel floats with him. Dragged away, it is an ordinary window other apps can cover; this keeps it floating anyway.
+					36 summary Greg Lively · notices on · attention off, Value: off
+						37 heading Greg, Value: 2
+							38 text Greg
+						39 text Lively · notices on · attention off
+					40 container (collapsed) Secondary Actions: Expand
+						41 summary Ways of working Time-box · Pickle jar, Value: off
+							42 heading Ways of working, Value: 2
+								43 text Ways of working
+							44 text Time-box · Pickle jar
+						45 stepper 0
+							46 unknown
+							47 unknown
+						48 stepper 0
+							49 unknown
+							50 unknown
+					51 summary Brain AI and skills, Value: off
+						52 heading Brain, Value: 2
+							53 text Brain
+						54 text AI and skills
+					55 summary Email Gmail, read-only, Value: off
+						56 heading Email, Value: 2
+							57 text Email
+						58 text Gmail, read-only
+					59 summary Startup Login, Dock, Value: off
+						60 heading Startup, Value: 2
+							61 text Startup
+						62 text Login, Dock
+					63 summary Privacy & data Back up, wipe, Value: off
+						64 heading Privacy & data, Value: 2
+							65 text Privacy & data
+						66 text Back up, wipe
+					67 summary About Heel 0.1.0, Value: off
+						68 heading About, Value: 2
+							69 text About
+						70 text Heel 0.1.0
+				71 button (collapsed) More, Secondary Actions: Expand
+				72 button What's on your mind?
+				73 container Notifications (F8)
+74 menu bar
+	75 Heel
+	76 File
+	77 Edit
+	78 View
+	79 Window
+	80 Help
+
+The focused UI element is 9 container Settings

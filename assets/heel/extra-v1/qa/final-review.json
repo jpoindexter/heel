@@ -1,0 +1,193 @@
+{
+  "executed": {
+    "assembly": "package_extra.py produced exact final custom atlas, frames, strips, GIFs, MP4 and manifest",
+    "structural": "All262 timedcells populated and passed2px alpha-bound margin checks; sheet3072x3536; unused cells transparent",
+    "browser": "Standalone browser player selected every clip and stepped262 Next frame actions in total. All12 returned to original style/frame1 after their full count. Pacing autoplay at nonzero frames and yawn autoplay at first/last frames observed.",
+    "visual": "All source contacts and final12-clip overview inspected. Third-ball repair verified at source and final native cell. Pacing native player and yawn128px view inspected.",
+    "cleanup": "One edge-local magenta despill pass on fresh composed raw atlas. Compatible Dot and previous dense six-state sheets unchanged."
+  },
+  "notEstablished": [
+    "Smoothness of every full loop and every transition in the actual Heel desktop app",
+    "Native roaming/window movement, event scheduling, one-shot cleanup and reduced-motion setting behavior",
+    "Visual user acceptance and production readiness"
+  ],
+  "qualityStatus": "Reviewable generated animation drafts; integrate and polish before production. Do not treat structural/browsing success as smoothness proof.",
+  "visualFollowups": {
+    "pacing": "Review body scale/colour at walk/turn source-family joins and stride contacts. Browser root translation interpolates continuously; artwork is discrete.",
+    "ball-play": "Ball now visible in all16 poses. Standing/sitting transitions and ball-size changes need timing/in-between polish.",
+    "fetch-offer": "Review head-lower/raise boundaries and mouth/floor prop transitions.",
+    "play-bow": "Review deepest bow and rise boundaries for pose changes and foot sliding.",
+    "chew-stick": "Check8+8 source-half join and palette against core Greg; mouth/stick contact was repaired.",
+    "scratch-ear": "Foreshortened rear leg near ear needs anatomy review.",
+    "yawn": "Source has gradual yawn and close; verify loop/one-shot in app.",
+    "sniff-search": "Eight selected generated poses forward and reverse over16timedcells. Add true in-betweens if head lowering is too stepped.",
+    "stretch": "Review stand\u2192stretch\u2192stand boundaries and foot anchors.",
+    "error-facepalm": "Review paw-lift and lowering in-betweens.",
+    "poop-gag": "Detached trailing oval was explicitly grouped to correct silhouette. Keep one-shot and clean props on completion.",
+    "pee-gag": "Review thin stream/rock edges and palette on dark background; keep one-shot and clean props on completion."
+  },
+  "perClip": [
+    {
+      "name": "pacing",
+      "timedFrames": 82,
+      "provenance": {
+        "generatedDrawings": 23,
+        "derivedMirrors": 18,
+        "playbackReuse": "two walking cycles per direction, reversed turn poses for return"
+      },
+      "browserFullWrap": true
+    },
+    {
+      "name": "ball-play",
+      "timedFrames": 16,
+      "provenance": {
+        "generatedDrawings": 16,
+        "derivedMirrors": 0,
+        "playbackReuse": "none"
+      },
+      "browserFullWrap": true,
+      "ochrePropPixelsPerFrame": [
+        1135,
+        1173,
+        1123,
+        1055,
+        1076,
+        1064,
+        1159,
+        1178,
+        1088,
+        1099,
+        1086,
+        1063,
+        1158,
+        1166,
+        1156,
+        1122
+      ]
+    },
+    {
+      "name": "fetch-offer",
+      "timedFrames": 16,
+      "provenance": {
+        "generatedDrawings": 16,
+        "derivedMirrors": 0,
+        "playbackReuse": "none"
+      },
+      "browserFullWrap": true,
+      "ochrePropPixelsPerFrame": [
+        376,
+        421,
+        266,
+        263,
+        361,
+        667,
+        660,
+        662,
+        582,
+        575,
+        595,
+        600,
+        326,
+        378,
+        387,
+        385
+      ]
+    },
+    {
+      "name": "play-bow",
+      "timedFrames": 17,
+      "provenance": {
+        "generatedDrawings": 17,
+        "derivedMirrors": 0,
+        "playbackReuse": "none"
+      },
+      "browserFullWrap": true
+    },
+    {
+      "name": "chew-stick",
+      "timedFrames": 16,
+      "provenance": {
+        "generatedDrawings": 16,
+        "derivedMirrors": 0,
+        "playbackReuse": "none"
+      },
+      "browserFullWrap": true
+    },
+    {
+      "name": "scratch-ear",
+      "timedFrames": 16,
+      "provenance": {
+        "generatedDrawings": 16,
+        "derivedMirrors": 0,
+        "playbackReuse": "none"
+      },
+      "browserFullWrap": true
+    },
+    {
+      "name": "yawn",
+      "timedFrames": 16,
+      "provenance": {
+        "generatedDrawings": 16,
+        "derivedMirrors": 0,
+        "playbackReuse": "none"
+      },
+      "browserFullWrap": true
+    },
+    {
+      "name": "sniff-search",
+      "timedFrames": 16,
+      "provenance": {
+        "generatedDrawings": 8,
+        "derivedMirrors": 0,
+        "playbackReuse": "forward/reverse sniff half-cycle"
+      },
+      "browserFullWrap": true
+    },
+    {
+      "name": "stretch",
+      "timedFrames": 17,
+      "provenance": {
+        "generatedDrawings": 17,
+        "derivedMirrors": 0,
+        "playbackReuse": "none"
+      },
+      "browserFullWrap": true
+    },
+    {
+      "name": "error-facepalm",
+      "timedFrames": 17,
+      "provenance": {
+        "generatedDrawings": 17,
+        "derivedMirrors": 0,
+        "playbackReuse": "none"
+      },
+      "browserFullWrap": true
+    },
+    {
+      "name": "poop-gag",
+      "timedFrames": 16,
+      "provenance": {
+        "generatedDrawings": 16,
+        "derivedMirrors": 0,
+        "playbackReuse": "none"
+      },
+      "browserFullWrap": true
+    },
+    {
+      "name": "pee-gag",
+      "timedFrames": 17,
+      "provenance": {
+        "generatedDrawings": 17,
+        "derivedMirrors": 0,
+        "playbackReuse": "none"
+      },
+      "browserFullWrap": true
+    }
+  ],
+  "atlasSha256": "360f3894fb3d87921463487059634e9ed7882792d8bcfd3a03e0625b751bf610",
+  "userAnatomyRejection": {
+    "status": "side-view anatomy rejected; rebuild before accepted integration",
+    "reason": "torso too short and side limbs/body look unlike real canine anatomy",
+    "correctionRun": "assets/heel/anatomy-v1"
+  }
+}

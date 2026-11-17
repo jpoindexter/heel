@@ -1,0 +1,114 @@
+[
+  {
+    "quarter": 0,
+    "frames": [
+      "/Users/jasonpoindexter/Documents/GitHub/Greg agent/assets/heel/smooth-v1/quarter-frames/gait-inbetweens-0/00.png",
+      "/Users/jasonpoindexter/Documents/GitHub/Greg agent/assets/heel/smooth-v1/quarter-frames/gait-inbetweens-0/01.png",
+      "/Users/jasonpoindexter/Documents/GitHub/Greg agent/assets/heel/smooth-v1/quarter-frames/gait-inbetweens-0/02.png"
+    ],
+    "rawBboxes": [
+      [
+        5,
+        39,
+        187,
+        168
+      ],
+      [
+        5,
+        39,
+        187,
+        168
+      ],
+      [
+        5,
+        39,
+        187,
+        168
+      ]
+    ]
+  },
+  {
+    "quarter": 1,
+    "frames": [
+      "/Users/jasonpoindexter/Documents/GitHub/Greg agent/assets/heel/smooth-v1/quarter-frames/gait-inbetweens-1/00.png",
+      "/Users/jasonpoindexter/Documents/GitHub/Greg agent/assets/heel/smooth-v1/quarter-frames/gait-inbetweens-1/01.png",
+      "/Users/jasonpoindexter/Documents/GitHub/Greg agent/assets/heel/smooth-v1/quarter-frames/gait-inbetweens-1/02.png"
+    ],
+    "rawBboxes": [
+      [
+        5,
+        25,
+        187,
+        182
+      ],
+      [
+        5,
+        25,
+        187,
+        181
+      ],
+      [
+        5,
+        25,
+        187,
+        175
+      ]
+    ]
+  },
+  {
+    "quarter": 2,
+    "frames": [
+      "/Users/jasonpoindexter/Documents/GitHub/Greg agent/assets/heel/smooth-v1/quarter-frames/gait-inbetweens-2/00.png",
+      "/Users/jasonpoindexter/Documents/GitHub/Greg agent/assets/heel/smooth-v1/quarter-frames/gait-inbetweens-2/01.png",
+      "/Users/jasonpoindexter/Documents/GitHub/Greg agent/assets/heel/smooth-v1/quarter-frames/gait-inbetweens-2/02.png"
+    ],
+    "rawBboxes": [
+      [
+        7,
+        31,
+        185,
+        172
+      ],
+      [
+        6,
+        31,
+        186,
+        172
+      ],
+      [
+        5,
+        31,
+        187,
+        176
+      ]
+    ]
+  },
+  {
+    "quarter": 3,
+    "frames": [
+      "/Users/jasonpoindexter/Documents/GitHub/Greg agent/assets/heel/smooth-v1/quarter-frames/gait-inbetweens-3/00.png",
+      "/Users/jasonpoindexter/Documents/GitHub/Greg agent/assets/heel/smooth-v1/quarter-frames/gait-inbetweens-3/01.png",
+      "/Users/jasonpoindexter/Documents/GitHub/Greg agent/assets/heel/smooth-v1/quarter-frames/gait-inbetweens-3/02.png"
+    ],
+    "rawBboxes": [
+      [
+        10,
+        41,
+        182,
+        167
+      ],
+      [
+        8,
+        41,
+        184,
+        167
+      ],
+      [
+        5,
+        41,
+        187,
+        164
+      ]
+    ]
+  }
+]

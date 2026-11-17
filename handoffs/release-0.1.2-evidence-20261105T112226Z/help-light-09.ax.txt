@@ -1,0 +1,102 @@
+Window: "Heel panel", App: Heel.
+0 standard window Heel panel, Secondary Actions: Raise
+	1 scroll area
+		2 HTML content Description: Heel, URL: tauri://localhost
+			3 container
+				4 button Back
+				5 heading Settings, Value: 1
+					6 text Settings
+				7 button Back to Greg
+				8 button Close panel
+				9 container Settings
+					10 container (expanded) Secondary Actions: Collapse
+						11 summary Help How Heel works, Value: on
+							12 heading Help, Value: 2
+								13 text Help
+							14 text How Heel works
+						15 container How Heel works
+							16 heading How Heel works, Value: 3
+								17 text How Heel works
+							18 summary Open Heel and find your way, Value: off
+								19 text Open Heel and find your way
+							20 summary Choose the AI Heel uses, Value: off
+								21 text Choose the AI Heel uses
+							22 summary Add, finish and park tasks, Value: off
+								23 text Add, finish and park tasks
+							24 summary Run a focus time-box, Value: off
+								25 text Run a focus time-box
+							26 summary Read your email with Heel, Value: off
+								27 text Read your email with Heel
+							28 summary Find anything, Value: off
+								29 text Find anything
+							30 summary Report a bug or suggest an idea, Value: off
+								31 text Report a bug or suggest an idea
+							32 summary Your data, Value: off
+								33 text Your data
+							34 container (expanded) Secondary Actions: Collapse
+								35 summary When something is off, Value: on
+									36 text When something is off
+								37 content list
+									38 container “Helper not reached”: press Restart helper in Settings › About, or Restart Heel's helper in the menu-bar icon.
+										39 list marker 1
+										40 text “Helper not reached”: press Restart helper in Settings › About, or Restart Heel's helper in the menu-bar icon.
+									41 container Still not starting: Heel needs Node 22 or newer. Install it with brew install node, then quit and reopen Heel.
+										42 list marker 2
+										43 text Still not starting: Heel needs Node 22 or newer. Install it with brew install node, then quit and reopen Heel.
+									44 container Greg is gone: menu-bar icon › Show Greg.
+										45 list marker 3
+										46 text Greg is gone: menu-bar icon › Show Greg.
+									47 container The AI says it isn't ready: Settings › Brain › Check again, then Test connection.
+										48 list marker 4
+										49 text The AI says it isn't ready: Settings › Brain › Check again, then Test connection.
+					50 summary Look System · Comfortable, Value: off
+						51 heading Look, Value: 2
+							52 text Look
+						53 text System · Comfortable
+					54 summary Greg Lively · notices on · attention off, Value: off
+						55 heading Greg, Value: 2
+							56 text Greg
+						57 text Lively · notices on · attention off
+					58 container (collapsed) Secondary Actions: Expand
+						59 summary Ways of working Time-box · Pickle jar, Value: off
+							60 heading Ways of working, Value: 2
+								61 text Ways of working
+							62 text Time-box · Pickle jar
+						63 stepper 0
+							64 unknown
+							65 unknown
+						66 stepper 0
+							67 unknown
+							68 unknown
+					69 summary Brain AI and skills, Value: off
+						70 heading Brain, Value: 2
+							71 text Brain
+						72 text AI and skills
+					73 summary Email Gmail, read-only, Value: off
+						74 heading Email, Value: 2
+							75 text Email
+						76 text Gmail, read-only
+					77 summary Startup Login, Dock, Value: off
+						78 heading Startup, Value: 2
+							79 text Startup
+						80 text Login, Dock
+					81 summary Privacy & data Back up, wipe, Value: off
+						82 heading Privacy & data, Value: 2
+							83 text Privacy & data
+						84 text Back up, wipe
+					85 summary About Heel 0.1.2 · send feedback, Value: off
+						86 heading About, Value: 2
+							87 text About
+						88 text Heel 0.1.2 · send feedback
+				89 button (collapsed) More, Secondary Actions: Expand
+				90 button What's on your mind?
+				91 container Notifications (F8)
+92 menu bar
+	93 Heel
+	94 File
+	95 Edit
+	96 View
+	97 Window
+	98 Help
+
+The focused UI element is 35 summary When something is off, Value: on

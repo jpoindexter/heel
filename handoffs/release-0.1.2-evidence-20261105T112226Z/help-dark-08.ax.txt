@@ -1,0 +1,96 @@
+Window: "Heel panel", App: Heel.
+0 standard window Heel panel, Secondary Actions: Raise
+	1 scroll area
+		2 HTML content Description: Heel, URL: tauri://localhost
+			3 container
+				4 button Back
+				5 heading Settings, Value: 1
+					6 text Settings
+				7 button Back to Greg
+				8 button Close panel
+				9 container Settings
+					10 container (expanded) Secondary Actions: Collapse
+						11 summary Help How Heel works, Value: on
+							12 heading Help, Value: 2
+								13 text Help
+							14 text How Heel works
+						15 container How Heel works
+							16 heading How Heel works, Value: 3
+								17 text How Heel works
+							18 summary Open Heel and find your way, Value: off
+								19 text Open Heel and find your way
+							20 summary Choose the AI Heel uses, Value: off
+								21 text Choose the AI Heel uses
+							22 summary Add, finish and park tasks, Value: off
+								23 text Add, finish and park tasks
+							24 summary Run a focus time-box, Value: off
+								25 text Run a focus time-box
+							26 summary Read your email with Heel, Value: off
+								27 text Read your email with Heel
+							28 summary Find anything, Value: off
+								29 text Find anything
+							30 summary Report a bug or suggest an idea, Value: off
+								31 text Report a bug or suggest an idea
+							32 container (expanded) Secondary Actions: Collapse
+								33 summary Your data, Value: on
+									34 text Your data
+								35 content list
+									36 container Everything stays on this Mac. Settings › Privacy & data backs it up to the Desktop or wipes it.
+										37 list marker 1
+										38 text Everything stays on this Mac. Settings › Privacy & data backs it up to the Desktop or wipes it.
+									39 container Logs never contain your tasks, messages or mail; read them under Settings › About › Debug.
+										40 list marker 2
+										41 text Logs never contain your tasks, messages or mail; read them under Settings › About › Debug.
+							42 summary When something is off, Value: off
+								43 text When something is off
+					44 summary Look Dark · Comfortable, Value: off
+						45 heading Look, Value: 2
+							46 text Look
+						47 text Dark · Comfortable
+					48 summary Greg Lively · notices on · attention off, Value: off
+						49 heading Greg, Value: 2
+							50 text Greg
+						51 text Lively · notices on · attention off
+					52 container (collapsed) Secondary Actions: Expand
+						53 summary Ways of working Time-box · Pickle jar, Value: off
+							54 heading Ways of working, Value: 2
+								55 text Ways of working
+							56 text Time-box · Pickle jar
+						57 stepper 0
+							58 unknown
+							59 unknown
+						60 stepper 0
+							61 unknown
+							62 unknown
+					63 summary Brain AI and skills, Value: off
+						64 heading Brain, Value: 2
+							65 text Brain
+						66 text AI and skills
+					67 summary Email Gmail, read-only, Value: off
+						68 heading Email, Value: 2
+							69 text Email
+						70 text Gmail, read-only
+					71 summary Startup Login, Dock, Value: off
+						72 heading Startup, Value: 2
+							73 text Startup
+						74 text Login, Dock
+					75 summary Privacy & data Back up, wipe, Value: off
+						76 heading Privacy & data, Value: 2
+							77 text Privacy & data
+						78 text Back up, wipe
+					79 summary About Heel 0.1.2 · send feedback, Value: off
+						80 heading About, Value: 2
+							81 text About
+						82 text Heel 0.1.2 · send feedback
+				83 button (collapsed) More, Secondary Actions: Expand
+				84 button What's on your mind?
+				85 container Notifications (F8)
+86 menu bar
+	87 Heel
+	88 File
+	89 Edit
+	90 View
+	91 Window
+	92 Help
+
+The focused UI element is 33 summary Your data, Value: on

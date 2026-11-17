@@ -1,0 +1,79 @@
+The following is a diff from the previous accessibility tree for Window: "Heel panel" with ~ and + representing changed and added elements, respectively. Removed elements are summarized by ID range.
+Removed element IDs: 87-89, 91-97
+~			85 container
+~				86 button Back
++				87 heading Settings, Value: 1
++					88 text Settings
++				89 button Back to Greg
+~				90 button Close panel
++				91 container Settings
++					92 summary Look System · Comfortable, Value: off
++						93 heading Look, Value: 2
++							94 text Look
++						95 text System · Comfortable
++					96 summary Greg Lively · notices on · attention off, Value: off
++						97 heading Greg, Value: 2
++							98 text Greg
++						99 text Lively · notices on · attention off
++					100 container (collapsed) Secondary Actions: Expand
++						101 summary Ways of working Time-box · Pickle jar, Value: off
++							102 heading Ways of working, Value: 2
++								103 text Ways of working
++							104 text Time-box · Pickle jar
++						105 stepper 0
++							106 unknown
++							107 unknown
++						108 stepper 0
++							109 unknown
++							110 unknown
++					111 container (expanded) Secondary Actions: Collapse
++						112 summary Brain AI and skills, Value: on
++							113 heading Brain, Value: 2
++								114 text Brain
++							115 text AI and skills
++						116 container Brain
++							117 heading Brain, Value: 3
++								118 text Brain
++							119 text Pick the AI Heel uses. What you type goes to that provider. Local keeps it on this Mac.
++							120 text AI
++							121 combo box (collapsed, settable) Description: AI, Secondary Actions: Expand, Value: Claude (subscription)
+
++								122 text Claude (subscription)
++							123 text Subscriptions signed in on this Mac show as ready. Greyed entries say what they need.
++							124 summary API keys Anthropic, OpenAI, Mistral, Value: off
++								125 text API keys
++								126 text Anthropic, OpenAI, Mistral
++							127 text Model (optional)
++							128 text field (settable) Model (optional)
++							129 text Leave empty to use the provider's default.
++							130 button Test connection
++							131 button Check again
++						132 container Skills
++							133 heading Skills, Value: 3
++								134 text Skills
++							135 text Short instructions Heel reads before answering. They are plain text: nothing here runs. Your own are chosen by the words you give them.
++							136 text entry area Skill file, Value: [text entry area: Skill file]
++								137 container
++									138 text --- name: writer description: When the person asks Heel to look into, research, write up, draft or summarise something, produce a saved document (write_document) rather than a wall of chat: short, structured, sourced, honest about what could not be checked. --- # Writer — research notes and short documents ## What this addresses A long answer in a chat bubble is lost by tomorrow. A document on disk can be opened, kept and sent. For an ADHD / autistic reader, structure beats prose: headings, short lines, one idea per paragraph, the answer first. ## Rules 1. Use `write_document`. "say" is two lines: what the document is and the one thing worth knowing. Never put the body in "say". 2. Shape: `## Answer` (2–5 lines, the conclusion first) → `## Findings` (short bullets, each one fact) → `## Open questions` (what you could not settle) → `## Sources` (the URLs you actually read, one per line; none means "No sources: this is from memory, not checked"). 3. Length: a research note is 150–400 words. A brief is one page. Stop when the question is answered. 4. Plain words. No hedging paragraphs, no "as an AI". Dates absolute. Numbers in a table if more than three. 5. Honesty: if you could not search (no web tool), say so in the Answer line and mark every claim that needs checking with "(unchecked)". 6. Title: the person's own words, trimmed to a few, e.g. "Notes: Tauri window levels".
++							139 text 1400 of 8000  characters
++							140 button Close
++					141 summary Email Gmail, read-only, Value: off
++						142 heading Email, Value: 2
++							143 text Email
++						144 text Gmail, read-only
++					145 summary Startup Login, Dock, Value: off
++						146 heading Startup, Value: 2
++							147 text Startup
++						148 text Login, Dock
++					149 summary Privacy & data Back up, wipe, Value: off
++						150 heading Privacy & data, Value: 2
++							151 text Privacy & data
++						152 text Back up, wipe
++					153 summary About Heel 0.1.0, Value: off
++						154 heading About, Value: 2
++							155 text About
++						156 text Heel 0.1.0
++				157 button (collapsed) More, Secondary Actions: Expand
++				158 button What's on your mind?
++				159 container Notifications (F8)
+The focused UI element is 121 combo box (collapsed, settable) Description: AI, Secondary Actions: Expand, Value: Claude (subscription)

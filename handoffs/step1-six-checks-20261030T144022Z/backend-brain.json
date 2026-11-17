@@ -1,0 +1,59 @@
+{
+  "ok": true,
+  "data": {
+    "settings": {
+      "provider": "claude",
+      "model": null
+    },
+    "providers": [
+      {
+        "id": "claude",
+        "label": "Claude (subscription)",
+        "installed": true,
+        "ready": true,
+        "detail": "max subscription",
+        "models": []
+      },
+      {
+        "id": "codex",
+        "label": "Codex (subscription)",
+        "installed": true,
+        "ready": true,
+        "detail": "ChatGPT subscription",
+        "models": []
+      },
+      {
+        "id": "ollama",
+        "label": "Local (Ollama)",
+        "installed": false,
+        "ready": false,
+        "detail": "Ollama isn't running. Start it with ollama serve, or open the Ollama app.",
+        "models": []
+      },
+      {
+        "id": "anthropic",
+        "label": "Claude (API key)",
+        "installed": false,
+        "ready": false,
+        "detail": "No API key yet. Paste one in Settings \u203a Brain.",
+        "models": []
+      },
+      {
+        "id": "openai",
+        "label": "OpenAI (API key)",
+        "installed": false,
+        "ready": false,
+        "detail": "No API key yet. Paste one in Settings \u203a Brain.",
+        "models": []
+      },
+      {
+        "id": "mistral",
+        "label": "Mistral (API key)",
+        "installed": false,
+        "ready": false,
+        "detail": "No API key yet. Paste one in Settings \u203a Brain.",
+        "models": []
+      }
+    ]
+  }
+}

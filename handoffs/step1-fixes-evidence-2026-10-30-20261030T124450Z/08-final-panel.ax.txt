@@ -1,0 +1,33 @@
+Window: "Heel panel", App: Heel.
+0 standard window Heel panel, Secondary Actions: Raise
+	1 scroll area
+		2 HTML content Description: Heel, URL: tauri://localhost
+			3 container
+				4 text HEEL
+				5 button Find anything (⌘K)
+				6 button Settings
+				7 button Back to Greg
+				8 button Close panel
+				9 button Last reply check email for new newsletters
+				10 container Now
+					11 checkbox (settable, integer) Complete: Schedule dog vet appointment, Value: 0
+					12 text Fill in dog's name and reason in the draft, then send
+					13 text Schedule dog vet appointment
+					14 button Section: Section. Change
+					15 button Start a time-box on this
+					16 button Split into steps: Schedule dog vet appointment
+					17 pop up button More: Schedule dog vet appointment
+					18 button Remove: Schedule dog vet appointment
+				19 button Nothing done yet today · History
+				20 button (collapsed) More, Secondary Actions: Expand
+				21 button What's on your mind?
+				22 container Notifications (F8)
+23 menu bar
+	24 Heel
+	25 File
+	26 Edit
+	27 View
+	28 Window
+	29 Help
+
+The focused UI element is 2 HTML content Description: Heel, URL: tauri://localhost

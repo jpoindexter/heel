@@ -1,0 +1,61 @@
+{
+  "ok": true,
+  "atlas": "/Users/jasonpoindexter/Documents/GitHub/Greg agent/assets/heel/animation-v1/final/spritesheet-extended.png",
+  "encoded_bytes": 2245967,
+  "sha256": "4353761c6e78bdaf0a5673aac3c54025a61bd841af4d1fc9dcf673b1b3c5e68a",
+  "jump": {
+    "idle_baseline": 202,
+    "jump_baselines": [
+      202,
+      202,
+      169,
+      189,
+      202
+    ],
+    "airborne_lift_pixels": 33,
+    "landing_delta_pixels": 0
+  },
+  "look_registration": {
+    "neutral_center_x": 95.0,
+    "look_centers_x": [
+      95.0,
+      95.0,
+      94.5,
+      94.5,
+      95.0,
+      95.0,
+      95.0,
+      94.0,
+      94.0,
+      94.5,
+      93.0,
+      89.0,
+      89.5,
+      94.0,
+      94.5,
+      95.0
+    ],
+    "look_widths": [
+      118,
+      118,
+      117,
+      119,
+      118,
+      118,
+      118,
+      118,
+      116,
+      117,
+      118,
+      126,
+      127,
+      120,
+      119,
+      118
+    ],
+    "maximum_center_drift_pixels": 6.0,
+    "maximum_width_ratio": 1.0948275862068966
+  },
+  "errors": [],
+  "warnings": []
+}

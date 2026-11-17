@@ -1,0 +1,248 @@
+{
+  "name": "scratch-ear",
+  "source": "/Users/jasonpoindexter/Documents/GitHub/Greg agent/assets/heel/puppy-v1/decoded/scratch-ear.png",
+  "sourceSize": [
+    1205,
+    1306
+  ],
+  "actualFrames": 16,
+  "bodyComponents": 16,
+  "uniqueEncodedFrames": 16,
+  "logicalFrame": [
+    192,
+    208
+  ],
+  "density2xAvailable": true,
+  "sharedScale": 0.393443,
+  "calibration": {
+    "logicalScale": 0.393443,
+    "headHeightSourcePx": 122,
+    "headHeightLogicalTargetPx": 48,
+    "method": "manual approximate neutral-head calibration; one uniform scale per entire clip; visual comparison required"
+  },
+  "rowGroundRegistration": [
+    303.0,
+    299.5,
+    295.0,
+    290.0
+  ],
+  "sharedXOffset": -0.7868859999999991,
+  "sourceBodyBoxes": [
+    [
+      59,
+      31,
+      273,
+      303
+    ],
+    [
+      358,
+      30,
+      593,
+      303
+    ],
+    [
+      655,
+      28,
+      899,
+      304
+    ],
+    [
+      964,
+      27,
+      1186,
+      303
+    ],
+    [
+      58,
+      347,
+      282,
+      626
+    ],
+    [
+      357,
+      347,
+      589,
+      626
+    ],
+    [
+      661,
+      347,
+      886,
+      626
+    ],
+    [
+      965,
+      347,
+      1187,
+      626
+    ],
+    [
+      58,
+      671,
+      283,
+      948
+    ],
+    [
+      359,
+      670,
+      586,
+      948
+    ],
+    [
+      661,
+      670,
+      888,
+      948
+    ],
+    [
+      965,
+      670,
+      1186,
+      948
+    ],
+    [
+      58,
+      989,
+      288,
+      1270
+    ],
+    [
+      363,
+      994,
+      593,
+      1270
+    ],
+    [
+      663,
+      992,
+      888,
+      1269
+    ],
+    [
+      959,
+      992,
+      1170,
+      1269
+    ]
+  ],
+  "boxes": [
+    [
+      51,
+      89,
+      136,
+      196
+    ],
+    [
+      49,
+      88,
+      142,
+      196
+    ],
+    [
+      48,
+      88,
+      144,
+      197
+    ],
+    [
+      51,
+      87,
+      139,
+      196
+    ],
+    [
+      51,
+      86,
+      139,
+      196
+    ],
+    [
+      49,
+      86,
+      141,
+      196
+    ],
+    [
+      50,
+      86,
+      139,
+      196
+    ],
+    [
+      52,
+      86,
+      140,
+      196
+    ],
+    [
+      51,
+      87,
+      140,
+      196
+    ],
+    [
+      50,
+      86,
+      140,
+      196
+    ],
+    [
+      50,
+      86,
+      140,
+      196
+    ],
+    [
+      52,
+      86,
+      139,
+      196
+    ],
+    [
+      51,
+      85,
+      142,
+      196
+    ],
+    [
+      51,
+      87,
+      142,
+      196
+    ],
+    [
+      51,
+      87,
+      140,
+      196
+    ],
+    [
+      49,
+      87,
+      133,
+      196
+    ]
+  ],
+  "adjacentChangedPixels": [
+    3961,
+    3635,
+    3525,
+    2730,
+    2576,
+    2585,
+    2643,
+    2482,
+    2261,
+    2345,
+    2559,
+    3792,
+    3460,
+    2324,
+    3875,
+    2779
+  ],
+  "seamChangedPixels": 2779,
+  "ok": true,
+  "errors": [],
+  "visualPlaybackRequired": true
+}

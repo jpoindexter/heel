@@ -1,0 +1,22 @@
+The following is a diff from the previous accessibility tree for Window: "Heel panel" with ~ and + representing changed and added elements, respectively. Removed elements are summarized by ID range.
+Removed element IDs: 104-106
++							184 container (expanded) Secondary Actions: Collapse
++								185 summary API keys Anthropic, OpenAI, Mistral, Value: on
++									186 text API keys
++									187 text Anthropic, OpenAI, Mistral
++								188 container
++									189 text Claude API key
++									190 secure text field (settable) Claude API key
++									191 button (disabled) Save key
++									192 text Checked with the provider, then kept in your Keychain. Sent nowhere else.
++								193 container
++									194 text OpenAI API key
++									195 secure text field (settable) OpenAI API key
++									196 button (disabled) Save key
++									197 text Checked with the provider, then kept in your Keychain. Sent nowhere else.
++								198 container
++									199 text Mistral API key
++									200 secure text field (settable) Mistral API key
++									201 button (disabled) Save key
++									202 text Checked with the provider, then kept in your Keychain. Sent nowhere else.
+The focused UI element is 185 summary API keys Anthropic, OpenAI, Mistral, Value: on

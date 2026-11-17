@@ -1,0 +1,173 @@
+{
+  "ok": true,
+  "source": "/Users/jasonpoindexter/Documents/GitHub/Greg agent/assets/heel/smooth-v1/decoded/waiting-flat.png",
+  "frames": 16,
+  "extraction": "bundled connected components with shared row scale",
+  "errors": [],
+  "geometry": [
+    {
+      "frame": 0,
+      "bbox": [
+        40,
+        26,
+        151,
+        193
+      ]
+    },
+    {
+      "frame": 1,
+      "bbox": [
+        40,
+        24,
+        151,
+        193
+      ]
+    },
+    {
+      "frame": 2,
+      "bbox": [
+        39,
+        21,
+        152,
+        193
+      ]
+    },
+    {
+      "frame": 3,
+      "bbox": [
+        38,
+        19,
+        152,
+        194
+      ]
+    },
+    {
+      "frame": 4,
+      "bbox": [
+        39,
+        17,
+        152,
+        194
+      ]
+    },
+    {
+      "frame": 5,
+      "bbox": [
+        39,
+        16,
+        152,
+        194
+      ]
+    },
+    {
+      "frame": 6,
+      "bbox": [
+        39,
+        15,
+        152,
+        193
+      ]
+    },
+    {
+      "frame": 7,
+      "bbox": [
+        39,
+        14,
+        152,
+        194
+      ]
+    },
+    {
+      "frame": 8,
+      "bbox": [
+        38,
+        16,
+        153,
+        193
+      ]
+    },
+    {
+      "frame": 9,
+      "bbox": [
+        39,
+        19,
+        151,
+        193
+      ]
+    },
+    {
+      "frame": 10,
+      "bbox": [
+        39,
+        20,
+        151,
+        193
+      ]
+    },
+    {
+      "frame": 11,
+      "bbox": [
+        39,
+        20,
+        152,
+        194
+      ]
+    },
+    {
+      "frame": 12,
+      "bbox": [
+        39,
+        20,
+        152,
+        193
+      ]
+    },
+    {
+      "frame": 13,
+      "bbox": [
+        39,
+        20,
+        152,
+        194
+      ]
+    },
+    {
+      "frame": 14,
+      "bbox": [
+        39,
+        21,
+        152,
+        194
+      ]
+    },
+    {
+      "frame": 15,
+      "bbox": [
+        39,
+        22,
+        152,
+        194
+      ]
+    }
+  ],
+  "adjacentChangedPixels": [
+    3536,
+    4277,
+    3427,
+    2931,
+    2521,
+    2761,
+    3278,
+    4749,
+    5210,
+    3575,
+    3736,
+    2839,
+    2047,
+    2345,
+    3348,
+    4955
+  ],
+  "seamChangedPixels": 4955,
+  "visualPlaybackRequired": true
+}

@@ -1,0 +1,402 @@
+Window: "⁨Desktop⁩ — Local", App: Finder.
+0 standard window ⁨Desktop⁩ — Local, ID: FinderWindow, Secondary Actions: Raise
+	1 split group
+		2 scroll area
+			3 outline sidebar
+				4 row (selectable) Shared
+				5 row (selectable, expanded) Value: Favorites, Secondary Actions: Collapse
+				6 row (selectable) Applications
+				7 row (selectable) Documents
+				8 row (selectable) Movies
+				9 row (selectable) Music
+				10 row (selectable) Pictures
+				11 row (selected) Desktop
+				12 row (selectable) Audio
+				13 row (selectable) Application Support
+				14 row (selectable) Downloads
+				15 row (selectable) GitHub
+				16 row (selectable, expanded) Value: Locations, Secondary Actions: Collapse
+				17 row (selectable) iCloud Drive
+				18 row (selectable) jasonpoindexter
+				19 row (selectable) Jason’s MacBook Pro
+				20 row (selectable) Eject, Description: eject, Value: iPhone
+				21 row (selectable) Macintosh HD
+				22 row (selectable) AirDrop
+				23 row (selectable) Eject, Description: eject, Value: OrbStack
+				24 row (selectable) Network
+				25 row (selectable) Trash
+		26 splitter (disabled, settable, float) 214
+		27 scroll area
+			28 outline Description: list view, ID: ListView
+				29 row (selectable)
+				30 row (selectable, collapsed) Secondary Actions: Expand
+					31 cell
+						32 image
+						33 text field (settable) URL: file:///Users/jasonpoindexter/Desktop/00%20Inbox/, Value: 00 Inbox, Secondary Actions: Open Finder item
+						34 disclosure triangle 0
+					35 cell
+						36 text 29/07/2026
+					37 cell
+						38 text --
+					39 cell
+						40 text Folder
+				41 row (selectable, collapsed) Secondary Actions: Expand
+					42 cell
+						43 image
+						44 text field (settable) URL: file:///Users/jasonpoindexter/Desktop/01%20Work%20-%20Vanta%20AI/, Value: 01 Work - Vanta AI, Secondary Actions: Open Finder item
+						45 disclosure triangle 0
+					46 cell
+						47 text 21/08/2026
+					48 cell
+						49 text --
+					50 cell
+						51 text Folder
+				52 row (selectable, collapsed) Secondary Actions: Expand
+					53 cell
+						54 image
+						55 text field (settable) URL: file:///Users/jasonpoindexter/Desktop/02%20Job%20Search/, Value: 02 Job Search, Secondary Actions: Open Finder item
+						56 disclosure triangle 0
+					57 cell
+						58 text 26/08/2026
+					59 cell
+						60 text --
+					61 cell
+						62 text Folder
+				63 row (selectable, collapsed) Secondary Actions: Expand
+					64 cell
+						65 image
+						66 text field (settable) URL: file:///Users/jasonpoindexter/Desktop/03%20Design%20Projects/, Value: 03 Design Projects, Secondary Actions: Open Finder item
+						67 disclosure triangle 0
+					68 cell
+						69 text 29/07/2026
+					70 cell
+						71 text --
+					72 cell
+						73 text Folder
+				74 row (selectable, collapsed) Secondary Actions: Expand
+					75 cell
+						76 image
+						77 text field (settable) URL: file:///Users/jasonpoindexter/Desktop/04%20Media/, Value: 04 Media, Secondary Actions: Open Finder item
+						78 disclosure triangle 0
+					79 cell
+						80 text 29/07/2026
+					81 cell
+						82 text --
+					83 cell
+						84 text Folder
+				85 row (selectable, collapsed) Secondary Actions: Expand
+					86 cell
+						87 image
+						88 text field (settable) URL: file:///Users/jasonpoindexter/Desktop/05%20Documents/, Value: 05 Documents, Secondary Actions: Open Finder item
+						89 disclosure triangle 0
+					90 cell
+						91 text 29/07/2026
+					92 cell
+						93 text --
+					94 cell
+						95 text Folder
+				96 row (selectable, collapsed) Secondary Actions: Expand
+					97 cell
+						98 image
+						99 text field (settable) URL: file:///Users/jasonpoindexter/Desktop/06%20Finance%20Legal%20Housing/, Value: 06 Finance Legal Housing, Secondary Actions: Open Finder item
+						100 disclosure triangle 0
+					101 cell
+						102 text 30/09/2026
+					103 cell
+						104 text --
+					105 cell
+						106 text Folder
+				107 row (selectable, collapsed) Secondary Actions: Expand
+					108 cell
+						109 image
+						110 text field (settable) URL: file:///Users/jasonpoindexter/Desktop/07%20Apps%20Archives/, Value: 07 Apps Archives, Secondary Actions: Open Finder item
+						111 disclosure triangle 0
+					112 cell
+						113 text 29/07/2026
+					114 cell
+						115 text --
+					116 cell
+						117 text Folder
+				118 row (selectable, collapsed) Secondary Actions: Expand
+					119 cell
+						120 image
+						121 text field (settable) URL: file:///Users/jasonpoindexter/Desktop/08%20Misc%20Review/, Value: 08 Misc Review, Secondary Actions: Open Finder item
+						122 disclosure triangle 0
+					123 cell
+						124 text 29/07/2026
+					125 cell
+						126 text --
+					127 cell
+						128 text Folder
+				129 row (selectable, collapsed) Secondary Actions: Expand
+					130 cell
+						131 image
+						132 text field (settable) URL: file:///Users/jasonpoindexter/Desktop/Downloads/, Value: Downloads, Secondary Actions: Open Finder item
+						133 disclosure triangle 0
+					134 cell
+						135 text 26/10/2026
+					136 cell
+						137 text --
+					138 cell
+						139 text Folder
+				140 row (selectable, collapsed) Secondary Actions: Expand
+					141 cell
+						142 image
+						143 text field (settable) URL: file:///Users/jasonpoindexter/Desktop/heel-backup-2026-10-30-12-17-06/, Value: heel-backup-2026-10-30-12-17-06, Secondary Actions: Open Finder item
+						144 disclosure triangle 0
+					145 cell
+						146 text 1:17 PM
+					147 cell
+						148 text --
+					149 cell
+						150 text Folder
+				151 row (selected, collapsed) Secondary Actions: Expand
+					152 cell (selected)
+						153 image
+						154 text field (selected, settable) URL: file:///Users/jasonpoindexter/Desktop/heel-backup-2026-10-30-14-41-54/, Value: heel-backup-2026-10-30-14-41-54, Secondary Actions: Open Finder item
+						155 disclosure triangle 0
+					156 cell (selected)
+						157 text 3:41 PM
+					158 cell (selected)
+						159 text --
+					160 cell (selected)
+						161 text Folder
+				162 row (selectable, collapsed) Secondary Actions: Expand
+					163 cell
+						164 image
+						165 text field (settable) URL: file:///Users/jasonpoindexter/Desktop/insights-orb-demo/, Value: insights-orb-demo, Secondary Actions: Open Finder item
+						166 disclosure triangle 0
+					167 cell
+						168 text 14/10/2026
+					169 cell
+						170 text --
+					171 cell
+						172 text Folder
+				173 row (selectable, collapsed) Secondary Actions: Expand
+					174 cell
+						175 image
+						176 text field (settable) URL: file:///Users/jasonpoindexter/Desktop/orbit-mind/, Value: orbit-mind, Secondary Actions: Open Finder item
+						177 disclosure triangle 0
+					178 cell
+						179 text 14/10/2026
+					180 cell
+						181 text --
+					182 cell
+						183 text Folder
+				184 row (selectable, collapsed) Secondary Actions: Expand
+					185 cell
+						186 image
+						187 text field (settable) URL: file:///Users/jasonpoindexter/Desktop/SPanish%20Books/, Value: SPanish Books, Secondary Actions: Open Finder item
+						188 disclosure triangle 0
+					189 cell
+						190 text 23/09/2026
+					191 cell
+						192 text --
+					193 cell
+						194 text Folder
+				195 row (selectable, collapsed) Secondary Actions: Expand
+					196 cell
+						197 image
+						198 text field (settable) URL: file:///Users/jasonpoindexter/Desktop/Staying%20Healthy/, Value: Staying Healthy, Secondary Actions: Open Finder item
+						199 image
+						200 disclosure triangle 0
+					201 cell
+						202 text 23/06/2025
+					203 cell
+						204 text --
+					205 cell
+						206 text Folder
+					207 cell
+						208 text Green
+				209 row (selectable, collapsed) Secondary Actions: Expand
+					210 cell
+						211 image
+						212 text field (settable) URL: file:///Users/jasonpoindexter/Desktop/THEFT%20Image%20Collection/, Value: THEFT Image Collection, Secondary Actions: Open Finder item
+						213 disclosure triangle 0
+					214 cell
+						215 text 14/10/2026
+					216 cell
+						217 text --
+					218 cell
+						219 text Folder
+				220 row (selectable, collapsed) Secondary Actions: Expand
+					221 cell
+						222 image
+						223 text field (settable) URL: file:///Users/jasonpoindexter/Desktop/vanta%20audit/, Value: vanta audit, Secondary Actions: Open Finder item
+						224 disclosure triangle 0
+					225 cell
+						226 text Yesterday
+					227 cell
+						228 text --
+					229 cell
+						230 text Folder
+				231 row (selectable)
+					232 cell
+						233 image
+						234 text field (settable) URL: file:///Users/jasonpoindexter/Desktop/e10f4dd7da86eb8fd0a327d8f088a509_3.mp4, Value: e10f4dd7da86eb8fd0a327d8f088a509_3.mp4, Secondary Actions: Open Finder item
+					235 cell
+						236 text 03/09/2026
+					237 cell
+						238 text 426,9 MB
+					239 cell
+						240 text MPEG-4 movie
+				241 row (selectable)
+					242 cell
+						243 image
+						244 text field (settable) URL: file:///Users/jasonpoindexter/Desktop/latern.pdf, Value: latern.pdf, Secondary Actions: Open Finder item
+					245 cell
+						246 text 24/09/2026
+					247 cell
+						248 text 17,1 MB
+					249 cell
+						250 text PDF Document
+				251 row (selectable)
+					252 cell
+						253 image
+						254 text field (settable) Value: screencapture-linkedin-in-jasonmpoindexter-2026-08-11-14_18_38.png, Secondary Actions: Open Finder item, URL: file:///Users/jasonpoindexter/Desktop/screencapture-linkedin-in-jasonmpoindexter-2026-08-11-14_18_38.png
+					255 cell
+						256 text 11/08/2026
+					257 cell
+						258 text 3,7 MB
+					259 cell
+						260 text PNG image
+				261 row (selectable)
+					262 cell
+						263 image
+						264 text field (settable) URL: file:///Users/jasonpoindexter/Desktop/Screenshot%202026-10-01%20at%2011.43.47%E2%80%AFAM.png, Value: Screenshot 2026-10-01 at 11.43.47 AM.png, Secondary Actions: Open Finder item
+					265 cell
+						266 text 01/10/2026
+					267 cell
+						268 text 913 KB
+					269 cell
+						270 text PNG image
+				271 row (selectable)
+					272 cell
+						273 image
+						274 text field (settable) URL: file:///Users/jasonpoindexter/Desktop/Screenshot%202026-10-27%20at%2010.37.49%E2%80%AFAM.png, Value: Screenshot 2026-10-27 at 10.37.49 AM.png, Secondary Actions: Open Finder item
+					275 cell
+						276 text 27/10/2026
+					277 cell
+						278 text 17 KB
+					279 cell
+						280 text PNG image
+				281 row (selectable)
+					282 cell
+						283 image
+						284 text field (settable) URL: file:///Users/jasonpoindexter/Desktop/Screenshot%202026-10-28%20at%203.24.51%E2%80%AFPM.png, Value: Screenshot 2026-10-28 at 3.24.51 PM.png, Secondary Actions: Open Finder item
+					285 cell
+						286 text 28/10/2026
+					287 cell
+						288 text 307 KB
+					289 cell
+						290 text PNG image
+				291 row (selectable)
+					292 cell
+						293 image
+						294 text field (settable) URL: file:///Users/jasonpoindexter/Desktop/Screenshot%202026-10-28%20at%203.25.02%E2%80%AFPM.png, Value: Screenshot 2026-10-28 at 3.25.02 PM.png, Secondary Actions: Open Finder item
+					295 cell
+						296 text 28/10/2026
+					297 cell
+						298 text 280 KB
+					299 cell
+						300 text PNG image
+				301 row (selectable)
+					302 cell
+						303 image
+						304 text field (settable) URL: file:///Users/jasonpoindexter/Desktop/Screenshot%202026-10-30%20at%2010.02.50%E2%80%AFAM.png, Value: Screenshot 2026-10-30 at 10.02.50 AM.png, Secondary Actions: Open Finder item
+					305 cell
+						306 text 10:02 AM
+					307 cell
+						308 text 1,7 MB
+					309 cell
+						310 text PNG image
+				311 row (selectable)
+					312 cell
+						313 image
+						314 text field (settable) URL: file:///Users/jasonpoindexter/Desktop/Screenshot%202026-10-30%20at%2010.02.53%E2%80%AFAM.png, Value: Screenshot 2026-10-30 at 10.02.53 AM.png, Secondary Actions: Open Finder item
+					315 cell
+						316 text 10:02 AM
+					317 cell
+						318 text 1,6 MB
+					319 cell
+						320 text PNG image
+				321 row (selectable)
+					322 cell
+						323 image
+						324 text field (settable) URL: file:///Users/jasonpoindexter/Desktop/Screenshot%202026-10-30%20at%2010.02.57%E2%80%AFAM.png, Value: Screenshot 2026-10-30 at 10.02.57 AM.png, Secondary Actions: Open Finder item
+					325 cell
+						326 text 10:03 AM
+					327 cell
+						328 text 1,7 MB
+					329 cell
+						330 text PNG image
+				331 row (selectable)
+					332 cell
+						333 image
+						334 text field (settable) URL: file:///Users/jasonpoindexter/Desktop/Screenshot%202026-10-30%20at%2012.40.53%E2%80%AFAM.png, Value: Screenshot 2026-10-30 at 12.40.53 AM.png, Secondary Actions: Open Finder item
+					335 cell
+						336 text 12:40 AM
+					337 cell
+						338 text 584 KB
+					339 cell
+						340 text PNG image
+				341 container
+					342 sort button Name
+					343 sort button Date Modified
+					344 sort button Size
+					345 sort button Kind
+					346 sort button Tags
+			347 button Name, Ascending order
+				348 text Name
+				349 image go up
+			350 button Date Modified
+				351 text Date Modified
+			352 button Size
+				353 text Size
+			354 button Kind
+				355 text Kind
+			356 button Tags
+				357 text Tags
+		358 unknown Details: status bar, ID: statusBar
+			359 text Value: 1 of 29 selected, 339,65 GB available, ID: statusBarText
+		360 list path
+			361 text URL: file:///, Value: Macintosh HD Users jasonpoindexter Desktop heel-backup-2026-10-30-14-41-54, Secondary Actions: open
+	362 toolbar
+		363 container Help: See folders you viewed previously, Secondary Actions: Move next, Remove from toolbar
+			364 container
+				365 button (disabled) back
+				366 button (disabled) forward
+			367 text Help: See folders you viewed previously, Value: Back/Forward
+		368 container Help: Show items as icons, in a list, in columns, or in a gallery, Secondary Actions: Move previous, Move next, Remove from toolbar
+			369 radio button Description: icon view, Value: 0
+			370 radio button Description: list view, Value: 1
+			371 radio button Description: column view, Value: 0
+			372 radio button Description: gallery view, Value: 0
+			373 text Help: Show items as icons, in a list, in columns, or in a gallery, Value: View
+		374 menu button Group, Help: Change the item grouping (hold down Option to change the sort), Secondary Actions: Move previous, Move next, Remove from toolbar
+		375 button Share, Help: Share the selected items, Secondary Actions: Move previous, Move next, Remove from toolbar
+		376 button Add Tags, Help: Edit Tags, Secondary Actions: Move previous, Move next, Remove from toolbar
+		377 menu button Action, Help: Perform tasks with the selected items, Secondary Actions: Move previous, Move next, Remove from toolbar
+		378 menu button Secondary Actions: Move previous, Move next, Remove from toolbar
+		379 menu button Secondary Actions: Move previous, Move next, Remove from toolbar
+		380 container Secondary Actions: Move previous, Remove from toolbar
+			381 search text field
+				382 button search
+			383 text Search
+	384 close button
+	385 full screen button Help: this button also has an action to zoom the window, Secondary Actions: zoom the window
+	386 minimize button
+	387 text ⁨Desktop⁩ — Local
+388 menu bar
+	389 Finder
+	390 File
+	391 Edit
+	392 View
+	393 Go
+	394 Window
+	395 Help
+
+Selected:
+	151 row (selected, collapsed) Secondary Actions: Expand
+
+Note: Pay special attention to the content selected by the user. If the user asks a question or refers to the content they are looking at on-screen, they might be referring to the selected content (but they might be referring to something else that's visible, too).

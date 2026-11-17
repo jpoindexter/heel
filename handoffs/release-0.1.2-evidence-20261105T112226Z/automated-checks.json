@@ -1,0 +1,16 @@
+{
+  "tests": {
+    "command": "node node_modules/vitest/vitest.mjs run",
+    "passed": 758,
+    "files": 147,
+    "exit": 0
+  },
+  "typecheck": {
+    "command": "npm run typecheck",
+    "exit": 0
+  },
+  "diffCheck": {
+    "command": "git diff --check",
+    "exit": 0
+  }
+}

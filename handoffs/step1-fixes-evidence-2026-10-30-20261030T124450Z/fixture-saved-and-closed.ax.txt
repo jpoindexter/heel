@@ -1,0 +1,1 @@
+The test fixture was saved into the evidence directory and closed. TextEdit returned to an existing user document; no further actions were taken on it.

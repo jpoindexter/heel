@@ -1,0 +1,82 @@
+{
+  "file": "greg-dot-compatible.png",
+  "columns": 32,
+  "rows": 10,
+  "cellWidth": 192,
+  "cellHeight": 208,
+  "actions": {
+    "idle": {
+      "row": 0,
+      "frames": 16,
+      "fps": 5.9880239520958085,
+      "loop": true
+    },
+    "walk-right": {
+      "row": 1,
+      "frames": 24,
+      "fps": 16.129032258064516,
+      "loop": true
+    },
+    "walk-left": {
+      "row": 2,
+      "frames": 24,
+      "fps": 16.129032258064516,
+      "loop": true
+    },
+    "wave": {
+      "row": 3,
+      "frames": 16,
+      "fps": 12.048192771084338,
+      "loop": false
+    },
+    "jump": {
+      "row": 4,
+      "frames": 16,
+      "fps": 12.048192771084338,
+      "loop": false
+    },
+    "error": {
+      "row": 5,
+      "frames": 16,
+      "fps": 12.048192771084338,
+      "loop": false
+    },
+    "listening": {
+      "row": 6,
+      "frames": 16,
+      "fps": 8.0,
+      "loop": true
+    },
+    "focus": {
+      "row": 7,
+      "frames": 16,
+      "fps": 5.9880239520958085,
+      "loop": true
+    },
+    "review": {
+      "row": 8,
+      "frames": 16,
+      "fps": 8.0,
+      "loop": true
+    },
+    "look-directions": {
+      "row": 9,
+      "frames": 16,
+      "fps": 4.0,
+      "loop": false
+    }
+  },
+  "aliases": {
+    "running-right": "walk-right",
+    "running-left": "walk-left",
+    "waving": "wave",
+    "jumping": "jump",
+    "failed": "error",
+    "waiting": "listening",
+    "running": "focus",
+    "review": "review",
+    "sitting": "idle",
+    "sleeping": "rest",
+    "ball": "ball-play"
+  }
+}

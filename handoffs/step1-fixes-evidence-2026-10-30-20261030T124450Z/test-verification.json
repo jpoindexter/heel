@@ -1,0 +1,22 @@
+{
+  "npmTest": {
+    "command": "npm test",
+    "files": 142,
+    "tests": 743,
+    "passed": 743,
+    "failed": 0
+  },
+  "targeted": {
+    "command": "npm test -- src/settings/brain-model.test.ts sidecar/server/app.test.ts src/panel/escape.test.ts",
+    "tests": 33,
+    "passed": 33
+  },
+  "typecheck": {
+    "command": "npm run typecheck",
+    "exitCode": 0
+  },
+  "diffCheck": {
+    "command": "git diff --check",
+    "exitCode": 0
+  }
+}

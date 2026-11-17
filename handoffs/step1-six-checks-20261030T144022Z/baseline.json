@@ -1,0 +1,78 @@
+{
+  "files": {
+    "heel.db": {
+      "sha256": "0201afcf132ab6289ddead84f5f0b170bb7e42c31e99006b8681da65d8145da1",
+      "copySha256": "0201afcf132ab6289ddead84f5f0b170bb7e42c31e99006b8681da65d8145da1"
+    },
+    "heel.db-wal": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "copySha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "heel.db-shm": {
+      "sha256": "fd4c9fda9cd3f9ae7c962b0ddf37232294d55580e1aa165aa06129b8549389eb",
+      "copySha256": "fd4c9fda9cd3f9ae7c962b0ddf37232294d55580e1aa165aa06129b8549389eb"
+    },
+    "panel-place.json": {
+      "sha256": "38e1ef37dd1316c5b1d72b43b39375cfa91d018e492ba6ea3409f87939bed730",
+      "copySha256": "38e1ef37dd1316c5b1d72b43b39375cfa91d018e492ba6ea3409f87939bed730"
+    },
+    "panel-size-v2.json": {
+      "sha256": "efd33de8f25cd7b44c14d0a9cbf011d96d5ca1d5894dfe1808dd9877af834daa",
+      "copySha256": "efd33de8f25cd7b44c14d0a9cbf011d96d5ca1d5894dfe1808dd9877af834daa"
+    },
+    "mascot-hidden.json": {
+      "sha256": "4e0d6f9a918fa5198cd3fe06a02db5f80ec86f3a6c0509092cd621112ccfe891",
+      "copySha256": "4e0d6f9a918fa5198cd3fe06a02db5f80ec86f3a6c0509092cd621112ccfe891"
+    },
+    "shell-settings.json": {
+      "sha256": "6f879daca71174113576900fb292efa341815220736c18c11ecff22f6b5702f9",
+      "copySha256": "6f879daca71174113576900fb292efa341815220736c18c11ecff22f6b5702f9"
+    },
+    "sidecar.log": {
+      "sha256": "20b99d03f66fb4ee177d756240fbff8014662fb4ad6a9b3d46421a5730f8f5b6",
+      "copySha256": "20b99d03f66fb4ee177d756240fbff8014662fb4ad6a9b3d46421a5730f8f5b6"
+    },
+    "sidecar.json": {
+      "sha256": "3d7b0b1c42113dbfd5c09ade33abd17b09d9613ece12672228d121e914db05f5",
+      "copySha256": "3d7b0b1c42113dbfd5c09ade33abd17b09d9613ece12672228d121e914db05f5"
+    }
+  },
+  "tables": {
+    "documents": {
+      "rows": 0,
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+    },
+    "focus_sessions": {
+      "rows": 0,
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+    },
+    "ledger": {
+      "rows": 0,
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+    },
+    "messages": {
+      "rows": 8,
+      "sha256": "362a8705298acc67791ff37ba6d550164d28c9f47163e52854a833fabb3076c1"
+    },
+    "parked": {
+      "rows": 0,
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+    },
+    "schema_migrations": {
+      "rows": 6,
+      "sha256": "658da9322e8a9aa423d2fa7455e1e9e7bbb11b0bdccb190d98f696a0b768534d"
+    },
+    "settings": {
+      "rows": 2,
+      "sha256": "41483020f5611282855b85da195ab42fe80ccc8c8097ed31ce8b8ed925664fea"
+    },
+    "tasks": {
+      "rows": 2,
+      "sha256": "cbd3cc041a467820634bf8eaadadd7b1c9659fdcab4e2620b4afbd5d1ed194f0"
+    }
+  },
+  "identity": {
+    "sha256": "16cab434b1691081a0c9f84f37eb557bc22b40da774f939eda290ed979d9526a",
+    "pid": "84328 /Users/jasonpoindexter/Documents/GitHub/Greg agent/src-tauri/target/release/bundle/macos/Heel.app/Contents/MacOS/heel"
+  }
+}

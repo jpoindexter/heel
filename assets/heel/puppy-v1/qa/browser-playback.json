@@ -1,0 +1,19 @@
+{
+  "date": "2026-10-15",
+  "url": "http://127.0.0.1:8876/assets/heel/puppy-v1/final/preview.html",
+  "observed": {
+    "loadedCards": 34,
+    "timedFramesLabel": 768,
+    "loopCountersAdvanced": true,
+    "animatedOneShotsReachedFinalFrames": true,
+    "gazeInitiallyRemainedFrameOne": true,
+    "warm192pxScreenshotInspected": true,
+    "dark128pxScreenshotInspected": true,
+    "transparencyGrid192pxInspected": true
+  },
+  "limits": [
+    "Source sheets and endpoint comparisons inspected; no claim that continuous perceptual motion of every clip is certified.",
+    "Pause test inconclusive: toggle returned to playing between observations; no diagnosis inferred.",
+    "No native integration, stripe/pixelation or reduced-motion system test performed."
+  ]
+}

@@ -1,0 +1,88 @@
+{
+  "pairs": [
+    {
+      "pair": "horizontal-1",
+      "A": "screen-right",
+      "B": "screen-left",
+      "reason": "A muzzle and nose project to the right of the head; B nose projects to the left with opposite cheek occlusion."
+    },
+    {
+      "pair": "horizontal-2",
+      "A": "screen-right",
+      "B": "screen-left",
+      "reason": "A raised snout is offset screen-right and right-facing profile shows; B snout is offset screen-left with opposite profile."
+    },
+    {
+      "pair": "horizontal-3",
+      "A": "screen-right",
+      "B": "screen-left",
+      "reason": "A long visible muzzle points right while B muzzle points left; asymmetric ear and cheek visibility support opposite yaw."
+    },
+    {
+      "pair": "horizontal-4",
+      "A": "screen-left",
+      "B": "screen-right",
+      "reason": "A shows an unmistakable left-facing nose profile; B shows the corresponding right-facing nose profile."
+    },
+    {
+      "pair": "horizontal-5",
+      "A": "screen-left",
+      "B": "screen-right",
+      "reason": "A lowered nose is left of the head center; B muzzle projects right with the nearer cheek on the opposite side."
+    },
+    {
+      "pair": "horizontal-6",
+      "A": "screen-right",
+      "B": "screen-left",
+      "reason": "Both heads pitch downward, but A nose and muzzle extend right of head center while B nose extends left."
+    },
+    {
+      "pair": "horizontal-7",
+      "A": "screen-right",
+      "B": "screen-left",
+      "reason": "Yaw is small: A nose tip sits slightly right of forehead center with rightward muzzle emphasis; B nose and muzzle sit left of forehead center."
+    },
+    {
+      "pair": "vertical-1",
+      "A": "up",
+      "B": "down",
+      "reason": "A chin lifts and nose points upward with underside of muzzle visible; B crowns the forehead and lowers nose toward chest."
+    },
+    {
+      "pair": "vertical-2",
+      "A": "down",
+      "B": "up",
+      "reason": "A neck folds and nose lowers toward paws with upper head dominant; B neck extends and snout lifts above neutral."
+    },
+    {
+      "pair": "vertical-3",
+      "A": "up",
+      "B": "down",
+      "reason": "A extends chin upward and shows throat below the muzzle; B dips its nose and eyes toward the ground."
+    },
+    {
+      "pair": "vertical-4",
+      "A": "up",
+      "B": "down",
+      "reason": "A snout tilts slightly upward and lifted chin exposes white throat; B right-facing muzzle lowers with the eyes above the nose and shorter visible throat."
+    },
+    {
+      "pair": "vertical-5",
+      "A": "up",
+      "B": "down",
+      "reason": "A stretches neck and aims nose up-left; B dips chin toward chest with downward eyes and pronounced top-of-head visibility."
+    },
+    {
+      "pair": "vertical-6",
+      "A": "up",
+      "B": "down",
+      "reason": "A holds nose above its resting muzzle line with lifted chin; B bows head and snout down-left toward paws."
+    },
+    {
+      "pair": "vertical-7",
+      "A": "down",
+      "B": "up",
+      "reason": "A left-facing head lowers nose and compresses neck; B left-facing head lifts snout and extends white throat."
+    }
+  ]
+}

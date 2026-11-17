@@ -1,0 +1,27 @@
+{
+  "accepted": false,
+  "attempts": [
+    {
+      "source": "running-right-r1-cadence.png",
+      "count": 16,
+      "structural": "pass",
+      "visual": "fail",
+      "reason": "Several repeated stride families;16 poses do not establish smooth16phase cycle."
+    },
+    {
+      "source": "running-right-r2-source.png",
+      "count": 18,
+      "structural": "fail",
+      "visual": "not accepted",
+      "reason": "Generated18 complete bodies instead of16."
+    },
+    {
+      "source": "running-right-half-a-source.png",
+      "count": 8,
+      "structural": "not run",
+      "visual": "fail",
+      "reason": "Near foreleg returns forward repeatedly rather than advancing plant-to-back sweep across thehalfcycle."
+    }
+  ],
+  "nextApproach": "Ground exact leg-phase anchor pairs and generate2-4inbetween drawings perjob, then sharedregistration; do not fake smoothness with repeatedframes/crossfade/warps."
+}

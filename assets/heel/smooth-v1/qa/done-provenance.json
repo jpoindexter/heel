@@ -1,0 +1,26 @@
+{
+  "generatedUniquePoses": 8,
+  "timedFrames": 16,
+  "method": "Deliberate forward/reverse playback of one coherent generated tail halfcycle; exact endpoint holds atframes7/8 and15/0.",
+  "frameSourceOrder": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    7,
+    6,
+    5,
+    4,
+    3,
+    2,
+    1,
+    0
+  ],
+  "generatedSource": "/Users/jasonpoindexter/Documents/GitHub/Greg agent/assets/heel/smooth-v1/decoded/done-half-a.png",
+  "notUsed": "done-half-b.png and18body sources rejected; no promise of16unique generated poses.",
+  "processing": "Bundled connectedcomponent extraction, transparent pixel assembly only; no manual character drawing, raster warps or crossfades."
+}

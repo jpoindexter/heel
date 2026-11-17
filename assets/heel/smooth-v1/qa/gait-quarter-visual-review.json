@@ -1,0 +1,20 @@
+{
+  "status": "candidate_requires_parent_playback_review",
+  "frames": 16,
+  "anchors": [
+    0,
+    4,
+    8,
+    12
+  ],
+  "generatedInbetweens": 12,
+  "sourceJobs": 4,
+  "observedLimbProgression": {
+    "quarter0": "extended nearforepaw bends and hindlegs gather progressively",
+    "quarter1": "three distinct close gathered poses with paw/tail microchanges",
+    "quarter2": "gathered -> bent opening -> almost vertical foreleg; last close to endanchor",
+    "quarter3": "nearforeleg extends from vertical to diagonalforward reach"
+  },
+  "remainingConcern": "Generated quarter0/3 legs appear shorter than old anchor legs, with lowestpaw bbox181-187 versusanchors196-203, while headsregister near64. Possible verticalsnap atanchorboundaries; structuralchecks do not establish smoothness.",
+  "registration": "uniformscale perquarter and wholeframe translations only; no warps, limb fabrication or crossfades"
+}

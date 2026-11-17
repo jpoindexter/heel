@@ -1,0 +1,155 @@
+{
+  "files": [
+    {
+      "file": "heel.db",
+      "existedBefore": true,
+      "existsAfter": true,
+      "beforeSha256": "85c009fb13d5987d292aaadc1c016cab66d8d2290ed834732910ce28dcd7378f",
+      "afterSha256": "85c009fb13d5987d292aaadc1c016cab66d8d2290ed834732910ce28dcd7378f",
+      "unchanged": true
+    },
+    {
+      "file": "heel.db-wal",
+      "existedBefore": true,
+      "existsAfter": true,
+      "beforeSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "afterSha256": "12b6c70ec7a4201fd26eb457d25706a8f9881d1e3b395ea51b6d040b2f2d0aa0",
+      "unchanged": false
+    },
+    {
+      "file": "heel.db-shm",
+      "existedBefore": true,
+      "existsAfter": true,
+      "beforeSha256": "fd4c9fda9cd3f9ae7c962b0ddf37232294d55580e1aa165aa06129b8549389eb",
+      "afterSha256": "fb22ff7e95402c84d53cf6fc0233ab0f7f01b73cc12affb90aa3dbc675ee7e2e",
+      "unchanged": false
+    },
+    {
+      "file": "panel-place.json",
+      "existedBefore": true,
+      "existsAfter": true,
+      "beforeSha256": "98b3234b60be451044dcf72d06e42ac7c919ba27e0b164dc16eb55d7791d0718",
+      "afterSha256": "38e1ef37dd1316c5b1d72b43b39375cfa91d018e492ba6ea3409f87939bed730",
+      "unchanged": false
+    },
+    {
+      "file": "panel-size-v2.json",
+      "existedBefore": true,
+      "existsAfter": true,
+      "beforeSha256": "efd33de8f25cd7b44c14d0a9cbf011d96d5ca1d5894dfe1808dd9877af834daa",
+      "afterSha256": "efd33de8f25cd7b44c14d0a9cbf011d96d5ca1d5894dfe1808dd9877af834daa",
+      "unchanged": true
+    },
+    {
+      "file": "mascot-hidden.json",
+      "existedBefore": true,
+      "existsAfter": true,
+      "beforeSha256": "4e0d6f9a918fa5198cd3fe06a02db5f80ec86f3a6c0509092cd621112ccfe891",
+      "afterSha256": "4e0d6f9a918fa5198cd3fe06a02db5f80ec86f3a6c0509092cd621112ccfe891",
+      "unchanged": true
+    },
+    {
+      "file": "sidecar.log",
+      "existedBefore": true,
+      "existsAfter": true,
+      "beforeSha256": "6efec784db6326268b787c88d841d7ada4863b3915fa0929db7d46193d2960a0",
+      "afterSha256": "6efec784db6326268b787c88d841d7ada4863b3915fa0929db7d46193d2960a0",
+      "unchanged": true
+    },
+    {
+      "file": "sidecar.json",
+      "existedBefore": true,
+      "existsAfter": true,
+      "beforeSha256": "270e930b4be9e30921fe78e3667bc6326a504a1b6a95af4a3a17b300678af237",
+      "afterSha256": "270e930b4be9e30921fe78e3667bc6326a504a1b6a95af4a3a17b300678af237",
+      "unchanged": true
+    }
+  ],
+  "tables": [
+    {
+      "table": "documents",
+      "beforeRows": 0,
+      "afterRows": 0,
+      "beforeContentSha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "afterContentSha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "unchanged": true
+    },
+    {
+      "table": "focus_sessions",
+      "beforeRows": 0,
+      "afterRows": 0,
+      "beforeContentSha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "afterContentSha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "unchanged": true
+    },
+    {
+      "table": "ledger",
+      "beforeRows": 0,
+      "afterRows": 0,
+      "beforeContentSha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "afterContentSha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "unchanged": true
+    },
+    {
+      "table": "messages",
+      "beforeRows": 8,
+      "afterRows": 8,
+      "beforeContentSha256": "0f40b44e14c6ebd6ba2dd77d1240657a6441f22b48af4797df2e857bf8d15df9",
+      "afterContentSha256": "0f40b44e14c6ebd6ba2dd77d1240657a6441f22b48af4797df2e857bf8d15df9",
+      "unchanged": true
+    },
+    {
+      "table": "parked",
+      "beforeRows": 0,
+      "afterRows": 0,
+      "beforeContentSha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "afterContentSha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "unchanged": true
+    },
+    {
+      "table": "schema_migrations",
+      "beforeRows": 6,
+      "afterRows": 6,
+      "beforeContentSha256": "ecf6a4e2cc8795198d382460a96c09c4042e848a211f39e3a1b15bf77c79a49e",
+      "afterContentSha256": "ecf6a4e2cc8795198d382460a96c09c4042e848a211f39e3a1b15bf77c79a49e",
+      "unchanged": true
+    },
+    {
+      "table": "settings",
+      "beforeRows": 2,
+      "afterRows": 2,
+      "beforeContentSha256": "181c19320faf948f53656714f4d818f2755b7cc8eeaae2a37492ca1af401ba0f",
+      "afterContentSha256": "9f43c3d66798dde80a4fb6eeb2aaa6389fb6303c960ebb2bc0daa3fc1e344c76",
+      "unchanged": false
+    },
+    {
+      "table": "tasks",
+      "beforeRows": 2,
+      "afterRows": 2,
+      "beforeContentSha256": "0131bc5d00e2e50b4ce33ebf8317d1717ea73d6cf794bd3d810b732a7fcb5cef",
+      "afterContentSha256": "0131bc5d00e2e50b4ce33ebf8317d1717ea73d6cf794bd3d810b732a7fcb5cef",
+      "unchanged": true
+    }
+  ],
+  "shellSettingsAfter": {
+    "alwaysOnTop": false,
+    "dockIcon": true,
+    "hotkey": "super+shift+h"
+  },
+  "shellSettingsBaselineCaptured": false,
+  "pidAfter": "65375 /Users/jasonpoindexter/Documents/GitHub/Greg agent/src-tauri/target/release/bundle/macos/Heel.app/Contents/MacOS/heel",
+  "keychainAfter": {
+    "anthropic": {
+      "found": false,
+      "exitCode": 44
+    },
+    "openai": {
+      "found": false,
+      "exitCode": 44
+    },
+    "mistral": {
+      "found": false,
+      "exitCode": 44
+    }
+  }
+}

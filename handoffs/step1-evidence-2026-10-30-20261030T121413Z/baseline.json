@@ -1,0 +1,96 @@
+{
+  "evidenceDir": "/Users/jasonpoindexter/Documents/GitHub/Greg agent/handoffs/step1-evidence-2026-10-30-20261030T121413Z",
+  "backupDir": "/Users/jasonpoindexter/Library/Application Support/studio.theft.heel-check-backups/20261030T121413Z",
+  "before": [
+    {
+      "file": "heel.db",
+      "exists": true,
+      "bytes": 81920,
+      "beforeSha256": "85c009fb13d5987d292aaadc1c016cab66d8d2290ed834732910ce28dcd7378f",
+      "backupSha256": "85c009fb13d5987d292aaadc1c016cab66d8d2290ed834732910ce28dcd7378f",
+      "sourceAfterCopySha256": "85c009fb13d5987d292aaadc1c016cab66d8d2290ed834732910ce28dcd7378f",
+      "copyMatched": true,
+      "sourceStableDuringCopy": true
+    },
+    {
+      "file": "heel.db-wal",
+      "exists": true,
+      "bytes": 0,
+      "beforeSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "backupSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "sourceAfterCopySha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "copyMatched": true,
+      "sourceStableDuringCopy": true
+    },
+    {
+      "file": "heel.db-shm",
+      "exists": true,
+      "bytes": 32768,
+      "beforeSha256": "fd4c9fda9cd3f9ae7c962b0ddf37232294d55580e1aa165aa06129b8549389eb",
+      "backupSha256": "fd4c9fda9cd3f9ae7c962b0ddf37232294d55580e1aa165aa06129b8549389eb",
+      "sourceAfterCopySha256": "fd4c9fda9cd3f9ae7c962b0ddf37232294d55580e1aa165aa06129b8549389eb",
+      "copyMatched": true,
+      "sourceStableDuringCopy": true
+    },
+    {
+      "file": "panel-place.json",
+      "exists": true,
+      "bytes": 33,
+      "beforeSha256": "98b3234b60be451044dcf72d06e42ac7c919ba27e0b164dc16eb55d7791d0718",
+      "backupSha256": "98b3234b60be451044dcf72d06e42ac7c919ba27e0b164dc16eb55d7791d0718",
+      "sourceAfterCopySha256": "98b3234b60be451044dcf72d06e42ac7c919ba27e0b164dc16eb55d7791d0718",
+      "copyMatched": true,
+      "sourceStableDuringCopy": true
+    },
+    {
+      "file": "panel-size-v2.json",
+      "exists": true,
+      "bytes": 30,
+      "beforeSha256": "efd33de8f25cd7b44c14d0a9cbf011d96d5ca1d5894dfe1808dd9877af834daa",
+      "backupSha256": "efd33de8f25cd7b44c14d0a9cbf011d96d5ca1d5894dfe1808dd9877af834daa",
+      "sourceAfterCopySha256": "efd33de8f25cd7b44c14d0a9cbf011d96d5ca1d5894dfe1808dd9877af834daa",
+      "copyMatched": true,
+      "sourceStableDuringCopy": true
+    },
+    {
+      "file": "mascot-hidden.json",
+      "exists": true,
+      "bytes": 16,
+      "beforeSha256": "4e0d6f9a918fa5198cd3fe06a02db5f80ec86f3a6c0509092cd621112ccfe891",
+      "backupSha256": "4e0d6f9a918fa5198cd3fe06a02db5f80ec86f3a6c0509092cd621112ccfe891",
+      "sourceAfterCopySha256": "4e0d6f9a918fa5198cd3fe06a02db5f80ec86f3a6c0509092cd621112ccfe891",
+      "copyMatched": true,
+      "sourceStableDuringCopy": true
+    },
+    {
+      "file": "sidecar.log",
+      "exists": true,
+      "bytes": 2578,
+      "beforeSha256": "6efec784db6326268b787c88d841d7ada4863b3915fa0929db7d46193d2960a0",
+      "backupSha256": "6efec784db6326268b787c88d841d7ada4863b3915fa0929db7d46193d2960a0",
+      "sourceAfterCopySha256": "6efec784db6326268b787c88d841d7ada4863b3915fa0929db7d46193d2960a0",
+      "copyMatched": true,
+      "sourceStableDuringCopy": true
+    },
+    {
+      "file": "sidecar.json",
+      "exists": true,
+      "bytes": 89,
+      "beforeSha256": "270e930b4be9e30921fe78e3667bc6326a504a1b6a95af4a3a17b300678af237",
+      "backupSha256": "270e930b4be9e30921fe78e3667bc6326a504a1b6a95af4a3a17b300678af237",
+      "sourceAfterCopySha256": "270e930b4be9e30921fe78e3667bc6326a504a1b6a95af4a3a17b300678af237",
+      "copyMatched": true,
+      "sourceStableDuringCopy": true
+    }
+  ],
+  "consistentDatabaseIntegrity": "ok",
+  "build": {
+    "app": "/Users/jasonpoindexter/Documents/GitHub/Greg agent/src-tauri/target/release/bundle/macos/Heel.app",
+    "binarySha256": "230eca25ced9a5572e0d47edb387ba2e53def64ea4e93e7d23e69b090c283104",
+    "binaryBytes": 41715024,
+    "binaryMtimeUtc": "2026-10-30T00:25:59.946786+00:00",
+    "version": "0.1.0",
+    "bundleId": "studio.theft.heel",
+    "running": "65375 /Users/jasonpoindexter/Documents/GitHub/Greg agent/src-tauri/target/release/bundle/macos/Heel.app/Contents/MacOS/heel"
+  }
+}

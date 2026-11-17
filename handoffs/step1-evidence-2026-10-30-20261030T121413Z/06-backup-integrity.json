@@ -1,0 +1,16 @@
+{
+  "folder": "/Users/jasonpoindexter/Desktop/heel-backup-2026-10-30-12-17-06",
+  "files": [
+    "data.json",
+    "heel.db"
+  ],
+  "databases": [
+    {
+      "file": "/Users/jasonpoindexter/Desktop/heel-backup-2026-10-30-12-17-06/heel.db",
+      "bytes": 81920,
+      "integrityCheck": "ok",
+      "sha256": "3fb71ac890058998c9d4d2cf41d55876b9f3e534632ed72c092ecc58b93787ab"
+    }
+  ],
+  "pass": true
+}

@@ -1,0 +1,9 @@
+{
+  "app": "/Users/jasonpoindexter/Documents/GitHub/Greg agent/src-tauri/target/release/bundle/macos/Heel.app",
+  "binarySha256": "16cab434b1691081a0c9f84f37eb557bc22b40da774f939eda290ed979d9526a",
+  "binaryBytes": 41715024,
+  "mtimeUtc": "2026-10-30T12:52:00.141209+00:00",
+  "process": "84328 /Users/jasonpoindexter/Documents/GitHub/Greg agent/src-tauri/target/release/bundle/macos/Heel.app/Contents/MacOS/heel",
+  "baseCommit": "67ab021c728f7e0c74dbd65ae6f857f9c2f4bab5",
+  "workingDiffSha256": "e5cc7763e5aa2efd6c97625887bb86c8bf42fee6bfb09599cbf020fe50845d5d"
+}

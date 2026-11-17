@@ -1,0 +1,248 @@
+{
+  "name": "jump",
+  "source": "/Users/jasonpoindexter/Documents/GitHub/Greg agent/assets/heel/puppy-v1/decoded/jump.png",
+  "sourceSize": [
+    1205,
+    1306
+  ],
+  "actualFrames": 16,
+  "bodyComponents": 16,
+  "uniqueEncodedFrames": 16,
+  "logicalFrame": [
+    192,
+    208
+  ],
+  "density2xAvailable": true,
+  "sharedScale": 0.510638,
+  "calibration": {
+    "logicalScale": 0.510638,
+    "headHeightSourcePx": 94,
+    "headHeightLogicalTargetPx": 48,
+    "method": "manual approximate neutral-head calibration; one uniform scale per entire clip; visual comparison required"
+  },
+  "rowGroundRegistration": [
+    302,
+    302,
+    302,
+    302
+  ],
+  "sharedXOffset": -1.5957437500000005,
+  "sourceBodyBoxes": [
+    [
+      39,
+      67,
+      282,
+      302
+    ],
+    [
+      336,
+      69,
+      569,
+      302
+    ],
+    [
+      630,
+      101,
+      868,
+      303
+    ],
+    [
+      935,
+      108,
+      1161,
+      300
+    ],
+    [
+      48,
+      377,
+      268,
+      618
+    ],
+    [
+      342,
+      361,
+      570,
+      615
+    ],
+    [
+      637,
+      355,
+      864,
+      570
+    ],
+    [
+      935,
+      346,
+      1154,
+      568
+    ],
+    [
+      39,
+      696,
+      279,
+      899
+    ],
+    [
+      335,
+      710,
+      572,
+      921
+    ],
+    [
+      626,
+      722,
+      861,
+      924
+    ],
+    [
+      929,
+      705,
+      1163,
+      924
+    ],
+    [
+      42,
+      1013,
+      276,
+      1233
+    ],
+    [
+      336,
+      1000,
+      565,
+      1236
+    ],
+    [
+      628,
+      1000,
+      879,
+      1235
+    ],
+    [
+      929,
+      1000,
+      1177,
+      1236
+    ]
+  ],
+  "boxes": [
+    [
+      33,
+      76,
+      157,
+      196
+    ],
+    [
+      34,
+      77,
+      154,
+      196
+    ],
+    [
+      33,
+      93,
+      155,
+      197
+    ],
+    [
+      37,
+      97,
+      153,
+      195
+    ],
+    [
+      37,
+      67,
+      150,
+      191
+    ],
+    [
+      37,
+      59,
+      154,
+      189
+    ],
+    [
+      37,
+      56,
+      153,
+      167
+    ],
+    [
+      37,
+      51,
+      149,
+      165
+    ],
+    [
+      33,
+      63,
+      156,
+      167
+    ],
+    [
+      34,
+      71,
+      155,
+      179
+    ],
+    [
+      31,
+      77,
+      151,
+      180
+    ],
+    [
+      34,
+      68,
+      154,
+      181
+    ],
+    [
+      34,
+      59,
+      154,
+      172
+    ],
+    [
+      34,
+      52,
+      152,
+      173
+    ],
+    [
+      32,
+      52,
+      160,
+      173
+    ],
+    [
+      34,
+      52,
+      161,
+      173
+    ]
+  ],
+  "adjacentChangedPixels": [
+    4865,
+    7461,
+    6146,
+    9256,
+    6724,
+    6430,
+    5538,
+    6785,
+    6899,
+    7049,
+    6293,
+    8278,
+    6208,
+    4844,
+    4620,
+    10368
+  ],
+  "seamChangedPixels": 10368,
+  "ok": true,
+  "errors": [],
+  "visualPlaybackRequired": true
+}

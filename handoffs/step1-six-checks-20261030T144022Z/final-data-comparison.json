@@ -1,0 +1,113 @@
+{
+  "files": {
+    "heel.db": {
+      "beforeSha256": "0201afcf132ab6289ddead84f5f0b170bb7e42c31e99006b8681da65d8145da1",
+      "afterSha256": "0201afcf132ab6289ddead84f5f0b170bb7e42c31e99006b8681da65d8145da1",
+      "unchanged": true
+    },
+    "heel.db-wal": {
+      "beforeSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "afterSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "unchanged": true
+    },
+    "heel.db-shm": {
+      "beforeSha256": "fd4c9fda9cd3f9ae7c962b0ddf37232294d55580e1aa165aa06129b8549389eb",
+      "afterSha256": "fd4c9fda9cd3f9ae7c962b0ddf37232294d55580e1aa165aa06129b8549389eb",
+      "unchanged": true
+    },
+    "panel-place.json": {
+      "beforeSha256": "38e1ef37dd1316c5b1d72b43b39375cfa91d018e492ba6ea3409f87939bed730",
+      "afterSha256": "38e1ef37dd1316c5b1d72b43b39375cfa91d018e492ba6ea3409f87939bed730",
+      "unchanged": true
+    },
+    "panel-size-v2.json": {
+      "beforeSha256": "efd33de8f25cd7b44c14d0a9cbf011d96d5ca1d5894dfe1808dd9877af834daa",
+      "afterSha256": "efd33de8f25cd7b44c14d0a9cbf011d96d5ca1d5894dfe1808dd9877af834daa",
+      "unchanged": true
+    },
+    "mascot-hidden.json": {
+      "beforeSha256": "4e0d6f9a918fa5198cd3fe06a02db5f80ec86f3a6c0509092cd621112ccfe891",
+      "afterSha256": "4e0d6f9a918fa5198cd3fe06a02db5f80ec86f3a6c0509092cd621112ccfe891",
+      "unchanged": true
+    },
+    "shell-settings.json": {
+      "beforeSha256": "6f879daca71174113576900fb292efa341815220736c18c11ecff22f6b5702f9",
+      "afterSha256": "6f879daca71174113576900fb292efa341815220736c18c11ecff22f6b5702f9",
+      "unchanged": true
+    },
+    "sidecar.log": {
+      "beforeSha256": "20b99d03f66fb4ee177d756240fbff8014662fb4ad6a9b3d46421a5730f8f5b6",
+      "afterSha256": "20b99d03f66fb4ee177d756240fbff8014662fb4ad6a9b3d46421a5730f8f5b6",
+      "unchanged": true
+    },
+    "sidecar.json": {
+      "beforeSha256": "3d7b0b1c42113dbfd5c09ade33abd17b09d9613ece12672228d121e914db05f5",
+      "afterSha256": "3d7b0b1c42113dbfd5c09ade33abd17b09d9613ece12672228d121e914db05f5",
+      "unchanged": true
+    }
+  },
+  "tables": {
+    "documents": {
+      "beforeRows": 0,
+      "afterRows": 0,
+      "unchanged": true
+    },
+    "focus_sessions": {
+      "beforeRows": 0,
+      "afterRows": 0,
+      "unchanged": true
+    },
+    "ledger": {
+      "beforeRows": 0,
+      "afterRows": 0,
+      "unchanged": true
+    },
+    "messages": {
+      "beforeRows": 8,
+      "afterRows": 8,
+      "unchanged": true
+    },
+    "parked": {
+      "beforeRows": 0,
+      "afterRows": 0,
+      "unchanged": true
+    },
+    "schema_migrations": {
+      "beforeRows": 6,
+      "afterRows": 6,
+      "unchanged": true
+    },
+    "settings": {
+      "beforeRows": 2,
+      "afterRows": 2,
+      "unchanged": true
+    },
+    "tasks": {
+      "beforeRows": 2,
+      "afterRows": 2,
+      "unchanged": true
+    }
+  },
+  "allTablesUnchanged": true,
+  "savedPreferencesUnchanged": true,
+  "keys": {
+    "anthropic": {
+      "absent": true,
+      "exitCode": 44
+    },
+    "openai": {
+      "absent": true,
+      "exitCode": 44
+    },
+    "mistral": {
+      "absent": true,
+      "exitCode": 44
+    }
+  },
+  "identity": {
+    "sha256": "16cab434b1691081a0c9f84f37eb557bc22b40da774f939eda290ed979d9526a",
+    "processes": [
+      "84328 /Users/jasonpoindexter/Documents/GitHub/Greg agent/src-tauri/target/release/bundle/macos/Heel.app/Contents/MacOS/heel"
+    ]
+  }
+}

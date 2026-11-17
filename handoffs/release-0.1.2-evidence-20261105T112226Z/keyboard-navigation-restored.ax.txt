@@ -1,0 +1,107 @@
+Window: "Keyboard", App: System Settings.
+0 standard window Keyboard, ID: main, Secondary Actions: Raise
+	1 split group main, SidebarNavigationSplitView
+		2 scroll area Secondary Actions: Scroll Up, Scroll Down
+			3 list Sidebar
+				4 row (selectable)
+				5 row (selectable) Jason Poindexter, Apple Account
+				6 row (selectable)
+				7 row (selectable) Description: Software Update Available, 1 new item, Value: 1
+				8 row (selectable)
+				9 row (selectable) Wi‑Fi
+				10 row (selectable) Bluetooth
+				11 row (selectable) Network
+				12 row (selectable) Battery
+				13 row (selectable)
+				14 row (selectable) General
+				15 row (selectable) Accessibility
+				16 row (selectable) Appearance
+				17 row (selectable) Apple Intelligence & Siri
+				18 row (selectable) Desktop & Dock
+				19 row (selectable) Displays
+				20 row (selectable) Menu Bar
+				21 row (selectable) Spotlight
+				22 row (selectable) Wallpaper
+				23 row (selectable)
+				24 row (selectable) Notifications
+				25 row (selectable) Sound
+				26 row (selectable) Focus
+				27 row (selectable) Screen Time
+				28 row (selectable)
+				29 row (selectable) Lock Screen
+				30 row (selectable) Privacy & Security
+				31 row (selectable) Touch ID & Password
+				32 row (selectable) Users & Groups
+				33 row (selectable)
+				34 row (selectable) Internet Accounts
+				35 row (selectable) Game Center
+				36 row (selectable) iCloud
+				37 row (selectable) Wallet & Apple Pay
+				38 row (selectable)
+				39 row (selected) Keyboard
+				40 row (selectable) Trackpad
+				41 row (selectable) Game Controllers
+				42 row (selectable) Printers & Scanners
+			43 scroll bar (settable, float) 0.9505208333333334
+				44 value indicator (settable, float) 0.9505208333333334
+				45 increment arrow button
+				46 decrement arrow button
+				47 increment page button
+				48 decrement page button
+		49 search text field (settable) Search
+			50 button Search
+		51 splitter (disabled, settable, float) 223
+		52 scroll area Secondary Actions: Scroll Up, Scroll Down
+			53 container
+				54 slider Description: Key repeat rate, Value: 6, Secondary Actions: Increment, Decrement
+					55 value indicator 6
+				56 slider Description: Delay until repeat, Value: 4, Secondary Actions: Increment, Decrement
+					57 value indicator 4
+			58 container
+				59 switch Adjust keyboard brightness in low light, Value: on
+				60 pop up button Turn keyboard backlight off after inactivity, Value: After 5 Seconds
+				61 pop up button Press 🌐︎ key to, Value: Start Dictation (Press 🌐︎ Twice)
+				62 switch Value: off, Use keyboard navigation to move focus between controls. Press the Tab key to move focus forward and Shift Tab to move focus backward.
+				63 button Keyboard Shortcuts…
+			64 heading Text Input
+			65 container
+				66 text Input Sources U.S. and Japanese – Kana
+				67 button Edit…
+				68 button Text Replacements…
+			69 heading Dictation
+			70 container
+				71 switch Value: on, Support for processing Spanish on your Mac will download later when an Internet connection is available.
+				72 text Languages English (United States) and Spanish (Spain)
+				73 button Edit…
+				74 pop up button Microphone source, Value: Automatic (MacBook Pro Microphone)
+				75 text Shortcut
+				76 pop up button Press 🎤︎
+				77 switch Auto-punctuation, Value: on
+				78 button About Ask Siri, Dictation & Privacy…
+			79 button Set Up Keyboard…
+			80 button Help
+			81 scroll bar (settable, float) 0
+				82 value indicator (settable, float) 0
+				83 increment arrow button
+				84 decrement arrow button
+				85 increment page button
+				86 decrement page button
+	87 toolbar
+		88 container
+			89 button Description: Back, ID: go back
+			90 menu button (disabled) Description: Forward, ID: go forward
+	91 close button
+	92 zoom button
+	93 minimize button
+	94 text Keyboard
+95 menu bar
+	96 System Settings
+	97 Edit
+	98 View
+	99 Window
+	100 Help
+
+Selected:
+	39 row (selected)
+
+Note: Pay special attention to the content selected by the user. If the user asks a question or refers to the content they are looking at on-screen, they might be referring to the selected content (but they might be referring to something else that's visible, too).

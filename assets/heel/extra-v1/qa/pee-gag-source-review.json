@@ -1,0 +1,16 @@
+{
+  "source": "/Users/jasonpoindexter/Documents/GitHub/Greg agent/assets/heel/extra-v1/decoded/pee-gag.png",
+  "dimensions": [
+    2172,
+    724
+  ],
+  "actualCompleteBodyComponents": 17,
+  "countMethod": "Bundled remove_chroma_background #FF00FF threshold96 then connected_components bodyarea>=30%oflargest",
+  "sourceBoundaryOpaquePixels": 0,
+  "identityReview": "Broadheadfoldedears, neutralcharcoalgrey coat, darknose/bridge/muzzle, whitechin/chest only, simplified flat palette with broad shadowregions, no visiblefinefurgrain.",
+  "observedAction": "Sideprofile sniff, visiblehindleg lifts, tiny paleochre stream towardmutedgreyrock duringhold, legreturns, sheepishbackglance andneutral.",
+  "notes": "Detached smallrock present eachpose; stream/drops duringmiddlehold mustremainassociated withcorresponding body, not filtered as noise.",
+  "playbackReviewed": false,
+  "smoothnessClaim": false,
+  "parentExtractionAndMotionReviewRequired": true
+}

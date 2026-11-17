@@ -1,0 +1,20 @@
+{
+  "method": "Browser playback of each generated standard-row GIF plus native-size contact inspection",
+  "observed": [
+    "idle blink changes from open to closed",
+    "running-right and running-left alternate extended and gathered gaits and face correct screen directions",
+    "paw lifts and lowers in waving",
+    "hop leaves baseline and lands",
+    "failed droops and recovers",
+    "waiting head tilts",
+    "focus lies chin-on-paws and blinks",
+    "review leans and scans"
+  ],
+  "executed": true,
+  "limits": "Initial playback was before final chroma cleanup and before shared row registration. Final encoded asset playback is still required.",
+  "repairs": [
+    "clipped source tails regenerated",
+    "broken equal-slot mirror rejected and left gait independently generated",
+    "seated rows registered to hop scale while preserving jump lift"
+  ]
+}

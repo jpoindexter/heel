@@ -1,0 +1,252 @@
+{
+  "structuralChecksPassed": true,
+  "clips": 34,
+  "timedFrames": 768,
+  "generatedSourcePoses": 648,
+  "derivedClips": [
+    "walk-left",
+    "pacing"
+  ],
+  "edgeDespillPixels": 724691,
+  "checks": [
+    {
+      "name": "idle",
+      "frames": 16,
+      "uniqueFrames": 16,
+      "atlasRoundTrip": true,
+      "clearOuterBorders": true
+    },
+    {
+      "name": "walk-right",
+      "frames": 24,
+      "uniqueFrames": 24,
+      "atlasRoundTrip": true,
+      "clearOuterBorders": true
+    },
+    {
+      "name": "ball-play",
+      "frames": 32,
+      "uniqueFrames": 32,
+      "atlasRoundTrip": true,
+      "clearOuterBorders": true
+    },
+    {
+      "name": "listening",
+      "frames": 16,
+      "uniqueFrames": 16,
+      "atlasRoundTrip": true,
+      "clearOuterBorders": true
+    },
+    {
+      "name": "focus",
+      "frames": 16,
+      "uniqueFrames": 16,
+      "atlasRoundTrip": true,
+      "clearOuterBorders": true
+    },
+    {
+      "name": "nudge",
+      "frames": 16,
+      "uniqueFrames": 16,
+      "atlasRoundTrip": true,
+      "clearOuterBorders": true
+    },
+    {
+      "name": "done",
+      "frames": 16,
+      "uniqueFrames": 16,
+      "atlasRoundTrip": true,
+      "clearOuterBorders": true
+    },
+    {
+      "name": "rest",
+      "frames": 16,
+      "uniqueFrames": 16,
+      "atlasRoundTrip": true,
+      "clearOuterBorders": true
+    },
+    {
+      "name": "wave",
+      "frames": 16,
+      "uniqueFrames": 16,
+      "atlasRoundTrip": true,
+      "clearOuterBorders": true
+    },
+    {
+      "name": "jump",
+      "frames": 16,
+      "uniqueFrames": 16,
+      "atlasRoundTrip": true,
+      "clearOuterBorders": true
+    },
+    {
+      "name": "error",
+      "frames": 16,
+      "uniqueFrames": 16,
+      "atlasRoundTrip": true,
+      "clearOuterBorders": true
+    },
+    {
+      "name": "review",
+      "frames": 16,
+      "uniqueFrames": 16,
+      "atlasRoundTrip": true,
+      "clearOuterBorders": true
+    },
+    {
+      "name": "fetch-offer",
+      "frames": 24,
+      "uniqueFrames": 24,
+      "atlasRoundTrip": true,
+      "clearOuterBorders": true
+    },
+    {
+      "name": "play-bow",
+      "frames": 24,
+      "uniqueFrames": 24,
+      "atlasRoundTrip": true,
+      "clearOuterBorders": true
+    },
+    {
+      "name": "chew-stick",
+      "frames": 16,
+      "uniqueFrames": 16,
+      "atlasRoundTrip": true,
+      "clearOuterBorders": true
+    },
+    {
+      "name": "scratch-ear",
+      "frames": 16,
+      "uniqueFrames": 16,
+      "atlasRoundTrip": true,
+      "clearOuterBorders": true
+    },
+    {
+      "name": "yawn",
+      "frames": 16,
+      "uniqueFrames": 16,
+      "atlasRoundTrip": true,
+      "clearOuterBorders": true
+    },
+    {
+      "name": "sniff-search",
+      "frames": 16,
+      "uniqueFrames": 16,
+      "atlasRoundTrip": true,
+      "clearOuterBorders": true
+    },
+    {
+      "name": "stretch",
+      "frames": 24,
+      "uniqueFrames": 24,
+      "atlasRoundTrip": true,
+      "clearOuterBorders": true
+    },
+    {
+      "name": "error-facepalm",
+      "frames": 16,
+      "uniqueFrames": 16,
+      "atlasRoundTrip": true,
+      "clearOuterBorders": true
+    },
+    {
+      "name": "poop-gag",
+      "frames": 24,
+      "uniqueFrames": 24,
+      "atlasRoundTrip": true,
+      "clearOuterBorders": true
+    },
+    {
+      "name": "pee-gag",
+      "frames": 24,
+      "uniqueFrames": 24,
+      "atlasRoundTrip": true,
+      "clearOuterBorders": true
+    },
+    {
+      "name": "sniff-trail",
+      "frames": 24,
+      "uniqueFrames": 24,
+      "atlasRoundTrip": true,
+      "clearOuterBorders": true
+    },
+    {
+      "name": "graze-grass",
+      "frames": 24,
+      "uniqueFrames": 24,
+      "atlasRoundTrip": true,
+      "clearOuterBorders": true
+    },
+    {
+      "name": "pick-up-stick",
+      "frames": 24,
+      "uniqueFrames": 24,
+      "atlasRoundTrip": true,
+      "clearOuterBorders": true
+    },
+    {
+      "name": "carry-stick",
+      "frames": 24,
+      "uniqueFrames": 24,
+      "atlasRoundTrip": true,
+      "clearOuterBorders": true
+    },
+    {
+      "name": "sit-down",
+      "frames": 24,
+      "uniqueFrames": 24,
+      "atlasRoundTrip": true,
+      "clearOuterBorders": true
+    },
+    {
+      "name": "lie-down",
+      "frames": 24,
+      "uniqueFrames": 24,
+      "atlasRoundTrip": true,
+      "clearOuterBorders": true
+    },
+    {
+      "name": "curl-up",
+      "frames": 24,
+      "uniqueFrames": 24,
+      "atlasRoundTrip": true,
+      "clearOuterBorders": true
+    },
+    {
+      "name": "wake-up",
+      "frames": 24,
+      "uniqueFrames": 24,
+      "atlasRoundTrip": true,
+      "clearOuterBorders": true
+    },
+    {
+      "name": "turn-around",
+      "frames": 24,
+      "uniqueFrames": 24,
+      "atlasRoundTrip": true,
+      "clearOuterBorders": true
+    },
+    {
+      "name": "look-directions",
+      "frames": 16,
+      "uniqueFrames": 16,
+      "atlasRoundTrip": true,
+      "clearOuterBorders": true
+    },
+    {
+      "name": "walk-left",
+      "frames": 24,
+      "uniqueFrames": 24,
+      "atlasRoundTrip": true,
+      "clearOuterBorders": true
+    },
+    {
+      "name": "pacing",
+      "frames": 96,
+      "uniqueFrames": 96,
+      "atlasRoundTrip": true,
+      "clearOuterBorders": true
+    }
+  ],
+  "visualAcceptance": "pending playback review; structural success does not establish smoothness or native integration"
+}

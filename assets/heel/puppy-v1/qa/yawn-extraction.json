@@ -1,0 +1,248 @@
+{
+  "name": "yawn",
+  "source": "/Users/jasonpoindexter/Documents/GitHub/Greg agent/assets/heel/puppy-v1/decoded/yawn.png",
+  "sourceSize": [
+    1205,
+    1306
+  ],
+  "actualFrames": 16,
+  "bodyComponents": 16,
+  "uniqueEncodedFrames": 16,
+  "logicalFrame": [
+    192,
+    208
+  ],
+  "density2xAvailable": true,
+  "sharedScale": 0.390244,
+  "calibration": {
+    "logicalScale": 0.390244,
+    "headHeightSourcePx": 123,
+    "headHeightLogicalTargetPx": 48,
+    "method": "manual approximate neutral-head calibration; one uniform scale per entire clip; visual comparison required"
+  },
+  "rowGroundRegistration": [
+    315.0,
+    313.5,
+    305.0,
+    295.5
+  ],
+  "sharedXOffset": 1.8536590000000004,
+  "sourceBodyBoxes": [
+    [
+      66,
+      37,
+      295,
+      315
+    ],
+    [
+      362,
+      38,
+      590,
+      314
+    ],
+    [
+      660,
+      38,
+      888,
+      315
+    ],
+    [
+      953,
+      39,
+      1182,
+      315
+    ],
+    [
+      67,
+      361,
+      296,
+      640
+    ],
+    [
+      363,
+      361,
+      591,
+      640
+    ],
+    [
+      661,
+      359,
+      889,
+      640
+    ],
+    [
+      954,
+      355,
+      1183,
+      640
+    ],
+    [
+      67,
+      690,
+      296,
+      958
+    ],
+    [
+      362,
+      691,
+      591,
+      958
+    ],
+    [
+      660,
+      691,
+      889,
+      958
+    ],
+    [
+      943,
+      697,
+      1183,
+      958
+    ],
+    [
+      57,
+      1014,
+      296,
+      1275
+    ],
+    [
+      359,
+      1002,
+      591,
+      1275
+    ],
+    [
+      660,
+      1000,
+      889,
+      1275
+    ],
+    [
+      953,
+      1000,
+      1183,
+      1275
+    ]
+  ],
+  "boxes": [
+    [
+      53,
+      87,
+      143,
+      196
+    ],
+    [
+      53,
+      88,
+      143,
+      196
+    ],
+    [
+      53,
+      88,
+      142,
+      196
+    ],
+    [
+      53,
+      88,
+      143,
+      196
+    ],
+    [
+      53,
+      87,
+      143,
+      196
+    ],
+    [
+      53,
+      87,
+      143,
+      196
+    ],
+    [
+      53,
+      86,
+      143,
+      196
+    ],
+    [
+      53,
+      85,
+      143,
+      196
+    ],
+    [
+      53,
+      91,
+      143,
+      196
+    ],
+    [
+      53,
+      92,
+      143,
+      196
+    ],
+    [
+      53,
+      92,
+      143,
+      196
+    ],
+    [
+      49,
+      94,
+      143,
+      196
+    ],
+    [
+      49,
+      94,
+      143,
+      196
+    ],
+    [
+      52,
+      89,
+      143,
+      196
+    ],
+    [
+      53,
+      88,
+      143,
+      196
+    ],
+    [
+      53,
+      88,
+      143,
+      196
+    ]
+  ],
+  "adjacentChangedPixels": [
+    1896,
+    2170,
+    1617,
+    2001,
+    2003,
+    1944,
+    1813,
+    2714,
+    1925,
+    2087,
+    2189,
+    2214,
+    2773,
+    1829,
+    778,
+    2163
+  ],
+  "seamChangedPixels": 2163,
+  "ok": true,
+  "errors": [],
+  "visualPlaybackRequired": true
+}

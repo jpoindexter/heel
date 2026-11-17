@@ -1,0 +1,160 @@
+{
+  "frontmost" : "com.brave.Browser",
+  "timestamp" : "2026-10-30T13:07:56Z",
+  "windows" : [
+    {
+      "bounds" : {
+        "Height" : 208,
+        "Width" : 192,
+        "X" : 1147,
+        "Y" : 702
+      },
+      "id" : 44719,
+      "layer" : 5,
+      "order" : 16,
+      "owner" : "Heel",
+      "pid" : 84328,
+      "title" : "Heel"
+    },
+    {
+      "bounds" : {
+        "Height" : 20,
+        "Width" : 66,
+        "X" : 6,
+        "Y" : 39
+      },
+      "id" : 44879,
+      "layer" : 0,
+      "order" : 21,
+      "owner" : "TextEdit",
+      "pid" : 83003,
+      "title" : "Window"
+    },
+    {
+      "bounds" : {
+        "Height" : 949,
+        "Width" : 1512,
+        "X" : 0,
+        "Y" : 33
+      },
+      "id" : 44660,
+      "layer" : 0,
+      "order" : 22,
+      "owner" : "TextEdit",
+      "pid" : 83003,
+      "title" : "Untitled 12.txt"
+    },
+    {
+      "bounds" : {
+        "Height" : 622,
+        "Width" : 412,
+        "X" : 897,
+        "Y" : 88
+      },
+      "id" : 44720,
+      "layer" : 0,
+      "order" : 24,
+      "owner" : "Heel",
+      "pid" : 84328,
+      "title" : "Heel panel"
+    },
+    {
+      "bounds" : {
+        "Height" : 872,
+        "Width" : 723,
+        "X" : 0,
+        "Y" : 110
+      },
+      "id" : 44530,
+      "layer" : 0,
+      "order" : 30,
+      "owner" : "System Settings",
+      "pid" : 74702,
+      "title" : "Login Items & Extensions"
+    },
+    {
+      "bounds" : {
+        "Height" : 905,
+        "Width" : 1474,
+        "X" : 29,
+        "Y" : 62
+      },
+      "id" : 44505,
+      "layer" : 0,
+      "order" : 31,
+      "owner" : "Finder",
+      "pid" : 1290,
+      "title" : "⁨Desktop⁩ — Local"
+    },
+    {
+      "bounds" : {
+        "Height" : 464,
+        "Width" : 920,
+        "X" : 58,
+        "Y" : 132
+      },
+      "id" : 40701,
+      "layer" : 0,
+      "order" : 39,
+      "owner" : "Finder",
+      "pid" : 1290,
+      "title" : "Applications"
+    },
+    {
+      "bounds" : {
+        "Height" : 835,
+        "Width" : 651,
+        "X" : 823,
+        "Y" : 103
+      },
+      "id" : 39459,
+      "layer" : 0,
+      "order" : 45,
+      "owner" : "Finder",
+      "pid" : 1290,
+      "title" : "Applications"
+    },
+    {
+      "bounds" : {
+        "Height" : 788,
+        "Width" : 1083,
+        "X" : 429,
+        "Y" : 194
+      },
+      "id" : 39455,
+      "layer" : 0,
+      "order" : 46,
+      "owner" : "Finder",
+      "pid" : 1290,
+      "title" : "Trash"
+    },
+    {
+      "bounds" : {
+        "Height" : 835,
+        "Width" : 651,
+        "X" : 346,
+        "Y" : 138
+      },
+      "id" : 34392,
+      "layer" : 0,
+      "order" : 47,
+      "owner" : "Finder",
+      "pid" : 1290,
+      "title" : "Jason’s MacBook Pro"
+    },
+    {
+      "bounds" : {
+        "Height" : 835,
+        "Width" : 651,
+        "X" : 823,
+        "Y" : 103
+      },
+      "id" : 29771,
+      "layer" : 0,
+      "order" : 48,
+      "owner" : "Finder",
+      "pid" : 1290,
+      "title" : "Applications"
+    }
+  ]
+}

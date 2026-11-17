@@ -1,0 +1,189 @@
+{
+  "ok": true,
+  "source": "/Users/jasonpoindexter/Documents/GitHub/Greg agent/assets/heel/smooth-v1/decoded/idle-flat.png",
+  "frames": 16,
+  "extraction": "bundled connected components with shared row scale",
+  "errors": [],
+  "geometry": [
+    {
+      "frame": 0,
+      "bbox": [
+        34,
+        9,
+        156,
+        199
+      ]
+    },
+    {
+      "frame": 1,
+      "bbox": [
+        34,
+        9,
+        156,
+        199
+      ]
+    },
+    {
+      "frame": 2,
+      "bbox": [
+        34,
+        9,
+        156,
+        199
+      ]
+    },
+    {
+      "frame": 3,
+      "bbox": [
+        34,
+        9,
+        156,
+        199
+      ]
+    },
+    {
+      "frame": 4,
+      "bbox": [
+        34,
+        9,
+        157,
+        199
+      ]
+    },
+    {
+      "frame": 5,
+      "bbox": [
+        34,
+        9,
+        156,
+        199
+      ]
+    },
+    {
+      "frame": 6,
+      "bbox": [
+        34,
+        9,
+        156,
+        199
+      ]
+    },
+    {
+      "frame": 7,
+      "bbox": [
+        34,
+        9,
+        156,
+        199
+      ]
+    },
+    {
+      "frame": 8,
+      "bbox": [
+        34,
+        9,
+        156,
+        199
+      ]
+    },
+    {
+      "frame": 9,
+      "bbox": [
+        34,
+        9,
+        157,
+        199
+      ]
+    },
+    {
+      "frame": 10,
+      "bbox": [
+        34,
+        9,
+        156,
+        199
+      ]
+    },
+    {
+      "frame": 11,
+      "bbox": [
+        34,
+        9,
+        156,
+        199
+      ]
+    },
+    {
+      "frame": 12,
+      "bbox": [
+        34,
+        9,
+        157,
+        199
+      ]
+    },
+    {
+      "frame": 13,
+      "bbox": [
+        34,
+        9,
+        156,
+        199
+      ]
+    },
+    {
+      "frame": 14,
+      "bbox": [
+        34,
+        9,
+        156,
+        199
+      ]
+    },
+    {
+      "frame": 15,
+      "bbox": [
+        33,
+        9,
+        158,
+        199
+      ]
+    }
+  ],
+  "adjacentChangedPixels": [
+    2629,
+    2516,
+    2837,
+    1636,
+    1901,
+    1876,
+    2113,
+    2168,
+    2732,
+    3499,
+    1565,
+    2777,
+    2375,
+    1836,
+    1956,
+    2310
+  ],
+  "seamChangedPixels": 2310,
+  "visualPlaybackRequired": true,
+  "authoring": {
+    "method": "imagegen flatpalette edit preserving input idle16 poses",
+    "editTarget": "/Users/jasonpoindexter/Documents/GitHub/Greg agent/assets/heel/smooth-v1/decoded/idle.png",
+    "colourReference": "/Users/jasonpoindexter/Documents/GitHub/Greg agent/assets/heel/smooth-v1/decoded/waving-flat.png"
+  },
+  "visualReview": {
+    "frames": 16,
+    "palette": "consistent charcoalcoat across row, no furgrain",
+    "blink": "original closedblink frames6,7,8 retained",
+    "pose": "allpaws planted and same seatedanatomy, no wavegesture introduced",
+    "doneEvidence": "source/contact plus normalizedframes00,07 inspected; final nativeplayback pending"
+  },
+  "warnings": [
+    "Final nativeplayback remains required.",
+    "Final atlas needs chromadespill."
+  ]
+}

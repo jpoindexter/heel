@@ -1,0 +1,19 @@
+{
+  "version": "greg-unified-beta-proposal-v1",
+  "status": "provisional-not-approved",
+  "logicalFrame": { "width": 192, "height": 208 },
+  "sourceDensity": 2,
+  "sourceFrame": { "width": 384, "height": 416 },
+  "groundY": 196,
+  "root": { "x": 96, "y": 196 },
+  "safeRect": { "x": 12, "y": 12, "width": 168, "height": 184 },
+  "neutralProfileProvisional": { "silhouetteWidth": 168, "silhouetteHeight": 108, "projectedHeadWidth": 44, "shoulderToHip": 80 },
+  "acceptedLandmarks": null,
+  "paletteStatus": "proposed-freeze-after-master-review",
+  "palette": { "coat": "#555A5D", "shadow": "#464B4E", "outline": "#303638", "nose": "#252A2C", "iris": "#604638", "whiteMarking": "#E8E5DD", "tongueInnerEar": "#A77F83" },
+  "outlineLogicalPx": 2,
+  "format": "lossless RGBA PNG",
+  "packingProposal": { "columns": 16, "rowsPerPage": 19, "logicalPageWidth": 3072, "logicalPageHeight": 3952, "sourcePageWidth": 6144, "sourcePageHeight": 7904 },
+  "frameRequiredFields": ["action", "page", "sourceRect", "sourceDensity", "logicalSize", "root", "durationMs", "loop", "entryPose", "exitPose", "provenance"],
+  "rules": ["constant physical scale; no per-frame bounding-box normalization", "photo authority over generated references", "pose-aware anatomy and landmark review", "transparent frame clearance", "real-window visual acceptance before replacing fallback"]
+}

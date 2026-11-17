@@ -1,0 +1,56 @@
+Heel 0.1.0 · macOS (Darwin 25.6.0) · 2026-10-30T12:16:27.953Z
+
+HELPER
+port: 50498
+up: 4 min
+data folder: /Users/jasonpoindexter/Library/Application Support/studio.theft.heel
+Node: v24.18.0
+database version: 6
+brain: claude
+attention sense: off
+tasks: 1 · parked: 0 · documents: 0
+
+PANEL LOG (newest last)
+2026-10-27 10:51:27 info  layers: today
+2026-10-27 10:51:27 warn  helper: starting
+2026-10-27 10:51:30 info  helper: running
+2026-10-27 13:35:49 info  layers: today
+2026-10-27 13:35:49 warn  helper: starting
+2026-10-27 13:35:52 info  helper: running
+2026-10-27 13:36:10 info  layers: settings
+2026-10-27 13:49:28 info  layers: today
+2026-10-30 13:03:30 info  layers: today
+2026-10-30 13:03:30 warn  helper: starting
+2026-10-30 13:03:33 info  helper: running
+2026-10-30 13:07:16 info  layers: history
+2026-10-30 13:07:18 info  layers: today
+
+HELPER LOG (last lines)
+(node:88990) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+Heel sidecar listening on 127.0.0.1:50749 (data: /Users/jasonpoindexter/Library/Application Support/studio.theft.heel)
+(node:14800) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+Heel sidecar listening on 127.0.0.1:55842 (data: /Users/jasonpoindexter/Library/Application Support/studio.theft.heel)
+(node:27522) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+Heel sidecar listening on 127.0.0.1:58443 (data: /Users/jasonpoindexter/Library/Application Support/studio.theft.heel)
+(node:27759) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+Heel's helper is already running on port 58443. Not starting a second one.
+(node:28001) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+Heel's helper is already running on port 58443. Not starting a second one.
+(node:30007) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+Heel's helper is already running on port 58443. Not starting a second one.
+(node:78822) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+Heel sidecar listening on 127.0.0.1:52177 (data: /Users/jasonpoindexter/Library/Application Support/studio.theft.heel)
+(node:8620) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+Heel sidecar listening on 127.0.0.1:63481 (data: /Users/jasonpoindexter/Library/Application Support/studio.theft.heel)
+(node:69322) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+Heel sidecar listening on 127.0.0.1:52862 (data: /Users/jasonpoindexter/Library/Application Support/studio.theft.heel)
+Heel sidecar listening on 127.0.0.1:50498 (data: /Users/jasonpoindexter/Library/Application Support/studio.theft.heel)

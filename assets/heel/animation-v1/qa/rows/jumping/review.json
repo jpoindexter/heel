@@ -1,0 +1,97 @@
+{
+  "ok": true,
+  "frames_root": "/Users/jasonpoindexter/Documents/GitHub/Greg agent/assets/heel/animation-v1/qa/rows/jumping/frames",
+  "states": [
+    "jumping"
+  ],
+  "errors": [],
+  "warnings": [],
+  "rows": [
+    {
+      "state": "jumping",
+      "expected_frames": 5,
+      "actual_frames": 5,
+      "extraction_method": "components",
+      "ok": true,
+      "errors": [],
+      "warnings": [],
+      "frames": [
+        {
+          "index": 0,
+          "file": "/Users/jasonpoindexter/Documents/GitHub/Greg agent/assets/heel/animation-v1/qa/rows/jumping/frames/jumping/00.png",
+          "width": 192,
+          "height": 208,
+          "nontransparent_pixels": 14380,
+          "bbox": [
+            33,
+            36,
+            158,
+            203
+          ],
+          "edge_pixels": 0,
+          "chroma_adjacent_pixels": 76
+        },
+        {
+          "index": 1,
+          "file": "/Users/jasonpoindexter/Documents/GitHub/Greg agent/assets/heel/animation-v1/qa/rows/jumping/frames/jumping/01.png",
+          "width": 192,
+          "height": 208,
+          "nontransparent_pixels": 13607,
+          "bbox": [
+            33,
+            52,
+            159,
+            203
+          ],
+          "edge_pixels": 0,
+          "chroma_adjacent_pixels": 65
+        },
+        {
+          "index": 2,
+          "file": "/Users/jasonpoindexter/Documents/GitHub/Greg agent/assets/heel/animation-v1/qa/rows/jumping/frames/jumping/02.png",
+          "width": 192,
+          "height": 208,
+          "nontransparent_pixels": 13182,
+          "bbox": [
+            40,
+            5,
+            152,
+            171
+          ],
+          "edge_pixels": 0,
+          "chroma_adjacent_pixels": 60
+        },
+        {
+          "index": 3,
+          "file": "/Users/jasonpoindexter/Documents/GitHub/Greg agent/assets/heel/animation-v1/qa/rows/jumping/frames/jumping/03.png",
+          "width": 192,
+          "height": 208,
+          "nontransparent_pixels": 12748,
+          "bbox": [
+            40,
+            31,
+            151,
+            192
+          ],
+          "edge_pixels": 0,
+          "chroma_adjacent_pixels": 68
+        },
+        {
+          "index": 4,
+          "file": "/Users/jasonpoindexter/Documents/GitHub/Greg agent/assets/heel/animation-v1/qa/rows/jumping/frames/jumping/04.png",
+          "width": 192,
+          "height": 208,
+          "nontransparent_pixels": 14388,
+          "bbox": [
+            33,
+            36,
+            159,
+            203
+          ],
+          "edge_pixels": 0,
+          "chroma_adjacent_pixels": 87
+        }
+      ]
+    }
+  ]
+}

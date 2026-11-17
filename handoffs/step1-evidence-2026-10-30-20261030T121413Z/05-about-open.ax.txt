@@ -1,0 +1,27 @@
+The following is a diff from the previous accessibility tree for Window: "Heel panel" with ~ and + representing changed and added elements, respectively. Removed elements are summarized by ID range.
+Removed element IDs: 45-48
++					59 container (expanded) Secondary Actions: Collapse
++						60 summary About Heel 0.1.0, Value: on
++							61 heading About, Value: 2
++								62 text About
++							63 text Heel 0.1.0
++						64 container About
++							65 description list
++								66 container
++									67 text Heel 0.1.0
++								68 container
++									69 text Mac macOS (Darwin 25.6.0)
++								70 container
++									71 text Data folder /Users/jasonpoindexter/Library/Application Support/studio.theft.heel
++								72 container
++									73 text Helper port 50498 · Node v24.18.0 · database v6
++								74 container
++									75 text Brain claude
++								76 container
++									77 text Attention sense off
++								78 container
++									79 text Kept 1 tasks · 0 parked · 0 documents
++							80 button Restart helper
++							81 summary Debug, Value: off
++								82 text Debug
+The focused UI element is 60 summary About Heel 0.1.0, Value: on

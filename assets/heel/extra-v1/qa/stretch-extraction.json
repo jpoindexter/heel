@@ -1,0 +1,136 @@
+{
+  "state": "stretch",
+  "source": "/Users/jasonpoindexter/Documents/GitHub/Greg agent/assets/heel/extra-v1/decoded/stretch.png",
+  "actualFrames": 17,
+  "uniqueEncodedFrames": 17,
+  "wholeSourceUpscale": 2,
+  "bundledExtractor": "/Users/jasonpoindexter/.codex/plugins/cache/openai-curated-remote/work-pets/0.1.6/skills/create-pet/scripts/extract_strip_frames.py",
+  "method": "components; shared row scale and vertical registration; detached props grouped to nearest body",
+  "ok": true,
+  "errors": [],
+  "boxes": [
+    [
+      15,
+      32,
+      176,
+      184
+    ],
+    [
+      14,
+      31,
+      178,
+      184
+    ],
+    [
+      15,
+      31,
+      176,
+      184
+    ],
+    [
+      12,
+      23,
+      180,
+      184
+    ],
+    [
+      15,
+      30,
+      177,
+      183
+    ],
+    [
+      16,
+      30,
+      176,
+      184
+    ],
+    [
+      10,
+      29,
+      182,
+      184
+    ],
+    [
+      9,
+      30,
+      182,
+      184
+    ],
+    [
+      9,
+      29,
+      182,
+      184
+    ],
+    [
+      9,
+      29,
+      183,
+      184
+    ],
+    [
+      7,
+      30,
+      185,
+      184
+    ],
+    [
+      21,
+      34,
+      172,
+      184
+    ],
+    [
+      18,
+      41,
+      173,
+      184
+    ],
+    [
+      19,
+      40,
+      173,
+      184
+    ],
+    [
+      17,
+      36,
+      175,
+      184
+    ],
+    [
+      13,
+      30,
+      178,
+      184
+    ],
+    [
+      14,
+      30,
+      177,
+      184
+    ]
+  ],
+  "adjacentChangedPixels": [
+    3651,
+    3151,
+    12548,
+    10626,
+    6412,
+    8640,
+    6315,
+    2970,
+    3699,
+    12424,
+    13409,
+    7252,
+    4823,
+    5270,
+    6126,
+    4292,
+    4557
+  ],
+  "seamChangedPixels": 4557,
+  "visualPlaybackRequired": true
+}

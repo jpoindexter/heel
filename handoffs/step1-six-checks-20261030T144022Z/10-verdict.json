@@ -1,0 +1,12 @@
+{
+  "firstCallMs": 38,
+  "secondCallMs": 55,
+  "totalMs": 93,
+  "settingsBefore": true,
+  "settingsClosed": true,
+  "panelStillOpen": true,
+  "todayRemains": false,
+  "mainPanelRemains": true,
+  "pass": true,
+  "note": "Main view has no Today heading in this build; positive evidence is Forward to Settings and the Now container."
+}

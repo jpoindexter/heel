@@ -1,0 +1,62 @@
+Window: "Heel panel", App: Heel.
+0 standard window Heel panel, Secondary Actions: Raise
+	1 scroll area
+		2 HTML content Description: Heel, URL: tauri://localhost
+			3 container
+				4 button Back
+				5 heading Settings, Value: 1
+					6 text Settings
+				7 button Back to Greg
+				8 button Close panel
+				9 container Settings
+					10 summary Look System · Comfortable, Value: off
+						11 heading Look, Value: 2
+							12 text Look
+						13 text System · Comfortable
+					14 summary Greg Lively · notices on · attention off, Value: off
+						15 heading Greg, Value: 2
+							16 text Greg
+						17 text Lively · notices on · attention off
+					18 container (collapsed) Secondary Actions: Expand
+						19 summary Ways of working Time-box · Pickle jar, Value: off
+							20 heading Ways of working, Value: 2
+								21 text Ways of working
+							22 text Time-box · Pickle jar
+						23 stepper 0
+							24 unknown
+							25 unknown
+						26 stepper 0
+							27 unknown
+							28 unknown
+					29 summary Brain AI and skills, Value: off
+						30 heading Brain, Value: 2
+							31 text Brain
+						32 text AI and skills
+					33 summary Email Gmail, read-only, Value: off
+						34 heading Email, Value: 2
+							35 text Email
+						36 text Gmail, read-only
+					37 summary Startup Login, Dock, Value: off
+						38 heading Startup, Value: 2
+							39 text Startup
+						40 text Login, Dock
+					41 summary Privacy & data Back up, wipe, Value: off
+						42 heading Privacy & data, Value: 2
+							43 text Privacy & data
+						44 text Back up, wipe
+					45 summary About Heel 0.1.0, Value: off
+						46 heading About, Value: 2
+							47 text About
+						48 text Heel 0.1.0
+				49 button (collapsed) More, Secondary Actions: Expand
+				50 button What's on your mind?
+				51 container Notifications (F8)
+52 menu bar
+	53 Heel
+	54 File
+	55 Edit
+	56 View
+	57 Window
+	58 Help
+
+The focused UI element is 29 summary Brain AI and skills, Value: off

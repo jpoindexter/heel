@@ -1,0 +1,14 @@
+{
+  "method": "native title-bar drag by physical delta (4,38), then compare saved preference",
+  "before": {
+    "docked": false,
+    "x": 1798,
+    "y": 214
+  },
+  "after": {
+    "docked": false,
+    "x": 1794,
+    "y": 176
+  },
+  "savedFileHashRestored": false
+}

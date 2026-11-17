@@ -1,0 +1,17 @@
+The following is a diff from the previous accessibility tree for Window: "Save" with ~ and + representing changed and added elements, respectively. Removed elements are summarized by ID range.
+Removed element IDs: 0-16
++25 sheet Description: save, ID: save-panel, Secondary Actions: Raise
++	26 split group
++		27 text Value: Where:, ID: whereLabel
++		28 pop up button Where:, Value: desktop-0.1.22-native, ID: where popup
++		29 disclosure triangle Description: show more options, Value: 0
++		30 text Do you want to keep this new document “Untitled 12.txt”? You can choose to save your changes, or delete this document immediately. You can’t undo this action. Save As:
++		31 text field (settable) Value: Untitled 12.txt, ID: saveAsNameTextField
++		32 text Value: Tags:, ID: tagsLabel
++		33 text field (settable) tag editor
++		34 text Plain Text Encoding:
++		35 pop up button Help: Encoding to use if there is no encoding specified with the file., Value: Unicode (UTF-8)
++		36 checkbox If no extension is provided, use “.txt”., Help: Automatically append “.txt” to the file name if no known file name extension is provided., Value: 1
++		37 button Delete, ID: DontSaveButton
++		38 button Cancel, ID: CancelButton
++		39 button Save, ID: OKButton

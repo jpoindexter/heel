@@ -1,0 +1,56 @@
+[
+  {
+    "title": "Open Heel and find your way",
+    "tabReached": true,
+    "key": "Return",
+    "opened": true
+  },
+  {
+    "title": "Choose the AI Heel uses",
+    "tabReached": true,
+    "key": "space",
+    "opened": true
+  },
+  {
+    "title": "Add, finish and park tasks",
+    "tabReached": true,
+    "key": "Return",
+    "opened": true
+  },
+  {
+    "title": "Run a focus time-box",
+    "tabReached": true,
+    "key": "space",
+    "opened": true
+  },
+  {
+    "title": "Read your email with Heel",
+    "tabReached": true,
+    "key": "Return",
+    "opened": true
+  },
+  {
+    "title": "Find anything",
+    "tabReached": true,
+    "key": "space",
+    "opened": true
+  },
+  {
+    "title": "Report a bug or suggest an idea",
+    "tabReached": true,
+    "key": "Return",
+    "opened": true
+  },
+  {
+    "title": "Your data",
+    "tabReached": true,
+    "key": "space",
+    "opened": true
+  },
+  {
+    "title": "When something is off",
+    "tabReached": true,
+    "key": "Return",
+    "opened": true
+  }
+]

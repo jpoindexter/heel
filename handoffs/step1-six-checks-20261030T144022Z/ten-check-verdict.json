@@ -1,0 +1,32 @@
+{
+  "date": "2026-10-30T14:46:11.481739+00:00",
+  "pass": 10,
+  "fail": 0,
+  "notVerified": 0,
+  "buildSha256": "16cab434b1691081a0c9f84f37eb557bc22b40da774f939eda290ed979d9526a",
+  "pid": 84328,
+  "fourChecksEvidence": "/Users/jasonpoindexter/Documents/GitHub/Greg agent/handoffs/step1-fixes-evidence-2026-10-30-20261030T124450Z",
+  "remainingSixEvidence": "/Users/jasonpoindexter/Documents/GitHub/Greg agent/handoffs/step1-six-checks-20261030T144022Z",
+  "criteriaRevisions": {
+    "1": "Floating panel/always-on-top enabled versus deliberately coverable parked panel",
+    "7": "Missing-key APIs offer setup; not activation, active AI unchanged"
+  },
+  "checks": {
+    "1": "Pass - executed native runtime",
+    "2": "Pass - executed native runtime",
+    "3": "Pass - executed native runtime",
+    "4": "Pass - executed native runtime",
+    "5": "Pass - executed native runtime",
+    "6": "Pass - executed native runtime",
+    "7": "Pass - executed native runtime",
+    "8": "Pass - executed native runtime",
+    "9": "Pass - executed native runtime",
+    "10": "Pass - executed native runtime"
+  },
+  "limits": [
+    "No real API request",
+    "No notarization",
+    "No actual logout/login cycle",
+    "Not full accessibility or broader card acceptance"
+  ]
+}

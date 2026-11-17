@@ -1,0 +1,9070 @@
+{
+  "schema": "heel-sprite-atlas-v1",
+  "status": "beta artwork; native integration unverified",
+  "logicalFrame": [
+    192,
+    208
+  ],
+  "groundY": 196,
+  "anchor": [
+    96,
+    196
+  ],
+  "pages": [
+    {
+      "file": "greg-puppy-1.png",
+      "file2x": "greg-puppy-1@2x.png",
+      "size": [
+        3072,
+        3328
+      ],
+      "size2x": [
+        6144,
+        6656
+      ],
+      "columns": 16,
+      "rows": 16,
+      "sha256": "d7ee8c075280c7b46f6329159ab95b60044605e6bffafd8bb041e2dc1f3dbf67"
+    },
+    {
+      "file": "greg-puppy-2.png",
+      "file2x": "greg-puppy-2@2x.png",
+      "size": [
+        3072,
+        3328
+      ],
+      "size2x": [
+        6144,
+        6656
+      ],
+      "columns": 16,
+      "rows": 16,
+      "sha256": "e3bec95a170000dcef153549935174cd7bbe2fbc89950cdcfd485f3118ccaed4"
+    },
+    {
+      "file": "greg-puppy-3.png",
+      "file2x": "greg-puppy-3@2x.png",
+      "size": [
+        3072,
+        3328
+      ],
+      "size2x": [
+        6144,
+        6656
+      ],
+      "columns": 16,
+      "rows": 16,
+      "sha256": "70dbffccf63ceeb5e22385fef2905759445cded3dd39542d6bbf394ae3fb855c"
+    }
+  ],
+  "animations": {
+    "idle": {
+      "label": "Sit quietly",
+      "frameCount": 16,
+      "loop": true,
+      "durationMs": 2672,
+      "provenance": "authored generated sequential poses",
+      "source": "decoded/idle.png",
+      "calibration": {
+        "logicalScale": 0.387097,
+        "headHeightSourcePx": 124,
+        "headHeightLogicalTargetPx": 48,
+        "method": "manual approximate neutral-head calibration; one uniform scale per entire clip; visual comparison required"
+      },
+      "frames": [
+        {
+          "page": 0,
+          "rect": [
+            0,
+            0,
+            192,
+            208
+          ],
+          "durationMs": 167,
+          "rootX": 0
+        },
+        {
+          "page": 0,
+          "rect": [
+            192,
+            0,
+            192,
+            208
+          ],
+          "durationMs": 167,
+          "rootX": 0
+        },
+        {
+          "page": 0,
+          "rect": [
+            384,
+            0,
+            192,
+            208
+          ],
+          "durationMs": 167,
+          "rootX": 0
+        },
+        {
+          "page": 0,
+          "rect": [
+            576,
+            0,
+            192,
+            208
+          ],
+          "durationMs": 167,
+          "rootX": 0
+        },
+        {
+          "page": 0,
+          "rect": [
+            768,
+            0,
+            192,
+            208
+          ],
+          "durationMs": 167,
+          "rootX": 0
+        },
+        {
+          "page": 0,
+          "rect": [
+            960,
+            0,
+            192,
+            208
+          ],
+          "durationMs": 167,
+          "rootX": 0
+        },
+        {
+          "page": 0,
+          "rect": [
+            1152,
+            0,
+            192,
+            208
+          ],
+          "durationMs": 167,
+          "rootX": 0
+        },
+        {
+          "page": 0,
+          "rect": [
+            1344,
+            0,
+            192,
+            208
+          ],
+          "durationMs": 167,
+          "rootX": 0
+        },
+        {
+          "page": 0,
+          "rect": [
+            1536,
+            0,
+            192,
+            208
+          ],
+          "durationMs": 167,
+          "rootX": 0
+        },
+        {
+          "page": 0,
+          "rect": [
+            1728,
+            0,
+            192,
+            208
+          ],
+          "durationMs": 167,
+          "rootX": 0
+        },
+        {
+          "page": 0,
+          "rect": [
+            1920,
+            0,
+            192,
+            208
+          ],
+          "durationMs": 167,
+          "rootX": 0
+        },
+        {
+          "page": 0,
+          "rect": [
+            2112,
+            0,
+            192,
+            208
+          ],
+          "durationMs": 167,
+          "rootX": 0
+        },
+        {
+          "page": 0,
+          "rect": [
+            2304,
+            0,
+            192,
+            208
+          ],
+          "durationMs": 167,
+          "rootX": 0
+        },
+        {
+          "page": 0,
+          "rect": [
+            2496,
+            0,
+            192,
+            208
+          ],
+          "durationMs": 167,
+          "rootX": 0
+        },
+        {
+          "page": 0,
+          "rect": [
+            2688,
+            0,
+            192,
+            208
+          ],
+          "durationMs": 167,
+          "rootX": 0
+        },
+        {
+          "page": 0,
+          "rect": [
+            2880,
+            0,
+            192,
+            208
+          ],
+          "durationMs": 167,
+          "rootX": 0
+        }
+      ]
+    },
+    "walk-right": {
+      "label": "Walk right",
+      "frameCount": 24,
+      "loop": true,
+      "durationMs": 1488,
+      "provenance": "authored generated sequential poses",
+      "source": "decoded/walk-right.png",
+      "calibration": {
+        "logicalScale": 0.786885,
+        "headHeightSourcePx": 61,
+        "headHeightLogicalTargetPx": 48,
+        "method": "manual approximate neutral-head calibration; one uniform scale per entire clip; visual comparison required"
+      },
+      "frames": [
+        {
+          "page": 0,
+          "rect": [
+            0,
+            208,
+            192,
+            208
+          ],
+          "durationMs": 62,
+          "rootX": 0
+        },
+        {
+          "page": 0,
+          "rect": [
+            192,
+            208,
+            192,
+            208
+          ],
+          "durationMs": 62,
+          "rootX": 0
+        },
+        {
+          "page": 0,
+          "rect": [
+            384,
+            208,
+            192,
+            208
+          ],
+          "durationMs": 62,
+          "rootX": 0
+        },
+        {
+          "page": 0,
+          "rect": [
+            576,
+            208,
+            192,
+            208
+          ],
+          "durationMs": 62,
+          "rootX": 0
+        },
+        {
+          "page": 0,
+          "rect": [
+            768,
+            208,
+            192,
+            208
+          ],
+          "durationMs": 62,
+          "rootX": 0
+        },
+        {
+          "page": 0,
+          "rect": [
+            960,
+            208,
+            192,
+            208
+          ],
+          "durationMs": 62,
+          "rootX": 0
+        },
+        {
+          "page": 0,
+          "rect": [
+            1152,
+            208,
+            192,
+            208
+          ],
+          "durationMs": 62,
+          "rootX": 0
+        },
+        {
+          "page": 0,
+          "rect": [
+            1344,
+            208,
+            192,
+            208
+          ],
+          "durationMs": 62,
+          "rootX": 0
+        },
+        {
+          "page": 0,
+          "rect": [
+            1536,
+            208,
+            192,
+            208
+          ],
+          "durationMs": 62,
+          "rootX": 0
+        },
+        {
+          "page": 0,
+          "rect": [
+            1728,
+            208,
+            192,
+            208
+          ],
+          "durationMs": 62,
+          "rootX": 0
+        },
+        {
+          "page": 0,
+          "rect": [
+            1920,
+            208,
+            192,
+            208
+          ],
+          "durationMs": 62,
+          "rootX": 0
+        },
+        {
+          "page": 0,
+          "rect": [
+            2112,
+            208,
+            192,
+            208
+          ],
+          "durationMs": 62,
+          "rootX": 0
+        },
+        {
+          "page": 0,
+          "rect": [
+            2304,
+            208,
+            192,
+            208
+          ],
+          "durationMs": 62,
+          "rootX": 0
+        },
+        {
+          "page": 0,
+          "rect": [
+            2496,
+            208,
+            192,
+            208
+          ],
+          "durationMs": 62,
+          "rootX": 0
+        },
+        {
+          "page": 0,
+          "rect": [
+            2688,
+            208,
+            192,
+            208
+          ],
+          "durationMs": 62,
+          "rootX": 0
+        },
+        {
+          "page": 0,
+          "rect": [
+            2880,
+            208,
+            192,
+            208
+          ],
+          "durationMs": 62,
+          "rootX": 0
+        },
+        {
+          "page": 0,
+          "rect": [
+            0,
+            416,
+            192,
+            208
+          ],
+          "durationMs": 62,
+          "rootX": 0
+        },
+        {
+          "page": 0,
+          "rect": [
+            192,
+            416,
+            192,
+            208
+          ],
+          "durationMs": 62,
+          "rootX": 0
+        },
+        {
+          "page": 0,
+          "rect": [
+            384,
+            416,
+            192,
+            208
+          ],
+          "durationMs": 62,
+          "rootX": 0
+        },
+        {
+          "page": 0,
+          "rect": [
+            576,
+            416,
+            192,
+            208
+          ],
+          "durationMs": 62,
+          "rootX": 0
+        },
+        {
+          "page": 0,
+          "rect": [
+            768,
+            416,
+            192,
+            208
+          ],
+          "durationMs": 62,
+          "rootX": 0
+        },
+        {
+          "page": 0,
+          "rect": [
+            960,
+            416,
+            192,
+            208
+          ],
+          "durationMs": 62,
+          "rootX": 0
+        },
+        {
+          "page": 0,
+          "rect": [
+            1152,
+            416,
+            192,
+            208
+          ],
+          "durationMs": 62,
+          "rootX": 0
+        },
+        {
+          "page": 0,
+          "rect": [
+            1344,
+            416,
+            192,
+            208
+          ],
+          "durationMs": 62,
+          "rootX": 0
+        }
+      ]
+    },
+    "ball-play": {
+      "label": "Play with a ball",
+      "frameCount": 32,
+      "loop": false,
+      "durationMs": 2580,
+      "provenance": "authored generated sequential poses",
+      "source": "decoded/ball-play.png",
+      "calibration": {
+        "logicalScale": 0.648649,
+        "headHeightSourcePx": 74,
+        "headHeightLogicalTargetPx": 48,
+        "method": "manual approximate neutral-head calibration; one uniform scale per entire clip; visual comparison required"
+      },
+      "frames": [
+        {
+          "page": 0,
+          "rect": [
+            1536,
+            416,
+            192,
+            208
+          ],
+          "durationMs": 220,
+          "rootX": 0
+        },
+        {
+          "page": 0,
+          "rect": [
+            1728,
+            416,
+            192,
+            208
+          ],
+          "durationMs": 62,
+          "rootX": 0
+        },
+        {
+          "page": 0,
+          "rect": [
+            1920,
+            416,
+            192,
+            208
+          ],
+          "durationMs": 62,
+          "rootX": 0
+        },
+        {
+          "page": 0,
+          "rect": [
+            2112,
+            416,
+            192,
+            208
+          ],
+          "durationMs": 62,
+          "rootX": 0
+        },
+        {
+          "page": 0,
+          "rect": [
+            2304,
+            416,
+            192,
+            208
+          ],
+          "durationMs": 62,
+          "rootX": 0
+        },
+        {
+          "page": 0,
+          "rect": [
+            2496,
+            416,
+            192,
+            208
+          ],
+          "durationMs": 62,
+          "rootX": 0
+        },
+        {
+          "page": 0,
+          "rect": [
+            2688,
+            416,
+            192,
+            208
+          ],
+          "durationMs": 62,
+          "rootX": 0
+        },
+        {
+          "page": 0,
+          "rect": [
+            2880,
+            416,
+            192,
+            208
+          ],
+          "durationMs": 62,
+          "rootX": 0
+        },
+        {
+          "page": 0,
+          "rect": [
+            0,
+            624,
+            192,
+            208
+          ],
+          "durationMs": 62,
+          "rootX": 0
+        },
+        {
+          "page": 0,
+          "rect": [
+            192,
+            624,
+            192,
+            208
+          ],
+          "durationMs": 62,
+          "rootX": 0
+        },
+        {
+          "page": 0,
+          "rect": [
+            384,
+            624,
+            192,
+            208
+          ],
+          "durationMs": 62,
+          "rootX": 0
+        },
+        {
+          "page": 0,
+          "rect": [
+            576,
+            624,
+            192,
+            208
+          ],
+          "durationMs": 62,
+          "rootX": 0
+        },
+        {
+          "page": 0,
+          "rect": [
+            768,
+            624,
+            192,
+            208
+          ],
+          "durationMs": 62,
+          "rootX": 0
+        },
+        {
+          "page": 0,
+          "rect": [
+            960,
+            624,
+            192,
+            208
+          ],
+          "durationMs": 62,
+          "rootX": 0
+        },
+        {
+          "page": 0,
+          "rect": [
+            1152,
+            624,
+            192,
+            208
+          ],
+          "durationMs": 62,
+          "rootX": 0
+        },
+        {
+          "page": 0,
+          "rect": [
+            1344,
+            624,
+            192,
+            208
+          ],
+          "durationMs": 62,
+          "rootX": 0
+        },
+        {
+          "page": 0,
+          "rect": [
+            1536,
+            624,
+            192,
+            208
+          ],
+          "durationMs": 62,
+          "rootX": 0
+        },
+        {
+          "page": 0,
+          "rect": [
+            1728,
+            624,
+            192,
+            208
+          ],
+          "durationMs": 62,
+          "rootX": 0
+        },
+        {
+          "page": 0,
+          "rect": [
+            1920,
+            624,
+            192,
+            208
+          ],
+          "durationMs": 62,
+          "rootX": 0
+        },
+        {
+          "page": 0,
+          "rect": [
+            2112,
+            624,
+            192,
+            208
+          ],
+          "durationMs": 62,
+          "rootX": 0
+        },
+        {
+          "page": 0,
+          "rect": [
+            2304,
+            624,
+            192,
+            208
+          ],
+          "durationMs": 62,
+          "rootX": 0
+        },
+        {
+          "page": 0,
+          "rect": [
+            2496,
+            624,
+            192,
+            208
+          ],
+          "durationMs": 62,
+          "rootX": 0
+        },
+        {
+          "page": 0,
+          "rect": [
+            2688,
+            624,
+            192,
+            208
+          ],
+          "durationMs": 62,
+          "rootX": 0
+        },
+        {
+          "page": 0,
+          "rect": [
+            2880,
+            624,
+            192,
+            208
+          ],
+          "durationMs": 62,
+          "rootX": 0
+        },
+        {
+          "page": 0,
+          "rect": [
+            0,
+            832,
+            192,
+            208
+          ],
+          "durationMs": 62,
+          "rootX": 0
+        },
+        {
+          "page": 0,
+          "rect": [
+            192,
+            832,
+            192,
+            208
+          ],
+          "durationMs": 62,
+          "rootX": 0
+        },
+        {
+          "page": 0,
+          "rect": [
+            384,
+            832,
+            192,
+            208
+          ],
+          "durationMs": 62,
+          "rootX": 0
+        },
+        {
+          "page": 0,
+          "rect": [
+            576,
+            832,
+            192,
+            208
+          ],
+          "durationMs": 62,
+          "rootX": 0
+        },
+        {
+          "page": 0,
+          "rect": [
+            768,
+            832,
+            192,
+            208
+          ],
+          "durationMs": 62,
+          "rootX": 0
+        },
+        {
+          "page": 0,
+          "rect": [
+            960,
+            832,
+            192,
+            208
+          ],
+          "durationMs": 62,
+          "rootX": 0
+        },
+        {
+          "page": 0,
+          "rect": [
+            1152,
+            832,
+            192,
+            208
+          ],
+          "durationMs": 62,
+          "rootX": 0
+        },
+        {
+          "page": 0,
+          "rect": [
+            1344,
+            832,
+            192,
+            208
+          ],
+          "durationMs": 500,
+          "rootX": 0
+        }
+      ]
+    },
+    "listening": {
+      "label": "Listen with a head tilt",
+      "frameCount": 16,
+      "loop": true,
+      "durationMs": 2000,
+      "provenance": "authored generated sequential poses",
+      "source": "decoded/listening.png",
+      "calibration": {
+        "logicalScale": 0.387097,
+        "headHeightSourcePx": 124,
+        "headHeightLogicalTargetPx": 48,
+        "method": "manual approximate neutral-head calibration; one uniform scale per entire clip; visual comparison required"
+      },
+      "frames": [
+        {
+          "page": 0,
+          "rect": [
+            1536,
+            832,
+            192,
+            208
+          ],
+          "durationMs": 125,
+          "rootX": 0
+        },
+        {
+          "page": 0,
+          "rect": [
+            1728,
+            832,
+            192,
+            208
+          ],
+          "durationMs": 125,
+          "rootX": 0
+        },
+        {
+          "page": 0,
+          "rect": [
+            1920,
+            832,
+            192,
+            208
+          ],
+          "durationMs": 125,
+          "rootX": 0
+        },
+        {
+          "page": 0,
+          "rect": [
+            2112,
+            832,
+            192,
+            208
+          ],
+          "durationMs": 125,
+          "rootX": 0
+        },
+        {
+          "page": 0,
+          "rect": [
+            2304,
+            832,
+            192,
+            208
+          ],
+          "durationMs": 125,
+          "rootX": 0
+        },
+        {
+          "page": 0,
+          "rect": [
+            2496,
+            832,
+            192,
+            208
+          ],
+          "durationMs": 125,
+          "rootX": 0
+        },
+        {
+          "page": 0,
+          "rect": [
+            2688,
+            832,
+            192,
+            208
+          ],
+          "durationMs": 125,
+          "rootX": 0
+        },
+        {
+          "page": 0,
+          "rect": [
+            2880,
+            832,
+            192,
+            208
+          ],
+          "durationMs": 125,
+          "rootX": 0
+        },
+        {
+          "page": 0,
+          "rect": [
+            0,
+            1040,
+            192,
+            208
+          ],
+          "durationMs": 125,
+          "rootX": 0
+        },
+        {
+          "page": 0,
+          "rect": [
+            192,
+            1040,
+            192,
+            208
+          ],
+          "durationMs": 125,
+          "rootX": 0
+        },
+        {
+          "page": 0,
+          "rect": [
+            384,
+            1040,
+            192,
+            208
+          ],
+          "durationMs": 125,
+          "rootX": 0
+        },
+        {
+          "page": 0,
+          "rect": [
+            576,
+            1040,
+            192,
+            208
+          ],
+          "durationMs": 125,
+          "rootX": 0
+        },
+        {
+          "page": 0,
+          "rect": [
+            768,
+            1040,
+            192,
+            208
+          ],
+          "durationMs": 125,
+          "rootX": 0
+        },
+        {
+          "page": 0,
+          "rect": [
+            960,
+            1040,
+            192,
+            208
+          ],
+          "durationMs": 125,
+          "rootX": 0
+        },
+        {
+          "page": 0,
+          "rect": [
+            1152,
+            1040,
+            192,
+            208
+          ],
+          "durationMs": 125,
+          "rootX": 0
+        },
+        {
+          "page": 0,
+          "rect": [
+            1344,
+            1040,
+            192,
+            208
+          ],
+          "durationMs": 125,
+          "rootX": 0
+        }
+      ]
+    },
+    "focus": {
+      "label": "Lie down and focus",
+      "frameCount": 16,
+      "loop": true,
+      "durationMs": 2672,
+      "provenance": "authored generated sequential poses",
+      "source": "decoded/focus.png",
+      "calibration": {
+        "logicalScale": 0.387097,
+        "headHeightSourcePx": 124,
+        "headHeightLogicalTargetPx": 48,
+        "method": "manual approximate neutral-head calibration; one uniform scale per entire clip; visual comparison required"
+      },
+      "frames": [
+        {
+          "page": 0,
+          "rect": [
+            1536,
+            1040,
+            192,
+            208
+          ],
+          "durationMs": 167,
+          "rootX": 0
+        },
+        {
+          "page": 0,
+          "rect": [
+            1728,
+            1040,
+            192,
+            208
+          ],
+          "durationMs": 167,
+          "rootX": 0
+        },
+        {
+          "page": 0,
+          "rect": [
+            1920,
+            1040,
+            192,
+            208
+          ],
+          "durationMs": 167,
+          "rootX": 0
+        },
+        {
+          "page": 0,
+          "rect": [
+            2112,
+            1040,
+            192,
+            208
+          ],
+          "durationMs": 167,
+          "rootX": 0
+        },
+        {
+          "page": 0,
+          "rect": [
+            2304,
+            1040,
+            192,
+            208
+          ],
+          "durationMs": 167,
+          "rootX": 0
+        },
+        {
+          "page": 0,
+          "rect": [
+            2496,
+            1040,
+            192,
+            208
+          ],
+          "durationMs": 167,
+          "rootX": 0
+        },
+        {
+          "page": 0,
+          "rect": [
+            2688,
+            1040,
+            192,
+            208
+          ],
+          "durationMs": 167,
+          "rootX": 0
+        },
+        {
+          "page": 0,
+          "rect": [
+            2880,
+            1040,
+            192,
+            208
+          ],
+          "durationMs": 167,
+          "rootX": 0
+        },
+        {
+          "page": 0,
+          "rect": [
+            0,
+            1248,
+            192,
+            208
+          ],
+          "durationMs": 167,
+          "rootX": 0
+        },
+        {
+          "page": 0,
+          "rect": [
+            192,
+            1248,
+            192,
+            208
+          ],
+          "durationMs": 167,
+          "rootX": 0
+        },
+        {
+          "page": 0,
+          "rect": [
+            384,
+            1248,
+            192,
+            208
+          ],
+          "durationMs": 167,
+          "rootX": 0
+        },
+        {
+          "page": 0,
+          "rect": [
+            576,
+            1248,
+            192,
+            208
+          ],
+          "durationMs": 167,
+          "rootX": 0
+        },
+        {
+          "page": 0,
+          "rect": [
+            768,
+            1248,
+            192,
+            208
+          ],
+          "durationMs": 167,
+          "rootX": 0
+        },
+        {
+          "page": 0,
+          "rect": [
+            960,
+            1248,
+            192,
+            208
+          ],
+          "durationMs": 167,
+          "rootX": 0
+        },
+        {
+          "page": 0,
+          "rect": [
+            1152,
+            1248,
+            192,
+            208
+          ],
+          "durationMs": 167,
+          "rootX": 0
+        },
+        {
+          "page": 0,
+          "rect": [
+            1344,
+            1248,
+            192,
+            208
+          ],
+          "durationMs": 167,
+          "rootX": 0
+        }
+      ]
+    },
+    "nudge": {
+      "label": "Gentle paw nudge",
+      "frameCount": 16,
+      "loop": false,
+      "durationMs": 1882,
+      "provenance": "authored generated sequential poses",
+      "source": "decoded/nudge.png",
+      "calibration": {
+        "logicalScale": 0.387097,
+        "headHeightSourcePx": 124,
+        "headHeightLogicalTargetPx": 48,
+        "method": "manual approximate neutral-head calibration; one uniform scale per entire clip; visual comparison required"
+      },
+      "frames": [
+        {
+          "page": 0,
+          "rect": [
+            1536,
+            1248,
+            192,
+            208
+          ],
+          "durationMs": 220,
+          "rootX": 0
+        },
+        {
+          "page": 0,
+          "rect": [
+            1728,
+            1248,
+            192,
+            208
+          ],
+          "durationMs": 83,
+          "rootX": 0
+        },
+        {
+          "page": 0,
+          "rect": [
+            1920,
+            1248,
+            192,
+            208
+          ],
+          "durationMs": 83,
+          "rootX": 0
+        },
+        {
+          "page": 0,
+          "rect": [
+            2112,
+            1248,
+            192,
+            208
+          ],
+          "durationMs": 83,
+          "rootX": 0
+        },
+        {
+          "page": 0,
+          "rect": [
+            2304,
+            1248,
+            192,
+            208
+          ],
+          "durationMs": 83,
+          "rootX": 0
+        },
+        {
+          "page": 0,
+          "rect": [
+            2496,
+            1248,
+            192,
+            208
+          ],
+          "durationMs": 83,
+          "rootX": 0
+        },
+        {
+          "page": 0,
+          "rect": [
+            2688,
+            1248,
+            192,
+            208
+          ],
+          "durationMs": 83,
+          "rootX": 0
+        },
+        {
+          "page": 0,
+          "rect": [
+            2880,
+            1248,
+            192,
+            208
+          ],
+          "durationMs": 83,
+          "rootX": 0
+        },
+        {
+          "page": 0,
+          "rect": [
+            0,
+            1456,
+            192,
+            208
+          ],
+          "durationMs": 83,
+          "rootX": 0
+        },
+        {
+          "page": 0,
+          "rect": [
+            192,
+            1456,
+            192,
+            208
+          ],
+          "durationMs": 83,
+          "rootX": 0
+        },
+        {
+          "page": 0,
+          "rect": [
+            384,
+            1456,
+            192,
+            208
+          ],
+          "durationMs": 83,
+          "rootX": 0
+        },
+        {
+          "page": 0,
+          "rect": [
+            576,
+            1456,
+            192,
+            208
+          ],
+          "durationMs": 83,
+          "rootX": 0
+        },
+        {
+          "page": 0,
+          "rect": [
+            768,
+            1456,
+            192,
+            208
+          ],
+          "durationMs": 83,
+          "rootX": 0
+        },
+        {
+          "page": 0,
+          "rect": [
+            960,
+            1456,
+            192,
+            208
+          ],
+          "durationMs": 83,
+          "rootX": 0
+        },
+        {
+          "page": 0,
+          "rect": [
+            1152,
+            1456,
+            192,
+            208
+          ],
+          "durationMs": 83,
+          "rootX": 0
+        },
+        {
+          "page": 0,
+          "rect": [
+            1344,
+            1456,
+            192,
+            208
+          ],
+          "durationMs": 500,
+          "rootX": 0
+        }
+      ]
+    },
+    "done": {
+      "label": "Contented tail wag",
+      "frameCount": 16,
+      "loop": false,
+      "durationMs": 1882,
+      "provenance": "authored generated sequential poses",
+      "source": "decoded/done.png",
+      "calibration": {
+        "logicalScale": 0.4,
+        "headHeightSourcePx": 120,
+        "headHeightLogicalTargetPx": 48,
+        "method": "manual approximate neutral-head calibration; one uniform scale per entire clip; visual comparison required"
+      },
+      "frames": [
+        {
+          "page": 0,
+          "rect": [
+            1536,
+            1456,
+            192,
+            208
+          ],
+          "durationMs": 220,
+          "rootX": 0
+        },
+        {
+          "page": 0,
+          "rect": [
+            1728,
+            1456,
+            192,
+            208
+          ],
+          "durationMs": 83,
+          "rootX": 0
+        },
+        {
+          "page": 0,
+          "rect": [
+            1920,
+            1456,
+            192,
+            208
+          ],
+          "durationMs": 83,
+          "rootX": 0
+        },
+        {
+          "page": 0,
+          "rect": [
+            2112,
+            1456,
+            192,
+            208
+          ],
+          "durationMs": 83,
+          "rootX": 0
+        },
+        {
+          "page": 0,
+          "rect": [
+            2304,
+            1456,
+            192,
+            208
+          ],
+          "durationMs": 83,
+          "rootX": 0
+        },
+        {
+          "page": 0,
+          "rect": [
+            2496,
+            1456,
+            192,
+            208
+          ],
+          "durationMs": 83,
+          "rootX": 0
+        },
+        {
+          "page": 0,
+          "rect": [
+            2688,
+            1456,
+            192,
+            208
+          ],
+          "durationMs": 83,
+          "rootX": 0
+        },
+        {
+          "page": 0,
+          "rect": [
+            2880,
+            1456,
+            192,
+            208
+          ],
+          "durationMs": 83,
+          "rootX": 0
+        },
+        {
+          "page": 0,
+          "rect": [
+            0,
+            1664,
+            192,
+            208
+          ],
+          "durationMs": 83,
+          "rootX": 0
+        },
+        {
+          "page": 0,
+          "rect": [
+            192,
+            1664,
+            192,
+            208
+          ],
+          "durationMs": 83,
+          "rootX": 0
+        },
+        {
+          "page": 0,
+          "rect": [
+            384,
+            1664,
+            192,
+            208
+          ],
+          "durationMs": 83,
+          "rootX": 0
+        },
+        {
+          "page": 0,
+          "rect": [
+            576,
+            1664,
+            192,
+            208
+          ],
+          "durationMs": 83,
+          "rootX": 0
+        },
+        {
+          "page": 0,
+          "rect": [
+            768,
+            1664,
+            192,
+            208
+          ],
+          "durationMs": 83,
+          "rootX": 0
+        },
+        {
+          "page": 0,
+          "rect": [
+            960,
+            1664,
+            192,
+            208
+          ],
+          "durationMs": 83,
+          "rootX": 0
+        },
+        {
+          "page": 0,
+          "rect": [
+            1152,
+            1664,
+            192,
+            208
+          ],
+          "durationMs": 83,
+          "rootX": 0
+        },
+        {
+          "page": 0,
+          "rect": [
+            1344,
+            1664,
+            192,
+            208
+          ],
+          "durationMs": 500,
+          "rootX": 0
+        }
+      ]
+    },
+    "rest": {
+      "label": "Curled asleep",
+      "frameCount": 16,
+      "loop": true,
+      "durationMs": 2672,
+      "provenance": "authored generated sequential poses",
+      "source": "decoded/rest.png",
+      "calibration": {
+        "logicalScale": 0.410256,
+        "headHeightSourcePx": 117,
+        "headHeightLogicalTargetPx": 48,
+        "method": "manual approximate neutral-head calibration; one uniform scale per entire clip; visual comparison required"
+      },
+      "frames": [
+        {
+          "page": 0,
+          "rect": [
+            1536,
+            1664,
+            192,
+            208
+          ],
+          "durationMs": 167,
+          "rootX": 0
+        },
+        {
+          "page": 0,
+          "rect": [
+            1728,
+            1664,
+            192,
+            208
+          ],
+          "durationMs": 167,
+          "rootX": 0
+        },
+        {
+          "page": 0,
+          "rect": [
+            1920,
+            1664,
+            192,
+            208
+          ],
+          "durationMs": 167,
+          "rootX": 0
+        },
+        {
+          "page": 0,
+          "rect": [
+            2112,
+            1664,
+            192,
+            208
+          ],
+          "durationMs": 167,
+          "rootX": 0
+        },
+        {
+          "page": 0,
+          "rect": [
+            2304,
+            1664,
+            192,
+            208
+          ],
+          "durationMs": 167,
+          "rootX": 0
+        },
+        {
+          "page": 0,
+          "rect": [
+            2496,
+            1664,
+            192,
+            208
+          ],
+          "durationMs": 167,
+          "rootX": 0
+        },
+        {
+          "page": 0,
+          "rect": [
+            2688,
+            1664,
+            192,
+            208
+          ],
+          "durationMs": 167,
+          "rootX": 0
+        },
+        {
+          "page": 0,
+          "rect": [
+            2880,
+            1664,
+            192,
+            208
+          ],
+          "durationMs": 167,
+          "rootX": 0
+        },
+        {
+          "page": 0,
+          "rect": [
+            0,
+            1872,
+            192,
+            208
+          ],
+          "durationMs": 167,
+          "rootX": 0
+        },
+        {
+          "page": 0,
+          "rect": [
+            192,
+            1872,
+            192,
+            208
+          ],
+          "durationMs": 167,
+          "rootX": 0
+        },
+        {
+          "page": 0,
+          "rect": [
+            384,
+            1872,
+            192,
+            208
+          ],
+          "durationMs": 167,
+          "rootX": 0
+        },
+        {
+          "page": 0,
+          "rect": [
+            576,
+            1872,
+            192,
+            208
+          ],
+          "durationMs": 167,
+          "rootX": 0
+        },
+        {
+          "page": 0,
+          "rect": [
+            768,
+            1872,
+            192,
+            208
+          ],
+          "durationMs": 167,
+          "rootX": 0
+        },
+        {
+          "page": 0,
+          "rect": [
+            960,
+            1872,
+            192,
+            208
+          ],
+          "durationMs": 167,
+          "rootX": 0
+        },
+        {
+          "page": 0,
+          "rect": [
+            1152,
+            1872,
+            192,
+            208
+          ],
+          "durationMs": 167,
+          "rootX": 0
+        },
+        {
+          "page": 0,
+          "rect": [
+            1344,
+            1872,
+            192,
+            208
+          ],
+          "durationMs": 167,
+          "rootX": 0
+        }
+      ]
+    },
+    "wave": {
+      "label": "Friendly paw wave",
+      "frameCount": 16,
+      "loop": false,
+      "durationMs": 1882,
+      "provenance": "authored generated sequential poses",
+      "source": "decoded/wave.png",
+      "calibration": {
+        "logicalScale": 0.4,
+        "headHeightSourcePx": 120,
+        "headHeightLogicalTargetPx": 48,
+        "method": "manual approximate neutral-head calibration; one uniform scale per entire clip; visual comparison required"
+      },
+      "frames": [
+        {
+          "page": 0,
+          "rect": [
+            1536,
+            1872,
+            192,
+            208
+          ],
+          "durationMs": 220,
+          "rootX": 0
+        },
+        {
+          "page": 0,
+          "rect": [
+            1728,
+            1872,
+            192,
+            208
+          ],
+          "durationMs": 83,
+          "rootX": 0
+        },
+        {
+          "page": 0,
+          "rect": [
+            1920,
+            1872,
+            192,
+            208
+          ],
+          "durationMs": 83,
+          "rootX": 0
+        },
+        {
+          "page": 0,
+          "rect": [
+            2112,
+            1872,
+            192,
+            208
+          ],
+          "durationMs": 83,
+          "rootX": 0
+        },
+        {
+          "page": 0,
+          "rect": [
+            2304,
+            1872,
+            192,
+            208
+          ],
+          "durationMs": 83,
+          "rootX": 0
+        },
+        {
+          "page": 0,
+          "rect": [
+            2496,
+            1872,
+            192,
+            208
+          ],
+          "durationMs": 83,
+          "rootX": 0
+        },
+        {
+          "page": 0,
+          "rect": [
+            2688,
+            1872,
+            192,
+            208
+          ],
+          "durationMs": 83,
+          "rootX": 0
+        },
+        {
+          "page": 0,
+          "rect": [
+            2880,
+            1872,
+            192,
+            208
+          ],
+          "durationMs": 83,
+          "rootX": 0
+        },
+        {
+          "page": 0,
+          "rect": [
+            0,
+            2080,
+            192,
+            208
+          ],
+          "durationMs": 83,
+          "rootX": 0
+        },
+        {
+          "page": 0,
+          "rect": [
+            192,
+            2080,
+            192,
+            208
+          ],
+          "durationMs": 83,
+          "rootX": 0
+        },
+        {
+          "page": 0,
+          "rect": [
+            384,
+            2080,
+            192,
+            208
+          ],
+          "durationMs": 83,
+          "rootX": 0
+        },
+        {
+          "page": 0,
+          "rect": [
+            576,
+            2080,
+            192,
+            208
+          ],
+          "durationMs": 83,
+          "rootX": 0
+        },
+        {
+          "page": 0,
+          "rect": [
+            768,
+            2080,
+            192,
+            208
+          ],
+          "durationMs": 83,
+          "rootX": 0
+        },
+        {
+          "page": 0,
+          "rect": [
+            960,
+            2080,
+            192,
+            208
+          ],
+          "durationMs": 83,
+          "rootX": 0
+        },
+        {
+          "page": 0,
+          "rect": [
+            1152,
+            2080,
+            192,
+            208
+          ],
+          "durationMs": 83,
+          "rootX": 0
+        },
+        {
+          "page": 0,
+          "rect": [
+            1344,
+            2080,
+            192,
+            208
+          ],
+          "durationMs": 500,
+          "rootX": 0
+        }
+      ]
+    },
+    "jump": {
+      "label": "Small happy hop",
+      "frameCount": 16,
+      "loop": false,
+      "durationMs": 1882,
+      "provenance": "authored generated sequential poses",
+      "source": "decoded/jump.png",
+      "calibration": {
+        "logicalScale": 0.510638,
+        "headHeightSourcePx": 94,
+        "headHeightLogicalTargetPx": 48,
+        "method": "manual approximate neutral-head calibration; one uniform scale per entire clip; visual comparison required"
+      },
+      "frames": [
+        {
+          "page": 0,
+          "rect": [
+            1536,
+            2080,
+            192,
+            208
+          ],
+          "durationMs": 220,
+          "rootX": 0
+        },
+        {
+          "page": 0,
+          "rect": [
+            1728,
+            2080,
+            192,
+            208
+          ],
+          "durationMs": 83,
+          "rootX": 0
+        },
+        {
+          "page": 0,
+          "rect": [
+            1920,
+            2080,
+            192,
+            208
+          ],
+          "durationMs": 83,
+          "rootX": 0
+        },
+        {
+          "page": 0,
+          "rect": [
+            2112,
+            2080,
+            192,
+            208
+          ],
+          "durationMs": 83,
+          "rootX": 0
+        },
+        {
+          "page": 0,
+          "rect": [
+            2304,
+            2080,
+            192,
+            208
+          ],
+          "durationMs": 83,
+          "rootX": 0
+        },
+        {
+          "page": 0,
+          "rect": [
+            2496,
+            2080,
+            192,
+            208
+          ],
+          "durationMs": 83,
+          "rootX": 0
+        },
+        {
+          "page": 0,
+          "rect": [
+            2688,
+            2080,
+            192,
+            208
+          ],
+          "durationMs": 83,
+          "rootX": 0
+        },
+        {
+          "page": 0,
+          "rect": [
+            2880,
+            2080,
+            192,
+            208
+          ],
+          "durationMs": 83,
+          "rootX": 0
+        },
+        {
+          "page": 0,
+          "rect": [
+            0,
+            2288,
+            192,
+            208
+          ],
+          "durationMs": 83,
+          "rootX": 0
+        },
+        {
+          "page": 0,
+          "rect": [
+            192,
+            2288,
+            192,
+            208
+          ],
+          "durationMs": 83,
+          "rootX": 0
+        },
+        {
+          "page": 0,
+          "rect": [
+            384,
+            2288,
+            192,
+            208
+          ],
+          "durationMs": 83,
+          "rootX": 0
+        },
+        {
+          "page": 0,
+          "rect": [
+            576,
+            2288,
+            192,
+            208
+          ],
+          "durationMs": 83,
+          "rootX": 0
+        },
+        {
+          "page": 0,
+          "rect": [
+            768,
+            2288,
+            192,
+            208
+          ],
+          "durationMs": 83,
+          "rootX": 0
+        },
+        {
+          "page": 0,
+          "rect": [
+            960,
+            2288,
+            192,
+            208
+          ],
+          "durationMs": 83,
+          "rootX": 0
+        },
+        {
+          "page": 0,
+          "rect": [
+            1152,
+            2288,
+            192,
+            208
+          ],
+          "durationMs": 83,
+          "rootX": 0
+        },
+        {
+          "page": 0,
+          "rect": [
+            1344,
+            2288,
+            192,
+            208
+          ],
+          "durationMs": 500,
+          "rootX": 0
+        }
+      ]
+    },
+    "error": {
+      "label": "Confused little head tilt",
+      "frameCount": 16,
+      "loop": false,
+      "durationMs": 1882,
+      "provenance": "authored generated sequential poses",
+      "source": "decoded/error.png",
+      "calibration": {
+        "logicalScale": 0.393443,
+        "headHeightSourcePx": 122,
+        "headHeightLogicalTargetPx": 48,
+        "method": "manual approximate neutral-head calibration; one uniform scale per entire clip; visual comparison required"
+      },
+      "frames": [
+        {
+          "page": 0,
+          "rect": [
+            1536,
+            2288,
+            192,
+            208
+          ],
+          "durationMs": 220,
+          "rootX": 0
+        },
+        {
+          "page": 0,
+          "rect": [
+            1728,
+            2288,
+            192,
+            208
+          ],
+          "durationMs": 83,
+          "rootX": 0
+        },
+        {
+          "page": 0,
+          "rect": [
+            1920,
+            2288,
+            192,
+            208
+          ],
+          "durationMs": 83,
+          "rootX": 0
+        },
+        {
+          "page": 0,
+          "rect": [
+            2112,
+            2288,
+            192,
+            208
+          ],
+          "durationMs": 83,
+          "rootX": 0
+        },
+        {
+          "page": 0,
+          "rect": [
+            2304,
+            2288,
+            192,
+            208
+          ],
+          "durationMs": 83,
+          "rootX": 0
+        },
+        {
+          "page": 0,
+          "rect": [
+            2496,
+            2288,
+            192,
+            208
+          ],
+          "durationMs": 83,
+          "rootX": 0
+        },
+        {
+          "page": 0,
+          "rect": [
+            2688,
+            2288,
+            192,
+            208
+          ],
+          "durationMs": 83,
+          "rootX": 0
+        },
+        {
+          "page": 0,
+          "rect": [
+            2880,
+            2288,
+            192,
+            208
+          ],
+          "durationMs": 83,
+          "rootX": 0
+        },
+        {
+          "page": 0,
+          "rect": [
+            0,
+            2496,
+            192,
+            208
+          ],
+          "durationMs": 83,
+          "rootX": 0
+        },
+        {
+          "page": 0,
+          "rect": [
+            192,
+            2496,
+            192,
+            208
+          ],
+          "durationMs": 83,
+          "rootX": 0
+        },
+        {
+          "page": 0,
+          "rect": [
+            384,
+            2496,
+            192,
+            208
+          ],
+          "durationMs": 83,
+          "rootX": 0
+        },
+        {
+          "page": 0,
+          "rect": [
+            576,
+            2496,
+            192,
+            208
+          ],
+          "durationMs": 83,
+          "rootX": 0
+        },
+        {
+          "page": 0,
+          "rect": [
+            768,
+            2496,
+            192,
+            208
+          ],
+          "durationMs": 83,
+          "rootX": 0
+        },
+        {
+          "page": 0,
+          "rect": [
+            960,
+            2496,
+            192,
+            208
+          ],
+          "durationMs": 83,
+          "rootX": 0
+        },
+        {
+          "page": 0,
+          "rect": [
+            1152,
+            2496,
+            192,
+            208
+          ],
+          "durationMs": 83,
+          "rootX": 0
+        },
+        {
+          "page": 0,
+          "rect": [
+            1344,
+            2496,
+            192,
+            208
+          ],
+          "durationMs": 500,
+          "rootX": 0
+        }
+      ]
+    },
+    "review": {
+      "label": "Look over the task",
+      "frameCount": 16,
+      "loop": true,
+      "durationMs": 2000,
+      "provenance": "authored generated sequential poses",
+      "source": "decoded/review.png",
+      "calibration": {
+        "logicalScale": 0.393443,
+        "headHeightSourcePx": 122,
+        "headHeightLogicalTargetPx": 48,
+        "method": "manual approximate neutral-head calibration; one uniform scale per entire clip; visual comparison required"
+      },
+      "frames": [
+        {
+          "page": 0,
+          "rect": [
+            1536,
+            2496,
+            192,
+            208
+          ],
+          "durationMs": 125,
+          "rootX": 0
+        },
+        {
+          "page": 0,
+          "rect": [
+            1728,
+            2496,
+            192,
+            208
+          ],
+          "durationMs": 125,
+          "rootX": 0
+        },
+        {
+          "page": 0,
+          "rect": [
+            1920,
+            2496,
+            192,
+            208
+          ],
+          "durationMs": 125,
+          "rootX": 0
+        },
+        {
+          "page": 0,
+          "rect": [
+            2112,
+            2496,
+            192,
+            208
+          ],
+          "durationMs": 125,
+          "rootX": 0
+        },
+        {
+          "page": 0,
+          "rect": [
+            2304,
+            2496,
+            192,
+            208
+          ],
+          "durationMs": 125,
+          "rootX": 0
+        },
+        {
+          "page": 0,
+          "rect": [
+            2496,
+            2496,
+            192,
+            208
+          ],
+          "durationMs": 125,
+          "rootX": 0
+        },
+        {
+          "page": 0,
+          "rect": [
+            2688,
+            2496,
+            192,
+            208
+          ],
+          "durationMs": 125,
+          "rootX": 0
+        },
+        {
+          "page": 0,
+          "rect": [
+            2880,
+            2496,
+            192,
+            208
+          ],
+          "durationMs": 125,
+          "rootX": 0
+        },
+        {
+          "page": 0,
+          "rect": [
+            0,
+            2704,
+            192,
+            208
+          ],
+          "durationMs": 125,
+          "rootX": 0
+        },
+        {
+          "page": 0,
+          "rect": [
+            192,
+            2704,
+            192,
+            208
+          ],
+          "durationMs": 125,
+          "rootX": 0
+        },
+        {
+          "page": 0,
+          "rect": [
+            384,
+            2704,
+            192,
+            208
+          ],
+          "durationMs": 125,
+          "rootX": 0
+        },
+        {
+          "page": 0,
+          "rect": [
+            576,
+            2704,
+            192,
+            208
+          ],
+          "durationMs": 125,
+          "rootX": 0
+        },
+        {
+          "page": 0,
+          "rect": [
+            768,
+            2704,
+            192,
+            208
+          ],
+          "durationMs": 125,
+          "rootX": 0
+        },
+        {
+          "page": 0,
+          "rect": [
+            960,
+            2704,
+            192,
+            208
+          ],
+          "durationMs": 125,
+          "rootX": 0
+        },
+        {
+          "page": 0,
+          "rect": [
+            1152,
+            2704,
+            192,
+            208
+          ],
+          "durationMs": 125,
+          "rootX": 0
+        },
+        {
+          "page": 0,
+          "rect": [
+            1344,
+            2704,
+            192,
+            208
+          ],
+          "durationMs": 125,
+          "rootX": 0
+        }
+      ]
+    },
+    "fetch-offer": {
+      "label": "Offer the ball",
+      "frameCount": 24,
+      "loop": false,
+      "durationMs": 2084,
+      "provenance": "authored generated sequential poses",
+      "source": "decoded/fetch-offer.png",
+      "calibration": {
+        "logicalScale": 0.592593,
+        "headHeightSourcePx": 81,
+        "headHeightLogicalTargetPx": 48,
+        "method": "manual approximate neutral-head calibration; one uniform scale per entire clip; visual comparison required"
+      },
+      "frames": [
+        {
+          "page": 0,
+          "rect": [
+            1536,
+            2704,
+            192,
+            208
+          ],
+          "durationMs": 220,
+          "rootX": 0
+        },
+        {
+          "page": 0,
+          "rect": [
+            1728,
+            2704,
+            192,
+            208
+          ],
+          "durationMs": 62,
+          "rootX": 0
+        },
+        {
+          "page": 0,
+          "rect": [
+            1920,
+            2704,
+            192,
+            208
+          ],
+          "durationMs": 62,
+          "rootX": 0
+        },
+        {
+          "page": 0,
+          "rect": [
+            2112,
+            2704,
+            192,
+            208
+          ],
+          "durationMs": 62,
+          "rootX": 0
+        },
+        {
+          "page": 0,
+          "rect": [
+            2304,
+            2704,
+            192,
+            208
+          ],
+          "durationMs": 62,
+          "rootX": 0
+        },
+        {
+          "page": 0,
+          "rect": [
+            2496,
+            2704,
+            192,
+            208
+          ],
+          "durationMs": 62,
+          "rootX": 0
+        },
+        {
+          "page": 0,
+          "rect": [
+            2688,
+            2704,
+            192,
+            208
+          ],
+          "durationMs": 62,
+          "rootX": 0
+        },
+        {
+          "page": 0,
+          "rect": [
+            2880,
+            2704,
+            192,
+            208
+          ],
+          "durationMs": 62,
+          "rootX": 0
+        },
+        {
+          "page": 0,
+          "rect": [
+            0,
+            2912,
+            192,
+            208
+          ],
+          "durationMs": 62,
+          "rootX": 0
+        },
+        {
+          "page": 0,
+          "rect": [
+            192,
+            2912,
+            192,
+            208
+          ],
+          "durationMs": 62,
+          "rootX": 0
+        },
+        {
+          "page": 0,
+          "rect": [
+            384,
+            2912,
+            192,
+            208
+          ],
+          "durationMs": 62,
+          "rootX": 0
+        },
+        {
+          "page": 0,
+          "rect": [
+            576,
+            2912,
+            192,
+            208
+          ],
+          "durationMs": 62,
+          "rootX": 0
+        },
+        {
+          "page": 0,
+          "rect": [
+            768,
+            2912,
+            192,
+            208
+          ],
+          "durationMs": 62,
+          "rootX": 0
+        },
+        {
+          "page": 0,
+          "rect": [
+            960,
+            2912,
+            192,
+            208
+          ],
+          "durationMs": 62,
+          "rootX": 0
+        },
+        {
+          "page": 0,
+          "rect": [
+            1152,
+            2912,
+            192,
+            208
+          ],
+          "durationMs": 62,
+          "rootX": 0
+        },
+        {
+          "page": 0,
+          "rect": [
+            1344,
+            2912,
+            192,
+            208
+          ],
+          "durationMs": 62,
+          "rootX": 0
+        },
+        {
+          "page": 0,
+          "rect": [
+            1536,
+            2912,
+            192,
+            208
+          ],
+          "durationMs": 62,
+          "rootX": 0
+        },
+        {
+          "page": 0,
+          "rect": [
+            1728,
+            2912,
+            192,
+            208
+          ],
+          "durationMs": 62,
+          "rootX": 0
+        },
+        {
+          "page": 0,
+          "rect": [
+            1920,
+            2912,
+            192,
+            208
+          ],
+          "durationMs": 62,
+          "rootX": 0
+        },
+        {
+          "page": 0,
+          "rect": [
+            2112,
+            2912,
+            192,
+            208
+          ],
+          "durationMs": 62,
+          "rootX": 0
+        },
+        {
+          "page": 0,
+          "rect": [
+            2304,
+            2912,
+            192,
+            208
+          ],
+          "durationMs": 62,
+          "rootX": 0
+        },
+        {
+          "page": 0,
+          "rect": [
+            2496,
+            2912,
+            192,
+            208
+          ],
+          "durationMs": 62,
+          "rootX": 0
+        },
+        {
+          "page": 0,
+          "rect": [
+            2688,
+            2912,
+            192,
+            208
+          ],
+          "durationMs": 62,
+          "rootX": 0
+        },
+        {
+          "page": 0,
+          "rect": [
+            2880,
+            2912,
+            192,
+            208
+          ],
+          "durationMs": 500,
+          "rootX": 0
+        }
+      ]
+    },
+    "play-bow": {
+      "label": "Play bow",
+      "frameCount": 24,
+      "loop": false,
+      "durationMs": 2084,
+      "provenance": "authored generated sequential poses",
+      "source": "decoded/play-bow.png",
+      "calibration": {
+        "logicalScale": 0.6,
+        "headHeightSourcePx": 80,
+        "headHeightLogicalTargetPx": 48,
+        "method": "manual approximate neutral-head calibration; one uniform scale per entire clip; visual comparison required"
+      },
+      "frames": [
+        {
+          "page": 0,
+          "rect": [
+            0,
+            3120,
+            192,
+            208
+          ],
+          "durationMs": 220,
+          "rootX": 0
+        },
+        {
+          "page": 0,
+          "rect": [
+            192,
+            3120,
+            192,
+            208
+          ],
+          "durationMs": 62,
+          "rootX": 0
+        },
+        {
+          "page": 0,
+          "rect": [
+            384,
+            3120,
+            192,
+            208
+          ],
+          "durationMs": 62,
+          "rootX": 0
+        },
+        {
+          "page": 0,
+          "rect": [
+            576,
+            3120,
+            192,
+            208
+          ],
+          "durationMs": 62,
+          "rootX": 0
+        },
+        {
+          "page": 0,
+          "rect": [
+            768,
+            3120,
+            192,
+            208
+          ],
+          "durationMs": 62,
+          "rootX": 0
+        },
+        {
+          "page": 0,
+          "rect": [
+            960,
+            3120,
+            192,
+            208
+          ],
+          "durationMs": 62,
+          "rootX": 0
+        },
+        {
+          "page": 0,
+          "rect": [
+            1152,
+            3120,
+            192,
+            208
+          ],
+          "durationMs": 62,
+          "rootX": 0
+        },
+        {
+          "page": 0,
+          "rect": [
+            1344,
+            3120,
+            192,
+            208
+          ],
+          "durationMs": 62,
+          "rootX": 0
+        },
+        {
+          "page": 0,
+          "rect": [
+            1536,
+            3120,
+            192,
+            208
+          ],
+          "durationMs": 62,
+          "rootX": 0
+        },
+        {
+          "page": 0,
+          "rect": [
+            1728,
+            3120,
+            192,
+            208
+          ],
+          "durationMs": 62,
+          "rootX": 0
+        },
+        {
+          "page": 0,
+          "rect": [
+            1920,
+            3120,
+            192,
+            208
+          ],
+          "durationMs": 62,
+          "rootX": 0
+        },
+        {
+          "page": 0,
+          "rect": [
+            2112,
+            3120,
+            192,
+            208
+          ],
+          "durationMs": 62,
+          "rootX": 0
+        },
+        {
+          "page": 0,
+          "rect": [
+            2304,
+            3120,
+            192,
+            208
+          ],
+          "durationMs": 62,
+          "rootX": 0
+        },
+        {
+          "page": 0,
+          "rect": [
+            2496,
+            3120,
+            192,
+            208
+          ],
+          "durationMs": 62,
+          "rootX": 0
+        },
+        {
+          "page": 0,
+          "rect": [
+            2688,
+            3120,
+            192,
+            208
+          ],
+          "durationMs": 62,
+          "rootX": 0
+        },
+        {
+          "page": 0,
+          "rect": [
+            2880,
+            3120,
+            192,
+            208
+          ],
+          "durationMs": 62,
+          "rootX": 0
+        },
+        {
+          "page": 1,
+          "rect": [
+            0,
+            0,
+            192,
+            208
+          ],
+          "durationMs": 62,
+          "rootX": 0
+        },
+        {
+          "page": 1,
+          "rect": [
+            192,
+            0,
+            192,
+            208
+          ],
+          "durationMs": 62,
+          "rootX": 0
+        },
+        {
+          "page": 1,
+          "rect": [
+            384,
+            0,
+            192,
+            208
+          ],
+          "durationMs": 62,
+          "rootX": 0
+        },
+        {
+          "page": 1,
+          "rect": [
+            576,
+            0,
+            192,
+            208
+          ],
+          "durationMs": 62,
+          "rootX": 0
+        },
+        {
+          "page": 1,
+          "rect": [
+            768,
+            0,
+            192,
+            208
+          ],
+          "durationMs": 62,
+          "rootX": 0
+        },
+        {
+          "page": 1,
+          "rect": [
+            960,
+            0,
+            192,
+            208
+          ],
+          "durationMs": 62,
+          "rootX": 0
+        },
+        {
+          "page": 1,
+          "rect": [
+            1152,
+            0,
+            192,
+            208
+          ],
+          "durationMs": 62,
+          "rootX": 0
+        },
+        {
+          "page": 1,
+          "rect": [
+            1344,
+            0,
+            192,
+            208
+          ],
+          "durationMs": 500,
+          "rootX": 0
+        }
+      ]
+    },
+    "chew-stick": {
+      "label": "Chew a stick",
+      "frameCount": 16,
+      "loop": true,
+      "durationMs": 1328,
+      "provenance": "authored generated sequential poses",
+      "source": "decoded/chew-stick.png",
+      "calibration": {
+        "logicalScale": 0.380952,
+        "headHeightSourcePx": 126,
+        "headHeightLogicalTargetPx": 48,
+        "method": "manual approximate neutral-head calibration; one uniform scale per entire clip; visual comparison required"
+      },
+      "frames": [
+        {
+          "page": 1,
+          "rect": [
+            1536,
+            0,
+            192,
+            208
+          ],
+          "durationMs": 83,
+          "rootX": 0
+        },
+        {
+          "page": 1,
+          "rect": [
+            1728,
+            0,
+            192,
+            208
+          ],
+          "durationMs": 83,
+          "rootX": 0
+        },
+        {
+          "page": 1,
+          "rect": [
+            1920,
+            0,
+            192,
+            208
+          ],
+          "durationMs": 83,
+          "rootX": 0
+        },
+        {
+          "page": 1,
+          "rect": [
+            2112,
+            0,
+            192,
+            208
+          ],
+          "durationMs": 83,
+          "rootX": 0
+        },
+        {
+          "page": 1,
+          "rect": [
+            2304,
+            0,
+            192,
+            208
+          ],
+          "durationMs": 83,
+          "rootX": 0
+        },
+        {
+          "page": 1,
+          "rect": [
+            2496,
+            0,
+            192,
+            208
+          ],
+          "durationMs": 83,
+          "rootX": 0
+        },
+        {
+          "page": 1,
+          "rect": [
+            2688,
+            0,
+            192,
+            208
+          ],
+          "durationMs": 83,
+          "rootX": 0
+        },
+        {
+          "page": 1,
+          "rect": [
+            2880,
+            0,
+            192,
+            208
+          ],
+          "durationMs": 83,
+          "rootX": 0
+        },
+        {
+          "page": 1,
+          "rect": [
+            0,
+            208,
+            192,
+            208
+          ],
+          "durationMs": 83,
+          "rootX": 0
+        },
+        {
+          "page": 1,
+          "rect": [
+            192,
+            208,
+            192,
+            208
+          ],
+          "durationMs": 83,
+          "rootX": 0
+        },
+        {
+          "page": 1,
+          "rect": [
+            384,
+            208,
+            192,
+            208
+          ],
+          "durationMs": 83,
+          "rootX": 0
+        },
+        {
+          "page": 1,
+          "rect": [
+            576,
+            208,
+            192,
+            208
+          ],
+          "durationMs": 83,
+          "rootX": 0
+        },
+        {
+          "page": 1,
+          "rect": [
+            768,
+            208,
+            192,
+            208
+          ],
+          "durationMs": 83,
+          "rootX": 0
+        },
+        {
+          "page": 1,
+          "rect": [
+            960,
+            208,
+            192,
+            208
+          ],
+          "durationMs": 83,
+          "rootX": 0
+        },
+        {
+          "page": 1,
+          "rect": [
+            1152,
+            208,
+            192,
+            208
+          ],
+          "durationMs": 83,
+          "rootX": 0
+        },
+        {
+          "page": 1,
+          "rect": [
+            1344,
+            208,
+            192,
+            208
+          ],
+          "durationMs": 83,
+          "rootX": 0
+        }
+      ]
+    },
+    "scratch-ear": {
+      "label": "Scratch an ear",
+      "frameCount": 16,
+      "loop": false,
+      "durationMs": 1882,
+      "provenance": "authored generated sequential poses",
+      "source": "decoded/scratch-ear.png",
+      "calibration": {
+        "logicalScale": 0.393443,
+        "headHeightSourcePx": 122,
+        "headHeightLogicalTargetPx": 48,
+        "method": "manual approximate neutral-head calibration; one uniform scale per entire clip; visual comparison required"
+      },
+      "frames": [
+        {
+          "page": 1,
+          "rect": [
+            1536,
+            208,
+            192,
+            208
+          ],
+          "durationMs": 220,
+          "rootX": 0
+        },
+        {
+          "page": 1,
+          "rect": [
+            1728,
+            208,
+            192,
+            208
+          ],
+          "durationMs": 83,
+          "rootX": 0
+        },
+        {
+          "page": 1,
+          "rect": [
+            1920,
+            208,
+            192,
+            208
+          ],
+          "durationMs": 83,
+          "rootX": 0
+        },
+        {
+          "page": 1,
+          "rect": [
+            2112,
+            208,
+            192,
+            208
+          ],
+          "durationMs": 83,
+          "rootX": 0
+        },
+        {
+          "page": 1,
+          "rect": [
+            2304,
+            208,
+            192,
+            208
+          ],
+          "durationMs": 83,
+          "rootX": 0
+        },
+        {
+          "page": 1,
+          "rect": [
+            2496,
+            208,
+            192,
+            208
+          ],
+          "durationMs": 83,
+          "rootX": 0
+        },
+        {
+          "page": 1,
+          "rect": [
+            2688,
+            208,
+            192,
+            208
+          ],
+          "durationMs": 83,
+          "rootX": 0
+        },
+        {
+          "page": 1,
+          "rect": [
+            2880,
+            208,
+            192,
+            208
+          ],
+          "durationMs": 83,
+          "rootX": 0
+        },
+        {
+          "page": 1,
+          "rect": [
+            0,
+            416,
+            192,
+            208
+          ],
+          "durationMs": 83,
+          "rootX": 0
+        },
+        {
+          "page": 1,
+          "rect": [
+            192,
+            416,
+            192,
+            208
+          ],
+          "durationMs": 83,
+          "rootX": 0
+        },
+        {
+          "page": 1,
+          "rect": [
+            384,
+            416,
+            192,
+            208
+          ],
+          "durationMs": 83,
+          "rootX": 0
+        },
+        {
+          "page": 1,
+          "rect": [
+            576,
+            416,
+            192,
+            208
+          ],
+          "durationMs": 83,
+          "rootX": 0
+        },
+        {
+          "page": 1,
+          "rect": [
+            768,
+            416,
+            192,
+            208
+          ],
+          "durationMs": 83,
+          "rootX": 0
+        },
+        {
+          "page": 1,
+          "rect": [
+            960,
+            416,
+            192,
+            208
+          ],
+          "durationMs": 83,
+          "rootX": 0
+        },
+        {
+          "page": 1,
+          "rect": [
+            1152,
+            416,
+            192,
+            208
+          ],
+          "durationMs": 83,
+          "rootX": 0
+        },
+        {
+          "page": 1,
+          "rect": [
+            1344,
+            416,
+            192,
+            208
+          ],
+          "durationMs": 500,
+          "rootX": 0
+        }
+      ]
+    },
+    "yawn": {
+      "label": "Sleepy yawn",
+      "frameCount": 16,
+      "loop": false,
+      "durationMs": 1882,
+      "provenance": "authored generated sequential poses",
+      "source": "decoded/yawn.png",
+      "calibration": {
+        "logicalScale": 0.390244,
+        "headHeightSourcePx": 123,
+        "headHeightLogicalTargetPx": 48,
+        "method": "manual approximate neutral-head calibration; one uniform scale per entire clip; visual comparison required"
+      },
+      "frames": [
+        {
+          "page": 1,
+          "rect": [
+            1536,
+            416,
+            192,
+            208
+          ],
+          "durationMs": 220,
+          "rootX": 0
+        },
+        {
+          "page": 1,
+          "rect": [
+            1728,
+            416,
+            192,
+            208
+          ],
+          "durationMs": 83,
+          "rootX": 0
+        },
+        {
+          "page": 1,
+          "rect": [
+            1920,
+            416,
+            192,
+            208
+          ],
+          "durationMs": 83,
+          "rootX": 0
+        },
+        {
+          "page": 1,
+          "rect": [
+            2112,
+            416,
+            192,
+            208
+          ],
+          "durationMs": 83,
+          "rootX": 0
+        },
+        {
+          "page": 1,
+          "rect": [
+            2304,
+            416,
+            192,
+            208
+          ],
+          "durationMs": 83,
+          "rootX": 0
+        },
+        {
+          "page": 1,
+          "rect": [
+            2496,
+            416,
+            192,
+            208
+          ],
+          "durationMs": 83,
+          "rootX": 0
+        },
+        {
+          "page": 1,
+          "rect": [
+            2688,
+            416,
+            192,
+            208
+          ],
+          "durationMs": 83,
+          "rootX": 0
+        },
+        {
+          "page": 1,
+          "rect": [
+            2880,
+            416,
+            192,
+            208
+          ],
+          "durationMs": 83,
+          "rootX": 0
+        },
+        {
+          "page": 1,
+          "rect": [
+            0,
+            624,
+            192,
+            208
+          ],
+          "durationMs": 83,
+          "rootX": 0
+        },
+        {
+          "page": 1,
+          "rect": [
+            192,
+            624,
+            192,
+            208
+          ],
+          "durationMs": 83,
+          "rootX": 0
+        },
+        {
+          "page": 1,
+          "rect": [
+            384,
+            624,
+            192,
+            208
+          ],
+          "durationMs": 83,
+          "rootX": 0
+        },
+        {
+          "page": 1,
+          "rect": [
+            576,
+            624,
+            192,
+            208
+          ],
+          "durationMs": 83,
+          "rootX": 0
+        },
+        {
+          "page": 1,
+          "rect": [
+            768,
+            624,
+            192,
+            208
+          ],
+          "durationMs": 83,
+          "rootX": 0
+        },
+        {
+          "page": 1,
+          "rect": [
+            960,
+            624,
+            192,
+            208
+          ],
+          "durationMs": 83,
+          "rootX": 0
+        },
+        {
+          "page": 1,
+          "rect": [
+            1152,
+            624,
+            192,
+            208
+          ],
+          "durationMs": 83,
+          "rootX": 0
+        },
+        {
+          "page": 1,
+          "rect": [
+            1344,
+            624,
+            192,
+            208
+          ],
+          "durationMs": 500,
+          "rootX": 0
+        }
+      ]
+    },
+    "sniff-search": {
+      "label": "Sniff around",
+      "frameCount": 16,
+      "loop": true,
+      "durationMs": 1328,
+      "provenance": "authored generated sequential poses",
+      "source": "decoded/sniff-search.png",
+      "calibration": {
+        "logicalScale": 0.5,
+        "headHeightSourcePx": 96,
+        "headHeightLogicalTargetPx": 48,
+        "method": "manual approximate neutral-head calibration; one uniform scale per entire clip; visual comparison required"
+      },
+      "frames": [
+        {
+          "page": 1,
+          "rect": [
+            1536,
+            624,
+            192,
+            208
+          ],
+          "durationMs": 83,
+          "rootX": 0
+        },
+        {
+          "page": 1,
+          "rect": [
+            1728,
+            624,
+            192,
+            208
+          ],
+          "durationMs": 83,
+          "rootX": 0
+        },
+        {
+          "page": 1,
+          "rect": [
+            1920,
+            624,
+            192,
+            208
+          ],
+          "durationMs": 83,
+          "rootX": 0
+        },
+        {
+          "page": 1,
+          "rect": [
+            2112,
+            624,
+            192,
+            208
+          ],
+          "durationMs": 83,
+          "rootX": 0
+        },
+        {
+          "page": 1,
+          "rect": [
+            2304,
+            624,
+            192,
+            208
+          ],
+          "durationMs": 83,
+          "rootX": 0
+        },
+        {
+          "page": 1,
+          "rect": [
+            2496,
+            624,
+            192,
+            208
+          ],
+          "durationMs": 83,
+          "rootX": 0
+        },
+        {
+          "page": 1,
+          "rect": [
+            2688,
+            624,
+            192,
+            208
+          ],
+          "durationMs": 83,
+          "rootX": 0
+        },
+        {
+          "page": 1,
+          "rect": [
+            2880,
+            624,
+            192,
+            208
+          ],
+          "durationMs": 83,
+          "rootX": 0
+        },
+        {
+          "page": 1,
+          "rect": [
+            0,
+            832,
+            192,
+            208
+          ],
+          "durationMs": 83,
+          "rootX": 0
+        },
+        {
+          "page": 1,
+          "rect": [
+            192,
+            832,
+            192,
+            208
+          ],
+          "durationMs": 83,
+          "rootX": 0
+        },
+        {
+          "page": 1,
+          "rect": [
+            384,
+            832,
+            192,
+            208
+          ],
+          "durationMs": 83,
+          "rootX": 0
+        },
+        {
+          "page": 1,
+          "rect": [
+            576,
+            832,
+            192,
+            208
+          ],
+          "durationMs": 83,
+          "rootX": 0
+        },
+        {
+          "page": 1,
+          "rect": [
+            768,
+            832,
+            192,
+            208
+          ],
+          "durationMs": 83,
+          "rootX": 0
+        },
+        {
+          "page": 1,
+          "rect": [
+            960,
+            832,
+            192,
+            208
+          ],
+          "durationMs": 83,
+          "rootX": 0
+        },
+        {
+          "page": 1,
+          "rect": [
+            1152,
+            832,
+            192,
+            208
+          ],
+          "durationMs": 83,
+          "rootX": 0
+        },
+        {
+          "page": 1,
+          "rect": [
+            1344,
+            832,
+            192,
+            208
+          ],
+          "durationMs": 83,
+          "rootX": 0
+        }
+      ]
+    },
+    "stretch": {
+      "label": "Post-nap stretch",
+      "frameCount": 24,
+      "loop": false,
+      "durationMs": 2084,
+      "provenance": "authored generated sequential poses",
+      "source": "decoded/stretch.png",
+      "calibration": {
+        "logicalScale": 0.615385,
+        "headHeightSourcePx": 78,
+        "headHeightLogicalTargetPx": 48,
+        "method": "manual approximate neutral-head calibration; one uniform scale per entire clip; visual comparison required"
+      },
+      "frames": [
+        {
+          "page": 1,
+          "rect": [
+            1536,
+            832,
+            192,
+            208
+          ],
+          "durationMs": 220,
+          "rootX": 0
+        },
+        {
+          "page": 1,
+          "rect": [
+            1728,
+            832,
+            192,
+            208
+          ],
+          "durationMs": 62,
+          "rootX": 0
+        },
+        {
+          "page": 1,
+          "rect": [
+            1920,
+            832,
+            192,
+            208
+          ],
+          "durationMs": 62,
+          "rootX": 0
+        },
+        {
+          "page": 1,
+          "rect": [
+            2112,
+            832,
+            192,
+            208
+          ],
+          "durationMs": 62,
+          "rootX": 0
+        },
+        {
+          "page": 1,
+          "rect": [
+            2304,
+            832,
+            192,
+            208
+          ],
+          "durationMs": 62,
+          "rootX": 0
+        },
+        {
+          "page": 1,
+          "rect": [
+            2496,
+            832,
+            192,
+            208
+          ],
+          "durationMs": 62,
+          "rootX": 0
+        },
+        {
+          "page": 1,
+          "rect": [
+            2688,
+            832,
+            192,
+            208
+          ],
+          "durationMs": 62,
+          "rootX": 0
+        },
+        {
+          "page": 1,
+          "rect": [
+            2880,
+            832,
+            192,
+            208
+          ],
+          "durationMs": 62,
+          "rootX": 0
+        },
+        {
+          "page": 1,
+          "rect": [
+            0,
+            1040,
+            192,
+            208
+          ],
+          "durationMs": 62,
+          "rootX": 0
+        },
+        {
+          "page": 1,
+          "rect": [
+            192,
+            1040,
+            192,
+            208
+          ],
+          "durationMs": 62,
+          "rootX": 0
+        },
+        {
+          "page": 1,
+          "rect": [
+            384,
+            1040,
+            192,
+            208
+          ],
+          "durationMs": 62,
+          "rootX": 0
+        },
+        {
+          "page": 1,
+          "rect": [
+            576,
+            1040,
+            192,
+            208
+          ],
+          "durationMs": 62,
+          "rootX": 0
+        },
+        {
+          "page": 1,
+          "rect": [
+            768,
+            1040,
+            192,
+            208
+          ],
+          "durationMs": 62,
+          "rootX": 0
+        },
+        {
+          "page": 1,
+          "rect": [
+            960,
+            1040,
+            192,
+            208
+          ],
+          "durationMs": 62,
+          "rootX": 0
+        },
+        {
+          "page": 1,
+          "rect": [
+            1152,
+            1040,
+            192,
+            208
+          ],
+          "durationMs": 62,
+          "rootX": 0
+        },
+        {
+          "page": 1,
+          "rect": [
+            1344,
+            1040,
+            192,
+            208
+          ],
+          "durationMs": 62,
+          "rootX": 0
+        },
+        {
+          "page": 1,
+          "rect": [
+            1536,
+            1040,
+            192,
+            208
+          ],
+          "durationMs": 62,
+          "rootX": 0
+        },
+        {
+          "page": 1,
+          "rect": [
+            1728,
+            1040,
+            192,
+            208
+          ],
+          "durationMs": 62,
+          "rootX": 0
+        },
+        {
+          "page": 1,
+          "rect": [
+            1920,
+            1040,
+            192,
+            208
+          ],
+          "durationMs": 62,
+          "rootX": 0
+        },
+        {
+          "page": 1,
+          "rect": [
+            2112,
+            1040,
+            192,
+            208
+          ],
+          "durationMs": 62,
+          "rootX": 0
+        },
+        {
+          "page": 1,
+          "rect": [
+            2304,
+            1040,
+            192,
+            208
+          ],
+          "durationMs": 62,
+          "rootX": 0
+        },
+        {
+          "page": 1,
+          "rect": [
+            2496,
+            1040,
+            192,
+            208
+          ],
+          "durationMs": 62,
+          "rootX": 0
+        },
+        {
+          "page": 1,
+          "rect": [
+            2688,
+            1040,
+            192,
+            208
+          ],
+          "durationMs": 62,
+          "rootX": 0
+        },
+        {
+          "page": 1,
+          "rect": [
+            2880,
+            1040,
+            192,
+            208
+          ],
+          "durationMs": 500,
+          "rootX": 0
+        }
+      ]
+    },
+    "error-facepalm": {
+      "label": "Oops, paw over face",
+      "frameCount": 16,
+      "loop": false,
+      "durationMs": 1882,
+      "provenance": "authored generated sequential poses",
+      "source": "decoded/error-facepalm.png",
+      "calibration": {
+        "logicalScale": 0.390244,
+        "headHeightSourcePx": 123,
+        "headHeightLogicalTargetPx": 48,
+        "method": "manual approximate neutral-head calibration; one uniform scale per entire clip; visual comparison required"
+      },
+      "frames": [
+        {
+          "page": 1,
+          "rect": [
+            0,
+            1248,
+            192,
+            208
+          ],
+          "durationMs": 220,
+          "rootX": 0
+        },
+        {
+          "page": 1,
+          "rect": [
+            192,
+            1248,
+            192,
+            208
+          ],
+          "durationMs": 83,
+          "rootX": 0
+        },
+        {
+          "page": 1,
+          "rect": [
+            384,
+            1248,
+            192,
+            208
+          ],
+          "durationMs": 83,
+          "rootX": 0
+        },
+        {
+          "page": 1,
+          "rect": [
+            576,
+            1248,
+            192,
+            208
+          ],
+          "durationMs": 83,
+          "rootX": 0
+        },
+        {
+          "page": 1,
+          "rect": [
+            768,
+            1248,
+            192,
+            208
+          ],
+          "durationMs": 83,
+          "rootX": 0
+        },
+        {
+          "page": 1,
+          "rect": [
+            960,
+            1248,
+            192,
+            208
+          ],
+          "durationMs": 83,
+          "rootX": 0
+        },
+        {
+          "page": 1,
+          "rect": [
+            1152,
+            1248,
+            192,
+            208
+          ],
+          "durationMs": 83,
+          "rootX": 0
+        },
+        {
+          "page": 1,
+          "rect": [
+            1344,
+            1248,
+            192,
+            208
+          ],
+          "durationMs": 83,
+          "rootX": 0
+        },
+        {
+          "page": 1,
+          "rect": [
+            1536,
+            1248,
+            192,
+            208
+          ],
+          "durationMs": 83,
+          "rootX": 0
+        },
+        {
+          "page": 1,
+          "rect": [
+            1728,
+            1248,
+            192,
+            208
+          ],
+          "durationMs": 83,
+          "rootX": 0
+        },
+        {
+          "page": 1,
+          "rect": [
+            1920,
+            1248,
+            192,
+            208
+          ],
+          "durationMs": 83,
+          "rootX": 0
+        },
+        {
+          "page": 1,
+          "rect": [
+            2112,
+            1248,
+            192,
+            208
+          ],
+          "durationMs": 83,
+          "rootX": 0
+        },
+        {
+          "page": 1,
+          "rect": [
+            2304,
+            1248,
+            192,
+            208
+          ],
+          "durationMs": 83,
+          "rootX": 0
+        },
+        {
+          "page": 1,
+          "rect": [
+            2496,
+            1248,
+            192,
+            208
+          ],
+          "durationMs": 83,
+          "rootX": 0
+        },
+        {
+          "page": 1,
+          "rect": [
+            2688,
+            1248,
+            192,
+            208
+          ],
+          "durationMs": 83,
+          "rootX": 0
+        },
+        {
+          "page": 1,
+          "rect": [
+            2880,
+            1248,
+            192,
+            208
+          ],
+          "durationMs": 500,
+          "rootX": 0
+        }
+      ]
+    },
+    "poop-gag": {
+      "label": "Cheeky toilet break",
+      "frameCount": 24,
+      "loop": false,
+      "durationMs": 2084,
+      "provenance": "authored generated sequential poses",
+      "source": "decoded/poop-gag.png",
+      "calibration": {
+        "logicalScale": 0.623377,
+        "headHeightSourcePx": 77,
+        "headHeightLogicalTargetPx": 48,
+        "method": "manual approximate neutral-head calibration; one uniform scale per entire clip; visual comparison required"
+      },
+      "frames": [
+        {
+          "page": 1,
+          "rect": [
+            0,
+            1456,
+            192,
+            208
+          ],
+          "durationMs": 220,
+          "rootX": 0
+        },
+        {
+          "page": 1,
+          "rect": [
+            192,
+            1456,
+            192,
+            208
+          ],
+          "durationMs": 62,
+          "rootX": 0
+        },
+        {
+          "page": 1,
+          "rect": [
+            384,
+            1456,
+            192,
+            208
+          ],
+          "durationMs": 62,
+          "rootX": 0
+        },
+        {
+          "page": 1,
+          "rect": [
+            576,
+            1456,
+            192,
+            208
+          ],
+          "durationMs": 62,
+          "rootX": 0
+        },
+        {
+          "page": 1,
+          "rect": [
+            768,
+            1456,
+            192,
+            208
+          ],
+          "durationMs": 62,
+          "rootX": 0
+        },
+        {
+          "page": 1,
+          "rect": [
+            960,
+            1456,
+            192,
+            208
+          ],
+          "durationMs": 62,
+          "rootX": 0
+        },
+        {
+          "page": 1,
+          "rect": [
+            1152,
+            1456,
+            192,
+            208
+          ],
+          "durationMs": 62,
+          "rootX": 0
+        },
+        {
+          "page": 1,
+          "rect": [
+            1344,
+            1456,
+            192,
+            208
+          ],
+          "durationMs": 62,
+          "rootX": 0
+        },
+        {
+          "page": 1,
+          "rect": [
+            1536,
+            1456,
+            192,
+            208
+          ],
+          "durationMs": 62,
+          "rootX": 0
+        },
+        {
+          "page": 1,
+          "rect": [
+            1728,
+            1456,
+            192,
+            208
+          ],
+          "durationMs": 62,
+          "rootX": 0
+        },
+        {
+          "page": 1,
+          "rect": [
+            1920,
+            1456,
+            192,
+            208
+          ],
+          "durationMs": 62,
+          "rootX": 0
+        },
+        {
+          "page": 1,
+          "rect": [
+            2112,
+            1456,
+            192,
+            208
+          ],
+          "durationMs": 62,
+          "rootX": 0
+        },
+        {
+          "page": 1,
+          "rect": [
+            2304,
+            1456,
+            192,
+            208
+          ],
+          "durationMs": 62,
+          "rootX": 0
+        },
+        {
+          "page": 1,
+          "rect": [
+            2496,
+            1456,
+            192,
+            208
+          ],
+          "durationMs": 62,
+          "rootX": 0
+        },
+        {
+          "page": 1,
+          "rect": [
+            2688,
+            1456,
+            192,
+            208
+          ],
+          "durationMs": 62,
+          "rootX": 0
+        },
+        {
+          "page": 1,
+          "rect": [
+            2880,
+            1456,
+            192,
+            208
+          ],
+          "durationMs": 62,
+          "rootX": 0
+        },
+        {
+          "page": 1,
+          "rect": [
+            0,
+            1664,
+            192,
+            208
+          ],
+          "durationMs": 62,
+          "rootX": 0
+        },
+        {
+          "page": 1,
+          "rect": [
+            192,
+            1664,
+            192,
+            208
+          ],
+          "durationMs": 62,
+          "rootX": 0
+        },
+        {
+          "page": 1,
+          "rect": [
+            384,
+            1664,
+            192,
+            208
+          ],
+          "durationMs": 62,
+          "rootX": 0
+        },
+        {
+          "page": 1,
+          "rect": [
+            576,
+            1664,
+            192,
+            208
+          ],
+          "durationMs": 62,
+          "rootX": 0
+        },
+        {
+          "page": 1,
+          "rect": [
+            768,
+            1664,
+            192,
+            208
+          ],
+          "durationMs": 62,
+          "rootX": 0
+        },
+        {
+          "page": 1,
+          "rect": [
+            960,
+            1664,
+            192,
+            208
+          ],
+          "durationMs": 62,
+          "rootX": 0
+        },
+        {
+          "page": 1,
+          "rect": [
+            1152,
+            1664,
+            192,
+            208
+          ],
+          "durationMs": 62,
+          "rootX": 0
+        },
+        {
+          "page": 1,
+          "rect": [
+            1344,
+            1664,
+            192,
+            208
+          ],
+          "durationMs": 500,
+          "rootX": 0
+        }
+      ]
+    },
+    "pee-gag": {
+      "label": "Mark a little rock",
+      "frameCount": 24,
+      "loop": false,
+      "durationMs": 2084,
+      "provenance": "authored generated sequential poses",
+      "source": "decoded/pee-gag.png",
+      "calibration": {
+        "logicalScale": 0.666667,
+        "headHeightSourcePx": 72,
+        "headHeightLogicalTargetPx": 48,
+        "method": "revised approximate neutral-head calibration after envelope check; one scale for full clip; not exact anatomical measurement"
+      },
+      "frames": [
+        {
+          "page": 1,
+          "rect": [
+            1536,
+            1664,
+            192,
+            208
+          ],
+          "durationMs": 220,
+          "rootX": 0
+        },
+        {
+          "page": 1,
+          "rect": [
+            1728,
+            1664,
+            192,
+            208
+          ],
+          "durationMs": 62,
+          "rootX": 0
+        },
+        {
+          "page": 1,
+          "rect": [
+            1920,
+            1664,
+            192,
+            208
+          ],
+          "durationMs": 62,
+          "rootX": 0
+        },
+        {
+          "page": 1,
+          "rect": [
+            2112,
+            1664,
+            192,
+            208
+          ],
+          "durationMs": 62,
+          "rootX": 0
+        },
+        {
+          "page": 1,
+          "rect": [
+            2304,
+            1664,
+            192,
+            208
+          ],
+          "durationMs": 62,
+          "rootX": 0
+        },
+        {
+          "page": 1,
+          "rect": [
+            2496,
+            1664,
+            192,
+            208
+          ],
+          "durationMs": 62,
+          "rootX": 0
+        },
+        {
+          "page": 1,
+          "rect": [
+            2688,
+            1664,
+            192,
+            208
+          ],
+          "durationMs": 62,
+          "rootX": 0
+        },
+        {
+          "page": 1,
+          "rect": [
+            2880,
+            1664,
+            192,
+            208
+          ],
+          "durationMs": 62,
+          "rootX": 0
+        },
+        {
+          "page": 1,
+          "rect": [
+            0,
+            1872,
+            192,
+            208
+          ],
+          "durationMs": 62,
+          "rootX": 0
+        },
+        {
+          "page": 1,
+          "rect": [
+            192,
+            1872,
+            192,
+            208
+          ],
+          "durationMs": 62,
+          "rootX": 0
+        },
+        {
+          "page": 1,
+          "rect": [
+            384,
+            1872,
+            192,
+            208
+          ],
+          "durationMs": 62,
+          "rootX": 0
+        },
+        {
+          "page": 1,
+          "rect": [
+            576,
+            1872,
+            192,
+            208
+          ],
+          "durationMs": 62,
+          "rootX": 0
+        },
+        {
+          "page": 1,
+          "rect": [
+            768,
+            1872,
+            192,
+            208
+          ],
+          "durationMs": 62,
+          "rootX": 0
+        },
+        {
+          "page": 1,
+          "rect": [
+            960,
+            1872,
+            192,
+            208
+          ],
+          "durationMs": 62,
+          "rootX": 0
+        },
+        {
+          "page": 1,
+          "rect": [
+            1152,
+            1872,
+            192,
+            208
+          ],
+          "durationMs": 62,
+          "rootX": 0
+        },
+        {
+          "page": 1,
+          "rect": [
+            1344,
+            1872,
+            192,
+            208
+          ],
+          "durationMs": 62,
+          "rootX": 0
+        },
+        {
+          "page": 1,
+          "rect": [
+            1536,
+            1872,
+            192,
+            208
+          ],
+          "durationMs": 62,
+          "rootX": 0
+        },
+        {
+          "page": 1,
+          "rect": [
+            1728,
+            1872,
+            192,
+            208
+          ],
+          "durationMs": 62,
+          "rootX": 0
+        },
+        {
+          "page": 1,
+          "rect": [
+            1920,
+            1872,
+            192,
+            208
+          ],
+          "durationMs": 62,
+          "rootX": 0
+        },
+        {
+          "page": 1,
+          "rect": [
+            2112,
+            1872,
+            192,
+            208
+          ],
+          "durationMs": 62,
+          "rootX": 0
+        },
+        {
+          "page": 1,
+          "rect": [
+            2304,
+            1872,
+            192,
+            208
+          ],
+          "durationMs": 62,
+          "rootX": 0
+        },
+        {
+          "page": 1,
+          "rect": [
+            2496,
+            1872,
+            192,
+            208
+          ],
+          "durationMs": 62,
+          "rootX": 0
+        },
+        {
+          "page": 1,
+          "rect": [
+            2688,
+            1872,
+            192,
+            208
+          ],
+          "durationMs": 62,
+          "rootX": 0
+        },
+        {
+          "page": 1,
+          "rect": [
+            2880,
+            1872,
+            192,
+            208
+          ],
+          "durationMs": 500,
+          "rootX": 0
+        }
+      ]
+    },
+    "sniff-trail": {
+      "label": "Follow a scent",
+      "frameCount": 24,
+      "loop": true,
+      "durationMs": 1488,
+      "provenance": "authored generated sequential poses",
+      "source": "decoded/sniff-trail.png",
+      "calibration": {
+        "logicalScale": 0.716418,
+        "headHeightSourcePx": 67,
+        "headHeightLogicalTargetPx": 48,
+        "method": "revised approximate neutral-head calibration after envelope check; one scale for full clip; not exact anatomical measurement"
+      },
+      "frames": [
+        {
+          "page": 1,
+          "rect": [
+            0,
+            2080,
+            192,
+            208
+          ],
+          "durationMs": 62,
+          "rootX": 0
+        },
+        {
+          "page": 1,
+          "rect": [
+            192,
+            2080,
+            192,
+            208
+          ],
+          "durationMs": 62,
+          "rootX": 0
+        },
+        {
+          "page": 1,
+          "rect": [
+            384,
+            2080,
+            192,
+            208
+          ],
+          "durationMs": 62,
+          "rootX": 0
+        },
+        {
+          "page": 1,
+          "rect": [
+            576,
+            2080,
+            192,
+            208
+          ],
+          "durationMs": 62,
+          "rootX": 0
+        },
+        {
+          "page": 1,
+          "rect": [
+            768,
+            2080,
+            192,
+            208
+          ],
+          "durationMs": 62,
+          "rootX": 0
+        },
+        {
+          "page": 1,
+          "rect": [
+            960,
+            2080,
+            192,
+            208
+          ],
+          "durationMs": 62,
+          "rootX": 0
+        },
+        {
+          "page": 1,
+          "rect": [
+            1152,
+            2080,
+            192,
+            208
+          ],
+          "durationMs": 62,
+          "rootX": 0
+        },
+        {
+          "page": 1,
+          "rect": [
+            1344,
+            2080,
+            192,
+            208
+          ],
+          "durationMs": 62,
+          "rootX": 0
+        },
+        {
+          "page": 1,
+          "rect": [
+            1536,
+            2080,
+            192,
+            208
+          ],
+          "durationMs": 62,
+          "rootX": 0
+        },
+        {
+          "page": 1,
+          "rect": [
+            1728,
+            2080,
+            192,
+            208
+          ],
+          "durationMs": 62,
+          "rootX": 0
+        },
+        {
+          "page": 1,
+          "rect": [
+            1920,
+            2080,
+            192,
+            208
+          ],
+          "durationMs": 62,
+          "rootX": 0
+        },
+        {
+          "page": 1,
+          "rect": [
+            2112,
+            2080,
+            192,
+            208
+          ],
+          "durationMs": 62,
+          "rootX": 0
+        },
+        {
+          "page": 1,
+          "rect": [
+            2304,
+            2080,
+            192,
+            208
+          ],
+          "durationMs": 62,
+          "rootX": 0
+        },
+        {
+          "page": 1,
+          "rect": [
+            2496,
+            2080,
+            192,
+            208
+          ],
+          "durationMs": 62,
+          "rootX": 0
+        },
+        {
+          "page": 1,
+          "rect": [
+            2688,
+            2080,
+            192,
+            208
+          ],
+          "durationMs": 62,
+          "rootX": 0
+        },
+        {
+          "page": 1,
+          "rect": [
+            2880,
+            2080,
+            192,
+            208
+          ],
+          "durationMs": 62,
+          "rootX": 0
+        },
+        {
+          "page": 1,
+          "rect": [
+            0,
+            2288,
+            192,
+            208
+          ],
+          "durationMs": 62,
+          "rootX": 0
+        },
+        {
+          "page": 1,
+          "rect": [
+            192,
+            2288,
+            192,
+            208
+          ],
+          "durationMs": 62,
+          "rootX": 0
+        },
+        {
+          "page": 1,
+          "rect": [
+            384,
+            2288,
+            192,
+            208
+          ],
+          "durationMs": 62,
+          "rootX": 0
+        },
+        {
+          "page": 1,
+          "rect": [
+            576,
+            2288,
+            192,
+            208
+          ],
+          "durationMs": 62,
+          "rootX": 0
+        },
+        {
+          "page": 1,
+          "rect": [
+            768,
+            2288,
+            192,
+            208
+          ],
+          "durationMs": 62,
+          "rootX": 0
+        },
+        {
+          "page": 1,
+          "rect": [
+            960,
+            2288,
+            192,
+            208
+          ],
+          "durationMs": 62,
+          "rootX": 0
+        },
+        {
+          "page": 1,
+          "rect": [
+            1152,
+            2288,
+            192,
+            208
+          ],
+          "durationMs": 62,
+          "rootX": 0
+        },
+        {
+          "page": 1,
+          "rect": [
+            1344,
+            2288,
+            192,
+            208
+          ],
+          "durationMs": 62,
+          "rootX": 0
+        }
+      ]
+    },
+    "graze-grass": {
+      "label": "Nibble grass",
+      "frameCount": 24,
+      "loop": false,
+      "durationMs": 2084,
+      "provenance": "authored generated sequential poses",
+      "source": "decoded/graze-grass.png",
+      "calibration": {
+        "logicalScale": 0.631579,
+        "headHeightSourcePx": 76,
+        "headHeightLogicalTargetPx": 48,
+        "method": "manual approximate neutral-head calibration; one uniform scale per entire clip; visual comparison required"
+      },
+      "frames": [
+        {
+          "page": 1,
+          "rect": [
+            1536,
+            2288,
+            192,
+            208
+          ],
+          "durationMs": 220,
+          "rootX": 0
+        },
+        {
+          "page": 1,
+          "rect": [
+            1728,
+            2288,
+            192,
+            208
+          ],
+          "durationMs": 62,
+          "rootX": 0
+        },
+        {
+          "page": 1,
+          "rect": [
+            1920,
+            2288,
+            192,
+            208
+          ],
+          "durationMs": 62,
+          "rootX": 0
+        },
+        {
+          "page": 1,
+          "rect": [
+            2112,
+            2288,
+            192,
+            208
+          ],
+          "durationMs": 62,
+          "rootX": 0
+        },
+        {
+          "page": 1,
+          "rect": [
+            2304,
+            2288,
+            192,
+            208
+          ],
+          "durationMs": 62,
+          "rootX": 0
+        },
+        {
+          "page": 1,
+          "rect": [
+            2496,
+            2288,
+            192,
+            208
+          ],
+          "durationMs": 62,
+          "rootX": 0
+        },
+        {
+          "page": 1,
+          "rect": [
+            2688,
+            2288,
+            192,
+            208
+          ],
+          "durationMs": 62,
+          "rootX": 0
+        },
+        {
+          "page": 1,
+          "rect": [
+            2880,
+            2288,
+            192,
+            208
+          ],
+          "durationMs": 62,
+          "rootX": 0
+        },
+        {
+          "page": 1,
+          "rect": [
+            0,
+            2496,
+            192,
+            208
+          ],
+          "durationMs": 62,
+          "rootX": 0
+        },
+        {
+          "page": 1,
+          "rect": [
+            192,
+            2496,
+            192,
+            208
+          ],
+          "durationMs": 62,
+          "rootX": 0
+        },
+        {
+          "page": 1,
+          "rect": [
+            384,
+            2496,
+            192,
+            208
+          ],
+          "durationMs": 62,
+          "rootX": 0
+        },
+        {
+          "page": 1,
+          "rect": [
+            576,
+            2496,
+            192,
+            208
+          ],
+          "durationMs": 62,
+          "rootX": 0
+        },
+        {
+          "page": 1,
+          "rect": [
+            768,
+            2496,
+            192,
+            208
+          ],
+          "durationMs": 62,
+          "rootX": 0
+        },
+        {
+          "page": 1,
+          "rect": [
+            960,
+            2496,
+            192,
+            208
+          ],
+          "durationMs": 62,
+          "rootX": 0
+        },
+        {
+          "page": 1,
+          "rect": [
+            1152,
+            2496,
+            192,
+            208
+          ],
+          "durationMs": 62,
+          "rootX": 0
+        },
+        {
+          "page": 1,
+          "rect": [
+            1344,
+            2496,
+            192,
+            208
+          ],
+          "durationMs": 62,
+          "rootX": 0
+        },
+        {
+          "page": 1,
+          "rect": [
+            1536,
+            2496,
+            192,
+            208
+          ],
+          "durationMs": 62,
+          "rootX": 0
+        },
+        {
+          "page": 1,
+          "rect": [
+            1728,
+            2496,
+            192,
+            208
+          ],
+          "durationMs": 62,
+          "rootX": 0
+        },
+        {
+          "page": 1,
+          "rect": [
+            1920,
+            2496,
+            192,
+            208
+          ],
+          "durationMs": 62,
+          "rootX": 0
+        },
+        {
+          "page": 1,
+          "rect": [
+            2112,
+            2496,
+            192,
+            208
+          ],
+          "durationMs": 62,
+          "rootX": 0
+        },
+        {
+          "page": 1,
+          "rect": [
+            2304,
+            2496,
+            192,
+            208
+          ],
+          "durationMs": 62,
+          "rootX": 0
+        },
+        {
+          "page": 1,
+          "rect": [
+            2496,
+            2496,
+            192,
+            208
+          ],
+          "durationMs": 62,
+          "rootX": 0
+        },
+        {
+          "page": 1,
+          "rect": [
+            2688,
+            2496,
+            192,
+            208
+          ],
+          "durationMs": 62,
+          "rootX": 0
+        },
+        {
+          "page": 1,
+          "rect": [
+            2880,
+            2496,
+            192,
+            208
+          ],
+          "durationMs": 500,
+          "rootX": 0
+        }
+      ]
+    },
+    "pick-up-stick": {
+      "label": "Pick up a stick",
+      "frameCount": 24,
+      "loop": false,
+      "durationMs": 2084,
+      "provenance": "authored generated sequential poses",
+      "source": "decoded/pick-up-stick.png",
+      "calibration": {
+        "logicalScale": 0.738462,
+        "headHeightSourcePx": 65,
+        "headHeightLogicalTargetPx": 48,
+        "method": "manual approximate neutral-head calibration; one uniform scale per entire clip; visual comparison required"
+      },
+      "frames": [
+        {
+          "page": 1,
+          "rect": [
+            0,
+            2704,
+            192,
+            208
+          ],
+          "durationMs": 220,
+          "rootX": 0
+        },
+        {
+          "page": 1,
+          "rect": [
+            192,
+            2704,
+            192,
+            208
+          ],
+          "durationMs": 62,
+          "rootX": 0
+        },
+        {
+          "page": 1,
+          "rect": [
+            384,
+            2704,
+            192,
+            208
+          ],
+          "durationMs": 62,
+          "rootX": 0
+        },
+        {
+          "page": 1,
+          "rect": [
+            576,
+            2704,
+            192,
+            208
+          ],
+          "durationMs": 62,
+          "rootX": 0
+        },
+        {
+          "page": 1,
+          "rect": [
+            768,
+            2704,
+            192,
+            208
+          ],
+          "durationMs": 62,
+          "rootX": 0
+        },
+        {
+          "page": 1,
+          "rect": [
+            960,
+            2704,
+            192,
+            208
+          ],
+          "durationMs": 62,
+          "rootX": 0
+        },
+        {
+          "page": 1,
+          "rect": [
+            1152,
+            2704,
+            192,
+            208
+          ],
+          "durationMs": 62,
+          "rootX": 0
+        },
+        {
+          "page": 1,
+          "rect": [
+            1344,
+            2704,
+            192,
+            208
+          ],
+          "durationMs": 62,
+          "rootX": 0
+        },
+        {
+          "page": 1,
+          "rect": [
+            1536,
+            2704,
+            192,
+            208
+          ],
+          "durationMs": 62,
+          "rootX": 0
+        },
+        {
+          "page": 1,
+          "rect": [
+            1728,
+            2704,
+            192,
+            208
+          ],
+          "durationMs": 62,
+          "rootX": 0
+        },
+        {
+          "page": 1,
+          "rect": [
+            1920,
+            2704,
+            192,
+            208
+          ],
+          "durationMs": 62,
+          "rootX": 0
+        },
+        {
+          "page": 1,
+          "rect": [
+            2112,
+            2704,
+            192,
+            208
+          ],
+          "durationMs": 62,
+          "rootX": 0
+        },
+        {
+          "page": 1,
+          "rect": [
+            2304,
+            2704,
+            192,
+            208
+          ],
+          "durationMs": 62,
+          "rootX": 0
+        },
+        {
+          "page": 1,
+          "rect": [
+            2496,
+            2704,
+            192,
+            208
+          ],
+          "durationMs": 62,
+          "rootX": 0
+        },
+        {
+          "page": 1,
+          "rect": [
+            2688,
+            2704,
+            192,
+            208
+          ],
+          "durationMs": 62,
+          "rootX": 0
+        },
+        {
+          "page": 1,
+          "rect": [
+            2880,
+            2704,
+            192,
+            208
+          ],
+          "durationMs": 62,
+          "rootX": 0
+        },
+        {
+          "page": 1,
+          "rect": [
+            0,
+            2912,
+            192,
+            208
+          ],
+          "durationMs": 62,
+          "rootX": 0
+        },
+        {
+          "page": 1,
+          "rect": [
+            192,
+            2912,
+            192,
+            208
+          ],
+          "durationMs": 62,
+          "rootX": 0
+        },
+        {
+          "page": 1,
+          "rect": [
+            384,
+            2912,
+            192,
+            208
+          ],
+          "durationMs": 62,
+          "rootX": 0
+        },
+        {
+          "page": 1,
+          "rect": [
+            576,
+            2912,
+            192,
+            208
+          ],
+          "durationMs": 62,
+          "rootX": 0
+        },
+        {
+          "page": 1,
+          "rect": [
+            768,
+            2912,
+            192,
+            208
+          ],
+          "durationMs": 62,
+          "rootX": 0
+        },
+        {
+          "page": 1,
+          "rect": [
+            960,
+            2912,
+            192,
+            208
+          ],
+          "durationMs": 62,
+          "rootX": 0
+        },
+        {
+          "page": 1,
+          "rect": [
+            1152,
+            2912,
+            192,
+            208
+          ],
+          "durationMs": 62,
+          "rootX": 0
+        },
+        {
+          "page": 1,
+          "rect": [
+            1344,
+            2912,
+            192,
+            208
+          ],
+          "durationMs": 500,
+          "rootX": 0
+        }
+      ]
+    },
+    "carry-stick": {
+      "label": "Carry a stick",
+      "frameCount": 24,
+      "loop": true,
+      "durationMs": 1488,
+      "provenance": "authored generated sequential poses",
+      "source": "decoded/carry-stick.png",
+      "calibration": {
+        "logicalScale": 0.727273,
+        "headHeightSourcePx": 66,
+        "headHeightLogicalTargetPx": 48,
+        "method": "manual approximate neutral-head calibration; one uniform scale per entire clip; visual comparison required"
+      },
+      "frames": [
+        {
+          "page": 1,
+          "rect": [
+            1536,
+            2912,
+            192,
+            208
+          ],
+          "durationMs": 62,
+          "rootX": 0
+        },
+        {
+          "page": 1,
+          "rect": [
+            1728,
+            2912,
+            192,
+            208
+          ],
+          "durationMs": 62,
+          "rootX": 0
+        },
+        {
+          "page": 1,
+          "rect": [
+            1920,
+            2912,
+            192,
+            208
+          ],
+          "durationMs": 62,
+          "rootX": 0
+        },
+        {
+          "page": 1,
+          "rect": [
+            2112,
+            2912,
+            192,
+            208
+          ],
+          "durationMs": 62,
+          "rootX": 0
+        },
+        {
+          "page": 1,
+          "rect": [
+            2304,
+            2912,
+            192,
+            208
+          ],
+          "durationMs": 62,
+          "rootX": 0
+        },
+        {
+          "page": 1,
+          "rect": [
+            2496,
+            2912,
+            192,
+            208
+          ],
+          "durationMs": 62,
+          "rootX": 0
+        },
+        {
+          "page": 1,
+          "rect": [
+            2688,
+            2912,
+            192,
+            208
+          ],
+          "durationMs": 62,
+          "rootX": 0
+        },
+        {
+          "page": 1,
+          "rect": [
+            2880,
+            2912,
+            192,
+            208
+          ],
+          "durationMs": 62,
+          "rootX": 0
+        },
+        {
+          "page": 1,
+          "rect": [
+            0,
+            3120,
+            192,
+            208
+          ],
+          "durationMs": 62,
+          "rootX": 0
+        },
+        {
+          "page": 1,
+          "rect": [
+            192,
+            3120,
+            192,
+            208
+          ],
+          "durationMs": 62,
+          "rootX": 0
+        },
+        {
+          "page": 1,
+          "rect": [
+            384,
+            3120,
+            192,
+            208
+          ],
+          "durationMs": 62,
+          "rootX": 0
+        },
+        {
+          "page": 1,
+          "rect": [
+            576,
+            3120,
+            192,
+            208
+          ],
+          "durationMs": 62,
+          "rootX": 0
+        },
+        {
+          "page": 1,
+          "rect": [
+            768,
+            3120,
+            192,
+            208
+          ],
+          "durationMs": 62,
+          "rootX": 0
+        },
+        {
+          "page": 1,
+          "rect": [
+            960,
+            3120,
+            192,
+            208
+          ],
+          "durationMs": 62,
+          "rootX": 0
+        },
+        {
+          "page": 1,
+          "rect": [
+            1152,
+            3120,
+            192,
+            208
+          ],
+          "durationMs": 62,
+          "rootX": 0
+        },
+        {
+          "page": 1,
+          "rect": [
+            1344,
+            3120,
+            192,
+            208
+          ],
+          "durationMs": 62,
+          "rootX": 0
+        },
+        {
+          "page": 1,
+          "rect": [
+            1536,
+            3120,
+            192,
+            208
+          ],
+          "durationMs": 62,
+          "rootX": 0
+        },
+        {
+          "page": 1,
+          "rect": [
+            1728,
+            3120,
+            192,
+            208
+          ],
+          "durationMs": 62,
+          "rootX": 0
+        },
+        {
+          "page": 1,
+          "rect": [
+            1920,
+            3120,
+            192,
+            208
+          ],
+          "durationMs": 62,
+          "rootX": 0
+        },
+        {
+          "page": 1,
+          "rect": [
+            2112,
+            3120,
+            192,
+            208
+          ],
+          "durationMs": 62,
+          "rootX": 0
+        },
+        {
+          "page": 1,
+          "rect": [
+            2304,
+            3120,
+            192,
+            208
+          ],
+          "durationMs": 62,
+          "rootX": 0
+        },
+        {
+          "page": 1,
+          "rect": [
+            2496,
+            3120,
+            192,
+            208
+          ],
+          "durationMs": 62,
+          "rootX": 0
+        },
+        {
+          "page": 1,
+          "rect": [
+            2688,
+            3120,
+            192,
+            208
+          ],
+          "durationMs": 62,
+          "rootX": 0
+        },
+        {
+          "page": 1,
+          "rect": [
+            2880,
+            3120,
+            192,
+            208
+          ],
+          "durationMs": 62,
+          "rootX": 0
+        }
+      ]
+    },
+    "sit-down": {
+      "label": "Stand to sit",
+      "frameCount": 24,
+      "loop": false,
+      "durationMs": 2084,
+      "provenance": "authored generated sequential poses",
+      "source": "decoded/sit-down.png",
+      "calibration": {
+        "logicalScale": 0.607595,
+        "headHeightSourcePx": 79,
+        "headHeightLogicalTargetPx": 48,
+        "method": "manual approximate neutral-head calibration; one uniform scale per entire clip; visual comparison required"
+      },
+      "frames": [
+        {
+          "page": 2,
+          "rect": [
+            0,
+            0,
+            192,
+            208
+          ],
+          "durationMs": 220,
+          "rootX": 0
+        },
+        {
+          "page": 2,
+          "rect": [
+            192,
+            0,
+            192,
+            208
+          ],
+          "durationMs": 62,
+          "rootX": 0
+        },
+        {
+          "page": 2,
+          "rect": [
+            384,
+            0,
+            192,
+            208
+          ],
+          "durationMs": 62,
+          "rootX": 0
+        },
+        {
+          "page": 2,
+          "rect": [
+            576,
+            0,
+            192,
+            208
+          ],
+          "durationMs": 62,
+          "rootX": 0
+        },
+        {
+          "page": 2,
+          "rect": [
+            768,
+            0,
+            192,
+            208
+          ],
+          "durationMs": 62,
+          "rootX": 0
+        },
+        {
+          "page": 2,
+          "rect": [
+            960,
+            0,
+            192,
+            208
+          ],
+          "durationMs": 62,
+          "rootX": 0
+        },
+        {
+          "page": 2,
+          "rect": [
+            1152,
+            0,
+            192,
+            208
+          ],
+          "durationMs": 62,
+          "rootX": 0
+        },
+        {
+          "page": 2,
+          "rect": [
+            1344,
+            0,
+            192,
+            208
+          ],
+          "durationMs": 62,
+          "rootX": 0
+        },
+        {
+          "page": 2,
+          "rect": [
+            1536,
+            0,
+            192,
+            208
+          ],
+          "durationMs": 62,
+          "rootX": 0
+        },
+        {
+          "page": 2,
+          "rect": [
+            1728,
+            0,
+            192,
+            208
+          ],
+          "durationMs": 62,
+          "rootX": 0
+        },
+        {
+          "page": 2,
+          "rect": [
+            1920,
+            0,
+            192,
+            208
+          ],
+          "durationMs": 62,
+          "rootX": 0
+        },
+        {
+          "page": 2,
+          "rect": [
+            2112,
+            0,
+            192,
+            208
+          ],
+          "durationMs": 62,
+          "rootX": 0
+        },
+        {
+          "page": 2,
+          "rect": [
+            2304,
+            0,
+            192,
+            208
+          ],
+          "durationMs": 62,
+          "rootX": 0
+        },
+        {
+          "page": 2,
+          "rect": [
+            2496,
+            0,
+            192,
+            208
+          ],
+          "durationMs": 62,
+          "rootX": 0
+        },
+        {
+          "page": 2,
+          "rect": [
+            2688,
+            0,
+            192,
+            208
+          ],
+          "durationMs": 62,
+          "rootX": 0
+        },
+        {
+          "page": 2,
+          "rect": [
+            2880,
+            0,
+            192,
+            208
+          ],
+          "durationMs": 62,
+          "rootX": 0
+        },
+        {
+          "page": 2,
+          "rect": [
+            0,
+            208,
+            192,
+            208
+          ],
+          "durationMs": 62,
+          "rootX": 0
+        },
+        {
+          "page": 2,
+          "rect": [
+            192,
+            208,
+            192,
+            208
+          ],
+          "durationMs": 62,
+          "rootX": 0
+        },
+        {
+          "page": 2,
+          "rect": [
+            384,
+            208,
+            192,
+            208
+          ],
+          "durationMs": 62,
+          "rootX": 0
+        },
+        {
+          "page": 2,
+          "rect": [
+            576,
+            208,
+            192,
+            208
+          ],
+          "durationMs": 62,
+          "rootX": 0
+        },
+        {
+          "page": 2,
+          "rect": [
+            768,
+            208,
+            192,
+            208
+          ],
+          "durationMs": 62,
+          "rootX": 0
+        },
+        {
+          "page": 2,
+          "rect": [
+            960,
+            208,
+            192,
+            208
+          ],
+          "durationMs": 62,
+          "rootX": 0
+        },
+        {
+          "page": 2,
+          "rect": [
+            1152,
+            208,
+            192,
+            208
+          ],
+          "durationMs": 62,
+          "rootX": 0
+        },
+        {
+          "page": 2,
+          "rect": [
+            1344,
+            208,
+            192,
+            208
+          ],
+          "durationMs": 500,
+          "rootX": 0
+        }
+      ]
+    },
+    "lie-down": {
+      "label": "Sit to lie down",
+      "frameCount": 24,
+      "loop": false,
+      "durationMs": 2084,
+      "provenance": "authored generated sequential poses",
+      "source": "decoded/lie-down.png",
+      "calibration": {
+        "logicalScale": 0.448598,
+        "headHeightSourcePx": 107,
+        "headHeightLogicalTargetPx": 48,
+        "method": "manual approximate neutral-head calibration; one uniform scale per entire clip; visual comparison required"
+      },
+      "frames": [
+        {
+          "page": 2,
+          "rect": [
+            1536,
+            208,
+            192,
+            208
+          ],
+          "durationMs": 220,
+          "rootX": 0
+        },
+        {
+          "page": 2,
+          "rect": [
+            1728,
+            208,
+            192,
+            208
+          ],
+          "durationMs": 62,
+          "rootX": 0
+        },
+        {
+          "page": 2,
+          "rect": [
+            1920,
+            208,
+            192,
+            208
+          ],
+          "durationMs": 62,
+          "rootX": 0
+        },
+        {
+          "page": 2,
+          "rect": [
+            2112,
+            208,
+            192,
+            208
+          ],
+          "durationMs": 62,
+          "rootX": 0
+        },
+        {
+          "page": 2,
+          "rect": [
+            2304,
+            208,
+            192,
+            208
+          ],
+          "durationMs": 62,
+          "rootX": 0
+        },
+        {
+          "page": 2,
+          "rect": [
+            2496,
+            208,
+            192,
+            208
+          ],
+          "durationMs": 62,
+          "rootX": 0
+        },
+        {
+          "page": 2,
+          "rect": [
+            2688,
+            208,
+            192,
+            208
+          ],
+          "durationMs": 62,
+          "rootX": 0
+        },
+        {
+          "page": 2,
+          "rect": [
+            2880,
+            208,
+            192,
+            208
+          ],
+          "durationMs": 62,
+          "rootX": 0
+        },
+        {
+          "page": 2,
+          "rect": [
+            0,
+            416,
+            192,
+            208
+          ],
+          "durationMs": 62,
+          "rootX": 0
+        },
+        {
+          "page": 2,
+          "rect": [
+            192,
+            416,
+            192,
+            208
+          ],
+          "durationMs": 62,
+          "rootX": 0
+        },
+        {
+          "page": 2,
+          "rect": [
+            384,
+            416,
+            192,
+            208
+          ],
+          "durationMs": 62,
+          "rootX": 0
+        },
+        {
+          "page": 2,
+          "rect": [
+            576,
+            416,
+            192,
+            208
+          ],
+          "durationMs": 62,
+          "rootX": 0
+        },
+        {
+          "page": 2,
+          "rect": [
+            768,
+            416,
+            192,
+            208
+          ],
+          "durationMs": 62,
+          "rootX": 0
+        },
+        {
+          "page": 2,
+          "rect": [
+            960,
+            416,
+            192,
+            208
+          ],
+          "durationMs": 62,
+          "rootX": 0
+        },
+        {
+          "page": 2,
+          "rect": [
+            1152,
+            416,
+            192,
+            208
+          ],
+          "durationMs": 62,
+          "rootX": 0
+        },
+        {
+          "page": 2,
+          "rect": [
+            1344,
+            416,
+            192,
+            208
+          ],
+          "durationMs": 62,
+          "rootX": 0
+        },
+        {
+          "page": 2,
+          "rect": [
+            1536,
+            416,
+            192,
+            208
+          ],
+          "durationMs": 62,
+          "rootX": 0
+        },
+        {
+          "page": 2,
+          "rect": [
+            1728,
+            416,
+            192,
+            208
+          ],
+          "durationMs": 62,
+          "rootX": 0
+        },
+        {
+          "page": 2,
+          "rect": [
+            1920,
+            416,
+            192,
+            208
+          ],
+          "durationMs": 62,
+          "rootX": 0
+        },
+        {
+          "page": 2,
+          "rect": [
+            2112,
+            416,
+            192,
+            208
+          ],
+          "durationMs": 62,
+          "rootX": 0
+        },
+        {
+          "page": 2,
+          "rect": [
+            2304,
+            416,
+            192,
+            208
+          ],
+          "durationMs": 62,
+          "rootX": 0
+        },
+        {
+          "page": 2,
+          "rect": [
+            2496,
+            416,
+            192,
+            208
+          ],
+          "durationMs": 62,
+          "rootX": 0
+        },
+        {
+          "page": 2,
+          "rect": [
+            2688,
+            416,
+            192,
+            208
+          ],
+          "durationMs": 62,
+          "rootX": 0
+        },
+        {
+          "page": 2,
+          "rect": [
+            2880,
+            416,
+            192,
+            208
+          ],
+          "durationMs": 500,
+          "rootX": 0
+        }
+      ]
+    },
+    "curl-up": {
+      "label": "Lie down to curl up",
+      "frameCount": 24,
+      "loop": false,
+      "durationMs": 2084,
+      "provenance": "authored generated sequential poses",
+      "source": "decoded/curl-up.png",
+      "calibration": {
+        "logicalScale": 0.631579,
+        "headHeightSourcePx": 76,
+        "headHeightLogicalTargetPx": 48,
+        "method": "manual approximate neutral-head calibration; one uniform scale per entire clip; visual comparison required"
+      },
+      "frames": [
+        {
+          "page": 2,
+          "rect": [
+            0,
+            624,
+            192,
+            208
+          ],
+          "durationMs": 220,
+          "rootX": 0
+        },
+        {
+          "page": 2,
+          "rect": [
+            192,
+            624,
+            192,
+            208
+          ],
+          "durationMs": 62,
+          "rootX": 0
+        },
+        {
+          "page": 2,
+          "rect": [
+            384,
+            624,
+            192,
+            208
+          ],
+          "durationMs": 62,
+          "rootX": 0
+        },
+        {
+          "page": 2,
+          "rect": [
+            576,
+            624,
+            192,
+            208
+          ],
+          "durationMs": 62,
+          "rootX": 0
+        },
+        {
+          "page": 2,
+          "rect": [
+            768,
+            624,
+            192,
+            208
+          ],
+          "durationMs": 62,
+          "rootX": 0
+        },
+        {
+          "page": 2,
+          "rect": [
+            960,
+            624,
+            192,
+            208
+          ],
+          "durationMs": 62,
+          "rootX": 0
+        },
+        {
+          "page": 2,
+          "rect": [
+            1152,
+            624,
+            192,
+            208
+          ],
+          "durationMs": 62,
+          "rootX": 0
+        },
+        {
+          "page": 2,
+          "rect": [
+            1344,
+            624,
+            192,
+            208
+          ],
+          "durationMs": 62,
+          "rootX": 0
+        },
+        {
+          "page": 2,
+          "rect": [
+            1536,
+            624,
+            192,
+            208
+          ],
+          "durationMs": 62,
+          "rootX": 0
+        },
+        {
+          "page": 2,
+          "rect": [
+            1728,
+            624,
+            192,
+            208
+          ],
+          "durationMs": 62,
+          "rootX": 0
+        },
+        {
+          "page": 2,
+          "rect": [
+            1920,
+            624,
+            192,
+            208
+          ],
+          "durationMs": 62,
+          "rootX": 0
+        },
+        {
+          "page": 2,
+          "rect": [
+            2112,
+            624,
+            192,
+            208
+          ],
+          "durationMs": 62,
+          "rootX": 0
+        },
+        {
+          "page": 2,
+          "rect": [
+            2304,
+            624,
+            192,
+            208
+          ],
+          "durationMs": 62,
+          "rootX": 0
+        },
+        {
+          "page": 2,
+          "rect": [
+            2496,
+            624,
+            192,
+            208
+          ],
+          "durationMs": 62,
+          "rootX": 0
+        },
+        {
+          "page": 2,
+          "rect": [
+            2688,
+            624,
+            192,
+            208
+          ],
+          "durationMs": 62,
+          "rootX": 0
+        },
+        {
+          "page": 2,
+          "rect": [
+            2880,
+            624,
+            192,
+            208
+          ],
+          "durationMs": 62,
+          "rootX": 0
+        },
+        {
+          "page": 2,
+          "rect": [
+            0,
+            832,
+            192,
+            208
+          ],
+          "durationMs": 62,
+          "rootX": 0
+        },
+        {
+          "page": 2,
+          "rect": [
+            192,
+            832,
+            192,
+            208
+          ],
+          "durationMs": 62,
+          "rootX": 0
+        },
+        {
+          "page": 2,
+          "rect": [
+            384,
+            832,
+            192,
+            208
+          ],
+          "durationMs": 62,
+          "rootX": 0
+        },
+        {
+          "page": 2,
+          "rect": [
+            576,
+            832,
+            192,
+            208
+          ],
+          "durationMs": 62,
+          "rootX": 0
+        },
+        {
+          "page": 2,
+          "rect": [
+            768,
+            832,
+            192,
+            208
+          ],
+          "durationMs": 62,
+          "rootX": 0
+        },
+        {
+          "page": 2,
+          "rect": [
+            960,
+            832,
+            192,
+            208
+          ],
+          "durationMs": 62,
+          "rootX": 0
+        },
+        {
+          "page": 2,
+          "rect": [
+            1152,
+            832,
+            192,
+            208
+          ],
+          "durationMs": 62,
+          "rootX": 0
+        },
+        {
+          "page": 2,
+          "rect": [
+            1344,
+            832,
+            192,
+            208
+          ],
+          "durationMs": 500,
+          "rootX": 0
+        }
+      ]
+    },
+    "wake-up": {
+      "label": "Wake and stand up",
+      "frameCount": 24,
+      "loop": false,
+      "durationMs": 2084,
+      "provenance": "authored generated sequential poses",
+      "source": "decoded/wake-up.png",
+      "calibration": {
+        "logicalScale": 0.64,
+        "headHeightSourcePx": 75,
+        "headHeightLogicalTargetPx": 48,
+        "method": "manual approximate neutral-head calibration; one uniform scale per entire clip; visual comparison required"
+      },
+      "frames": [
+        {
+          "page": 2,
+          "rect": [
+            1536,
+            832,
+            192,
+            208
+          ],
+          "durationMs": 220,
+          "rootX": 0
+        },
+        {
+          "page": 2,
+          "rect": [
+            1728,
+            832,
+            192,
+            208
+          ],
+          "durationMs": 62,
+          "rootX": 0
+        },
+        {
+          "page": 2,
+          "rect": [
+            1920,
+            832,
+            192,
+            208
+          ],
+          "durationMs": 62,
+          "rootX": 0
+        },
+        {
+          "page": 2,
+          "rect": [
+            2112,
+            832,
+            192,
+            208
+          ],
+          "durationMs": 62,
+          "rootX": 0
+        },
+        {
+          "page": 2,
+          "rect": [
+            2304,
+            832,
+            192,
+            208
+          ],
+          "durationMs": 62,
+          "rootX": 0
+        },
+        {
+          "page": 2,
+          "rect": [
+            2496,
+            832,
+            192,
+            208
+          ],
+          "durationMs": 62,
+          "rootX": 0
+        },
+        {
+          "page": 2,
+          "rect": [
+            2688,
+            832,
+            192,
+            208
+          ],
+          "durationMs": 62,
+          "rootX": 0
+        },
+        {
+          "page": 2,
+          "rect": [
+            2880,
+            832,
+            192,
+            208
+          ],
+          "durationMs": 62,
+          "rootX": 0
+        },
+        {
+          "page": 2,
+          "rect": [
+            0,
+            1040,
+            192,
+            208
+          ],
+          "durationMs": 62,
+          "rootX": 0
+        },
+        {
+          "page": 2,
+          "rect": [
+            192,
+            1040,
+            192,
+            208
+          ],
+          "durationMs": 62,
+          "rootX": 0
+        },
+        {
+          "page": 2,
+          "rect": [
+            384,
+            1040,
+            192,
+            208
+          ],
+          "durationMs": 62,
+          "rootX": 0
+        },
+        {
+          "page": 2,
+          "rect": [
+            576,
+            1040,
+            192,
+            208
+          ],
+          "durationMs": 62,
+          "rootX": 0
+        },
+        {
+          "page": 2,
+          "rect": [
+            768,
+            1040,
+            192,
+            208
+          ],
+          "durationMs": 62,
+          "rootX": 0
+        },
+        {
+          "page": 2,
+          "rect": [
+            960,
+            1040,
+            192,
+            208
+          ],
+          "durationMs": 62,
+          "rootX": 0
+        },
+        {
+          "page": 2,
+          "rect": [
+            1152,
+            1040,
+            192,
+            208
+          ],
+          "durationMs": 62,
+          "rootX": 0
+        },
+        {
+          "page": 2,
+          "rect": [
+            1344,
+            1040,
+            192,
+            208
+          ],
+          "durationMs": 62,
+          "rootX": 0
+        },
+        {
+          "page": 2,
+          "rect": [
+            1536,
+            1040,
+            192,
+            208
+          ],
+          "durationMs": 62,
+          "rootX": 0
+        },
+        {
+          "page": 2,
+          "rect": [
+            1728,
+            1040,
+            192,
+            208
+          ],
+          "durationMs": 62,
+          "rootX": 0
+        },
+        {
+          "page": 2,
+          "rect": [
+            1920,
+            1040,
+            192,
+            208
+          ],
+          "durationMs": 62,
+          "rootX": 0
+        },
+        {
+          "page": 2,
+          "rect": [
+            2112,
+            1040,
+            192,
+            208
+          ],
+          "durationMs": 62,
+          "rootX": 0
+        },
+        {
+          "page": 2,
+          "rect": [
+            2304,
+            1040,
+            192,
+            208
+          ],
+          "durationMs": 62,
+          "rootX": 0
+        },
+        {
+          "page": 2,
+          "rect": [
+            2496,
+            1040,
+            192,
+            208
+          ],
+          "durationMs": 62,
+          "rootX": 0
+        },
+        {
+          "page": 2,
+          "rect": [
+            2688,
+            1040,
+            192,
+            208
+          ],
+          "durationMs": 62,
+          "rootX": 0
+        },
+        {
+          "page": 2,
+          "rect": [
+            2880,
+            1040,
+            192,
+            208
+          ],
+          "durationMs": 500,
+          "rootX": 0
+        }
+      ]
+    },
+    "turn-around": {
+      "label": "Turn to walk back",
+      "frameCount": 24,
+      "loop": false,
+      "durationMs": 2084,
+      "provenance": "authored generated sequential poses",
+      "source": "decoded/turn-around.png",
+      "calibration": {
+        "logicalScale": 0.685714,
+        "headHeightSourcePx": 70,
+        "headHeightLogicalTargetPx": 48,
+        "method": "revised approximate neutral-head calibration after envelope check; one scale for full clip; not exact anatomical measurement"
+      },
+      "frames": [
+        {
+          "page": 2,
+          "rect": [
+            0,
+            1248,
+            192,
+            208
+          ],
+          "durationMs": 220,
+          "rootX": 0
+        },
+        {
+          "page": 2,
+          "rect": [
+            192,
+            1248,
+            192,
+            208
+          ],
+          "durationMs": 62,
+          "rootX": 0
+        },
+        {
+          "page": 2,
+          "rect": [
+            384,
+            1248,
+            192,
+            208
+          ],
+          "durationMs": 62,
+          "rootX": 0
+        },
+        {
+          "page": 2,
+          "rect": [
+            576,
+            1248,
+            192,
+            208
+          ],
+          "durationMs": 62,
+          "rootX": 0
+        },
+        {
+          "page": 2,
+          "rect": [
+            768,
+            1248,
+            192,
+            208
+          ],
+          "durationMs": 62,
+          "rootX": 0
+        },
+        {
+          "page": 2,
+          "rect": [
+            960,
+            1248,
+            192,
+            208
+          ],
+          "durationMs": 62,
+          "rootX": 0
+        },
+        {
+          "page": 2,
+          "rect": [
+            1152,
+            1248,
+            192,
+            208
+          ],
+          "durationMs": 62,
+          "rootX": 0
+        },
+        {
+          "page": 2,
+          "rect": [
+            1344,
+            1248,
+            192,
+            208
+          ],
+          "durationMs": 62,
+          "rootX": 0
+        },
+        {
+          "page": 2,
+          "rect": [
+            1536,
+            1248,
+            192,
+            208
+          ],
+          "durationMs": 62,
+          "rootX": 0
+        },
+        {
+          "page": 2,
+          "rect": [
+            1728,
+            1248,
+            192,
+            208
+          ],
+          "durationMs": 62,
+          "rootX": 0
+        },
+        {
+          "page": 2,
+          "rect": [
+            1920,
+            1248,
+            192,
+            208
+          ],
+          "durationMs": 62,
+          "rootX": 0
+        },
+        {
+          "page": 2,
+          "rect": [
+            2112,
+            1248,
+            192,
+            208
+          ],
+          "durationMs": 62,
+          "rootX": 0
+        },
+        {
+          "page": 2,
+          "rect": [
+            2304,
+            1248,
+            192,
+            208
+          ],
+          "durationMs": 62,
+          "rootX": 0
+        },
+        {
+          "page": 2,
+          "rect": [
+            2496,
+            1248,
+            192,
+            208
+          ],
+          "durationMs": 62,
+          "rootX": 0
+        },
+        {
+          "page": 2,
+          "rect": [
+            2688,
+            1248,
+            192,
+            208
+          ],
+          "durationMs": 62,
+          "rootX": 0
+        },
+        {
+          "page": 2,
+          "rect": [
+            2880,
+            1248,
+            192,
+            208
+          ],
+          "durationMs": 62,
+          "rootX": 0
+        },
+        {
+          "page": 2,
+          "rect": [
+            0,
+            1456,
+            192,
+            208
+          ],
+          "durationMs": 62,
+          "rootX": 0
+        },
+        {
+          "page": 2,
+          "rect": [
+            192,
+            1456,
+            192,
+            208
+          ],
+          "durationMs": 62,
+          "rootX": 0
+        },
+        {
+          "page": 2,
+          "rect": [
+            384,
+            1456,
+            192,
+            208
+          ],
+          "durationMs": 62,
+          "rootX": 0
+        },
+        {
+          "page": 2,
+          "rect": [
+            576,
+            1456,
+            192,
+            208
+          ],
+          "durationMs": 62,
+          "rootX": 0
+        },
+        {
+          "page": 2,
+          "rect": [
+            768,
+            1456,
+            192,
+            208
+          ],
+          "durationMs": 62,
+          "rootX": 0
+        },
+        {
+          "page": 2,
+          "rect": [
+            960,
+            1456,
+            192,
+            208
+          ],
+          "durationMs": 62,
+          "rootX": 0
+        },
+        {
+          "page": 2,
+          "rect": [
+            1152,
+            1456,
+            192,
+            208
+          ],
+          "durationMs": 62,
+          "rootX": 0
+        },
+        {
+          "page": 2,
+          "rect": [
+            1344,
+            1456,
+            192,
+            208
+          ],
+          "durationMs": 500,
+          "rootX": 0
+        }
+      ]
+    },
+    "look-directions": {
+      "label": "Sixteen directional looks",
+      "frameCount": 16,
+      "loop": false,
+      "durationMs": 4000,
+      "provenance": "authored generated sequential poses",
+      "source": "decoded/look-directions.png",
+      "calibration": {
+        "logicalScale": 0.390244,
+        "headHeightSourcePx": 123,
+        "headHeightLogicalTargetPx": 48,
+        "method": "manual approximate neutral-head calibration; one uniform scale per entire clip; visual comparison required"
+      },
+      "frames": [
+        {
+          "page": 2,
+          "rect": [
+            1536,
+            1456,
+            192,
+            208
+          ],
+          "durationMs": 250,
+          "rootX": 0
+        },
+        {
+          "page": 2,
+          "rect": [
+            1728,
+            1456,
+            192,
+            208
+          ],
+          "durationMs": 250,
+          "rootX": 0
+        },
+        {
+          "page": 2,
+          "rect": [
+            1920,
+            1456,
+            192,
+            208
+          ],
+          "durationMs": 250,
+          "rootX": 0
+        },
+        {
+          "page": 2,
+          "rect": [
+            2112,
+            1456,
+            192,
+            208
+          ],
+          "durationMs": 250,
+          "rootX": 0
+        },
+        {
+          "page": 2,
+          "rect": [
+            2304,
+            1456,
+            192,
+            208
+          ],
+          "durationMs": 250,
+          "rootX": 0
+        },
+        {
+          "page": 2,
+          "rect": [
+            2496,
+            1456,
+            192,
+            208
+          ],
+          "durationMs": 250,
+          "rootX": 0
+        },
+        {
+          "page": 2,
+          "rect": [
+            2688,
+            1456,
+            192,
+            208
+          ],
+          "durationMs": 250,
+          "rootX": 0
+        },
+        {
+          "page": 2,
+          "rect": [
+            2880,
+            1456,
+            192,
+            208
+          ],
+          "durationMs": 250,
+          "rootX": 0
+        },
+        {
+          "page": 2,
+          "rect": [
+            0,
+            1664,
+            192,
+            208
+          ],
+          "durationMs": 250,
+          "rootX": 0
+        },
+        {
+          "page": 2,
+          "rect": [
+            192,
+            1664,
+            192,
+            208
+          ],
+          "durationMs": 250,
+          "rootX": 0
+        },
+        {
+          "page": 2,
+          "rect": [
+            384,
+            1664,
+            192,
+            208
+          ],
+          "durationMs": 250,
+          "rootX": 0
+        },
+        {
+          "page": 2,
+          "rect": [
+            576,
+            1664,
+            192,
+            208
+          ],
+          "durationMs": 250,
+          "rootX": 0
+        },
+        {
+          "page": 2,
+          "rect": [
+            768,
+            1664,
+            192,
+            208
+          ],
+          "durationMs": 250,
+          "rootX": 0
+        },
+        {
+          "page": 2,
+          "rect": [
+            960,
+            1664,
+            192,
+            208
+          ],
+          "durationMs": 250,
+          "rootX": 0
+        },
+        {
+          "page": 2,
+          "rect": [
+            1152,
+            1664,
+            192,
+            208
+          ],
+          "durationMs": 250,
+          "rootX": 0
+        },
+        {
+          "page": 2,
+          "rect": [
+            1344,
+            1664,
+            192,
+            208
+          ],
+          "durationMs": 250,
+          "rootX": 0
+        }
+      ]
+    },
+    "walk-left": {
+      "label": "Walk left",
+      "frameCount": 24,
+      "loop": true,
+      "durationMs": 1488,
+      "provenance": "spatial mirror of walk-right; temporal order retained",
+      "source": "walk-right",
+      "calibration": {
+        "logicalScale": 0.786885,
+        "headHeightSourcePx": 61,
+        "headHeightLogicalTargetPx": 48,
+        "method": "manual approximate neutral-head calibration; one uniform scale per entire clip; visual comparison required"
+      },
+      "frames": [
+        {
+          "page": 2,
+          "rect": [
+            1536,
+            1664,
+            192,
+            208
+          ],
+          "durationMs": 62,
+          "rootX": 0
+        },
+        {
+          "page": 2,
+          "rect": [
+            1728,
+            1664,
+            192,
+            208
+          ],
+          "durationMs": 62,
+          "rootX": 0
+        },
+        {
+          "page": 2,
+          "rect": [
+            1920,
+            1664,
+            192,
+            208
+          ],
+          "durationMs": 62,
+          "rootX": 0
+        },
+        {
+          "page": 2,
+          "rect": [
+            2112,
+            1664,
+            192,
+            208
+          ],
+          "durationMs": 62,
+          "rootX": 0
+        },
+        {
+          "page": 2,
+          "rect": [
+            2304,
+            1664,
+            192,
+            208
+          ],
+          "durationMs": 62,
+          "rootX": 0
+        },
+        {
+          "page": 2,
+          "rect": [
+            2496,
+            1664,
+            192,
+            208
+          ],
+          "durationMs": 62,
+          "rootX": 0
+        },
+        {
+          "page": 2,
+          "rect": [
+            2688,
+            1664,
+            192,
+            208
+          ],
+          "durationMs": 62,
+          "rootX": 0
+        },
+        {
+          "page": 2,
+          "rect": [
+            2880,
+            1664,
+            192,
+            208
+          ],
+          "durationMs": 62,
+          "rootX": 0
+        },
+        {
+          "page": 2,
+          "rect": [
+            0,
+            1872,
+            192,
+            208
+          ],
+          "durationMs": 62,
+          "rootX": 0
+        },
+        {
+          "page": 2,
+          "rect": [
+            192,
+            1872,
+            192,
+            208
+          ],
+          "durationMs": 62,
+          "rootX": 0
+        },
+        {
+          "page": 2,
+          "rect": [
+            384,
+            1872,
+            192,
+            208
+          ],
+          "durationMs": 62,
+          "rootX": 0
+        },
+        {
+          "page": 2,
+          "rect": [
+            576,
+            1872,
+            192,
+            208
+          ],
+          "durationMs": 62,
+          "rootX": 0
+        },
+        {
+          "page": 2,
+          "rect": [
+            768,
+            1872,
+            192,
+            208
+          ],
+          "durationMs": 62,
+          "rootX": 0
+        },
+        {
+          "page": 2,
+          "rect": [
+            960,
+            1872,
+            192,
+            208
+          ],
+          "durationMs": 62,
+          "rootX": 0
+        },
+        {
+          "page": 2,
+          "rect": [
+            1152,
+            1872,
+            192,
+            208
+          ],
+          "durationMs": 62,
+          "rootX": 0
+        },
+        {
+          "page": 2,
+          "rect": [
+            1344,
+            1872,
+            192,
+            208
+          ],
+          "durationMs": 62,
+          "rootX": 0
+        },
+        {
+          "page": 2,
+          "rect": [
+            1536,
+            1872,
+            192,
+            208
+          ],
+          "durationMs": 62,
+          "rootX": 0
+        },
+        {
+          "page": 2,
+          "rect": [
+            1728,
+            1872,
+            192,
+            208
+          ],
+          "durationMs": 62,
+          "rootX": 0
+        },
+        {
+          "page": 2,
+          "rect": [
+            1920,
+            1872,
+            192,
+            208
+          ],
+          "durationMs": 62,
+          "rootX": 0
+        },
+        {
+          "page": 2,
+          "rect": [
+            2112,
+            1872,
+            192,
+            208
+          ],
+          "durationMs": 62,
+          "rootX": 0
+        },
+        {
+          "page": 2,
+          "rect": [
+            2304,
+            1872,
+            192,
+            208
+          ],
+          "durationMs": 62,
+          "rootX": 0
+        },
+        {
+          "page": 2,
+          "rect": [
+            2496,
+            1872,
+            192,
+            208
+          ],
+          "durationMs": 62,
+          "rootX": 0
+        },
+        {
+          "page": 2,
+          "rect": [
+            2688,
+            1872,
+            192,
+            208
+          ],
+          "durationMs": 62,
+          "rootX": 0
+        },
+        {
+          "page": 2,
+          "rect": [
+            2880,
+            1872,
+            192,
+            208
+          ],
+          "durationMs": 62,
+          "rootX": 0
+        }
+      ]
+    },
+    "pacing": {
+      "label": "Pace back and forth",
+      "frameCount": 96,
+      "loop": true,
+      "durationMs": 7200,
+      "provenance": "composition: right walk, authored turn, mirrored left walk, mirrored turn; not 96 newly authored poses",
+      "source": "walk-right + turn-around",
+      "calibration": "inherits source clip calibration",
+      "frames": [
+        {
+          "page": 2,
+          "rect": [
+            0,
+            2080,
+            192,
+            208
+          ],
+          "durationMs": 70,
+          "rootX": -48
+        },
+        {
+          "page": 2,
+          "rect": [
+            192,
+            2080,
+            192,
+            208
+          ],
+          "durationMs": 70,
+          "rootX": -44
+        },
+        {
+          "page": 2,
+          "rect": [
+            384,
+            2080,
+            192,
+            208
+          ],
+          "durationMs": 70,
+          "rootX": -40
+        },
+        {
+          "page": 2,
+          "rect": [
+            576,
+            2080,
+            192,
+            208
+          ],
+          "durationMs": 70,
+          "rootX": -35
+        },
+        {
+          "page": 2,
+          "rect": [
+            768,
+            2080,
+            192,
+            208
+          ],
+          "durationMs": 70,
+          "rootX": -31
+        },
+        {
+          "page": 2,
+          "rect": [
+            960,
+            2080,
+            192,
+            208
+          ],
+          "durationMs": 70,
+          "rootX": -27
+        },
+        {
+          "page": 2,
+          "rect": [
+            1152,
+            2080,
+            192,
+            208
+          ],
+          "durationMs": 70,
+          "rootX": -23
+        },
+        {
+          "page": 2,
+          "rect": [
+            1344,
+            2080,
+            192,
+            208
+          ],
+          "durationMs": 70,
+          "rootX": -19
+        },
+        {
+          "page": 2,
+          "rect": [
+            1536,
+            2080,
+            192,
+            208
+          ],
+          "durationMs": 70,
+          "rootX": -15
+        },
+        {
+          "page": 2,
+          "rect": [
+            1728,
+            2080,
+            192,
+            208
+          ],
+          "durationMs": 70,
+          "rootX": -10
+        },
+        {
+          "page": 2,
+          "rect": [
+            1920,
+            2080,
+            192,
+            208
+          ],
+          "durationMs": 70,
+          "rootX": -6
+        },
+        {
+          "page": 2,
+          "rect": [
+            2112,
+            2080,
+            192,
+            208
+          ],
+          "durationMs": 70,
+          "rootX": -2
+        },
+        {
+          "page": 2,
+          "rect": [
+            2304,
+            2080,
+            192,
+            208
+          ],
+          "durationMs": 70,
+          "rootX": 2
+        },
+        {
+          "page": 2,
+          "rect": [
+            2496,
+            2080,
+            192,
+            208
+          ],
+          "durationMs": 70,
+          "rootX": 6
+        },
+        {
+          "page": 2,
+          "rect": [
+            2688,
+            2080,
+            192,
+            208
+          ],
+          "durationMs": 70,
+          "rootX": 10
+        },
+        {
+          "page": 2,
+          "rect": [
+            2880,
+            2080,
+            192,
+            208
+          ],
+          "durationMs": 70,
+          "rootX": 15
+        },
+        {
+          "page": 2,
+          "rect": [
+            0,
+            2288,
+            192,
+            208
+          ],
+          "durationMs": 70,
+          "rootX": 19
+        },
+        {
+          "page": 2,
+          "rect": [
+            192,
+            2288,
+            192,
+            208
+          ],
+          "durationMs": 70,
+          "rootX": 23
+        },
+        {
+          "page": 2,
+          "rect": [
+            384,
+            2288,
+            192,
+            208
+          ],
+          "durationMs": 70,
+          "rootX": 27
+        },
+        {
+          "page": 2,
+          "rect": [
+            576,
+            2288,
+            192,
+            208
+          ],
+          "durationMs": 70,
+          "rootX": 31
+        },
+        {
+          "page": 2,
+          "rect": [
+            768,
+            2288,
+            192,
+            208
+          ],
+          "durationMs": 70,
+          "rootX": 35
+        },
+        {
+          "page": 2,
+          "rect": [
+            960,
+            2288,
+            192,
+            208
+          ],
+          "durationMs": 70,
+          "rootX": 40
+        },
+        {
+          "page": 2,
+          "rect": [
+            1152,
+            2288,
+            192,
+            208
+          ],
+          "durationMs": 70,
+          "rootX": 44
+        },
+        {
+          "page": 2,
+          "rect": [
+            1344,
+            2288,
+            192,
+            208
+          ],
+          "durationMs": 70,
+          "rootX": 48
+        },
+        {
+          "page": 2,
+          "rect": [
+            1536,
+            2288,
+            192,
+            208
+          ],
+          "durationMs": 80,
+          "rootX": 48
+        },
+        {
+          "page": 2,
+          "rect": [
+            1728,
+            2288,
+            192,
+            208
+          ],
+          "durationMs": 80,
+          "rootX": 48
+        },
+        {
+          "page": 2,
+          "rect": [
+            1920,
+            2288,
+            192,
+            208
+          ],
+          "durationMs": 80,
+          "rootX": 48
+        },
+        {
+          "page": 2,
+          "rect": [
+            2112,
+            2288,
+            192,
+            208
+          ],
+          "durationMs": 80,
+          "rootX": 48
+        },
+        {
+          "page": 2,
+          "rect": [
+            2304,
+            2288,
+            192,
+            208
+          ],
+          "durationMs": 80,
+          "rootX": 48
+        },
+        {
+          "page": 2,
+          "rect": [
+            2496,
+            2288,
+            192,
+            208
+          ],
+          "durationMs": 80,
+          "rootX": 48
+        },
+        {
+          "page": 2,
+          "rect": [
+            2688,
+            2288,
+            192,
+            208
+          ],
+          "durationMs": 80,
+          "rootX": 48
+        },
+        {
+          "page": 2,
+          "rect": [
+            2880,
+            2288,
+            192,
+            208
+          ],
+          "durationMs": 80,
+          "rootX": 48
+        },
+        {
+          "page": 2,
+          "rect": [
+            0,
+            2496,
+            192,
+            208
+          ],
+          "durationMs": 80,
+          "rootX": 48
+        },
+        {
+          "page": 2,
+          "rect": [
+            192,
+            2496,
+            192,
+            208
+          ],
+          "durationMs": 80,
+          "rootX": 48
+        },
+        {
+          "page": 2,
+          "rect": [
+            384,
+            2496,
+            192,
+            208
+          ],
+          "durationMs": 80,
+          "rootX": 48
+        },
+        {
+          "page": 2,
+          "rect": [
+            576,
+            2496,
+            192,
+            208
+          ],
+          "durationMs": 80,
+          "rootX": 48
+        },
+        {
+          "page": 2,
+          "rect": [
+            768,
+            2496,
+            192,
+            208
+          ],
+          "durationMs": 80,
+          "rootX": 48
+        },
+        {
+          "page": 2,
+          "rect": [
+            960,
+            2496,
+            192,
+            208
+          ],
+          "durationMs": 80,
+          "rootX": 48
+        },
+        {
+          "page": 2,
+          "rect": [
+            1152,
+            2496,
+            192,
+            208
+          ],
+          "durationMs": 80,
+          "rootX": 48
+        },
+        {
+          "page": 2,
+          "rect": [
+            1344,
+            2496,
+            192,
+            208
+          ],
+          "durationMs": 80,
+          "rootX": 48
+        },
+        {
+          "page": 2,
+          "rect": [
+            1536,
+            2496,
+            192,
+            208
+          ],
+          "durationMs": 80,
+          "rootX": 48
+        },
+        {
+          "page": 2,
+          "rect": [
+            1728,
+            2496,
+            192,
+            208
+          ],
+          "durationMs": 80,
+          "rootX": 48
+        },
+        {
+          "page": 2,
+          "rect": [
+            1920,
+            2496,
+            192,
+            208
+          ],
+          "durationMs": 80,
+          "rootX": 48
+        },
+        {
+          "page": 2,
+          "rect": [
+            2112,
+            2496,
+            192,
+            208
+          ],
+          "durationMs": 80,
+          "rootX": 48
+        },
+        {
+          "page": 2,
+          "rect": [
+            2304,
+            2496,
+            192,
+            208
+          ],
+          "durationMs": 80,
+          "rootX": 48
+        },
+        {
+          "page": 2,
+          "rect": [
+            2496,
+            2496,
+            192,
+            208
+          ],
+          "durationMs": 80,
+          "rootX": 48
+        },
+        {
+          "page": 2,
+          "rect": [
+            2688,
+            2496,
+            192,
+            208
+          ],
+          "durationMs": 80,
+          "rootX": 48
+        },
+        {
+          "page": 2,
+          "rect": [
+            2880,
+            2496,
+            192,
+            208
+          ],
+          "durationMs": 80,
+          "rootX": 48
+        },
+        {
+          "page": 2,
+          "rect": [
+            0,
+            2704,
+            192,
+            208
+          ],
+          "durationMs": 70,
+          "rootX": 48
+        },
+        {
+          "page": 2,
+          "rect": [
+            192,
+            2704,
+            192,
+            208
+          ],
+          "durationMs": 70,
+          "rootX": 44
+        },
+        {
+          "page": 2,
+          "rect": [
+            384,
+            2704,
+            192,
+            208
+          ],
+          "durationMs": 70,
+          "rootX": 40
+        },
+        {
+          "page": 2,
+          "rect": [
+            576,
+            2704,
+            192,
+            208
+          ],
+          "durationMs": 70,
+          "rootX": 35
+        },
+        {
+          "page": 2,
+          "rect": [
+            768,
+            2704,
+            192,
+            208
+          ],
+          "durationMs": 70,
+          "rootX": 31
+        },
+        {
+          "page": 2,
+          "rect": [
+            960,
+            2704,
+            192,
+            208
+          ],
+          "durationMs": 70,
+          "rootX": 27
+        },
+        {
+          "page": 2,
+          "rect": [
+            1152,
+            2704,
+            192,
+            208
+          ],
+          "durationMs": 70,
+          "rootX": 23
+        },
+        {
+          "page": 2,
+          "rect": [
+            1344,
+            2704,
+            192,
+            208
+          ],
+          "durationMs": 70,
+          "rootX": 19
+        },
+        {
+          "page": 2,
+          "rect": [
+            1536,
+            2704,
+            192,
+            208
+          ],
+          "durationMs": 70,
+          "rootX": 15
+        },
+        {
+          "page": 2,
+          "rect": [
+            1728,
+            2704,
+            192,
+            208
+          ],
+          "durationMs": 70,
+          "rootX": 10
+        },
+        {
+          "page": 2,
+          "rect": [
+            1920,
+            2704,
+            192,
+            208
+          ],
+          "durationMs": 70,
+          "rootX": 6
+        },
+        {
+          "page": 2,
+          "rect": [
+            2112,
+            2704,
+            192,
+            208
+          ],
+          "durationMs": 70,
+          "rootX": 2
+        },
+        {
+          "page": 2,
+          "rect": [
+            2304,
+            2704,
+            192,
+            208
+          ],
+          "durationMs": 70,
+          "rootX": -2
+        },
+        {
+          "page": 2,
+          "rect": [
+            2496,
+            2704,
+            192,
+            208
+          ],
+          "durationMs": 70,
+          "rootX": -6
+        },
+        {
+          "page": 2,
+          "rect": [
+            2688,
+            2704,
+            192,
+            208
+          ],
+          "durationMs": 70,
+          "rootX": -10
+        },
+        {
+          "page": 2,
+          "rect": [
+            2880,
+            2704,
+            192,
+            208
+          ],
+          "durationMs": 70,
+          "rootX": -15
+        },
+        {
+          "page": 2,
+          "rect": [
+            0,
+            2912,
+            192,
+            208
+          ],
+          "durationMs": 70,
+          "rootX": -19
+        },
+        {
+          "page": 2,
+          "rect": [
+            192,
+            2912,
+            192,
+            208
+          ],
+          "durationMs": 70,
+          "rootX": -23
+        },
+        {
+          "page": 2,
+          "rect": [
+            384,
+            2912,
+            192,
+            208
+          ],
+          "durationMs": 70,
+          "rootX": -27
+        },
+        {
+          "page": 2,
+          "rect": [
+            576,
+            2912,
+            192,
+            208
+          ],
+          "durationMs": 70,
+          "rootX": -31
+        },
+        {
+          "page": 2,
+          "rect": [
+            768,
+            2912,
+            192,
+            208
+          ],
+          "durationMs": 70,
+          "rootX": -35
+        },
+        {
+          "page": 2,
+          "rect": [
+            960,
+            2912,
+            192,
+            208
+          ],
+          "durationMs": 70,
+          "rootX": -40
+        },
+        {
+          "page": 2,
+          "rect": [
+            1152,
+            2912,
+            192,
+            208
+          ],
+          "durationMs": 70,
+          "rootX": -44
+        },
+        {
+          "page": 2,
+          "rect": [
+            1344,
+            2912,
+            192,
+            208
+          ],
+          "durationMs": 70,
+          "rootX": -48
+        },
+        {
+          "page": 2,
+          "rect": [
+            1536,
+            2912,
+            192,
+            208
+          ],
+          "durationMs": 80,
+          "rootX": -48
+        },
+        {
+          "page": 2,
+          "rect": [
+            1728,
+            2912,
+            192,
+            208
+          ],
+          "durationMs": 80,
+          "rootX": -48
+        },
+        {
+          "page": 2,
+          "rect": [
+            1920,
+            2912,
+            192,
+            208
+          ],
+          "durationMs": 80,
+          "rootX": -48
+        },
+        {
+          "page": 2,
+          "rect": [
+            2112,
+            2912,
+            192,
+            208
+          ],
+          "durationMs": 80,
+          "rootX": -48
+        },
+        {
+          "page": 2,
+          "rect": [
+            2304,
+            2912,
+            192,
+            208
+          ],
+          "durationMs": 80,
+          "rootX": -48
+        },
+        {
+          "page": 2,
+          "rect": [
+            2496,
+            2912,
+            192,
+            208
+          ],
+          "durationMs": 80,
+          "rootX": -48
+        },
+        {
+          "page": 2,
+          "rect": [
+            2688,
+            2912,
+            192,
+            208
+          ],
+          "durationMs": 80,
+          "rootX": -48
+        },
+        {
+          "page": 2,
+          "rect": [
+            2880,
+            2912,
+            192,
+            208
+          ],
+          "durationMs": 80,
+          "rootX": -48
+        },
+        {
+          "page": 2,
+          "rect": [
+            0,
+            3120,
+            192,
+            208
+          ],
+          "durationMs": 80,
+          "rootX": -48
+        },
+        {
+          "page": 2,
+          "rect": [
+            192,
+            3120,
+            192,
+            208
+          ],
+          "durationMs": 80,
+          "rootX": -48
+        },
+        {
+          "page": 2,
+          "rect": [
+            384,
+            3120,
+            192,
+            208
+          ],
+          "durationMs": 80,
+          "rootX": -48
+        },
+        {
+          "page": 2,
+          "rect": [
+            576,
+            3120,
+            192,
+            208
+          ],
+          "durationMs": 80,
+          "rootX": -48
+        },
+        {
+          "page": 2,
+          "rect": [
+            768,
+            3120,
+            192,
+            208
+          ],
+          "durationMs": 80,
+          "rootX": -48
+        },
+        {
+          "page": 2,
+          "rect": [
+            960,
+            3120,
+            192,
+            208
+          ],
+          "durationMs": 80,
+          "rootX": -48
+        },
+        {
+          "page": 2,
+          "rect": [
+            1152,
+            3120,
+            192,
+            208
+          ],
+          "durationMs": 80,
+          "rootX": -48
+        },
+        {
+          "page": 2,
+          "rect": [
+            1344,
+            3120,
+            192,
+            208
+          ],
+          "durationMs": 80,
+          "rootX": -48
+        },
+        {
+          "page": 2,
+          "rect": [
+            1536,
+            3120,
+            192,
+            208
+          ],
+          "durationMs": 80,
+          "rootX": -48
+        },
+        {
+          "page": 2,
+          "rect": [
+            1728,
+            3120,
+            192,
+            208
+          ],
+          "durationMs": 80,
+          "rootX": -48
+        },
+        {
+          "page": 2,
+          "rect": [
+            1920,
+            3120,
+            192,
+            208
+          ],
+          "durationMs": 80,
+          "rootX": -48
+        },
+        {
+          "page": 2,
+          "rect": [
+            2112,
+            3120,
+            192,
+            208
+          ],
+          "durationMs": 80,
+          "rootX": -48
+        },
+        {
+          "page": 2,
+          "rect": [
+            2304,
+            3120,
+            192,
+            208
+          ],
+          "durationMs": 80,
+          "rootX": -48
+        },
+        {
+          "page": 2,
+          "rect": [
+            2496,
+            3120,
+            192,
+            208
+          ],
+          "durationMs": 80,
+          "rootX": -48
+        },
+        {
+          "page": 2,
+          "rect": [
+            2688,
+            3120,
+            192,
+            208
+          ],
+          "durationMs": 80,
+          "rootX": -48
+        },
+        {
+          "page": 2,
+          "rect": [
+            2880,
+            3120,
+            192,
+            208
+          ],
+          "durationMs": 80,
+          "rootX": -48
+        }
+      ]
+    }
+  },
+  "aliases": {
+    "running-right": "walk-right",
+    "running-left": "walk-left",
+    "waving": "wave",
+    "jumping": "jump",
+    "failed": "error",
+    "waiting": "listening",
+    "running": "focus",
+    "review": "review",
+    "sitting": "idle",
+    "sleeping": "rest",
+    "ball": "ball-play"
+  },
+  "notes": [
+    "One shared cell geometry and manifest; pages bound texture dimensions.",
+    "2x exports are uniformly resampled from generated source resolution; they do not add new drawn detail.",
+    "Every clip uses one calibration scale; no per-frame bounding-box fitting.",
+    "Generated pose art can retain shape and colour variation; native visual acceptance is still required.",
+    "Root offsets are logical pixels external to the source frame. Apply pacing rootX once only; source walks are in place.",
+    "Directional looks are discrete targets; do not play as a spinning-body loop."
+  ]
+}

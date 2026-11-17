@@ -1,0 +1,23 @@
+{
+  "assets": [
+    {
+      "apiUrl": "https://api.github.com/repos/jpoindexter/heel/releases/assets/713190984",
+      "contentType": "application/x-apple-diskimage",
+      "createdAt": "2026-11-05T11:35:19Z",
+      "digest": "sha256:f6026c77a0ce2c36ed8adcab4b3a295fb4c6f361891b267e6b62bce9127ab976",
+      "downloadCount": 0,
+      "id": "RA_kwDOVKkaKM4qgm5I",
+      "label": "",
+      "name": "Heel_0.1.2_aarch64.dmg",
+      "size": 41276276,
+      "state": "uploaded",
+      "updatedAt": "2026-11-05T11:35:22Z",
+      "url": "https://github.com/jpoindexter/heel/releases/download/v0.1.2/Heel_0.1.2_aarch64.dmg"
+    }
+  ],
+  "body": "Tester build of Heel, a desk companion for ADHD and autistic brains: Greg the dog holds your tasks, reads your mail with you, and runs one focus box at a time.\n\n**Read [docs/TESTERS.md](https://github.com/jpoindexter/heel/blob/main/docs/TESTERS.md) before installing.**\n\n## Before you install\n- Apple silicon Mac (tested on macOS 26).\n- **Node 22 or newer** (`brew install node`).\n- One AI: `claude` or `codex` signed in, Ollama running, or an Anthropic / OpenAI / Mistral API key.\n\n## Opening it\nSigned and notarized by Apple: opens like any app.\n\n## Help and feedback\n**Settings \u203a Help** explains every part in short steps. Settings \u203a About \u203a **Send feedback** opens an email to jason@theft.studio with the version and logs (never your tasks, messages or mail). The crash screen has **Email details**.\n\nSHA-256 of the DMG: `f6026c77a0ce2c36ed8adcab4b3a295fb4c6f361891b267e6b62bce9127ab976`\n\n## Known findings from native checks\n- Help topics and their keyboard activation work in light and dark; the keyboard focus outline is missing and needs a follow-up fix.\n- Feedback relies on the Mac\u2019s configured mailto handler. On the test Mac, Brave accepted the link without opening a draft, although Heel reported success. A configured email client is required; draft opening is not verified for this configuration.\n",
+  "isPrerelease": true,
+  "tagName": "v0.1.2",
+  "targetCommitish": "1eff38c203b4c93dd9eb16229bb9844a85c95380",
+  "url": "https://github.com/jpoindexter/heel/releases/tag/v0.1.2"
+}

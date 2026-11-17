@@ -1,0 +1,142 @@
+{
+  "ok": true,
+  "frames_root": "/Users/jasonpoindexter/Documents/GitHub/Greg agent/assets/heel/animation-v1/qa/rows/running-right/frames",
+  "states": [
+    "running-right"
+  ],
+  "errors": [],
+  "warnings": [],
+  "rows": [
+    {
+      "state": "running-right",
+      "expected_frames": 8,
+      "actual_frames": 8,
+      "extraction_method": "components",
+      "ok": true,
+      "errors": [],
+      "warnings": [],
+      "frames": [
+        {
+          "index": 0,
+          "file": "/Users/jasonpoindexter/Documents/GitHub/Greg agent/assets/heel/animation-v1/qa/rows/running-right/frames/running-right/00.png",
+          "width": 192,
+          "height": 208,
+          "nontransparent_pixels": 12207,
+          "bbox": [
+            8,
+            33,
+            183,
+            167
+          ],
+          "edge_pixels": 0,
+          "chroma_adjacent_pixels": 210
+        },
+        {
+          "index": 1,
+          "file": "/Users/jasonpoindexter/Documents/GitHub/Greg agent/assets/heel/animation-v1/qa/rows/running-right/frames/running-right/01.png",
+          "width": 192,
+          "height": 208,
+          "nontransparent_pixels": 10668,
+          "bbox": [
+            20,
+            33,
+            172,
+            173
+          ],
+          "edge_pixels": 0,
+          "chroma_adjacent_pixels": 151
+        },
+        {
+          "index": 2,
+          "file": "/Users/jasonpoindexter/Documents/GitHub/Greg agent/assets/heel/animation-v1/qa/rows/running-right/frames/running-right/02.png",
+          "width": 192,
+          "height": 208,
+          "nontransparent_pixels": 10194,
+          "bbox": [
+            18,
+            35,
+            174,
+            171
+          ],
+          "edge_pixels": 0,
+          "chroma_adjacent_pixels": 135
+        },
+        {
+          "index": 3,
+          "file": "/Users/jasonpoindexter/Documents/GitHub/Greg agent/assets/heel/animation-v1/qa/rows/running-right/frames/running-right/03.png",
+          "width": 192,
+          "height": 208,
+          "nontransparent_pixels": 12794,
+          "bbox": [
+            10,
+            35,
+            182,
+            174
+          ],
+          "edge_pixels": 0,
+          "chroma_adjacent_pixels": 233
+        },
+        {
+          "index": 4,
+          "file": "/Users/jasonpoindexter/Documents/GitHub/Greg agent/assets/heel/animation-v1/qa/rows/running-right/frames/running-right/04.png",
+          "width": 192,
+          "height": 208,
+          "nontransparent_pixels": 12408,
+          "bbox": [
+            5,
+            36,
+            187,
+            169
+          ],
+          "edge_pixels": 0,
+          "chroma_adjacent_pixels": 201
+        },
+        {
+          "index": 5,
+          "file": "/Users/jasonpoindexter/Documents/GitHub/Greg agent/assets/heel/animation-v1/qa/rows/running-right/frames/running-right/05.png",
+          "width": 192,
+          "height": 208,
+          "nontransparent_pixels": 10808,
+          "bbox": [
+            18,
+            35,
+            174,
+            174
+          ],
+          "edge_pixels": 0,
+          "chroma_adjacent_pixels": 172
+        },
+        {
+          "index": 6,
+          "file": "/Users/jasonpoindexter/Documents/GitHub/Greg agent/assets/heel/animation-v1/qa/rows/running-right/frames/running-right/06.png",
+          "width": 192,
+          "height": 208,
+          "nontransparent_pixels": 10216,
+          "bbox": [
+            18,
+            35,
+            174,
+            171
+          ],
+          "edge_pixels": 0,
+          "chroma_adjacent_pixels": 142
+        },
+        {
+          "index": 7,
+          "file": "/Users/jasonpoindexter/Documents/GitHub/Greg agent/assets/heel/animation-v1/qa/rows/running-right/frames/running-right/07.png",
+          "width": 192,
+          "height": 208,
+          "nontransparent_pixels": 12345,
+          "bbox": [
+            7,
+            34,
+            185,
+            169
+          ],
+          "edge_pixels": 0,
+          "chroma_adjacent_pixels": 199
+        }
+      ]
+    }
+  ]
+}

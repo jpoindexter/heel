@@ -1,0 +1,102 @@
+Window: "Heel panel", App: Heel.
+0 standard window Heel panel, Secondary Actions: Raise
+	1 scroll area
+		2 HTML content Description: Heel, URL: tauri://localhost
+			3 container
+				4 button Back
+				5 heading Settings, Value: 1
+					6 text Settings
+				7 button Back to Greg
+				8 button Close panel
+				9 container Settings
+					10 container (expanded) Secondary Actions: Collapse
+						11 summary Help How Heel works, Value: on
+							12 heading Help, Value: 2
+								13 text Help
+							14 text How Heel works
+						15 container How Heel works
+							16 heading How Heel works, Value: 3
+								17 text How Heel works
+							18 container (expanded) Secondary Actions: Collapse
+								19 summary Open Heel and find your way, Value: on
+									20 text Open Heel and find your way
+								21 content list
+									22 container Click Greg to open the panel. Command Shift H opens or closes it from any app (change the shortcut in Settings › Startup).
+										23 list marker 1
+										24 text Click Greg to open the panel. Command Shift H opens or closes it from any app (change the shortcut in Settings › Startup).
+									25 container Right-click Greg for his menu: Open Heel, Settings…, Take a walk, Play, Take a nap, Quiet mode, Hide Greg, Quit Heel.
+										26 list marker 2
+										27 text Right-click Greg for his menu: Open Heel, Settings…, Take a walk, Play, Take a nap, Quiet mode, Hide Greg, Quit Heel.
+									28 container The menu-bar icon has Show / hide panel, Show Greg, Settings… and Quit Heel. Settings is also Command comma.
+										29 list marker 3
+										30 text The menu-bar icon has Show / hide panel, Show Greg, Settings… and Quit Heel. Settings is also Command comma.
+									31 container Escape closes one thing at a time: a list, a layer, then the panel.
+										32 list marker 4
+										33 text Escape closes one thing at a time: a list, a layer, then the panel.
+							34 summary Choose the AI Heel uses, Value: off
+								35 text Choose the AI Heel uses
+							36 summary Add, finish and park tasks, Value: off
+								37 text Add, finish and park tasks
+							38 summary Run a focus time-box, Value: off
+								39 text Run a focus time-box
+							40 summary Read your email with Heel, Value: off
+								41 text Read your email with Heel
+							42 summary Find anything, Value: off
+								43 text Find anything
+							44 summary Report a bug or suggest an idea, Value: off
+								45 text Report a bug or suggest an idea
+							46 summary Your data, Value: off
+								47 text Your data
+							48 summary When something is off, Value: off
+								49 text When something is off
+					50 summary Look Dark · Comfortable, Value: off
+						51 heading Look, Value: 2
+							52 text Look
+						53 text Dark · Comfortable
+					54 summary Greg Lively · notices on · attention off, Value: off
+						55 heading Greg, Value: 2
+							56 text Greg
+						57 text Lively · notices on · attention off
+					58 container (collapsed) Secondary Actions: Expand
+						59 summary Ways of working Time-box · Pickle jar, Value: off
+							60 heading Ways of working, Value: 2
+								61 text Ways of working
+							62 text Time-box · Pickle jar
+						63 stepper 0
+							64 unknown
+							65 unknown
+						66 stepper 0
+							67 unknown
+							68 unknown
+					69 summary Brain AI and skills, Value: off
+						70 heading Brain, Value: 2
+							71 text Brain
+						72 text AI and skills
+					73 summary Email Gmail, read-only, Value: off
+						74 heading Email, Value: 2
+							75 text Email
+						76 text Gmail, read-only
+					77 summary Startup Login, Dock, Value: off
+						78 heading Startup, Value: 2
+							79 text Startup
+						80 text Login, Dock
+					81 summary Privacy & data Back up, wipe, Value: off
+						82 heading Privacy & data, Value: 2
+							83 text Privacy & data
+						84 text Back up, wipe
+					85 summary About Heel 0.1.2 · send feedback, Value: off
+						86 heading About, Value: 2
+							87 text About
+						88 text Heel 0.1.2 · send feedback
+				89 button (collapsed) More, Secondary Actions: Expand
+				90 button What's on your mind?
+				91 container Notifications (F8)
+92 menu bar
+	93 Heel
+	94 File
+	95 Edit
+	96 View
+	97 Window
+	98 Help
+
+The focused UI element is 19 summary Open Heel and find your way, Value: on

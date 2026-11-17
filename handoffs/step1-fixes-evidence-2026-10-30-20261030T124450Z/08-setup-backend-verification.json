@@ -1,0 +1,21 @@
+{
+  "settings": {
+    "provider": "claude",
+    "model": null
+  },
+  "keychain": {
+    "anthropic": {
+      "found": false,
+      "exitCode": 44
+    },
+    "openai": {
+      "found": false,
+      "exitCode": 44
+    },
+    "mistral": {
+      "found": false,
+      "exitCode": 44
+    }
+  },
+  "backendReadinessGuardUnchanged": true
+}

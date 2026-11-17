@@ -1,0 +1,90 @@
+{
+  "files": {
+    "heel.db": {
+      "before": "d526b88eff6e74dc983c575ba3e13f8e22e6cd2acf148930a5ea3939d498277e",
+      "after": "d526b88eff6e74dc983c575ba3e13f8e22e6cd2acf148930a5ea3939d498277e",
+      "unchanged": true
+    },
+    "mascot-hidden.json": {
+      "before": "4e0d6f9a918fa5198cd3fe06a02db5f80ec86f3a6c0509092cd621112ccfe891",
+      "after": "4e0d6f9a918fa5198cd3fe06a02db5f80ec86f3a6c0509092cd621112ccfe891",
+      "unchanged": true
+    },
+    "panel-place.json": {
+      "before": "38e1ef37dd1316c5b1d72b43b39375cfa91d018e492ba6ea3409f87939bed730",
+      "after": "afd0fc2ad7c9d477b8e1ca625b705a9a4ad4da9929a5467fe3c6f7ed0d50cfad",
+      "unchanged": false
+    },
+    "panel-size-v2.json": {
+      "before": "efd33de8f25cd7b44c14d0a9cbf011d96d5ca1d5894dfe1808dd9877af834daa",
+      "after": "efd33de8f25cd7b44c14d0a9cbf011d96d5ca1d5894dfe1808dd9877af834daa",
+      "unchanged": true
+    },
+    "shell-settings.json": {
+      "before": "6f879daca71174113576900fb292efa341815220736c18c11ecff22f6b5702f9",
+      "after": "6f879daca71174113576900fb292efa341815220736c18c11ecff22f6b5702f9",
+      "unchanged": true
+    },
+    "sidecar.log": {
+      "before": "9fb054854b3806a2dfc81390a8283f17dae63dd2524dbc2e3086ed5a984e8be5",
+      "after": "6a3cd77023e82ae5384036ec24f240b05f8c194e378a0f8ce6bca40e7e69f1c1",
+      "unchanged": false
+    }
+  },
+  "tables": {
+    "documents": {
+      "beforeCount": 0,
+      "afterCount": 0,
+      "rowsUnchanged": true,
+      "dumpUnchanged": true
+    },
+    "focus_sessions": {
+      "beforeCount": 0,
+      "afterCount": 0,
+      "rowsUnchanged": true,
+      "dumpUnchanged": true
+    },
+    "ledger": {
+      "beforeCount": 0,
+      "afterCount": 0,
+      "rowsUnchanged": true,
+      "dumpUnchanged": true
+    },
+    "messages": {
+      "beforeCount": 8,
+      "afterCount": 8,
+      "rowsUnchanged": true,
+      "dumpUnchanged": true
+    },
+    "parked": {
+      "beforeCount": 0,
+      "afterCount": 0,
+      "rowsUnchanged": true,
+      "dumpUnchanged": true
+    },
+    "schema_migrations": {
+      "beforeCount": 6,
+      "afterCount": 6,
+      "rowsUnchanged": true,
+      "dumpUnchanged": true
+    },
+    "settings": {
+      "beforeCount": 2,
+      "afterCount": 2,
+      "rowsUnchanged": true,
+      "dumpUnchanged": true
+    },
+    "tasks": {
+      "beforeCount": 2,
+      "afterCount": 2,
+      "rowsUnchanged": true,
+      "dumpUnchanged": true
+    }
+  },
+  "appStopped": true,
+  "connectionFileRemoved": true,
+  "keyboardNavigationRestored": true,
+  "tableListUnchanged": true,
+  "allTablesUnchanged": true,
+  "preferencesUnchanged": false
+}

@@ -1,0 +1,16 @@
+The following is a diff from the previous accessibility tree for Window: "Heel panel" with ~ and + representing changed and added elements, respectively. Removed elements are summarized by ID range.
+Removed element IDs: 67-69, 71-103, 107-186
+~			65 list (settable)
+~				66 container Claude (subscription) · max subscription
++					67 text Claude (subscription) · max subscription
++				68 container Codex (subscription) · ChatGPT subscription
++					69 text Codex (subscription) · ChatGPT subscription
+~				70 container Local (Ollama) · Needs setup
++					71 text Local (Ollama) · Needs setup
++				72 container Claude (API key) · Needs setup
++					73 text Claude (API key) · Needs setup
++				74 container OpenAI (API key) · Needs setup
++					75 text OpenAI (API key) · Needs setup
++				76 container Mistral (API key) · Needs setup
++					77 text Mistral (API key) · Needs setup
+The focused UI element is 78 text (selected) Claude (subscription)

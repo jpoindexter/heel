@@ -1,0 +1,87 @@
+{
+  "image": "heel-states.png",
+  "width": 1536,
+  "height": 1248,
+  "cellWidth": 192,
+  "cellHeight": 208,
+  "columns": 8,
+  "rows": [
+    {
+      "name": "idle",
+      "row": 0,
+      "frames": 6,
+      "durationsMs": [
+        1200,
+        120,
+        120,
+        120,
+        180,
+        1400
+      ]
+    },
+    {
+      "name": "listening",
+      "row": 1,
+      "frames": 6,
+      "durationsMs": [
+        700,
+        200,
+        250,
+        250,
+        200,
+        900
+      ]
+    },
+    {
+      "name": "focus",
+      "row": 2,
+      "frames": 6,
+      "durationsMs": [
+        1000,
+        300,
+        350,
+        140,
+        250,
+        1200
+      ]
+    },
+    {
+      "name": "nudge",
+      "row": 3,
+      "frames": 4,
+      "durationsMs": [
+        1500,
+        260,
+        500,
+        350
+      ]
+    },
+    {
+      "name": "done",
+      "row": 4,
+      "frames": 6,
+      "durationsMs": [
+        350,
+        240,
+        240,
+        240,
+        240,
+        500
+      ]
+    },
+    {
+      "name": "rest",
+      "row": 5,
+      "frames": 6,
+      "durationsMs": [
+        1000,
+        1000,
+        1000,
+        1000,
+        1000,
+        1000
+      ]
+    }
+  ],
+  "reducedMotion": "Show first frame only. Keep rest when Off."
+}

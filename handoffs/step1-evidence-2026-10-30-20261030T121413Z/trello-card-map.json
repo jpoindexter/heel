@@ -1,0 +1,38 @@
+[
+  {
+    "id": "ari:cloud:trello::card/workspace/6a8f03e71844a6c1103692dc/6ae06704f951c1e951c3ba9e",
+    "name": "B9 WINDOW LEVELS: the panel is not always on top — only while pinned to Greg or with an \"Always on top\" option; Greg himself always is",
+    "url": "https://trello.com/c/04crz8wf/121-b9-window-levels-the-panel-is-not-always-on-top-only-while-pinned-to-greg-or-with-an-always-on-top-option-greg-himself-always-is",
+    "list": "Done"
+  },
+  {
+    "id": "ari:cloud:trello::card/workspace/6a8f03e71844a6c1103692dc/6ae066babb8d3ae4d1687198",
+    "name": "N30 DEBUG: a log Heel keeps itself, a Debug section in Settings, and one Copy report button — so \"something broke\" can be tracked",
+    "url": "https://trello.com/c/a90wSwPS/120-n30-debug-a-log-heel-keeps-itself-a-debug-section-in-settings-and-one-copy-report-button-so-something-broke-can-be-tracked",
+    "list": "Done"
+  },
+  {
+    "id": "ari:cloud:trello::card/workspace/6a8f03e71844a6c1103692dc/6ad0f8e3ceae3b0f1d254718",
+    "name": "N4 ROBUST SETTINGS (absorbs V1-8): every setting a daily user needs, in one compact place",
+    "url": "https://trello.com/c/Bdi1Ik1x/86-n4-robust-settings-absorbs-v1-8-every-setting-a-daily-user-needs-in-one-compact-place",
+    "list": "Done"
+  },
+  {
+    "id": "ari:cloud:trello::card/workspace/6a8f03e71844a6c1103692dc/6ad0fa61efce25b70ad57e54",
+    "name": "N9 IDLE COST: drop idle CPU from 2-3% to near 0 (audit #8, severity 2)",
+    "url": "https://trello.com/c/la6Q0jmR/91-n9-idle-cost-drop-idle-cpu-from-2-3-to-near-0-audit-8-severity-2",
+    "list": "Done"
+  },
+  {
+    "id": "ari:cloud:trello::card/workspace/6a8f03e71844a6c1103692dc/6ad0fa640593572c8b9f7cb5",
+    "name": "N10 STARTUP + HARDENING: launch at login, optional Dock icon, Content Security Policy (audit #9, #11)",
+    "url": "https://trello.com/c/c9p5qB3X/92-n10-startup-hardening-launch-at-login-optional-dock-icon-content-security-policy-audit-9-11",
+    "list": "Done"
+  },
+  {
+    "id": "ari:cloud:trello::card/workspace/6a8f03e71844a6c1103692dc/6ae1f307fdce1fb085c61de7",
+    "name": "L1 LEFTOVERS from P1–P3: wipe is one transaction, Esc mid-fade no longer closes two layers, \"Bucket\" reads \"Section\"",
+    "url": "https://trello.com/c/4i3iRzi9/136-l1-leftovers-from-p1-p3-wipe-is-one-transaction-esc-mid-fade-no-longer-closes-two-layers-bucket-reads-section",
+    "list": "Done"
+  }
+]

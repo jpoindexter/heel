@@ -1,0 +1,26 @@
+Window: "Heel panel", App: Heel.
+0 standard window Heel panel, Secondary Actions: Raise
+	1 scroll area
+		2 HTML content Description: Heel, URL: tauri://localhost
+			3 list (settable)
+				4 container Claude (subscription) · max subscription
+					5 text Claude (subscription) · max subscription
+				6 container Codex (subscription) · ChatGPT subscription
+					7 text Codex (subscription) · ChatGPT subscription
+				8 container Local (Ollama) · Needs setup
+					9 text Local (Ollama) · Needs setup
+				10 container Claude (API key) · Needs setup
+					11 text Claude (API key) · Needs setup
+				12 container OpenAI (API key) · Needs setup
+					13 text OpenAI (API key) · Needs setup
+				14 container Mistral (API key) · Needs setup
+					15 text Mistral (API key) · Needs setup
+16 menu bar
+	17 Heel
+	18 File
+	19 Edit
+	20 View
+	21 Window
+	22 Help
+
+The focused UI element is 23 text (selected) Claude (subscription)

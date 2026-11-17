@@ -1,0 +1,71 @@
+{
+  "backupDir": "/Users/jasonpoindexter/Library/Application Support/studio.theft.heel-check-backups/release-0.1.2-20261105T112352Z",
+  "files": {
+    "heel.db": {
+      "before": "d526b88eff6e74dc983c575ba3e13f8e22e6cd2acf148930a5ea3939d498277e",
+      "backup": "d526b88eff6e74dc983c575ba3e13f8e22e6cd2acf148930a5ea3939d498277e"
+    },
+    "mascot-hidden.json": {
+      "before": "4e0d6f9a918fa5198cd3fe06a02db5f80ec86f3a6c0509092cd621112ccfe891",
+      "backup": "4e0d6f9a918fa5198cd3fe06a02db5f80ec86f3a6c0509092cd621112ccfe891"
+    },
+    "panel-place.json": {
+      "before": "38e1ef37dd1316c5b1d72b43b39375cfa91d018e492ba6ea3409f87939bed730",
+      "backup": "38e1ef37dd1316c5b1d72b43b39375cfa91d018e492ba6ea3409f87939bed730"
+    },
+    "panel-size-v2.json": {
+      "before": "efd33de8f25cd7b44c14d0a9cbf011d96d5ca1d5894dfe1808dd9877af834daa",
+      "backup": "efd33de8f25cd7b44c14d0a9cbf011d96d5ca1d5894dfe1808dd9877af834daa"
+    },
+    "shell-settings.json": {
+      "before": "6f879daca71174113576900fb292efa341815220736c18c11ecff22f6b5702f9",
+      "backup": "6f879daca71174113576900fb292efa341815220736c18c11ecff22f6b5702f9"
+    },
+    "sidecar.log": {
+      "before": "9fb054854b3806a2dfc81390a8283f17dae63dd2524dbc2e3086ed5a984e8be5",
+      "backup": "9fb054854b3806a2dfc81390a8283f17dae63dd2524dbc2e3086ed5a984e8be5"
+    }
+  },
+  "tables": {
+    "documents": {
+      "count": 0,
+      "rowsSha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "dumpSha256": "0d3841c319e9a371bba3c411f52f39bd4a9212442a42138b247bb062e7620744"
+    },
+    "focus_sessions": {
+      "count": 0,
+      "rowsSha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "dumpSha256": "ccb71b034f4b25866d79125b0450206e5abaaa2e14ee78db6f406ed2c4a77f63"
+    },
+    "ledger": {
+      "count": 0,
+      "rowsSha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "dumpSha256": "7461272dbf5a58a94c8dae8608e3633111602a8099d571f0584fe69c04a21fa4"
+    },
+    "messages": {
+      "count": 8,
+      "rowsSha256": "362a8705298acc67791ff37ba6d550164d28c9f47163e52854a833fabb3076c1",
+      "dumpSha256": "f75c6cfe33aee1f7d9067d0e67ebc5992188bee30b1ec3212911c640aff821bf"
+    },
+    "parked": {
+      "count": 0,
+      "rowsSha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "dumpSha256": "78fb55a737efa25215b61d699e1912a2f69f928476f5f6557584f9c7c134b78e"
+    },
+    "schema_migrations": {
+      "count": 6,
+      "rowsSha256": "658da9322e8a9aa423d2fa7455e1e9e7bbb11b0bdccb190d98f696a0b768534d",
+      "dumpSha256": "70076999d74a6e1e5ca477b0cc7f76dabb83fca40441b51efb85f7a00826bcb3"
+    },
+    "settings": {
+      "count": 2,
+      "rowsSha256": "41483020f5611282855b85da195ab42fe80ccc8c8097ed31ce8b8ed925664fea",
+      "dumpSha256": "322eba4311a868e3a5d3efe3926745e20865dbd97422d858252162ba22bfe6bb"
+    },
+    "tasks": {
+      "count": 2,
+      "rowsSha256": "c882982f5dc19e030683588474b2c9af8723e7bacc98426c2e6bdddde50488b8",
+      "dumpSha256": "8a2bb73cfb38b4dbd2dab33621cf7c672cce3d79fc0b676ab121d30ce20e3826"
+    }
+  }
+}

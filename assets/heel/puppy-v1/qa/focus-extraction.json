@@ -1,0 +1,248 @@
+{
+  "name": "focus",
+  "source": "/Users/jasonpoindexter/Documents/GitHub/Greg agent/assets/heel/puppy-v1/decoded/focus.png",
+  "sourceSize": [
+    1205,
+    1306
+  ],
+  "actualFrames": 16,
+  "bodyComponents": 16,
+  "uniqueEncodedFrames": 16,
+  "logicalFrame": [
+    192,
+    208
+  ],
+  "density2xAvailable": true,
+  "sharedScale": 0.387097,
+  "calibration": {
+    "logicalScale": 0.387097,
+    "headHeightSourcePx": 124,
+    "headHeightLogicalTargetPx": 48,
+    "method": "manual approximate neutral-head calibration; one uniform scale per entire clip; visual comparison required"
+  },
+  "rowGroundRegistration": [
+    274.0,
+    240.5,
+    210.0,
+    177.5
+  ],
+  "sharedXOffset": 0.1451613750000007,
+  "sourceBodyBoxes": [
+    [
+      16,
+      131,
+      293,
+      274
+    ],
+    [
+      317,
+      131,
+      594,
+      274
+    ],
+    [
+      618,
+      132,
+      895,
+      274
+    ],
+    [
+      920,
+      131,
+      1197,
+      274
+    ],
+    [
+      16,
+      425,
+      293,
+      567
+    ],
+    [
+      317,
+      424,
+      594,
+      567
+    ],
+    [
+      618,
+      421,
+      895,
+      567
+    ],
+    [
+      919,
+      413,
+      1197,
+      567
+    ],
+    [
+      16,
+      717,
+      292,
+      863
+    ],
+    [
+      317,
+      711,
+      594,
+      863
+    ],
+    [
+      618,
+      718,
+      895,
+      863
+    ],
+    [
+      920,
+      712,
+      1197,
+      863
+    ],
+    [
+      16,
+      1013,
+      292,
+      1157
+    ],
+    [
+      317,
+      1012,
+      594,
+      1157
+    ],
+    [
+      618,
+      1015,
+      895,
+      1157
+    ],
+    [
+      920,
+      1014,
+      1197,
+      1158
+    ]
+  ],
+  "boxes": [
+    [
+      42,
+      140,
+      150,
+      196
+    ],
+    [
+      42,
+      140,
+      150,
+      196
+    ],
+    [
+      42,
+      141,
+      150,
+      196
+    ],
+    [
+      42,
+      140,
+      150,
+      196
+    ],
+    [
+      42,
+      141,
+      150,
+      196
+    ],
+    [
+      42,
+      140,
+      150,
+      196
+    ],
+    [
+      42,
+      139,
+      150,
+      196
+    ],
+    [
+      42,
+      136,
+      150,
+      196
+    ],
+    [
+      42,
+      139,
+      150,
+      196
+    ],
+    [
+      42,
+      137,
+      150,
+      196
+    ],
+    [
+      42,
+      140,
+      150,
+      196
+    ],
+    [
+      42,
+      137,
+      150,
+      196
+    ],
+    [
+      42,
+      140,
+      150,
+      196
+    ],
+    [
+      42,
+      140,
+      150,
+      196
+    ],
+    [
+      42,
+      141,
+      150,
+      196
+    ],
+    [
+      42,
+      140,
+      150,
+      196
+    ]
+  ],
+  "adjacentChangedPixels": [
+    1013,
+    1352,
+    878,
+    773,
+    1131,
+    1510,
+    1166,
+    1416,
+    1402,
+    1733,
+    1409,
+    1502,
+    928,
+    1514,
+    936,
+    1342
+  ],
+  "seamChangedPixels": 1342,
+  "ok": true,
+  "errors": [],
+  "visualPlaybackRequired": true
+}

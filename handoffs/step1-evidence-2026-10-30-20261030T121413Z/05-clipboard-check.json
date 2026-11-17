@@ -1,0 +1,17 @@
+{
+  "characters": 3447,
+  "patternCounts": {
+    "sk-": 0,
+    "token": 0,
+    "Bearer": 0
+  },
+  "requiredSections": {
+    "nonempty": true,
+    "version": true,
+    "os": true,
+    "provider": true,
+    "counts": true,
+    "logTail": true
+  },
+  "pass": true
+}

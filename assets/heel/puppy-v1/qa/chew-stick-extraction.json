@@ -1,0 +1,248 @@
+{
+  "name": "chew-stick",
+  "source": "/Users/jasonpoindexter/Documents/GitHub/Greg agent/assets/heel/puppy-v1/decoded/chew-stick.png",
+  "sourceSize": [
+    1205,
+    1306
+  ],
+  "actualFrames": 16,
+  "bodyComponents": 16,
+  "uniqueEncodedFrames": 16,
+  "logicalFrame": [
+    192,
+    208
+  ],
+  "density2xAvailable": true,
+  "sharedScale": 0.380952,
+  "calibration": {
+    "logicalScale": 0.380952,
+    "headHeightSourcePx": 126,
+    "headHeightLogicalTargetPx": 48,
+    "method": "manual approximate neutral-head calibration; one uniform scale per entire clip; visual comparison required"
+  },
+  "rowGroundRegistration": [
+    287.5,
+    288.5,
+    286.0,
+    283.5
+  ],
+  "sharedXOffset": 0.2857139999999987,
+  "sourceBodyBoxes": [
+    [
+      19,
+      82,
+      295,
+      286
+    ],
+    [
+      314,
+      97,
+      604,
+      287
+    ],
+    [
+      620,
+      103,
+      907,
+      288
+    ],
+    [
+      930,
+      102,
+      1201,
+      288
+    ],
+    [
+      14,
+      414,
+      299,
+      615
+    ],
+    [
+      317,
+      412,
+      604,
+      615
+    ],
+    [
+      622,
+      413,
+      905,
+      616
+    ],
+    [
+      926,
+      408,
+      1201,
+      615
+    ],
+    [
+      29,
+      737,
+      301,
+      939
+    ],
+    [
+      335,
+      727,
+      607,
+      939
+    ],
+    [
+      621,
+      732,
+      905,
+      939
+    ],
+    [
+      929,
+      740,
+      1201,
+      940
+    ],
+    [
+      20,
+      1053,
+      298,
+      1262
+    ],
+    [
+      320,
+      1055,
+      604,
+      1263
+    ],
+    [
+      616,
+      1046,
+      901,
+      1264
+    ],
+    [
+      925,
+      1044,
+      1197,
+      1263
+    ]
+  ],
+  "boxes": [
+    [
+      43,
+      117,
+      149,
+      195
+    ],
+    [
+      40,
+      123,
+      151,
+      196
+    ],
+    [
+      41,
+      125,
+      151,
+      196
+    ],
+    [
+      45,
+      125,
+      148,
+      197
+    ],
+    [
+      41,
+      119,
+      150,
+      196
+    ],
+    [
+      41,
+      118,
+      151,
+      196
+    ],
+    [
+      42,
+      119,
+      151,
+      197
+    ],
+    [
+      43,
+      117,
+      149,
+      196
+    ],
+    [
+      47,
+      119,
+      151,
+      196
+    ],
+    [
+      48,
+      115,
+      152,
+      196
+    ],
+    [
+      42,
+      117,
+      150,
+      196
+    ],
+    [
+      45,
+      120,
+      149,
+      196
+    ],
+    [
+      43,
+      116,
+      150,
+      196
+    ],
+    [
+      42,
+      117,
+      151,
+      196
+    ],
+    [
+      40,
+      113,
+      149,
+      197
+    ],
+    [
+      43,
+      112,
+      147,
+      196
+    ]
+  ],
+  "adjacentChangedPixels": [
+    3323,
+    2264,
+    2384,
+    2925,
+    1488,
+    2060,
+    3105,
+    3206,
+    2418,
+    2930,
+    2448,
+    2074,
+    2024,
+    3289,
+    3109,
+    2772
+  ],
+  "seamChangedPixels": 2772,
+  "ok": true,
+  "errors": [],
+  "visualPlaybackRequired": true
+}

@@ -1,0 +1,169 @@
+Window: "Login Items & Extensions", App: System Settings.
+0 standard window Login Items & Extensions, ID: main, Secondary Actions: Raise
+	1 split group main, SidebarNavigationSplitView
+		2 scroll area Secondary Actions: Scroll Up, Scroll Down
+			3 list Sidebar
+				4 row (selectable)
+				5 row (selectable) Jason Poindexter, Apple Account
+				6 row (selectable)
+				7 row (selectable) Description: Software Update Available, 1 new item, Value: 1
+				8 row (selectable)
+				9 row (selectable) Wi‑Fi
+				10 row (selectable) Bluetooth
+				11 row (selectable) Network
+				12 row (selectable) Battery
+				13 row (selectable)
+				14 row (selected) General
+				15 row (selectable) Accessibility
+				16 row (selectable) Appearance
+				17 row (selectable) Apple Intelligence & Siri
+				18 row (selectable) Desktop & Dock
+				19 row (selectable) Displays
+				20 row (selectable) Menu Bar
+				21 row (selectable) Spotlight
+				22 row (selectable) Wallpaper
+				23 row (selectable)
+				24 row (selectable) Notifications
+				25 row (selectable) Sound
+				26 row (selectable) Focus
+				27 row (selectable) Screen Time
+				28 row (selectable)
+				29 row (selectable) Lock Screen
+				30 row (selectable) Privacy & Security
+				31 row (selectable) Touch ID & Password
+				32 row (selectable) Users & Groups
+				33 row (selectable)
+				34 row (selectable) Internet Accounts
+				35 row (selectable) Game Center
+				36 row (selectable) iCloud
+				37 row (selectable) Wallet & Apple Pay
+				38 row (selectable)
+				39 row (selectable) Keyboard
+				40 row (selectable) Trackpad
+				41 row (selectable) Game Controllers
+				42 row (selectable) Printers & Scanners
+			43 scroll bar (settable, float) 0
+				44 value indicator (settable, float) 0
+				45 increment arrow button
+				46 decrement arrow button
+				47 increment page button
+				48 decrement page button
+		49 search text field (settable) Search
+			50 button Search
+		51 splitter (disabled, settable, float) 223
+		52 scroll area Secondary Actions: Scroll Up, Scroll Down
+			53 heading Open at Login
+			54 text These items will open automatically when you log in.
+			55 container
+				56 scroll area
+					57 outline
+						58 row (selectable) Claude.app
+Application
+						59 row (selectable) Handy.app
+Application
+						60 row (selectable) Heel.app
+Application
+						61 row (selectable) NIHardwareAgent.app
+Application
+						62 row (selectable) NordVPN.app
+Application
+						63 container
+							64 sort button Item
+							65 sort button Kind
+				66 button Add
+				67 button (disabled) Remove
+			68 heading App Background Activity
+			69 text Apps run in the background after you close them to perform tasks such as checking for updates. Personal data and device sensors can be accessed by apps while they run in the background, if you grant permission.
+			70 container
+				71 toggle button Description: Show in Finder, Value: on, ID: background-switch-bash
+				72 switch Item from unidentified developer., Value: on, ID: background-switch-bash
+				73 toggle button Description: Show in Finder, Value: on, ID: background-switch-bash
+				74 switch Item from unidentified developer., Value: on, ID: background-switch-bash
+				75 toggle button Description: Show in Finder, Value: on, ID: background-switch-bash
+				76 switch Item from unidentified developer., Value: on, ID: background-switch-bash
+				77 switch 1 item, Value: on, ID: background-switch-Claude.app
+				78 switch 2 items: 1 item affects all users, Value: on, ID: background-switch-CleanMyMac X
+				79 switch 1 item, Value: on, ID: background-switch-CleanMyMac X HealthMonitor.app
+				80 switch 1 item, Value: on, ID: background-switch-CleanMyMac X Menu.app
+				81 switch 3 items, Value: on, ID: background-switch-CleanMyMac X.app
+				82 switch 1 item: 1 item affects all users, Value: on, ID: background-switch-Docker
+				83 switch 1 item, Value: on, ID: background-switch-GoogleUpdater.app
+				84 switch 1 item, Value: on, ID: background-switch-iMazing
+				85 toggle button Description: Show in Finder, Value: on, ID: background-switch-launch_conmon.sh
+				86 switch Item from unidentified developer., Value: on, ID: background-switch-launch_conmon.sh
+				87 switch 1 item: 1 item affects all users, Value: on, ID: background-switch-Microsoft AutoUpdate
+				88 switch 1 item: 1 item affects all users, Value: on, ID: background-switch-Microsoft Office Licensing
+				89 switch 1 item, Value: on, ID: background-switch-Microsoft Teams.app
+				90 switch 1 item: 1 item affects all users, Value: on, ID: background-switch-Native Access
+				91 switch 1 item, Value: on, ID: background-switch-Node.js Foundation
+				92 switch 1 item: 1 item affects all users, Value: on, ID: background-switch-Nordvpn S.A.
+				93 switch 1 item, Value: on, ID: background-switch-Ollama.app
+				94 switch 1 item, Value: off, ID: background-switch-PACE Anti-Piracy, Inc.
+				95 switch 1 item, Value: on, ID: background-switch-Passwords.app
+				96 switch 1 item, Value: on, ID: background-switch-Podcasts.app
+				97 toggle button Description: Show in Finder, Value: on, ID: background-switch-run.sh
+				98 switch Item from unidentified developer., Value: on, ID: background-switch-run.sh
+				99 switch 1 item, Value: on, ID: background-switch-Shazam.app
+				100 switch 1 item, Value: on, ID: background-switch-Stocks.app
+				101 switch 1 item, Value: on, ID: background-switch-Visual Studio Code.app
+				102 switch 1 item, Value: on, ID: background-switch-Weather.app
+				103 switch 1 item: 1 item affects all users, Value: on, ID: background-switch-Zoom Communications, Inc.
+				104 switch 2 items, Value: on, ID: background-switch-Zoom.app
+				105 switch Allow command line tools to be used for automating scheduled background tasks., Value: on
+			106 heading Extensions
+			107 text Extensions add extra functionality to your Mac and apps, and some may run in the background.
+			108 radio button Description: By App, Value: 1
+			109 radio button Description: By Category, Value: 0
+			110 container
+				111 text Books Sharing
+				112 button Show Detail
+				113 text ChatGPT Dock Tile
+				114 button Show Detail
+				115 text Downie 4 Sharing
+				116 button Show Detail
+				117 text Freeform Sharing
+				118 button Show Detail
+				119 text Icon Composer Quick Look, Quick Look
+				120 button Show Detail
+				121 text Journal Sharing
+				122 button Show Detail
+				123 text LibreOfficeDev Quick Look, Quick Look, Spotlight, Spotlight
+				124 button Show Detail
+				125 text Messages Sharing
+				126 button Show Detail
+				127 text Notes Sharing
+				128 button Show Detail
+				129 text Reminders Sharing
+				130 button Show Detail
+				131 text Shortcuts Sharing
+				132 button Show Detail
+				133 text Telegram Sharing
+				134 button Show Detail
+				135 text System Services Convert Image, Create PDF, Markup and 3 more.
+				136 button Show Detail
+			137 button Help
+			138 scroll bar (settable, float) 0
+				139 value indicator (settable, float) 0
+				140 increment arrow button
+				141 decrement arrow button
+				142 increment page button
+				143 decrement page button
+	144 toolbar
+		145 container
+			146 button Description: Back, ID: go back
+			147 menu button (disabled) Description: Forward, ID: go forward
+	148 close button
+	149 zoom button
+	150 minimize button
+	151 text Login Items & Extensions
+152 menu bar
+	153 System Settings
+	154 Edit
+	155 View
+	156 Window
+	157 Help
+
+Selected:
+	14 row (selected)
+
+Note: Pay special attention to the content selected by the user. If the user asks a question or refers to the content they are looking at on-screen, they might be referring to the selected content (but they might be referring to something else that's visible, too).

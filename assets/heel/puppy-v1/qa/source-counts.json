@@ -1,0 +1,482 @@
+[
+  {
+    "name": "idle",
+    "expected": 16,
+    "count": 16,
+    "size": [
+      1205,
+      1306
+    ],
+    "firstBox": [
+      62,
+      25,
+      266,
+      315
+    ]
+  },
+  {
+    "name": "walk-right",
+    "expected": 24,
+    "count": 24,
+    "size": [
+      1476,
+      1066
+    ],
+    "firstBox": [
+      17,
+      72,
+      242,
+      241
+    ]
+  },
+  {
+    "name": "ball-play",
+    "expected": 32,
+    "count": 32,
+    "size": [
+      1704,
+      923
+    ],
+    "firstBox": [
+      38,
+      60,
+      164,
+      227
+    ]
+  },
+  {
+    "name": "listening",
+    "expected": 16,
+    "count": 16,
+    "size": [
+      1205,
+      1306
+    ],
+    "firstBox": [
+      55,
+      37,
+      256,
+      317
+    ]
+  },
+  {
+    "name": "focus",
+    "expected": 16,
+    "count": 16,
+    "size": [
+      1205,
+      1306
+    ],
+    "firstBox": [
+      16,
+      131,
+      293,
+      274
+    ]
+  },
+  {
+    "name": "nudge",
+    "expected": 16,
+    "count": 16,
+    "size": [
+      1205,
+      1306
+    ],
+    "firstBox": [
+      66,
+      26,
+      264,
+      309
+    ]
+  },
+  {
+    "name": "done",
+    "expected": 16,
+    "count": 16,
+    "size": [
+      1205,
+      1306
+    ],
+    "firstBox": [
+      63,
+      36,
+      259,
+      311
+    ]
+  },
+  {
+    "name": "rest",
+    "expected": 16,
+    "count": 16,
+    "size": [
+      1205,
+      1306
+    ],
+    "firstBox": [
+      31,
+      134,
+      280,
+      287
+    ]
+  },
+  {
+    "name": "wave",
+    "expected": 16,
+    "count": 16,
+    "size": [
+      1205,
+      1306
+    ],
+    "firstBox": [
+      66,
+      31,
+      260,
+      306
+    ]
+  },
+  {
+    "name": "jump",
+    "expected": 16,
+    "count": 16,
+    "size": [
+      1205,
+      1306
+    ],
+    "firstBox": [
+      39,
+      67,
+      282,
+      302
+    ]
+  },
+  {
+    "name": "error",
+    "expected": 16,
+    "count": 16,
+    "size": [
+      1205,
+      1306
+    ],
+    "firstBox": [
+      55,
+      27,
+      255,
+      303
+    ]
+  },
+  {
+    "name": "review",
+    "expected": 16,
+    "count": 16,
+    "size": [
+      1205,
+      1306
+    ],
+    "firstBox": [
+      55,
+      33,
+      264,
+      311
+    ]
+  },
+  {
+    "name": "fetch-offer",
+    "expected": 24,
+    "count": 24,
+    "size": [
+      1536,
+      1024
+    ],
+    "firstBox": [
+      18,
+      34,
+      256,
+      247
+    ]
+  },
+  {
+    "name": "play-bow",
+    "expected": 24,
+    "count": 24,
+    "size": [
+      1476,
+      1066
+    ],
+    "firstBox": [
+      14,
+      57,
+      235,
+      257
+    ]
+  },
+  {
+    "name": "chew-stick",
+    "expected": 16,
+    "count": 16,
+    "size": [
+      1205,
+      1306
+    ],
+    "firstBox": [
+      19,
+      82,
+      295,
+      286
+    ]
+  },
+  {
+    "name": "scratch-ear",
+    "expected": 16,
+    "count": 16,
+    "size": [
+      1205,
+      1306
+    ],
+    "firstBox": [
+      59,
+      31,
+      273,
+      303
+    ]
+  },
+  {
+    "name": "yawn",
+    "expected": 16,
+    "count": 16,
+    "size": [
+      1205,
+      1306
+    ],
+    "firstBox": [
+      66,
+      37,
+      295,
+      315
+    ]
+  },
+  {
+    "name": "sniff-search",
+    "expected": 16,
+    "count": 16,
+    "size": [
+      1205,
+      1306
+    ],
+    "firstBox": [
+      13,
+      90,
+      283,
+      293
+    ]
+  },
+  {
+    "name": "stretch",
+    "expected": 24,
+    "count": 24,
+    "size": [
+      1536,
+      1024
+    ],
+    "firstBox": [
+      24,
+      61,
+      241,
+      251
+    ]
+  },
+  {
+    "name": "error-facepalm",
+    "expected": 16,
+    "count": 16,
+    "size": [
+      1205,
+      1306
+    ],
+    "firstBox": [
+      62,
+      30,
+      263,
+      303
+    ]
+  },
+  {
+    "name": "poop-gag",
+    "expected": 24,
+    "count": 24,
+    "size": [
+      1476,
+      1066
+    ],
+    "firstBox": [
+      22,
+      58,
+      237,
+      251
+    ]
+  },
+  {
+    "name": "pee-gag",
+    "expected": 24,
+    "count": 24,
+    "size": [
+      1536,
+      1024
+    ],
+    "firstBox": [
+      23,
+      87,
+      218,
+      225
+    ]
+  },
+  {
+    "name": "sniff-trail",
+    "expected": 24,
+    "count": 24,
+    "size": [
+      1476,
+      1066
+    ],
+    "firstBox": [
+      8,
+      113,
+      238,
+      232
+    ]
+  },
+  {
+    "name": "graze-grass",
+    "expected": 24,
+    "count": 24,
+    "size": [
+      1536,
+      1024
+    ],
+    "firstBox": [
+      33,
+      52,
+      246,
+      237
+    ]
+  },
+  {
+    "name": "pick-up-stick",
+    "expected": 24,
+    "count": 24,
+    "size": [
+      1536,
+      1024
+    ],
+    "firstBox": [
+      23,
+      80,
+      215,
+      236
+    ]
+  },
+  {
+    "name": "carry-stick",
+    "expected": 24,
+    "count": 24,
+    "size": [
+      1536,
+      1024
+    ],
+    "firstBox": [
+      13,
+      59,
+      253,
+      231
+    ]
+  },
+  {
+    "name": "sit-down",
+    "expected": 24,
+    "count": 24,
+    "size": [
+      1536,
+      1024
+    ],
+    "firstBox": [
+      34,
+      48,
+      258,
+      245
+    ]
+  },
+  {
+    "name": "lie-down",
+    "expected": 24,
+    "count": 24,
+    "size": [
+      1536,
+      1024
+    ],
+    "firstBox": [
+      36,
+      40,
+      217,
+      273
+    ]
+  },
+  {
+    "name": "curl-up",
+    "expected": 24,
+    "count": 24,
+    "size": [
+      1536,
+      1024
+    ],
+    "firstBox": [
+      29,
+      132,
+      267,
+      233
+    ]
+  },
+  {
+    "name": "wake-up",
+    "expected": 24,
+    "count": 24,
+    "size": [
+      1536,
+      1024
+    ],
+    "firstBox": [
+      31,
+      134,
+      231,
+      231
+    ]
+  },
+  {
+    "name": "turn-around",
+    "expected": 24,
+    "count": 24,
+    "size": [
+      1476,
+      1066
+    ],
+    "firstBox": [
+      13,
+      64,
+      256,
+      248
+    ]
+  },
+  {
+    "name": "look-directions",
+    "expected": 16,
+    "count": 16,
+    "size": [
+      1205,
+      1306
+    ],
+    "firstBox": [
+      64,
+      21,
+      267,
+      309
+    ]
+  }
+]

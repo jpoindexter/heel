@@ -1,0 +1,66 @@
+Window: "Heel panel", App: Heel.
+0 standard window Heel panel, Secondary Actions: Raise
+	1 scroll area
+		2 HTML content Description: Heel, URL: tauri://localhost
+			3 container
+				4 button Back
+				5 heading Settings, Value: 1
+					6 text Settings
+				7 button Back to Greg
+				8 button Close panel
+				9 container Settings
+					10 summary Help How Heel works, Value: off
+						11 heading Help, Value: 2
+							12 text Help
+						13 text How Heel works
+					14 summary Look System · Comfortable, Value: off
+						15 heading Look, Value: 2
+							16 text Look
+						17 text System · Comfortable
+					18 summary Greg Lively · notices on · attention off, Value: off
+						19 heading Greg, Value: 2
+							20 text Greg
+						21 text Lively · notices on · attention off
+					22 container (collapsed) Secondary Actions: Expand
+						23 summary Ways of working Time-box · Pickle jar, Value: off
+							24 heading Ways of working, Value: 2
+								25 text Ways of working
+							26 text Time-box · Pickle jar
+						27 stepper 0
+							28 unknown
+							29 unknown
+						30 stepper 0
+							31 unknown
+							32 unknown
+					33 summary Brain AI and skills, Value: off
+						34 heading Brain, Value: 2
+							35 text Brain
+						36 text AI and skills
+					37 summary Email Gmail, read-only, Value: off
+						38 heading Email, Value: 2
+							39 text Email
+						40 text Gmail, read-only
+					41 summary Startup Login, Dock, Value: off
+						42 heading Startup, Value: 2
+							43 text Startup
+						44 text Login, Dock
+					45 summary Privacy & data Back up, wipe, Value: off
+						46 heading Privacy & data, Value: 2
+							47 text Privacy & data
+						48 text Back up, wipe
+					49 summary About Heel 0.1.2 · send feedback, Value: off
+						50 heading About, Value: 2
+							51 text About
+						52 text Heel 0.1.2 · send feedback
+				53 button (collapsed) More, Secondary Actions: Expand
+				54 button What's on your mind?
+				55 container Notifications (F8)
+56 menu bar
+	57 Heel
+	58 File
+	59 Edit
+	60 View
+	61 Window
+	62 Help
+
+The focused UI element is 10 summary Help How Heel works, Value: off

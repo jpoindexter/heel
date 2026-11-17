@@ -1,0 +1,414 @@
+{
+  "animatedFiles": 68,
+  "allAnimated": true,
+  "checks": [
+    {
+      "name": "idle",
+      "format": "gif",
+      "encodedFrames": 16,
+      "manifestTimedFrames": 16
+    },
+    {
+      "name": "idle",
+      "format": "webp",
+      "encodedFrames": 16,
+      "manifestTimedFrames": 16
+    },
+    {
+      "name": "walk-right",
+      "format": "gif",
+      "encodedFrames": 24,
+      "manifestTimedFrames": 24
+    },
+    {
+      "name": "walk-right",
+      "format": "webp",
+      "encodedFrames": 24,
+      "manifestTimedFrames": 24
+    },
+    {
+      "name": "ball-play",
+      "format": "gif",
+      "encodedFrames": 32,
+      "manifestTimedFrames": 32
+    },
+    {
+      "name": "ball-play",
+      "format": "webp",
+      "encodedFrames": 32,
+      "manifestTimedFrames": 32
+    },
+    {
+      "name": "listening",
+      "format": "gif",
+      "encodedFrames": 16,
+      "manifestTimedFrames": 16
+    },
+    {
+      "name": "listening",
+      "format": "webp",
+      "encodedFrames": 16,
+      "manifestTimedFrames": 16
+    },
+    {
+      "name": "focus",
+      "format": "gif",
+      "encodedFrames": 16,
+      "manifestTimedFrames": 16
+    },
+    {
+      "name": "focus",
+      "format": "webp",
+      "encodedFrames": 16,
+      "manifestTimedFrames": 16
+    },
+    {
+      "name": "nudge",
+      "format": "gif",
+      "encodedFrames": 16,
+      "manifestTimedFrames": 16
+    },
+    {
+      "name": "nudge",
+      "format": "webp",
+      "encodedFrames": 16,
+      "manifestTimedFrames": 16
+    },
+    {
+      "name": "done",
+      "format": "gif",
+      "encodedFrames": 16,
+      "manifestTimedFrames": 16
+    },
+    {
+      "name": "done",
+      "format": "webp",
+      "encodedFrames": 16,
+      "manifestTimedFrames": 16
+    },
+    {
+      "name": "rest",
+      "format": "gif",
+      "encodedFrames": 16,
+      "manifestTimedFrames": 16
+    },
+    {
+      "name": "rest",
+      "format": "webp",
+      "encodedFrames": 16,
+      "manifestTimedFrames": 16
+    },
+    {
+      "name": "wave",
+      "format": "gif",
+      "encodedFrames": 16,
+      "manifestTimedFrames": 16
+    },
+    {
+      "name": "wave",
+      "format": "webp",
+      "encodedFrames": 16,
+      "manifestTimedFrames": 16
+    },
+    {
+      "name": "jump",
+      "format": "gif",
+      "encodedFrames": 16,
+      "manifestTimedFrames": 16
+    },
+    {
+      "name": "jump",
+      "format": "webp",
+      "encodedFrames": 16,
+      "manifestTimedFrames": 16
+    },
+    {
+      "name": "error",
+      "format": "gif",
+      "encodedFrames": 16,
+      "manifestTimedFrames": 16
+    },
+    {
+      "name": "error",
+      "format": "webp",
+      "encodedFrames": 16,
+      "manifestTimedFrames": 16
+    },
+    {
+      "name": "review",
+      "format": "gif",
+      "encodedFrames": 16,
+      "manifestTimedFrames": 16
+    },
+    {
+      "name": "review",
+      "format": "webp",
+      "encodedFrames": 16,
+      "manifestTimedFrames": 16
+    },
+    {
+      "name": "fetch-offer",
+      "format": "gif",
+      "encodedFrames": 24,
+      "manifestTimedFrames": 24
+    },
+    {
+      "name": "fetch-offer",
+      "format": "webp",
+      "encodedFrames": 24,
+      "manifestTimedFrames": 24
+    },
+    {
+      "name": "play-bow",
+      "format": "gif",
+      "encodedFrames": 24,
+      "manifestTimedFrames": 24
+    },
+    {
+      "name": "play-bow",
+      "format": "webp",
+      "encodedFrames": 24,
+      "manifestTimedFrames": 24
+    },
+    {
+      "name": "chew-stick",
+      "format": "gif",
+      "encodedFrames": 16,
+      "manifestTimedFrames": 16
+    },
+    {
+      "name": "chew-stick",
+      "format": "webp",
+      "encodedFrames": 16,
+      "manifestTimedFrames": 16
+    },
+    {
+      "name": "scratch-ear",
+      "format": "gif",
+      "encodedFrames": 16,
+      "manifestTimedFrames": 16
+    },
+    {
+      "name": "scratch-ear",
+      "format": "webp",
+      "encodedFrames": 16,
+      "manifestTimedFrames": 16
+    },
+    {
+      "name": "yawn",
+      "format": "gif",
+      "encodedFrames": 16,
+      "manifestTimedFrames": 16
+    },
+    {
+      "name": "yawn",
+      "format": "webp",
+      "encodedFrames": 16,
+      "manifestTimedFrames": 16
+    },
+    {
+      "name": "sniff-search",
+      "format": "gif",
+      "encodedFrames": 16,
+      "manifestTimedFrames": 16
+    },
+    {
+      "name": "sniff-search",
+      "format": "webp",
+      "encodedFrames": 16,
+      "manifestTimedFrames": 16
+    },
+    {
+      "name": "stretch",
+      "format": "gif",
+      "encodedFrames": 24,
+      "manifestTimedFrames": 24
+    },
+    {
+      "name": "stretch",
+      "format": "webp",
+      "encodedFrames": 24,
+      "manifestTimedFrames": 24
+    },
+    {
+      "name": "error-facepalm",
+      "format": "gif",
+      "encodedFrames": 16,
+      "manifestTimedFrames": 16
+    },
+    {
+      "name": "error-facepalm",
+      "format": "webp",
+      "encodedFrames": 16,
+      "manifestTimedFrames": 16
+    },
+    {
+      "name": "poop-gag",
+      "format": "gif",
+      "encodedFrames": 24,
+      "manifestTimedFrames": 24
+    },
+    {
+      "name": "poop-gag",
+      "format": "webp",
+      "encodedFrames": 24,
+      "manifestTimedFrames": 24
+    },
+    {
+      "name": "pee-gag",
+      "format": "gif",
+      "encodedFrames": 24,
+      "manifestTimedFrames": 24
+    },
+    {
+      "name": "pee-gag",
+      "format": "webp",
+      "encodedFrames": 24,
+      "manifestTimedFrames": 24
+    },
+    {
+      "name": "sniff-trail",
+      "format": "gif",
+      "encodedFrames": 24,
+      "manifestTimedFrames": 24
+    },
+    {
+      "name": "sniff-trail",
+      "format": "webp",
+      "encodedFrames": 24,
+      "manifestTimedFrames": 24
+    },
+    {
+      "name": "graze-grass",
+      "format": "gif",
+      "encodedFrames": 24,
+      "manifestTimedFrames": 24
+    },
+    {
+      "name": "graze-grass",
+      "format": "webp",
+      "encodedFrames": 24,
+      "manifestTimedFrames": 24
+    },
+    {
+      "name": "pick-up-stick",
+      "format": "gif",
+      "encodedFrames": 24,
+      "manifestTimedFrames": 24
+    },
+    {
+      "name": "pick-up-stick",
+      "format": "webp",
+      "encodedFrames": 24,
+      "manifestTimedFrames": 24
+    },
+    {
+      "name": "carry-stick",
+      "format": "gif",
+      "encodedFrames": 24,
+      "manifestTimedFrames": 24
+    },
+    {
+      "name": "carry-stick",
+      "format": "webp",
+      "encodedFrames": 24,
+      "manifestTimedFrames": 24
+    },
+    {
+      "name": "sit-down",
+      "format": "gif",
+      "encodedFrames": 24,
+      "manifestTimedFrames": 24
+    },
+    {
+      "name": "sit-down",
+      "format": "webp",
+      "encodedFrames": 24,
+      "manifestTimedFrames": 24
+    },
+    {
+      "name": "lie-down",
+      "format": "gif",
+      "encodedFrames": 24,
+      "manifestTimedFrames": 24
+    },
+    {
+      "name": "lie-down",
+      "format": "webp",
+      "encodedFrames": 24,
+      "manifestTimedFrames": 24
+    },
+    {
+      "name": "curl-up",
+      "format": "gif",
+      "encodedFrames": 24,
+      "manifestTimedFrames": 24
+    },
+    {
+      "name": "curl-up",
+      "format": "webp",
+      "encodedFrames": 24,
+      "manifestTimedFrames": 24
+    },
+    {
+      "name": "wake-up",
+      "format": "gif",
+      "encodedFrames": 24,
+      "manifestTimedFrames": 24
+    },
+    {
+      "name": "wake-up",
+      "format": "webp",
+      "encodedFrames": 24,
+      "manifestTimedFrames": 24
+    },
+    {
+      "name": "turn-around",
+      "format": "gif",
+      "encodedFrames": 24,
+      "manifestTimedFrames": 24
+    },
+    {
+      "name": "turn-around",
+      "format": "webp",
+      "encodedFrames": 24,
+      "manifestTimedFrames": 24
+    },
+    {
+      "name": "look-directions",
+      "format": "gif",
+      "encodedFrames": 16,
+      "manifestTimedFrames": 16
+    },
+    {
+      "name": "look-directions",
+      "format": "webp",
+      "encodedFrames": 16,
+      "manifestTimedFrames": 16
+    },
+    {
+      "name": "walk-left",
+      "format": "gif",
+      "encodedFrames": 24,
+      "manifestTimedFrames": 24
+    },
+    {
+      "name": "walk-left",
+      "format": "webp",
+      "encodedFrames": 24,
+      "manifestTimedFrames": 24
+    },
+    {
+      "name": "pacing",
+      "format": "gif",
+      "encodedFrames": 96,
+      "manifestTimedFrames": 96
+    },
+    {
+      "name": "pacing",
+      "format": "webp",
+      "encodedFrames": 96,
+      "manifestTimedFrames": 96
+    }
+  ]
+}

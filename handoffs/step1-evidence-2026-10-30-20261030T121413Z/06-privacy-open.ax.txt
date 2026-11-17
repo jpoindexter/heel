@@ -1,0 +1,15 @@
+The following is a diff from the previous accessibility tree for Window: "Heel panel" with ~ and + representing changed and added elements, respectively. Removed elements are summarized by ID range.
+Removed element IDs: 41-44, 66-94
+~						60 summary Privacy & data Back up, wipe, Value: on
+~							61 heading Privacy & data, Value: 2
+~								62 text Privacy & data
+~							63 text Back up, wipe
+~						64 container Privacy & data
+~							65 text Everything Heel keeps is in one folder on this Mac (the path is under About). Conversations are dropped after 30 days; tasks, parked ideas and documents stay until you remove them.
++							66 button Back up to Desktop…
++							67 button Wipe everything…
++					68 summary About Heel 0.1.0, Value: off
++						69 heading About, Value: 2
++							70 text About
++						71 text Heel 0.1.0
+The focused UI element is 60 summary Privacy & data Back up, wipe, Value: on

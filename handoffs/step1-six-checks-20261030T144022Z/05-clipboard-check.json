@@ -1,0 +1,15 @@
+{
+  "characters": 4061,
+  "secretPatternHits": {
+    "sk-": 0,
+    "token": 0,
+    "Bearer": 0
+  },
+  "sections": {
+    "version": true,
+    "os": true,
+    "provider": true,
+    "counts": true,
+    "log": true
+  }
+}

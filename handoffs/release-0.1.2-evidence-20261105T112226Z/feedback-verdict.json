@@ -1,0 +1,25 @@
+{
+  "verdict": "Fail",
+  "uiFormValidated": true,
+  "kind": "bug",
+  "title": "Codex check — ignore",
+  "what": "Temporary release verification draft. Please ignore; this message will not be sent.",
+  "debugReportOn": true,
+  "statusMessageObserved": "An email to jason@theft.studio is open in your mail app. Read it over, then press Send there.",
+  "defaultHandler": "com.brave.browser",
+  "defaultApplication": "/Applications/Brave Browser.app",
+  "draftObserved": false,
+  "mailWindowList": [
+    "Inbox — jason@theft.studio"
+  ],
+  "browserWindowList": [
+    "Google News - Entertainment - Latest",
+    "The Lowdown (2025) Season 2 Ep…og with Two Tails | PrimeWire"
+  ],
+  "sent": false,
+  "cleanup": "No test draft found to discard; did not delete any existing draft.",
+  "unverified": [
+    "actual composed To/subject/body",
+    "actual debug report exclusion in a composed message"
+  ]
+}

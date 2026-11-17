@@ -1,0 +1,143 @@
+{
+  "state": "pacing",
+  "source": "/Users/jasonpoindexter/Documents/GitHub/Greg agent/assets/heel/extra-v1/decoded/pacing.png",
+  "actualFrames": 18,
+  "uniqueEncodedFrames": 18,
+  "wholeSourceUpscale": 2,
+  "bundledExtractor": "/Users/jasonpoindexter/.codex/plugins/cache/openai-curated-remote/work-pets/0.1.6/skills/create-pet/scripts/extract_strip_frames.py",
+  "method": "components; shared row scale and vertical registration; detached props grouped to nearest body",
+  "ok": true,
+  "errors": [],
+  "boxes": [
+    [
+      11,
+      33,
+      181,
+      179
+    ],
+    [
+      9,
+      33,
+      182,
+      179
+    ],
+    [
+      8,
+      32,
+      183,
+      179
+    ],
+    [
+      8,
+      32,
+      184,
+      178
+    ],
+    [
+      8,
+      32,
+      184,
+      178
+    ],
+    [
+      8,
+      32,
+      183,
+      179
+    ],
+    [
+      7,
+      31,
+      184,
+      178
+    ],
+    [
+      9,
+      29,
+      183,
+      178
+    ],
+    [
+      7,
+      29,
+      184,
+      178
+    ],
+    [
+      7,
+      30,
+      185,
+      178
+    ],
+    [
+      8,
+      30,
+      184,
+      178
+    ],
+    [
+      8,
+      30,
+      183,
+      178
+    ],
+    [
+      9,
+      30,
+      182,
+      178
+    ],
+    [
+      9,
+      30,
+      182,
+      178
+    ],
+    [
+      10,
+      30,
+      182,
+      178
+    ],
+    [
+      8,
+      32,
+      183,
+      179
+    ],
+    [
+      9,
+      33,
+      183,
+      179
+    ],
+    [
+      9,
+      33,
+      182,
+      179
+    ]
+  ],
+  "adjacentChangedPixels": [
+    5627,
+    4960,
+    5150,
+    5405,
+    5521,
+    7100,
+    7581,
+    6124,
+    4736,
+    5740,
+    6001,
+    6384,
+    6014,
+    5609,
+    5806,
+    6934,
+    6689,
+    4831
+  ],
+  "seamChangedPixels": 4831,
+  "visualPlaybackRequired": true
+}

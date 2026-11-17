@@ -1,0 +1,10 @@
+{
+  "status": "ANATOMY_UNAPPROVED",
+  "reason": "User rejected short torso/side anatomy; preserve provisional sources and regenerate from corrected body reference",
+  "pendingBehaviours": [
+    "sniff-trail",
+    "graze-grass",
+    "pick-up-stick",
+    "carry-stick"
+  ]
+}

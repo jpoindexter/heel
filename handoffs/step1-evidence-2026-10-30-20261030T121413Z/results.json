@@ -1,0 +1,113 @@
+{
+  "checks": [
+    {
+      "number": 1,
+      "verdict": "Not verified",
+      "check": "Greg/panel above another app",
+      "observation": "Clicked Greg, then the known Finder backup row. The panel remained open in AX. Per-window images cannot establish composited z-order. Baseline is parked/undocked with alwaysOnTop=false, so the expected pinned-panel behaviour is also an unmet precondition.",
+      "screenshots": [
+        "01-greg-click-panel-open.png",
+        "01-heel-after-other-app-click.png"
+      ]
+    },
+    {
+      "number": 2,
+      "verdict": "Not verified",
+      "check": "Transparent-area click-through",
+      "observation": "Captured the real transparent mascot window. Did not click through an unidentified underlying screen target: the available window-local UI view did not establish a safe known underlay/global click position. No click-through pass inferred from source or unit tests.",
+      "screenshots": [
+        "02-transparent-window-reference.png"
+      ]
+    },
+    {
+      "number": 3,
+      "verdict": "Not verified",
+      "check": "Dock icon off/on without relaunch",
+      "observation": "Executed off then on; switch states changed, no error shown, same single Heel PID65375 throughout. Dock accessibility inspection timed out (-10005), so actual icon disappearance/reappearance was not visually established. Final preference is on, matching baseline.",
+      "screenshots": [
+        "03-dock-off.png",
+        "03-dock-restored-on.png"
+      ]
+    },
+    {
+      "number": 4,
+      "verdict": "Pass",
+      "check": "Login item on, system-listed, then off and absent",
+      "observation": "Enabled in Heel. System Settings > Login Items & Extensions listed Heel.app. Disabled in Heel; reopened the actual Login Items pane and confirmed Heel.app absent. Final app switch off.",
+      "screenshots": [
+        "04-login-enabled.png",
+        "04-system-login-enabled.png",
+        "04-login-disabled.png",
+        "04-system-login-disabled-confirmed.png"
+      ]
+    },
+    {
+      "number": 5,
+      "verdict": "Pass",
+      "check": "Copy report via UI and inspect clipboard",
+      "observation": "Clicked About > Debug > Copy report. UI said Copied. Clipboard3447 characters includes version0.1.0, macOS/Darwin, Claude, counts and logs. Case-insensitive sk-, token, Bearer counts all0.",
+      "screenshots": [
+        "05-copy-report-clicked.png"
+      ]
+    },
+    {
+      "number": 6,
+      "verdict": "Pass",
+      "check": "Back up via UI, Finder reveal, SQLite integrity",
+      "observation": "Clicked Privacy & data > Back up to Desktop. Created Desktop/heel-backup-2026-10-30-12-17-06 containing data.json and heel.db; Finder selected the folder. The actual backup database returned integrity_check=ok.",
+      "screenshots": [
+        "06-backup-clicked.png",
+        "06-finder-revealed.png"
+      ]
+    },
+    {
+      "number": 7,
+      "verdict": "Pass",
+      "check": "One grouped AI list, ready and disabled entries",
+      "observation": "Observed Claude and Codex subscription groups ready; Ollama greyed with not-running instruction; Claude API/OpenAI/Mistral greyed with No API key yet instruction. Before/after Keychain checks confirm all3 API-key items absent.",
+      "screenshots": [
+        "07-ai-list-open.png",
+        "07-ai-list-bottom.png"
+      ]
+    },
+    {
+      "number": 8,
+      "verdict": "Not verified",
+      "check": "Unready Mistral selection automatically opens key disclosure",
+      "observation": "With Claude selected the disclosure is closed. Clicking disabled Mistral leaves the list/selection unchanged, as check7 requires. Consequently this test cannot reach automatic opening or a Mistral choice toast without changing its preconditions. Manually opening shows3 empty secure key fields and disabled Save buttons; closed again. Claude restored. No key entered or Test connection pressed.",
+      "screenshots": [
+        "08-mistral-disabled-attempt.png",
+        "08-ai-list-closed.png",
+        "08-key-fields-manually-opened.png",
+        "09-final-claude-restored.png"
+      ]
+    },
+    {
+      "number": 9,
+      "verdict": "Pass",
+      "check": "Esc closes AI list under an active toast, Settings stays",
+      "observation": "Changed Claude\u2192Codex, captured its choice toast, reopened the AI list while toast visible, pressed Esc once. List closed, Settings and Codex combo remained, toast still present. Restored Claude afterwards.",
+      "screenshots": [
+        "09-valid-codex-toast.png",
+        "09-valid-menu-with-toast.png",
+        "09-valid-escape-result.png",
+        "09-final-claude-restored.png"
+      ]
+    },
+    {
+      "number": 10,
+      "verdict": "Pass",
+      "check": "Two rapid Esc presses close one layer",
+      "observation": "Started with Settings open and no active selector. Two native Escape calls completed in46ms (9ms +37ms). Result: Today remained open, Settings absent, Forward to Settings visible. Panel did not close.",
+      "screenshots": [
+        "10-settings-before-double-escape.png",
+        "10-double-escape-result.png"
+      ]
+    }
+  ],
+  "passes": 6,
+  "fails": 0,
+  "notVerified": 4,
+  "resultFile": "/Users/jasonpoindexter/Documents/GitHub/Greg agent/handoffs/codex-to-claude-step1-results-2026-10-30.md",
+  "trelloWrites": 0
+}

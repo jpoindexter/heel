@@ -1,0 +1,62 @@
+{
+  "evidenceDir": "/Users/jasonpoindexter/Documents/GitHub/Greg agent/handoffs/step1-fixes-evidence-2026-10-30-20261030T124450Z",
+  "backupDir": "/Users/jasonpoindexter/Library/Application Support/studio.theft.heel-check-backups/fixes-20261030T124450Z",
+  "files": [
+    {
+      "name": "heel.db",
+      "sha256": "85c009fb13d5987d292aaadc1c016cab66d8d2290ed834732910ce28dcd7378f",
+      "sourceMatchesCopy": true
+    },
+    {
+      "name": "heel.db-wal",
+      "sha256": "12b6c70ec7a4201fd26eb457d25706a8f9881d1e3b395ea51b6d040b2f2d0aa0",
+      "sourceMatchesCopy": true
+    },
+    {
+      "name": "heel.db-shm",
+      "sha256": "fb22ff7e95402c84d53cf6fc0233ab0f7f01b73cc12affb90aa3dbc675ee7e2e",
+      "sourceMatchesCopy": true
+    },
+    {
+      "name": "panel-place.json",
+      "sha256": "38e1ef37dd1316c5b1d72b43b39375cfa91d018e492ba6ea3409f87939bed730",
+      "sourceMatchesCopy": true
+    },
+    {
+      "name": "panel-size-v2.json",
+      "sha256": "efd33de8f25cd7b44c14d0a9cbf011d96d5ca1d5894dfe1808dd9877af834daa",
+      "sourceMatchesCopy": true
+    },
+    {
+      "name": "mascot-hidden.json",
+      "sha256": "4e0d6f9a918fa5198cd3fe06a02db5f80ec86f3a6c0509092cd621112ccfe891",
+      "sourceMatchesCopy": true
+    },
+    {
+      "name": "shell-settings.json",
+      "sha256": "6f879daca71174113576900fb292efa341815220736c18c11ecff22f6b5702f9",
+      "sourceMatchesCopy": true
+    },
+    {
+      "name": "sidecar.log",
+      "sha256": "6efec784db6326268b787c88d841d7ada4863b3915fa0929db7d46193d2960a0",
+      "sourceMatchesCopy": true
+    },
+    {
+      "name": "sidecar.json",
+      "sha256": "270e930b4be9e30921fe78e3667bc6326a504a1b6a95af4a3a17b300678af237",
+      "sourceMatchesCopy": true
+    }
+  ],
+  "integrityCheck": "ok",
+  "shell": {
+    "alwaysOnTop": false,
+    "dockIcon": true,
+    "hotkey": "super+shift+h"
+  },
+  "placement": {
+    "docked": false,
+    "x": 1794,
+    "y": 176
+  }
+}

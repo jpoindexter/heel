@@ -1,0 +1,111 @@
+Window: "Heel panel", App: Heel.
+0 standard window Heel panel, Secondary Actions: Raise
+	1 scroll area
+		2 HTML content Description: Heel, URL: tauri://localhost
+			3 container
+				4 button Back
+				5 heading Settings, Value: 1
+					6 text Settings
+				7 button Back to Greg
+				8 button Close panel
+				9 container Settings
+					10 summary Look System · Comfortable, Value: off
+						11 heading Look, Value: 2
+							12 text Look
+						13 text System · Comfortable
+					14 summary Greg Lively · notices on · attention off, Value: off
+						15 heading Greg, Value: 2
+							16 text Greg
+						17 text Lively · notices on · attention off
+					18 container (collapsed) Secondary Actions: Expand
+						19 summary Ways of working Time-box · Pickle jar, Value: off
+							20 heading Ways of working, Value: 2
+								21 text Ways of working
+							22 text Time-box · Pickle jar
+						23 stepper 0
+							24 unknown
+							25 unknown
+						26 stepper 0
+							27 unknown
+							28 unknown
+					29 summary Brain AI and skills, Value: off
+						30 heading Brain, Value: 2
+							31 text Brain
+						32 text AI and skills
+					33 summary Email Gmail, read-only, Value: off
+						34 heading Email, Value: 2
+							35 text Email
+						36 text Gmail, read-only
+					37 summary Startup Login, Dock, Value: off
+						38 heading Startup, Value: 2
+							39 text Startup
+						40 text Login, Dock
+					41 summary Privacy & data Back up, wipe, Value: off
+						42 heading Privacy & data, Value: 2
+							43 text Privacy & data
+						44 text Back up, wipe
+					45 container (expanded) Secondary Actions: Collapse
+						46 summary About Heel 0.1.0, Value: on
+							47 heading About, Value: 2
+								48 text About
+							49 text Heel 0.1.0
+						50 container About
+							51 description list
+								52 container
+									53 text Heel 0.1.0
+								54 container
+									55 text Mac macOS (Darwin 25.6.0)
+								56 container
+									57 text Data folder /Users/jasonpoindexter/Library/Application Support/studio.theft.heel
+								58 container
+									59 text Helper port 55718 · Node v24.18.0 · database v6
+								60 container
+									61 text Brain claude
+								62 container
+									63 text Attention sense off
+								64 container
+									65 text Kept 1 tasks · 0 parked · 0 documents
+							66 button Restart helper
+							67 container (expanded) Secondary Actions: Collapse
+								68 summary Debug, Value: on
+									69 text Debug
+								70 text What Heel noted about itself: where and when, never what you wrote. Hand it over when something breaks.
+								71 text Panel log
+								72 container Panel log
+									73 text 2026-10-27 10:51:27 info  layers: today
+2026-10-27 10:51:27 warn  helper: starting
+2026-10-27 10:51:30 info  helper: running
+2026-10-27 13:35:49 info  layers: today
+2026-10-27 13:35:49 warn  helper: starting
+2026-10-27 13:35:52 info  helper: running
+2026-10-27 13:36:10 info  layers: settings
+2026-10-27 13:49:28 info  layers: today
+2026-10-30 13:03:30 info  layers: today
+2026-10-30 13:03:30 warn  helper: starting
+2026-10-30 13:03:33 info  helper: running
+2026-10-30 13:07:16 info  layers: history
+2026-10-30 1
+								74 text Helper log
+								75 container Helper log
+									76 text (node:88990) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+Heel sidecar listening on 127.0.0.1:50749 (data: /Users/jasonpoindexter/Library/Application Support/studio.theft.heel)
+(node:14800) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+Heel sidecar listening on 127.0.0.1:55842 (data: /Users
+								77 button Copy report
+								78 button Export report…
+								79 button Clear log
+								80 text Copied. Paste it anywhere.
+				81 button (collapsed) More, Secondary Actions: Expand
+				82 button What's on your mind?
+				83 container Notifications (F8)
+84 menu bar
+	85 Heel
+	86 File
+	87 Edit
+	88 View
+	89 Window
+	90 Help
+
+The focused UI element is 9 container Settings

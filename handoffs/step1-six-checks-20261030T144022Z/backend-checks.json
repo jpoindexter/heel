@@ -1,0 +1,14 @@
+{
+  "/debug": {
+    "http": 200,
+    "secretPatternHits": 0
+  },
+  "/data/preview": {
+    "http": 200,
+    "secretPatternHits": 0
+  },
+  "/brain": {
+    "http": 200,
+    "secretPatternHits": 0
+  }
+}

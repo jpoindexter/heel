@@ -1,0 +1,141 @@
+{
+  "ok": true,
+  "width": 3072,
+  "height": 3536,
+  "timedCells": 262,
+  "clips": [
+    {
+      "name": "pacing",
+      "timedFrames": 82,
+      "uniqueEncodedFrames": 41,
+      "provenance": {
+        "generatedDrawings": 23,
+        "derivedMirrors": 18,
+        "playbackReuse": "two walking cycles per direction, reversed turn poses for return"
+      },
+      "clippingErrors": []
+    },
+    {
+      "name": "ball-play",
+      "timedFrames": 16,
+      "uniqueEncodedFrames": 16,
+      "provenance": {
+        "generatedDrawings": 16,
+        "derivedMirrors": 0,
+        "playbackReuse": "none"
+      },
+      "clippingErrors": []
+    },
+    {
+      "name": "fetch-offer",
+      "timedFrames": 16,
+      "uniqueEncodedFrames": 16,
+      "provenance": {
+        "generatedDrawings": 16,
+        "derivedMirrors": 0,
+        "playbackReuse": "none"
+      },
+      "clippingErrors": []
+    },
+    {
+      "name": "play-bow",
+      "timedFrames": 17,
+      "uniqueEncodedFrames": 17,
+      "provenance": {
+        "generatedDrawings": 17,
+        "derivedMirrors": 0,
+        "playbackReuse": "none"
+      },
+      "clippingErrors": []
+    },
+    {
+      "name": "chew-stick",
+      "timedFrames": 16,
+      "uniqueEncodedFrames": 16,
+      "provenance": {
+        "generatedDrawings": 16,
+        "derivedMirrors": 0,
+        "playbackReuse": "none"
+      },
+      "clippingErrors": []
+    },
+    {
+      "name": "scratch-ear",
+      "timedFrames": 16,
+      "uniqueEncodedFrames": 16,
+      "provenance": {
+        "generatedDrawings": 16,
+        "derivedMirrors": 0,
+        "playbackReuse": "none"
+      },
+      "clippingErrors": []
+    },
+    {
+      "name": "yawn",
+      "timedFrames": 16,
+      "uniqueEncodedFrames": 16,
+      "provenance": {
+        "generatedDrawings": 16,
+        "derivedMirrors": 0,
+        "playbackReuse": "none"
+      },
+      "clippingErrors": []
+    },
+    {
+      "name": "sniff-search",
+      "timedFrames": 16,
+      "uniqueEncodedFrames": 8,
+      "provenance": {
+        "generatedDrawings": 8,
+        "derivedMirrors": 0,
+        "playbackReuse": "forward/reverse sniff half-cycle"
+      },
+      "clippingErrors": []
+    },
+    {
+      "name": "stretch",
+      "timedFrames": 17,
+      "uniqueEncodedFrames": 17,
+      "provenance": {
+        "generatedDrawings": 17,
+        "derivedMirrors": 0,
+        "playbackReuse": "none"
+      },
+      "clippingErrors": []
+    },
+    {
+      "name": "error-facepalm",
+      "timedFrames": 17,
+      "uniqueEncodedFrames": 17,
+      "provenance": {
+        "generatedDrawings": 17,
+        "derivedMirrors": 0,
+        "playbackReuse": "none"
+      },
+      "clippingErrors": []
+    },
+    {
+      "name": "poop-gag",
+      "timedFrames": 16,
+      "uniqueEncodedFrames": 16,
+      "provenance": {
+        "generatedDrawings": 16,
+        "derivedMirrors": 0,
+        "playbackReuse": "none"
+      },
+      "clippingErrors": []
+    },
+    {
+      "name": "pee-gag",
+      "timedFrames": 17,
+      "uniqueEncodedFrames": 17,
+      "provenance": {
+        "generatedDrawings": 17,
+        "derivedMirrors": 0,
+        "playbackReuse": "none"
+      },
+      "clippingErrors": []
+    }
+  ],
+  "scope": "Custom count/alpha/margin checks only; not Dot preflight and not perceived smoothness proof"
+}

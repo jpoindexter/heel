@@ -1,0 +1,97 @@
+Window: "", App: System Settings.
+0 standard window ID: main, Secondary Actions: Raise
+	1 split group main, SidebarNavigationSplitView
+		2 scroll area Secondary Actions: Scroll Up, Scroll Down
+			3 list Sidebar
+				4 row (selectable)
+				5 row (selectable) Jason Poindexter, Apple Account
+				6 row (selectable)
+				7 row (selectable) Description: Software Update Available, 1 new item, Value: 1
+				8 row (selectable)
+				9 row (selectable) Wi‑Fi
+				10 row (selectable) Bluetooth
+				11 row (selectable) Network
+				12 row (selectable) Battery
+				13 row (selectable)
+				14 row (selected) General
+				15 row (selectable) Accessibility
+				16 row (selectable) Appearance
+				17 row (selectable) Apple Intelligence & Siri
+				18 row (selectable) Desktop & Dock
+				19 row (selectable) Displays
+				20 row (selectable) Menu Bar
+				21 row (selectable) Spotlight
+				22 row (selectable) Wallpaper
+				23 row (selectable)
+				24 row (selectable) Notifications
+				25 row (selectable) Sound
+				26 row (selectable) Focus
+				27 row (selectable) Screen Time
+				28 row (selectable)
+				29 row (selectable) Lock Screen
+				30 row (selectable) Privacy & Security
+				31 row (selectable) Touch ID & Password
+				32 row (selectable) Users & Groups
+				33 row (selectable)
+				34 row (selectable) Internet Accounts
+				35 row (selectable) Game Center
+				36 row (selectable) iCloud
+				37 row (selectable) Wallet & Apple Pay
+				38 row (selectable)
+				39 row (selectable) Keyboard
+				40 row (selectable) Trackpad
+				41 row (selectable) Game Controllers
+				42 row (selectable) Printers & Scanners
+			43 scroll bar (settable, float) 0
+				44 value indicator (settable, float) 0
+				45 increment arrow button
+				46 decrement arrow button
+				47 increment page button
+				48 decrement page button
+		49 search text field (settable) Search
+			50 button Search
+		51 splitter (disabled, settable, float) 223
+		52 scroll area Secondary Actions: Scroll Up, Scroll Down
+			53 container
+				54 text General Manage your overall setup and preferences for Mac, such as software updates, device language, AirDrop, and more.
+			55 container
+				56 button About
+				57 button Software Update
+				58 button Storage
+			59 button AppleCare & Warranty
+			60 button AirDrop & Continuity
+			61 container
+				62 button AutoFill & Passwords
+				63 button Date & Time
+				64 button Language & Region
+				65 button Login Items & Extensions
+				66 button Sharing
+				67 button Startup Disk
+				68 button Time Machine
+			69 button Device Management
+			70 button Transfer or Reset
+			71 scroll bar (settable, float) 0
+				72 value indicator (settable, float) 0
+				73 increment arrow button
+				74 decrement arrow button
+				75 increment page button
+				76 decrement page button
+	77 toolbar
+		78 container
+			79 menu button (disabled) Description: Back, ID: go back
+			80 menu button (disabled) Description: Forward, ID: go forward
+	81 close button
+	82 zoom button
+	83 minimize button
+	84 text
+85 menu bar
+	86 System Settings
+	87 Edit
+	88 View
+	89 Window
+	90 Help
+
+Selected:
+	14 row (selected)
+
+Note: Pay special attention to the content selected by the user. If the user asks a question or refers to the content they are looking at on-screen, they might be referring to the selected content (but they might be referring to something else that's visible, too).

@@ -1,0 +1,1129 @@
+{
+  "date": "2026-10-15",
+  "operation": "full puppy beta artifact update; descriptions plus A3b title only",
+  "before": [
+    {
+      "id": "ari:cloud:trello::card/workspace/6a8f03e71844a6c1103692dc/6ad0875b651ed3ebde8e641e",
+      "name": "D5 Mascot art (name decided: Heel)",
+      "description": "## 2026-10-15 \u2014 Greg visual consistency reset (Jason)\n\nDecision updated: Heel uses original Greg artwork; Greg is the chosen mascot. Remaining decision is acceptance of the corrected photo-based model, not whether to use a placeholder. Review ALL angles, real chest markings, charcoal coat/dark muzzle, longer adult torso and natural male anatomy. Freeze palette, proportions, stroke and template before regenerating.\n\nCanonical follow-up: https://trello.com/c/S8JdeGot\nExtra behaviours: https://trello.com/c/F0816jgq\nNature behaviours: https://trello.com/c/mAM5xYCB\nSpec: assets/heel/anatomy-v2-photo-based/UNIFIED-ART-SPEC.md\nHandoff: handoffs/codex-to-claude-greg-visual-reset-2026-10-15.md\n\nThis update supersedes conflicting earlier art assumptions. Existing completed code/integration evidence remains historical; corrected artwork and native visual acceptance are pending.\n\n---\n\nName: Heel (decided 2026-10-15). Mascot still open. Idea: a dog, since Greg is your dog (original art of your own dog avoids cloning the friend's Bunny/Owl). Pick art source (hand-made / generated / commissioned). Not blocking v0 \u2014 use a placeholder blob. Greg nutrition app rename: undecided, untouched.",
+      "url": "https://trello.com/c/Mb9PHuPZ/5-d5-mascot-art-name-decided-heel",
+      "shortUrl": "https://trello.com/c/Mb9PHuPZ",
+      "closed": false,
+      "complete": false,
+      "position": 5.5,
+      "lastActivityAt": "2026-10-15T15:48:38.923Z",
+      "startedAt": null,
+      "due": {
+        "date": null,
+        "complete": false
+      },
+      "listId": "ari:cloud:trello::list/workspace/6a8f03e71844a6c1103692dc/6ad0871dd9b7cc9db38218ed",
+      "boardId": "ari:cloud:trello::board/workspace/6a8f03e71844a6c1103692dc/6ad086eb6adf74cfd0674abf",
+      "labels": [],
+      "labelsHasMore": false,
+      "checklists": [],
+      "checklistsHasMore": false,
+      "members": [],
+      "comments": [
+        {
+          "id": "ari:cloud:trello::action/6ad0f5d6ba8f4c8de9bdc199",
+          "text": "D5 note: the DECISION (use original Greg art, name Heel) is made, so this card is in Done. The appended 2026-10-15 note's remaining item, ACCEPTANCE of the corrected photo-based Greg model, is still open and is tracked on A5 (v1 list) and A3b (Blocked, needs image generation) \u2014 not decided by moving this card.",
+          "date": "2026-10-15T15:48:38.892Z",
+          "author": {
+            "id": "ari:cloud:trello::user/6a8f03e72f1758f6e32bc5a6",
+            "fullName": "Jason",
+            "avatarUrl": "https://trello-members.s3.amazonaws.com/6a8f03e72f1758f6e32bc5a6/9f12f068dba982d637bcb31f0324a632"
+          }
+        }
+      ],
+      "commentsHasMore": false,
+      "list": {
+        "id": "ari:cloud:trello::list/workspace/6a8f03e71844a6c1103692dc/6ad0871dd9b7cc9db38218ed",
+        "name": "Done"
+      },
+      "board": {
+        "id": "ari:cloud:trello::board/workspace/6a8f03e71844a6c1103692dc/6ad086eb6adf74cfd0674abf",
+        "name": "Greg Agent \u2014 ND desktop companion"
+      }
+    },
+    {
+      "id": "ari:cloud:trello::card/workspace/6a8f03e71844a6c1103692dc/6ad0c80b6cd2fbeeec0f4b74",
+      "name": "A1 Swap mascot art: Riff -> Greg (Dot-compatible sheet, primary)",
+      "description": "## 2026-10-15 \u2014 Greg visual consistency reset (Jason)\n\nThe Riff-to-Greg integration remains historically Done. That does not mean all artwork is currently accepted. Jason rejected short side anatomy and now reports stripes, pixelation, colour/size/design drift during movement. Keep this integration history and fallback; replacement art must pass A5 and A3b before swapping.\n\nCanonical follow-up: https://trello.com/c/S8JdeGot\nExtra behaviours: https://trello.com/c/F0816jgq\nNature behaviours: https://trello.com/c/mAM5xYCB\nSpec: assets/heel/anatomy-v2-photo-based/UNIFIED-ART-SPEC.md\nHandoff: handoffs/codex-to-claude-greg-visual-reset-2026-10-15.md\n\nThis update supersedes conflicting earlier art assumptions. Existing completed code/integration evidence remains historical; corrected artwork and native visual acceptance are pending.\n\n---\n\nSTATUS: approved by Jason 2026-10-15, being executed now.\n\nDECISION (Jason): use the Dot layout as the MAIN set (9 actions + 16 look directions), Greg art, not Riff. Dense six-state sheet stays optional (see V1-11).\n\nSOURCE: assets/heel/smooth-v1/final/compatible-dot/spritesheet-extended.png (1536x2288, 8 cols x 11 rows, 192x208 cells, 73 populated cells). SHA-256 4353761c6e78bdaf0a5673aac3c54025a61bd841af4d1fc9dcf673b1b3c5e68a (checked, matches handoff). Manifest: compatible-dot/dot-animations.json.\nHANDOFF: handoffs/codex-to-claude-2026-10-15-1425.md (from Codex).\n\nPLAN: copy PNG to public/mascot/ under a Greg-specific name, point Sprite.tsx at it (was /mascot/riff.png). Manifest row names and timings are to be diffed against src/mascot/atlas.ts for all rows before claiming a match. KEEP the Riff PNG in the repo and assets/riff untouched. Note: handoff cites src/panel/TodayTab.tsx, which moved to src/today/TodayTab.tsx.\n\nFINISH LINE (observed in the REAL app, not just build):\n- Greg PNG loads, correct 8x11 layout, clean transparency, no clipping at desktop size.\n- Exercise all nine action rows + 16 look directions; keep panel events, greeting one-shot, click/drag.\n- Watch repeated loops at real size incl. last->first frame boundary and state switches. More actions != smooth: if a loop is janky, name the exact action/boundary and refine it.\n- Calm behavior: jumps/runs only on appropriate triggers. The standard Dot sheet has NO curled-up sleep clip: do not fake Rest with another row.\n- Verify reduced motion (OS setting) end to end. Run tests/typecheck after changes. Report observed desktop behavior separately from static checks.\n\nDO NOT: use smooth-v1/registered-gait/ (rejected), delete earlier variants, touch Riff's OpenAI Dot account pet, read dense 16-col frames with Dot geometry.\n\nKNOWN LIMITATIONS (from Codex): small outline variation between generated frames; Focus slightly warmer/olive than Idle; no authored transition clips (sit->lie, wake); Jason has not visually approved any Greg animation yet.",
+      "url": "https://trello.com/c/AXes51nW/37-a1-swap-mascot-art-riff-greg-dot-compatible-sheet-primary",
+      "shortUrl": "https://trello.com/c/AXes51nW",
+      "closed": false,
+      "complete": false,
+      "position": 147456,
+      "lastActivityAt": "2026-10-15T14:55:15.794Z",
+      "startedAt": null,
+      "due": {
+        "date": null,
+        "complete": false
+      },
+      "listId": "ari:cloud:trello::list/workspace/6a8f03e71844a6c1103692dc/6ad0871dd9b7cc9db38218ed",
+      "boardId": "ari:cloud:trello::board/workspace/6a8f03e71844a6c1103692dc/6ad086eb6adf74cfd0674abf",
+      "labels": [],
+      "labelsHasMore": false,
+      "checklists": [],
+      "checklistsHasMore": false,
+      "members": [],
+      "comments": [
+        {
+          "id": "ari:cloud:trello::action/6ad0c93e57291d210f6fe447",
+          "text": "A1 closed 2026-10-15 (swap only). Jason confirmed in the REAL desktop app: Greg shows up, idle and panel reactions look fine. NOT exercised in the real app because the app does not use them yet: running-left/right and review rows, the 16 look directions (our 'look' is only a sweep; no pointer-following). Heel currently maps 6 of 9 actions (idle, waiting, running, waving, jumping, failed). Not assessed: loop smoothness at boundaries, state-switch transitions, reduced motion end to end. Known art issues carried to A2: running-left row lighter/greyer than the rest; no sit->lie transition; subtle idle; no Rest pose (V1-11). Follow-up card: A2.",
+          "date": "2026-10-15T12:38:22.590Z",
+          "author": {
+            "id": "ari:cloud:trello::user/6a8f03e72f1758f6e32bc5a6",
+            "fullName": "Jason",
+            "avatarUrl": "https://trello-members.s3.amazonaws.com/6a8f03e72f1758f6e32bc5a6/9f12f068dba982d637bcb31f0324a632"
+          }
+        },
+        {
+          "id": "ari:cloud:trello::action/6ad0c89a055a31640801f27a",
+          "text": "A1 code swap done 2026-10-15; staying in Doing until Jason sees Greg in the real desktop window. DONE+EXECUTED: public/mascot/greg.png (checksum matches handoff) + greg.dot.json; Sprite.tsx points at Greg; Riff PNG + assets/riff kept. Manifest vs atlas.ts diffed for all 9 action rows (row + every duration) = exact match; look rows = 2 rows x 8 fixed poses at 22.5 deg steps (our 'look' = 16 frames, same cells). Pixel check: 73 populated cells, unused cells empty, no clipping (>=6px margin), stable baselines. Browser check with the real sprite code: sheet loads 192x208, idle loop steps through 6 frame positions. 175 tests pass. NOT DONE / NOT ASSESSED: real Tauri window, smoothness of any loop, last->first boundaries, state-switch transitions, reduced motion end to end, look directions driven in-app (our 'look' is a sweep; pointer-following not built). FINDINGS: (1) running-left row is ~4.7 lightness points lighter and ~5% vs 11-16% saturation vs other rows: visible colour mismatch. (2) 'thinking' maps to the row-7 lying pose, so sit->lie is an abrupt cut. (3) Idle frames have identical bbox height: motion is subtle (blink-level). (4) No Rest/sleep pose in this sheet (V1-11).",
+          "date": "2026-10-15T12:35:38.855Z",
+          "author": {
+            "id": "ari:cloud:trello::user/6a8f03e72f1758f6e32bc5a6",
+            "fullName": "Jason",
+            "avatarUrl": "https://trello-members.s3.amazonaws.com/6a8f03e72f1758f6e32bc5a6/9f12f068dba982d637bcb31f0324a632"
+          }
+        }
+      ],
+      "commentsHasMore": false,
+      "list": {
+        "id": "ari:cloud:trello::list/workspace/6a8f03e71844a6c1103692dc/6ad0871dd9b7cc9db38218ed",
+        "name": "Done"
+      },
+      "board": {
+        "id": "ari:cloud:trello::board/workspace/6a8f03e71844a6c1103692dc/6ad086eb6adf74cfd0674abf",
+        "name": "Greg Agent \u2014 ND desktop companion"
+      }
+    },
+    {
+      "id": "ari:cloud:trello::card/workspace/6a8f03e71844a6c1103692dc/6ad0c95ceab4ae31aa559b57",
+      "name": "A2 Use the rest of Greg's actions + fix art issues + reduced-motion check",
+      "description": "## 2026-10-15 \u2014 Greg visual consistency reset (Jason)\n\nExpand the art-fix scope to the entire set: one photo-based master, locked grey palette, chest marking, outline, head/body/leg proportions and physical scale. Rebuild rejected side poses; recolouring or mirroring alone cannot repair anatomy. Diagnose stripe/pixelation in real playback, compare source frames vs renderer. Include every Dot action/look, six quiet states and transitions. No per-frame bounding-box resizing.\n\nCanonical follow-up: https://trello.com/c/S8JdeGot\nExtra behaviours: https://trello.com/c/F0816jgq\nNature behaviours: https://trello.com/c/mAM5xYCB\nSpec: assets/heel/anatomy-v2-photo-based/UNIFIED-ART-SPEC.md\nHandoff: handoffs/codex-to-claude-greg-visual-reset-2026-10-15.md\n\nThis update supersedes conflicting earlier art assumptions. Existing completed code/integration evidence remains historical; corrected artwork and native visual acceptance are pending.\n\n---\n\nFollow-up to A1 (swap done, idle + panel reactions confirmed by Jason).\n\nNOT USED BY THE APP YET: running-right/left (e.g. while Greg is dragged), review (e.g. while reading the inbox, S7), the 16 look directions (our 'look' is only a sweep; add pointer-following or look-at-panel). Calm rule: runs/jumps only on real triggers, never as constant idle motion.\n\nART ISSUES (measured 2026-10-15): (1) running-left row ~4.7 lightness points lighter and ~5% vs 11-16% saturation compared with other rows: needs recolour/regenerate (Codex's pipeline, see handoff). (2) 'thinking' maps to row 7, a lying pose: sit->lie is an abrupt cut; needs an authored transition or a different mapping. (3) Idle frames have near-identical silhouettes: motion is blink-level, judge in the real app. (4) No Rest pose: see V1-11.\n\nVERIFY IN THE REAL APP: reduced motion (OS setting on/off while running), last->first frame boundary of each loop, state switches, CPU use of the mascot window idle. Name the exact action/boundary if a loop is janky.",
+      "url": "https://trello.com/c/09WlERKf/39-a2-use-the-rest-of-gregs-actions-fix-art-issues-reduced-motion-check",
+      "shortUrl": "https://trello.com/c/09WlERKf",
+      "closed": false,
+      "complete": false,
+      "position": 11,
+      "lastActivityAt": "2026-10-15T14:56:25.817Z",
+      "startedAt": null,
+      "due": {
+        "date": null,
+        "complete": false
+      },
+      "listId": "ari:cloud:trello::list/workspace/6a8f03e71844a6c1103692dc/6ad0871896d2c66af249f9fe",
+      "boardId": "ari:cloud:trello::board/workspace/6a8f03e71844a6c1103692dc/6ad086eb6adf74cfd0674abf",
+      "labels": [],
+      "labelsHasMore": false,
+      "checklists": [],
+      "checklistsHasMore": false,
+      "members": [],
+      "comments": [],
+      "commentsHasMore": false,
+      "list": {
+        "id": "ari:cloud:trello::list/workspace/6a8f03e71844a6c1103692dc/6ad0871896d2c66af249f9fe",
+        "name": "v1 \u2014 After real use"
+      },
+      "board": {
+        "id": "ari:cloud:trello::board/workspace/6a8f03e71844a6c1103692dc/6ad086eb6adf74cfd0674abf",
+        "name": "Greg Agent \u2014 ND desktop companion"
+      }
+    },
+    {
+      "id": "ari:cloud:trello::card/workspace/6a8f03e71844a6c1103692dc/6ad0cb41a442905d7dfce771",
+      "name": "17 A3a Manifest-driven mascot player (prereq for sleep/dense art; no new art needed)",
+      "description": "## 2026-10-15 \u2014 Greg visual consistency reset (Jason)\n\nA3a is now Done and current source confirms manifest-driven playback. A5 is follow-up, not a claim this player is missing. Extend it only as required for source-density-aware 2x textures, atlas page + per-frame sourceRect, fixed logical frame/root and transitions. Current schema limits action frames to columns and uses uniform rows: a giant/packed sheet cannot be dropped in without matching manifest/player changes. Preserve fallback; reproduce stripes at actual native/Retina sizes, verify every action and boundary.\n\nCanonical follow-up: https://trello.com/c/S8JdeGot\nExtra behaviours: https://trello.com/c/F0816jgq\nNature behaviours: https://trello.com/c/mAM5xYCB\nSpec: assets/heel/anatomy-v2-photo-based/UNIFIED-ART-SPEC.md\nHandoff: handoffs/codex-to-claude-greg-visual-reset-2026-10-15.md\n\nThis update supersedes conflicting earlier art assumptions. Existing completed code/integration evidence remains historical; corrected artwork and native visual acceptance are pending.\n\n---\n\nFrom Codex handoff (updated 2026-10-15 14:44), codex-to-claude-2026-10-15-1425.md. Jason wants ALL Dot animations smooth with more frames.\n\nWHAT I CAN BUILD NOW (no new art): replace hardcoded 8-col / 16-look / timers in src/mascot with a manifest-driven player:\n- manifest per sheet: columns, cell size, per-action frame list (rect/position), per-frame durations, loop vs one-shot, look angle samples (angles in degrees, clockwise).\n- generate a manifest for the CURRENT sparse 8x11 Greg sheet (converter from dot-animations.json) so it is testable with real art today; keep the 8x11 sheet + manifest unchanged as the fallback.\n- monotonic-clock timeline via requestAnimationFrame (no chained timers); suspend when the window is hidden; explicit reduced-motion handling.\n- look by angle (nearest sample, 360->0 wrap, rapid changes); NOT a spinning idle loop.\n- tests: timeline math, wrap, loop/one-shot, manifest validation (frames in sheet, durations match).\nNOT claiming smoothness: only new art can add in-between poses.\n\nDONE = tests + manifest of current sheet plays identically to today in the real window; a custom 24x11 manifest with placeholder cells validates.",
+      "url": "https://trello.com/c/AJRxT8Xw/42-17-a3a-manifest-driven-mascot-player-prereq-for-sleep-dense-art-no-new-art-needed",
+      "shortUrl": "https://trello.com/c/AJRxT8Xw",
+      "closed": false,
+      "complete": false,
+      "position": 1,
+      "lastActivityAt": "2026-10-15T14:56:50.281Z",
+      "startedAt": null,
+      "due": {
+        "date": null,
+        "complete": false
+      },
+      "listId": "ari:cloud:trello::list/workspace/6a8f03e71844a6c1103692dc/6ad0871dd9b7cc9db38218ed",
+      "boardId": "ari:cloud:trello::board/workspace/6a8f03e71844a6c1103692dc/6ad086eb6adf74cfd0674abf",
+      "labels": [],
+      "labelsHasMore": false,
+      "checklists": [],
+      "checklistsHasMore": false,
+      "members": [],
+      "comments": [],
+      "commentsHasMore": false,
+      "list": {
+        "id": "ari:cloud:trello::list/workspace/6a8f03e71844a6c1103692dc/6ad0871dd9b7cc9db38218ed",
+        "name": "Done"
+      },
+      "board": {
+        "id": "ari:cloud:trello::board/workspace/6a8f03e71844a6c1103692dc/6ad086eb6adf74cfd0674abf",
+        "name": "Greg Agent \u2014 ND desktop companion"
+      }
+    },
+    {
+      "id": "ari:cloud:trello::card/workspace/6a8f03e71844a6c1103692dc/6ad0cb4a79ca86e635fa9e90",
+      "name": "A3b Dense full-repertoire Greg art (BLOCKED for Claude: needs image generation, Codex/Jason)",
+      "description": "## 2026-10-15 \u2014 Greg visual consistency reset (Jason)\n\nBLOCKING ART GATE: previous side body is rejected (short torso, unnatural legs). Jason requires consistent Greg anatomy, palette, scale, stroke and markings in EVERY frame/action. Use 32 locally indexed photo references covering all angles; long standing reference G0032 is primary proportion authority. Include subtle natural fur-covered male sheath when visible. One measured master/template and shared manifest (A5), then walk proof, then all 9 Dot actions + looks + quiet states + extras/nature. Existing frame targets remain authoring targets, not completed art. Output a combined review sheet and bounded runtime pages when appropriate. Do not force huge textures or resize curled/sitting/standing silhouettes to identical boxes.\n\nCanonical follow-up: https://trello.com/c/S8JdeGot\nExtra behaviours: https://trello.com/c/F0816jgq\nNature behaviours: https://trello.com/c/mAM5xYCB\nSpec: assets/heel/anatomy-v2-photo-based/UNIFIED-ART-SPEC.md\nHandoff: handoffs/codex-to-claude-greg-visual-reset-2026-10-15.md\n\nThis update supersedes conflicting earlier art assumptions. Existing completed code/integration evidence remains historical; corrected artwork and native visual acceptance are pending.\n\n---\n\nART DELIVERABLE, not code. Claude has no image generation in this environment. From the Codex handoff (updated 14:44).\n\nTARGET authored poses per action: idle 16, running-right 24, running-left 24, waving 16, jumping 24, failed 16, waiting 16, running(processing/focus) 16, review 16 = 168 poses. Look directions: 32 samples at 11.25 deg (keep the original 16 as every-other anchors), body still, eyes/head only. Extras kept separate: Rest (curled sleep), quiet Done (wag).\n\nFORMAT: custom Heel atlas (proposed 24 cols x 11 rows of 192x208 = 4608x2288; actions rows 0-8, looks row 9 samples 0-23, row 10 samples 24-31) + manifest. NOT compatible with the standard Dot uploader. Keep the standard 8x11 sheet as fallback.\n\nRULES: lock scale/foot anchors/palette/markings; no arbitrary duplicates, no dissolves between incompatible poses, no limb-warp interpolation; label generated vs reused vs unfilled honestly; do not use smooth-v1/registered-gait/ (rejected). Fix known issues: running-left row is lighter/greyer (measured 2026-10-15), Focus slightly olive, no sit->lie transition.\n\nNeeds A3a (player) to display it. Verify in the real app: 3 full cycles per loop incl. 128px on light/dark, loop seams, one-shots, direction wrap, reduced motion, frame pacing/CPU.",
+      "url": "https://trello.com/c/DAEkTasT/43-a3b-dense-full-repertoire-greg-art-blocked-for-claude-needs-image-generation-codex-jason",
+      "shortUrl": "https://trello.com/c/DAEkTasT",
+      "closed": false,
+      "complete": false,
+      "position": 140737488388096,
+      "lastActivityAt": "2026-10-15T14:57:17.696Z",
+      "startedAt": null,
+      "due": {
+        "date": null,
+        "complete": false
+      },
+      "listId": "ari:cloud:trello::list/workspace/6a8f03e71844a6c1103692dc/6ad0d7ed5320127c04c18ab3",
+      "boardId": "ari:cloud:trello::board/workspace/6a8f03e71844a6c1103692dc/6ad086eb6adf74cfd0674abf",
+      "labels": [],
+      "labelsHasMore": false,
+      "checklists": [],
+      "checklistsHasMore": false,
+      "members": [],
+      "comments": [],
+      "commentsHasMore": false,
+      "list": {
+        "id": "ari:cloud:trello::list/workspace/6a8f03e71844a6c1103692dc/6ad0d7ed5320127c04c18ab3",
+        "name": "\u26d4 Blocked / needs Jason"
+      },
+      "board": {
+        "id": "ari:cloud:trello::board/workspace/6a8f03e71844a6c1103692dc/6ad086eb6adf74cfd0674abf",
+        "name": "Greg Agent \u2014 ND desktop companion"
+      }
+    },
+    {
+      "id": "ari:cloud:trello::card/workspace/6a8f03e71844a6c1103692dc/6ad0d89976c74544f2ade748",
+      "name": "14 A4a Idle life engine: pure behaviour state machine (look, wave, stretch, lie down, sleep, walk) + Calm/Lively/Off",
+      "description": "## 2026-10-15 \u2014 Greg visual consistency reset (Jason)\n\nKeep the completed scheduler and guards. Visual follow-up uses A5's accepted common body/palette/scale for every behaviour. Correct row meaning: Dot waiting = listening; Dot running (row 7) is the lying/processing pose. New ball/stick/sniff/grass actions belong to A6/A7 after their art is accepted. Preserve Calm/Lively/Off, typing/panel/focus guards and reduced-motion static fallback. Toilet gags optional/manual or explicit opt-in; no surprise repeated gags.\n\nCanonical follow-up: https://trello.com/c/S8JdeGot\nExtra behaviours: https://trello.com/c/F0816jgq\nNature behaviours: https://trello.com/c/mAM5xYCB\nSpec: assets/heel/anatomy-v2-photo-based/UNIFIED-ART-SPEC.md\nHandoff: handoffs/codex-to-claude-greg-visual-reset-2026-10-15.md\n\nThis update supersedes conflicting earlier art assumptions. Existing completed code/integration evidence remains historical; corrected artwork and native visual acceptance are pending.\n\n---\n\nJason: when idle Greg shouldn't just stare. He should sometimes look around, lie down, go to sleep, walk across the screen. Pure, tested scheduler (no UI): states idle -> look-around / wave / stretch / lie-down -> sleep (after long idle) / walk; weighted random with minimum gaps; seeded RNG for tests. Rules for an ND user: never while the panel is open or the person is typing, never during a focus time-box, nothing sudden (always a lead-in), Quiet mode = none, prefers-reduced-motion = static, setting \"Greg's activity: Calm (default) / Lively / Off\". Wake on pointer or panel open.\nUses existing Dot rows now (idle, waving, look rows, running-left/right, waiting=lying); sleep/rest art arrives with A3a (dense sheet).\nDONE = unit tests for every transition and every guard (panel open, quiet, reduced motion, budget); 1h of simulated time produces behaviours within the Calm frequency caps.\nEffort: medium (3h).",
+      "url": "https://trello.com/c/M5UAj5TE/66-14-a4a-idle-life-engine-pure-behaviour-state-machine-look-wave-stretch-lie-down-sleep-walk-calm-lively-off",
+      "shortUrl": "https://trello.com/c/M5UAj5TE",
+      "closed": false,
+      "complete": false,
+      "position": 140737488584704,
+      "lastActivityAt": "2026-10-15T14:57:41.447Z",
+      "startedAt": null,
+      "due": {
+        "date": null,
+        "complete": false
+      },
+      "listId": "ari:cloud:trello::list/workspace/6a8f03e71844a6c1103692dc/6ad0871dd9b7cc9db38218ed",
+      "boardId": "ari:cloud:trello::board/workspace/6a8f03e71844a6c1103692dc/6ad086eb6adf74cfd0674abf",
+      "labels": [],
+      "labelsHasMore": false,
+      "checklists": [],
+      "checklistsHasMore": false,
+      "members": [],
+      "comments": [
+        {
+          "id": "ari:cloud:trello::action/6ad0e4db814302265d49526a",
+          "text": "A4a DONE \u2014 commit f5d2f03. Real window: look-around, lie down, nap \u2192 curled asleep, wake, panel-open keeps him still, Calm/Lively/Off setting shared across windows. NOT verified: wave/paw in the live window over a long idle, activity setting persistence across a full app restart.",
+          "date": "2026-10-15T14:36:11.348Z",
+          "author": {
+            "id": "ari:cloud:trello::user/6a8f03e72f1758f6e32bc5a6",
+            "fullName": "Jason",
+            "avatarUrl": "https://trello-members.s3.amazonaws.com/6a8f03e72f1758f6e32bc5a6/9f12f068dba982d637bcb31f0324a632"
+          }
+        }
+      ],
+      "commentsHasMore": false,
+      "list": {
+        "id": "ari:cloud:trello::list/workspace/6a8f03e71844a6c1103692dc/6ad0871dd9b7cc9db38218ed",
+        "name": "Done"
+      },
+      "board": {
+        "id": "ari:cloud:trello::board/workspace/6a8f03e71844a6c1103692dc/6ad086eb6adf74cfd0674abf",
+        "name": "Greg Agent \u2014 ND desktop companion"
+      }
+    },
+    {
+      "id": "ari:cloud:trello::card/workspace/6a8f03e71844a6c1103692dc/6ad0d8a172d1ca9d26d916b4",
+      "name": "15 A4b Walk across the screen (window glides with running rows, eased, stays on screen)",
+      "description": "## 2026-10-15 \u2014 Greg visual consistency reset (Jason)\n\nKeep completed native traversal. New visual acceptance requires corrected long adult side anatomy and a coherent four-legged gait in both directions, same palette/scale as sitting/rest, no sliding paws, body-length pulses, coat bands or pixelation. Mirroring a row is not sufficient if the source body is wrong. Coordinate sprite root travel with native window travel once, not twice. Reproduce the user-reported movement stripes in the real app and distinguish source art from sampling/frame-rectangle errors.\n\nCanonical follow-up: https://trello.com/c/S8JdeGot\nExtra behaviours: https://trello.com/c/F0816jgq\nNature behaviours: https://trello.com/c/mAM5xYCB\nSpec: assets/heel/anatomy-v2-photo-based/UNIFIED-ART-SPEC.md\nHandoff: handoffs/codex-to-claude-greg-visual-reset-2026-10-15.md\n\nThis update supersedes conflicting earlier art assumptions. Existing completed code/integration evidence remains historical; corrected artwork and native visual acceptance are pending.\n\n---\n\nRust tweens the mascot window along the bottom of the work area (ease in/out, ~60fps timer, stops on any pointer or key activity near it) while the sprite plays running-left/right; direction matches travel. Never leaves the visible area of the current monitor; never over the panel; the docked panel (if it was open) is skipped by A4a rules. Ends in a sit or lie. Pure path planner (start, end, speed, bounds) with tests.\nKnown art flaw: running-left row is greyer (A2) - fix or mirror running-right.\nDONE = real window: trigger via driver; Greg's window position sampled from the OS list moves monotonically across and stays inside bounds; returns/ends where planned; click on him mid-walk stops him.\nEffort: medium (3h).",
+      "url": "https://trello.com/c/shm8WGiy/67-15-a4b-walk-across-the-screen-window-glides-with-running-rows-eased-stays-on-screen",
+      "shortUrl": "https://trello.com/c/shm8WGiy",
+      "closed": false,
+      "complete": false,
+      "position": 140737488601088,
+      "lastActivityAt": "2026-10-15T14:58:04.038Z",
+      "startedAt": null,
+      "due": {
+        "date": null,
+        "complete": false
+      },
+      "listId": "ari:cloud:trello::list/workspace/6a8f03e71844a6c1103692dc/6ad0871dd9b7cc9db38218ed",
+      "boardId": "ari:cloud:trello::board/workspace/6a8f03e71844a6c1103692dc/6ad086eb6adf74cfd0674abf",
+      "labels": [],
+      "labelsHasMore": false,
+      "checklists": [],
+      "checklistsHasMore": false,
+      "members": [],
+      "comments": [
+        {
+          "id": "ari:cloud:trello::action/6ad0e4d9f51a7150561d326f",
+          "text": "A4b DONE \u2014 commit 0f3cfdb. Verified in the real app: native glide moved Greg's window 1296\u2192896 (exactly 400px, monotonic, ease in/out, no overshoot); the `walk` life-command path (hook \u2192 start_walk \u2192 run sprite \u2192 finished) walked 896\u21921320 and turned at the right wall; mid-glide `wake` (touch \u2192 stop_walk) halted him within one frame and he stayed put 3.5s; running pose seen in a screenshot. Added 'Take a walk' to the right-click menu. NOT verified: a real mouse click on Greg mid-walk (no input permission), idle-timer-triggered walks over a long idle stretch, multi-monitor / Retina-scale edge cases, reduced-motion (engine suppresses walks per unit test only).",
+          "date": "2026-10-15T14:36:09.957Z",
+          "author": {
+            "id": "ari:cloud:trello::user/6a8f03e72f1758f6e32bc5a6",
+            "fullName": "Jason",
+            "avatarUrl": "https://trello-members.s3.amazonaws.com/6a8f03e72f1758f6e32bc5a6/9f12f068dba982d637bcb31f0324a632"
+          }
+        }
+      ],
+      "commentsHasMore": false,
+      "list": {
+        "id": "ari:cloud:trello::list/workspace/6a8f03e71844a6c1103692dc/6ad0871dd9b7cc9db38218ed",
+        "name": "Done"
+      },
+      "board": {
+        "id": "ari:cloud:trello::board/workspace/6a8f03e71844a6c1103692dc/6ad086eb6adf74cfd0674abf",
+        "name": "Greg Agent \u2014 ND desktop companion"
+      }
+    },
+    {
+      "id": "ari:cloud:trello::card/workspace/6a8f03e71844a6c1103692dc/6ad0d8a99c9a38a2a9211a6d",
+      "name": "16 A4c Hide = run off screen; Show = run back in (no vanishing) + \"Show Greg\" in tray",
+      "description": "## 2026-10-15 \u2014 Greg visual consistency reset (Jason)\n\nKeep completed hide/show integration history. Replacement entrance/exit poses must use the same accepted A5 model, size, palette and corrected gait as walking/idle, with natural turns and clean frame/loop boundaries. Remaining persistence/launch/quit/reduced-motion work is tracked on 16b; this visual follow-up does not assert those paths are complete.\n\nCanonical follow-up: https://trello.com/c/S8JdeGot\nExtra behaviours: https://trello.com/c/F0816jgq\nNature behaviours: https://trello.com/c/mAM5xYCB\nSpec: assets/heel/anatomy-v2-photo-based/UNIFIED-ART-SPEC.md\nHandoff: handoffs/codex-to-claude-greg-visual-reset-2026-10-15.md\n\nThis update supersedes conflicting earlier art assumptions. Existing completed code/integration evidence remains historical; corrected artwork and native visual acceptance are pending.\n\n---\n\nJason: hiding should not just make him disappear; he runs/walks off screen, and comes back on screen. Hide: run to the nearest screen edge, window hidden after he's fully off; hidden state remembered across restarts. Show: from the tray menu / right-click on the tray / hotkey / app relaunch (second launch) he runs in from the edge back to his home spot. Also: launch = he walks on instead of popping in; quit = he waves then walks off (500ms cap so quit never feels slow). Ideas to consider (cards if wanted): peek from the screen edge when hidden, sleep curled up off-screen corner, greet with a wave on first show of the day, follow-the-cursor look rows while the panel is open.\nDONE = real window: hide -> window position leaves the screen then window hidden; show -> returns to home; state survives restart; reduced motion = instant fade instead.\nEffort: medium (3h). Depends on A4b path planner.",
+      "url": "https://trello.com/c/9p2R66j8/68-16-a4c-hide-run-off-screen-show-run-back-in-no-vanishing-show-greg-in-tray",
+      "shortUrl": "https://trello.com/c/9p2R66j8",
+      "closed": false,
+      "complete": false,
+      "position": 140737488617472,
+      "lastActivityAt": "2026-10-15T14:58:32.723Z",
+      "startedAt": null,
+      "due": {
+        "date": null,
+        "complete": false
+      },
+      "listId": "ari:cloud:trello::list/workspace/6a8f03e71844a6c1103692dc/6ad0871dd9b7cc9db38218ed",
+      "boardId": "ari:cloud:trello::board/workspace/6a8f03e71844a6c1103692dc/6ad086eb6adf74cfd0674abf",
+      "labels": [],
+      "labelsHasMore": false,
+      "checklists": [],
+      "checklistsHasMore": false,
+      "members": [],
+      "comments": [
+        {
+          "id": "ari:cloud:trello::action/6ad0e605719af69163ee15b9",
+          "text": "A4c DONE (hide/show) \u2014 commit 487ab89. Real app: hide ran him off the nearest edge (1300\u21921511, then window hidden); show brought him back in from that edge to exactly where he stood (1503\u21921296); run pose seen mid-entry; stray stop_walk calls during the exit did not strand him. Panel hides at once, Greg runs. Tray 'Show Greg' + right-click 'Hide Greg' + tray/Greg-menu Quit all route through the new appear module. NOT verified: quit's \u2264500ms run-off (code path + duration unit test only), reduced-motion fallback (instant hide/show; no fade, no system toggle), the menu clicks themselves (commands call the same functions), hidden state surviving an app restart (not implemented), launch walk-on (not implemented \u2014 parked), the quit 'wave'. ",
+          "date": "2026-10-15T14:41:09.323Z",
+          "author": {
+            "id": "ari:cloud:trello::user/6a8f03e72f1758f6e32bc5a6",
+            "fullName": "Jason",
+            "avatarUrl": "https://trello-members.s3.amazonaws.com/6a8f03e72f1758f6e32bc5a6/9f12f068dba982d637bcb31f0324a632"
+          }
+        }
+      ],
+      "commentsHasMore": false,
+      "list": {
+        "id": "ari:cloud:trello::list/workspace/6a8f03e71844a6c1103692dc/6ad0871dd9b7cc9db38218ed",
+        "name": "Done"
+      },
+      "board": {
+        "id": "ari:cloud:trello::board/workspace/6a8f03e71844a6c1103692dc/6ad086eb6adf74cfd0674abf",
+        "name": "Greg Agent \u2014 ND desktop companion"
+      }
+    },
+    {
+      "id": "ari:cloud:trello::card/workspace/6a8f03e71844a6c1103692dc/6ad0e61569f0ae8941fe5f37",
+      "name": "16b A4c remainder: hidden state survives restart, launch walk-on, quit wave, reduced-motion fade",
+      "description": "## 2026-10-15 \u2014 Greg visual consistency reset (Jason)\n\nUse the A5 canonical model/template for launch walk-on, quit wave/run-off and re-entry. Same physical size/palette/markings through all action switches; no short body, coat stripes, pixelation or pop in scale. Keep existing \u2264500ms quit budget, persistence and reduced-motion acceptance; final evidence must come from the real window.\n\nCanonical follow-up: https://trello.com/c/S8JdeGot\nExtra behaviours: https://trello.com/c/F0816jgq\nNature behaviours: https://trello.com/c/mAM5xYCB\nSpec: assets/heel/anatomy-v2-photo-based/UNIFIED-ART-SPEC.md\nHandoff: handoffs/codex-to-claude-greg-visual-reset-2026-10-15.md\n\nThis update supersedes conflicting earlier art assumptions. Existing completed code/integration evidence remains historical; corrected artwork and native visual acceptance are pending.\n\n---\n\nLeft over from card 16 (hide/show shipped in 487ab89). (1) Hidden state remembered across restarts: persist 'hidden' + rest x; on launch stay hidden, 'Show Greg' runs him in. (2) Launch = he walks on instead of popping in (needs the webview ready before the run event, or a Rust-only pose fallback). (3) Quit = he waves then walks off, still <=500ms. (4) Reduced motion = short opacity fade instead of an instant hide/show. (5) Real-window verification of quit run-off (\u2264500ms then process gone). DONE = each executed in the real app; restart test uses the detached driver. Effort: small-medium (2h). Not blocking anything.",
+      "url": "https://trello.com/c/SRmF74Zp/78-16b-a4c-remainder-hidden-state-survives-restart-launch-walk-on-quit-wave-reduced-motion-fade",
+      "shortUrl": "https://trello.com/c/SRmF74Zp",
+      "closed": false,
+      "complete": false,
+      "position": 140737488781312,
+      "lastActivityAt": "2026-10-15T15:40:35.899Z",
+      "startedAt": null,
+      "due": {
+        "date": null,
+        "complete": false
+      },
+      "listId": "ari:cloud:trello::list/workspace/6a8f03e71844a6c1103692dc/6ad0871dd9b7cc9db38218ed",
+      "boardId": "ari:cloud:trello::board/workspace/6a8f03e71844a6c1103692dc/6ad086eb6adf74cfd0674abf",
+      "labels": [],
+      "labelsHasMore": false,
+      "checklists": [],
+      "checklistsHasMore": false,
+      "members": [],
+      "comments": [
+        {
+          "id": "ari:cloud:trello::action/6ad0f3f3f9fe06f03a051a39",
+          "text": "CLARIFICATION: 16b's CODE is done (see comment above). The appended 2026-10-15 'visual reset' note says walk-on / quit / re-entry must use the A5 canonical Greg art and have native visual acceptance. That art is not mine to make (A5 is blocked on image generation), so this card's VISUAL acceptance is pending and rides on A5/A6 (v1 list). Moving the card there would hide finished code; keeping it in Done with this note.",
+          "date": "2026-10-15T15:40:35.870Z",
+          "author": {
+            "id": "ari:cloud:trello::user/6a8f03e72f1758f6e32bc5a6",
+            "fullName": "Jason",
+            "avatarUrl": "https://trello-members.s3.amazonaws.com/6a8f03e72f1758f6e32bc5a6/9f12f068dba982d637bcb31f0324a632"
+          }
+        },
+        {
+          "id": "ari:cloud:trello::action/6ad0f3d99072ef57baf4d9b9",
+          "text": "16b DONE \u2014 commit 866a0bb. Real app: (1) hidden state persisted: hide \u2192 relaunch \u2192 he stays hidden, his page still loads, show runs him in from the edge to home (1503\u21921296) and clears the flag; (2) launch walk-on: parked off-screen, runs in to home (1512\u21921296); (3) reduced motion (flag forced the way the page sets it): hide/show with NO travel. Bug found and fixed while testing: reading the window position straight after placing it returned the stale centred spot (he 'rested' at 660), so launch now uses the computed home position. DROPPED on purpose: quit 'wave' (quit must be instant for an ND user; it still runs off within 500 ms). NOT verified: the opacity fade seen on screen (position-only check), the quit run-off timing, the real system 'Reduce motion' toggle (flag forced instead), a launch walk-on on a second monitor.",
+          "date": "2026-10-15T15:40:09.943Z",
+          "author": {
+            "id": "ari:cloud:trello::user/6a8f03e72f1758f6e32bc5a6",
+            "fullName": "Jason",
+            "avatarUrl": "https://trello-members.s3.amazonaws.com/6a8f03e72f1758f6e32bc5a6/9f12f068dba982d637bcb31f0324a632"
+          }
+        }
+      ],
+      "commentsHasMore": false,
+      "list": {
+        "id": "ari:cloud:trello::list/workspace/6a8f03e71844a6c1103692dc/6ad0871dd9b7cc9db38218ed",
+        "name": "Done"
+      },
+      "board": {
+        "id": "ari:cloud:trello::board/workspace/6a8f03e71844a6c1103692dc/6ad086eb6adf74cfd0674abf",
+        "name": "Greg Agent \u2014 ND desktop companion"
+      }
+    },
+    {
+      "id": "ari:cloud:trello::card/workspace/6a8f03e71844a6c1103692dc/6ad0d8b204edfbf4cfb34184",
+      "name": "18 A4d Sleep: lie down, curl up, snore-free zzz; wakes on touch or panel open (needs A3a + dense REST art)",
+      "description": "## 2026-10-15 \u2014 Greg visual consistency reset (Jason)\n\nKeep completed sleep wiring. Rebuild rest/focus/sit/wake art with A5's one physical scale, palette and body model. Curling naturally reduces occupied bounding box; never scale it up to fill the cell. Author sit\u2192lie\u2192curl and wake transitions rather than treating a hold/crossfade as new anatomical in-betweens. Confirm state switches do not change coat colour, skull/torso proportions or ground plane.\n\nCanonical follow-up: https://trello.com/c/S8JdeGot\nExtra behaviours: https://trello.com/c/F0816jgq\nNature behaviours: https://trello.com/c/mAM5xYCB\nSpec: assets/heel/anatomy-v2-photo-based/UNIFIED-ART-SPEC.md\nHandoff: handoffs/codex-to-claude-greg-visual-reset-2026-10-15.md\n\nThis update supersedes conflicting earlier art assumptions. Existing completed code/integration evidence remains historical; corrected artwork and native visual acceptance are pending.\n\n---\n\nUses the smooth-v1 pack (assets/heel/smooth-v1/final: 16 cols x 6 rows, rows idle / listening / focus / nudge / done / rest) via the manifest-driven player (A3a). Sequence: lie down (focus pose) -> curl up (rest) loop; wake = lift head -> sit. No transition art exists (\"direct switches\"): use a short cross-hold (pause 300ms in the lying pose) rather than inventing frames. Triggered by A4a (long idle, e.g. after 10 min) or the right-click \"Go to sleep\"; any interaction wakes him.\nDONE = real window: after the idle threshold (set to 30s by an env override for the test) the rest row plays; opening the panel wakes him; reduced motion = static curled frame.\nEffort: small-medium (2h) once A3a lands.",
+      "url": "https://trello.com/c/lPrh8SBZ/69-18-a4d-sleep-lie-down-curl-up-snore-free-zzz-wakes-on-touch-or-panel-open-needs-a3a-dense-rest-art",
+      "shortUrl": "https://trello.com/c/lPrh8SBZ",
+      "closed": false,
+      "complete": false,
+      "position": 140737488666624,
+      "lastActivityAt": "2026-10-15T14:59:07.805Z",
+      "startedAt": null,
+      "due": {
+        "date": null,
+        "complete": false
+      },
+      "listId": "ari:cloud:trello::list/workspace/6a8f03e71844a6c1103692dc/6ad0871dd9b7cc9db38218ed",
+      "boardId": "ari:cloud:trello::board/workspace/6a8f03e71844a6c1103692dc/6ad086eb6adf74cfd0674abf",
+      "labels": [],
+      "labelsHasMore": false,
+      "checklists": [],
+      "checklistsHasMore": false,
+      "members": [],
+      "comments": [
+        {
+          "id": "ari:cloud:trello::action/6ad0e4eb40b451fd72738555",
+          "text": "A4d DONE \u2014 commit f5d2f03. Nap / Wake up / Quiet mode in the native right-click menu, Greg's activity setting in Settings; nap \u2192 asleep \u2192 wake verified in the real window. NOT verified: a real right-click (menu verified by invoking it programmatically, appears at the pointer); menu item clicks.",
+          "date": "2026-10-15T14:36:27.505Z",
+          "author": {
+            "id": "ari:cloud:trello::user/6a8f03e72f1758f6e32bc5a6",
+            "fullName": "Jason",
+            "avatarUrl": "https://trello-members.s3.amazonaws.com/6a8f03e72f1758f6e32bc5a6/9f12f068dba982d637bcb31f0324a632"
+          }
+        }
+      ],
+      "commentsHasMore": false,
+      "list": {
+        "id": "ari:cloud:trello::list/workspace/6a8f03e71844a6c1103692dc/6ad0871dd9b7cc9db38218ed",
+        "name": "Done"
+      },
+      "board": {
+        "id": "ari:cloud:trello::board/workspace/6a8f03e71844a6c1103692dc/6ad086eb6adf74cfd0674abf",
+        "name": "Greg Agent \u2014 ND desktop companion"
+      }
+    },
+    {
+      "id": "ari:cloud:trello::card/workspace/6a8f03e71844a6c1103692dc/6ad0c812e69df5f465bcb294",
+      "name": "V1-11 Greg dense six-state set (Rest, quiet Done, Focus) + transitions",
+      "description": "## 2026-10-15 \u2014 Greg visual consistency reset (Jason)\n\nUnify six-state art with the full Dot repertoire and A6/A7 under A5's common master/template. Current 96 timed cells remain review drafts and are not a complete consistent replacement. Remove olive/warm palette drift and textured bands; match physical head/body scale across idle/listening/focus/nudge/done/rest. Include authored transitions and real-app loop/seam checks. Runtime may use multiple atlas pages, all exported from the exact same template.\n\nCanonical follow-up: https://trello.com/c/S8JdeGot\nExtra behaviours: https://trello.com/c/F0816jgq\nNature behaviours: https://trello.com/c/mAM5xYCB\nSpec: assets/heel/anatomy-v2-photo-based/UNIFIED-ART-SPEC.md\nHandoff: handoffs/codex-to-claude-greg-visual-reset-2026-10-15.md\n\nThis update supersedes conflicting earlier art assumptions. Existing completed code/integration evidence remains historical; corrected artwork and native visual acceptance are pending.\n\n---\n\nOPTIONAL extension after A1. Coexists with the Dot set; never replaces it.\n\nASSETS: assets/heel/smooth-v1/final/heel-smooth.png (3072x1248, 16 cols x 6 rows, 192x208 cells; rows: idle, listening, focus, nudge, done, rest; 96 timed cells). Exact per-frame timings in heel-animations.json: keep the quiet holds, no uniform frame rate. Player: smooth-v1/final/preview.html. Pack: smooth-v1/greg-heel-animation-pack.zip (18.8 MB).\n\nWHY: the Dot sheet has no curled-up Rest (needed for Off / low-capacity mode, see V1-7) and its Done is a jump; the dense Done is a quiet contented wag, better for a calm companion.\n\nWORK: separate atlas definition for the 16-col geometry (never interpret dense frames with Dot geometry); map Rest->Off/Low mode, Done->completion, Focus->focus session (S6); consider authored transition clips (sit->lie, wake). Dense Done is 8 drawings forward+reversed (disclosed). Focus palette is slightly olive vs Idle: match to grey.\n\nVERIFY in the real app: reduced motion, loop boundaries, state switches, performance. Do not call it smooth from frame count alone.",
+      "url": "https://trello.com/c/TP6xHJpJ/38-v1-11-greg-dense-six-state-set-rest-quiet-done-focus-transitions",
+      "shortUrl": "https://trello.com/c/TP6xHJpJ",
+      "closed": false,
+      "complete": false,
+      "position": 10,
+      "lastActivityAt": "2026-10-15T14:59:32.741Z",
+      "startedAt": null,
+      "due": {
+        "date": null,
+        "complete": false
+      },
+      "listId": "ari:cloud:trello::list/workspace/6a8f03e71844a6c1103692dc/6ad0871896d2c66af249f9fe",
+      "boardId": "ari:cloud:trello::board/workspace/6a8f03e71844a6c1103692dc/6ad086eb6adf74cfd0674abf",
+      "labels": [],
+      "labelsHasMore": false,
+      "checklists": [],
+      "checklistsHasMore": false,
+      "members": [],
+      "comments": [],
+      "commentsHasMore": false,
+      "list": {
+        "id": "ari:cloud:trello::list/workspace/6a8f03e71844a6c1103692dc/6ad0871896d2c66af249f9fe",
+        "name": "v1 \u2014 After real use"
+      },
+      "board": {
+        "id": "ari:cloud:trello::board/workspace/6a8f03e71844a6c1103692dc/6ad086eb6adf74cfd0674abf",
+        "name": "Greg Agent \u2014 ND desktop companion"
+      }
+    },
+    {
+      "id": "ari:cloud:trello::card/workspace/6a8f03e71844a6c1103692dc/6ad0ace8159f65e1cc66c840",
+      "name": "V1-8 Full Settings tab: privacy, quiet, capacity, mascot, skills",
+      "description": "## 2026-10-15 \u2014 Greg visual consistency reset (Jason)\n\nMascot settings follow A5/A6/A7: Calm/Lively/Off and quiet/reduced-motion controls apply to all optional behaviours, including future sniff/grass/ball/stick actions. Optional toilet gags require explicit enable/manual trigger and cooldowns. Size control applies one logical/world scale consistently to every animation and hit region; it must not rescale each clip independently.\n\nCanonical follow-up: https://trello.com/c/S8JdeGot\nExtra behaviours: https://trello.com/c/F0816jgq\nNature behaviours: https://trello.com/c/mAM5xYCB\nSpec: assets/heel/anatomy-v2-photo-based/UNIFIED-ART-SPEC.md\nHandoff: handoffs/codex-to-claude-greg-visual-reset-2026-10-15.md\n\nThis update supersedes conflicting earlier art assumptions. Existing completed code/integration evidence remains historical; corrected artwork and native visual acceptance are pending.\n\n---\n\nEach group ships with its feature (Quiet with S8, Privacy with S7). v1 adds: Capacity (Normal/Low/Off), Mascot (character, size, reset position, launch at login, hotkey), Skills (list vendored nd-skills, on/off, read text), Data (location, export, delete all). See docs/ND-SPEC.md > Settings tab.",
+      "url": "https://trello.com/c/CBYfH3bq/33-v1-8-full-settings-tab-privacy-quiet-capacity-mascot-skills",
+      "shortUrl": "https://trello.com/c/CBYfH3bq",
+      "closed": false,
+      "complete": false,
+      "position": 7,
+      "lastActivityAt": "2026-10-15T14:59:52.126Z",
+      "startedAt": null,
+      "due": {
+        "date": null,
+        "complete": false
+      },
+      "listId": "ari:cloud:trello::list/workspace/6a8f03e71844a6c1103692dc/6ad0871896d2c66af249f9fe",
+      "boardId": "ari:cloud:trello::board/workspace/6a8f03e71844a6c1103692dc/6ad086eb6adf74cfd0674abf",
+      "labels": [],
+      "labelsHasMore": false,
+      "checklists": [],
+      "checklistsHasMore": false,
+      "members": [],
+      "comments": [],
+      "commentsHasMore": false,
+      "list": {
+        "id": "ari:cloud:trello::list/workspace/6a8f03e71844a6c1103692dc/6ad0871896d2c66af249f9fe",
+        "name": "v1 \u2014 After real use"
+      },
+      "board": {
+        "id": "ari:cloud:trello::board/workspace/6a8f03e71844a6c1103692dc/6ad086eb6adf74cfd0674abf",
+        "name": "Greg Agent \u2014 ND desktop companion"
+      }
+    },
+    {
+      "id": "ari:cloud:trello::card/workspace/6a8f03e71844a6c1103692dc/6ad087c6872ee7bbc8ca2563",
+      "name": "V1-7 Capacity modes: Normal / Low / Off",
+      "description": "## 2026-10-15 \u2014 Greg visual consistency reset (Jason)\n\nKeep user-controlled capacity; never infer it. Off suppresses optional behaviours. Low/Focus preserve quiet static/rest presence without ambient roaming, ball/stick/grass actions or toilet gags. Rest uses the same A5 physical scale/palette as the other poses, naturally occupying less space when curled. OS reduced-motion is respected independently.\n\nCanonical follow-up: https://trello.com/c/S8JdeGot\nExtra behaviours: https://trello.com/c/F0816jgq\nNature behaviours: https://trello.com/c/mAM5xYCB\nSpec: assets/heel/anatomy-v2-photo-based/UNIFIED-ART-SPEC.md\nHandoff: handoffs/codex-to-claude-greg-visual-reset-2026-10-15.md\n\nThis update supersedes conflicting earlier art assumptions. Existing completed code/integration evidence remains historical; corrected artwork and native visual acceptance are pending.\n\n---\n\nUser-set (never inferred from behavior \u2014 nd router guardrail). Low = functional-minimums: one task, no chips, no inbox, shortest copy. Off = nothing optional. Quiet body-doubling presence (\"Focus\" chip in the reference) lives here.",
+      "url": "https://trello.com/c/U9x10IUT/23-v1-7-capacity-modes-normal-low-off",
+      "shortUrl": "https://trello.com/c/U9x10IUT",
+      "closed": false,
+      "complete": false,
+      "position": 6.5,
+      "lastActivityAt": "2026-10-15T15:00:44.970Z",
+      "startedAt": null,
+      "due": {
+        "date": null,
+        "complete": false
+      },
+      "listId": "ari:cloud:trello::list/workspace/6a8f03e71844a6c1103692dc/6ad0871896d2c66af249f9fe",
+      "boardId": "ari:cloud:trello::board/workspace/6a8f03e71844a6c1103692dc/6ad086eb6adf74cfd0674abf",
+      "labels": [],
+      "labelsHasMore": false,
+      "checklists": [],
+      "checklistsHasMore": false,
+      "members": [],
+      "comments": [],
+      "commentsHasMore": false,
+      "list": {
+        "id": "ari:cloud:trello::list/workspace/6a8f03e71844a6c1103692dc/6ad0871896d2c66af249f9fe",
+        "name": "v1 \u2014 After real use"
+      },
+      "board": {
+        "id": "ari:cloud:trello::board/workspace/6a8f03e71844a6c1103692dc/6ad086eb6adf74cfd0674abf",
+        "name": "Greg Agent \u2014 ND desktop companion"
+      }
+    },
+    {
+      "id": "ari:cloud:trello::card/workspace/6a8f03e71844a6c1103692dc/6ad0875a9e38e61b96ea2c64",
+      "name": "D4 Interrupt policy: when may it speak? (default quiet)",
+      "description": "## 2026-10-15 \u2014 Greg visual consistency reset (Jason)\n\nAnimation is also an interruption channel: apply quiet/default-off optional-motion rules to A6/A7. Sniffing, pacing, ball/stick play and grass eating must not distract during focus/typing/panel use. Toilet gags are optional manual/opt-in one-shots; real errors retain clear actionable text. No sounds, sparkles or repetitive attention seeking.\n\nCanonical follow-up: https://trello.com/c/S8JdeGot\nExtra behaviours: https://trello.com/c/F0816jgq\nNature behaviours: https://trello.com/c/mAM5xYCB\nSpec: assets/heel/anatomy-v2-photo-based/UNIFIED-ART-SPEC.md\nHandoff: handoffs/codex-to-claude-greg-visual-reset-2026-10-15.md\n\nThis update supersedes conflicting earlier art assumptions. Existing completed code/integration evidence remains historical; corrected artwork and native visual acceptance are pending.\n\n---\n\nAutism/ADHD tension: nudges help re-entry but interruptions cost a lot (context switch, sensory). Proposed defaults:\n- Silent by default; mascot shows a passive badge, no sound, no popups.\n- It speaks only at: (a) user-set time-box ends, (b) declared-goal drift after N min (v1), (c) user opens it.\n- Interrupt budget: max 3/day, user-adjustable; \"quiet hours\" + \"do not disturb\" toggle one click.\n- Transition warnings (10/5/1 min) opt-in.\nDecide: default budget number and whether drift nudges are on by default.",
+      "url": "https://trello.com/c/iOuUhWRQ/4-d4-interrupt-policy-when-may-it-speak-default-quiet",
+      "shortUrl": "https://trello.com/c/iOuUhWRQ",
+      "closed": false,
+      "complete": false,
+      "position": 5,
+      "lastActivityAt": "2026-10-15T15:48:05.973Z",
+      "startedAt": null,
+      "due": {
+        "date": null,
+        "complete": false
+      },
+      "listId": "ari:cloud:trello::list/workspace/6a8f03e71844a6c1103692dc/6ad0871dd9b7cc9db38218ed",
+      "boardId": "ari:cloud:trello::board/workspace/6a8f03e71844a6c1103692dc/6ad086eb6adf74cfd0674abf",
+      "labels": [],
+      "labelsHasMore": false,
+      "checklists": [],
+      "checklistsHasMore": false,
+      "members": [],
+      "comments": [],
+      "commentsHasMore": false,
+      "list": {
+        "id": "ari:cloud:trello::list/workspace/6a8f03e71844a6c1103692dc/6ad0871dd9b7cc9db38218ed",
+        "name": "Done"
+      },
+      "board": {
+        "id": "ari:cloud:trello::board/workspace/6a8f03e71844a6c1103692dc/6ad086eb6adf74cfd0674abf",
+        "name": "Greg Agent \u2014 ND desktop companion"
+      }
+    },
+    {
+      "id": "ari:cloud:trello::card/workspace/6a8f03e71844a6c1103692dc/6ad0878adc4c7f684e05105c",
+      "name": "S8 Interrupt budget + quiet mode + one-click off",
+      "description": "## 2026-10-15 \u2014 Greg visual consistency reset (Jason)\n\nApply quiet mode, one-click Off and interrupt guards to every new A6/A7 animation, not only speech. Stop optional roaming during focus, typing and panel interaction; allow a stable held/rest pose for reduced motion. Do not repeatedly trigger error/toilet gags, and clear props on interruption/exit.\n\nCanonical follow-up: https://trello.com/c/S8JdeGot\nExtra behaviours: https://trello.com/c/F0816jgq\nNature behaviours: https://trello.com/c/mAM5xYCB\nSpec: assets/heel/anatomy-v2-photo-based/UNIFIED-ART-SPEC.md\nHandoff: handoffs/codex-to-claude-greg-visual-reset-2026-10-15.md\n\nThis update supersedes conflicting earlier art assumptions. Existing completed code/integration evidence remains historical; corrected artwork and native visual acceptance are pending.\n\n---\n\nImplements D4. Counter persisted; mascot never speaks past budget; \"Off\" mode removes all optional scaffolding (mirrors /nd off). Copy rules: no shame, no streaks, never-miss-twice recovery wording (biz: atomic-habits/never-miss-twice).",
+      "url": "https://trello.com/c/miLoeRCa/15-s8-interrupt-budget-quiet-mode-one-click-off",
+      "shortUrl": "https://trello.com/c/miLoeRCa",
+      "closed": false,
+      "complete": false,
+      "position": 9,
+      "lastActivityAt": "2026-10-15T15:02:06.658Z",
+      "startedAt": null,
+      "due": {
+        "date": null,
+        "complete": false
+      },
+      "listId": "ari:cloud:trello::list/workspace/6a8f03e71844a6c1103692dc/6ad0871dd9b7cc9db38218ed",
+      "boardId": "ari:cloud:trello::board/workspace/6a8f03e71844a6c1103692dc/6ad086eb6adf74cfd0674abf",
+      "labels": [],
+      "labelsHasMore": false,
+      "checklists": [],
+      "checklistsHasMore": false,
+      "members": [],
+      "comments": [
+        {
+          "id": "ari:cloud:trello::action/6ad0e93aebc0474cb7465dc7",
+          "text": "S8 DONE (budget + Off) \u2014 commit b1d2952. Helper-owned budget: 3 nudges per local day, each reason once per day, persisted in the settings table (no migration), corrupt row \u2192 fresh day. Real app: nudge spend observed at due time for two boxes (used 1 \u2192 2), third filled, a 4th spend refused with why='budget'. Off mode: no focus pose, no nudge (presence unit-tested; Off already in the right-click menu from A4d). Copy: no streaks, no shame, check-in has no wrong answer. NOT verified: Greg's window actually withholding a 4th nudge (indistinguishable from outside: count stays 3 either way), Off mode in the live app with a running box, the daily limit as a user setting (constant for now \u2014 DECISIONS), quiet hours / sound (sound is simply absent), never-miss-twice recovery wording (no streak surface exists yet to attach it to).",
+          "date": "2026-10-15T14:54:50.121Z",
+          "author": {
+            "id": "ari:cloud:trello::user/6a8f03e72f1758f6e32bc5a6",
+            "fullName": "Jason",
+            "avatarUrl": "https://trello-members.s3.amazonaws.com/6a8f03e72f1758f6e32bc5a6/9f12f068dba982d637bcb31f0324a632"
+          }
+        }
+      ],
+      "commentsHasMore": false,
+      "list": {
+        "id": "ari:cloud:trello::list/workspace/6a8f03e71844a6c1103692dc/6ad0871dd9b7cc9db38218ed",
+        "name": "Done"
+      },
+      "board": {
+        "id": "ari:cloud:trello::board/workspace/6a8f03e71844a6c1103692dc/6ad086eb6adf74cfd0674abf",
+        "name": "Greg Agent \u2014 ND desktop companion"
+      }
+    },
+    {
+      "id": "ari:cloud:trello::card/workspace/6a8f03e71844a6c1103692dc/6ad0d891b5cb85e92a67eecb",
+      "name": "13 R1 Right-click menu on Greg (native): Open / Settings / Hide / Sleep / Walk / Quit",
+      "description": "## 2026-10-15 \u2014 Greg visual consistency reset (Jason)\n\nKeep the native menu Done. Future manual previews/actions for A6/A7 should use a restrained labelled submenu if needed, separate from scheduler defaults. One-shot actions return to the correct idle/rest state and clean up props; interruption/Hide/Quit remains responsive. All actions use A5's accepted model and scale.\n\nCanonical follow-up: https://trello.com/c/S8JdeGot\nExtra behaviours: https://trello.com/c/F0816jgq\nNature behaviours: https://trello.com/c/mAM5xYCB\nSpec: assets/heel/anatomy-v2-photo-based/UNIFIED-ART-SPEC.md\nHandoff: handoffs/codex-to-claude-greg-visual-reset-2026-10-15.md\n\nThis update supersedes conflicting earlier art assumptions. Existing completed code/integration evidence remains historical; corrected artwork and native visual acceptance are pending.\n\n---\n\nToday right-click is blocked. Proposed menu (Jason: \"figure out what it should be\"; quit + settings + hide required):\n  Open Heel  (or Close Heel when open)\n  Settings\u2026\n  \u2500\n  Go to sleep  / Wake up\n  Take a walk   (walks across the screen and back, A4b)\n  Quiet mode (no wandering, no walking, no sound)   [check mark]\n  \u2500\n  Hide Greg  (he runs off screen, A4c)   /  Show Greg (tray menu has it too)\n  \u2500\n  Quit Heel\nNative Tauri menu popped by Rust on the webview's contextmenu event (invoke `show_mascot_menu`), reuses open_settings / toggle_panel; items that depend on A4 behaviours are added as those land (menu built from a pure list so it is unit-testable).\nDONE = real window: menu appears at the pointer on right-click (driver triggers the same command), each item calls its handler; quit exits; hide/show round-trips. Click on a menu item itself unverifiable without input.\nEffort: medium (2.5h).",
+      "url": "https://trello.com/c/UVxP7KV5/65-13-r1-right-click-menu-on-greg-native-open-settings-hide-sleep-walk-quit",
+      "shortUrl": "https://trello.com/c/UVxP7KV5",
+      "closed": false,
+      "complete": false,
+      "position": 2,
+      "lastActivityAt": "2026-10-15T15:02:52.408Z",
+      "startedAt": null,
+      "due": {
+        "date": null,
+        "complete": false
+      },
+      "listId": "ari:cloud:trello::list/workspace/6a8f03e71844a6c1103692dc/6ad0871dd9b7cc9db38218ed",
+      "boardId": "ari:cloud:trello::board/workspace/6a8f03e71844a6c1103692dc/6ad086eb6adf74cfd0674abf",
+      "labels": [],
+      "labelsHasMore": false,
+      "checklists": [],
+      "checklistsHasMore": false,
+      "members": [],
+      "comments": [],
+      "commentsHasMore": false,
+      "list": {
+        "id": "ari:cloud:trello::list/workspace/6a8f03e71844a6c1103692dc/6ad0871dd9b7cc9db38218ed",
+        "name": "Done"
+      },
+      "board": {
+        "id": "ari:cloud:trello::board/workspace/6a8f03e71844a6c1103692dc/6ad086eb6adf74cfd0674abf",
+        "name": "Greg Agent \u2014 ND desktop companion"
+      }
+    },
+    {
+      "id": "ari:cloud:trello::card/workspace/6a8f03e71844a6c1103692dc/6ad0d5504c5e640b55925318",
+      "name": "21 F9 Keyboard / screen-reader / reduced-motion pass (keyboard + contrast DONE 2026-10-15; rest after D7)",
+      "description": "## 2026-10-15 \u2014 Greg visual consistency reset (Jason)\n\nInclude every A5/A6/A7 action, transition and roam mode in real-window reduced-motion QA: held meaningful pose, no auto pacing/play/grass/toilet loops. Controls remain keyboard/screen-reader usable; do not announce every sprite frame. Visual acceptance includes 128px/native/Retina scale, light/dark, no stripe/row bleed, pixelation, clipping, palette or scale jumps. Source-only tests do not establish the user-reported native defect is fixed.\n\nCanonical follow-up: https://trello.com/c/S8JdeGot\nExtra behaviours: https://trello.com/c/F0816jgq\nNature behaviours: https://trello.com/c/mAM5xYCB\nSpec: assets/heel/anatomy-v2-photo-based/UNIFIED-ART-SPEC.md\nHandoff: handoffs/codex-to-claude-greg-visual-reset-2026-10-15.md\n\nThis update supersedes conflicting earlier art assumptions. Existing completed code/integration evidence remains historical; corrected artwork and native visual acceptance are pending.\n\n---\n\nPROGRESS 2026-10-15: keyboard walk done in the browser pane with real key events: textarea focused on open; Enter sends; Tab order Close/chip -> Now checkbox -> conversation (focusable) -> receipts summary -> Jump to latest -> drawer -> Plan -> Stuck -> Park it -> ask box -> Send; every stop shows a focus outline; no trap. FINDING: placeholder contrast 2.98:1 (fails AA) - fixed by D3 (Radix TextArea). All other pairs measured >= 4.14:1 (UI line) / >= 7.5:1 (text).\nREMAINING: Esc/Space on Radix components after D3-D5; reduced motion (chevron, scroll, mascot) after D7; VoiceOver cannot be driven here - the accessibility tree is reviewed instead and that limit is stated.\nDONE = D7's contrast table + tree names recorded; no focus trap; Esc behaviour confirmed.\nEffort left: small (1h).",
+      "url": "https://trello.com/c/bkJrGUrA/52-21-f9-keyboard-screen-reader-reduced-motion-pass-keyboard-contrast-done-2026-10-15-rest-after-d7",
+      "shortUrl": "https://trello.com/c/bkJrGUrA",
+      "closed": false,
+      "complete": false,
+      "position": 140737488715776,
+      "lastActivityAt": "2026-10-15T15:43:05.063Z",
+      "startedAt": null,
+      "due": {
+        "date": null,
+        "complete": false
+      },
+      "listId": "ari:cloud:trello::list/workspace/6a8f03e71844a6c1103692dc/6ad0d7ed5320127c04c18ab3",
+      "boardId": "ari:cloud:trello::board/workspace/6a8f03e71844a6c1103692dc/6ad086eb6adf74cfd0674abf",
+      "labels": [],
+      "labelsHasMore": false,
+      "checklists": [],
+      "checklistsHasMore": false,
+      "members": [],
+      "comments": [
+        {
+          "id": "ari:cloud:trello::action/6ad0f47c6e0fa14507ef690e",
+          "text": "F9 DONE except VoiceOver \u2014 Esc fix committed (see git log 'fix(F9)'). Executed in the real panel: with the model select confirmed open (screenshot), Esc #1 kept the panel, Esc #2 closed it. Keyboard walk + contrast were done earlier (D7). Reduced motion: audited, nothing custom to fix \u2014 Radix Themes puts its animations behind no-preference, and our only transition uses a token that goes to 0 under reduce. NOT verified: VoiceOver (I cannot drive it \u2014 needs Jason, 10 minutes: open panel, Tab through, listen for labels on Now strip, check-in, Stop/Send); Esc fixed-vs-unfixed comparison (not run unfixed); the real system 'Reduce motion' toggle (not flipped).",
+          "date": "2026-10-15T15:42:52.862Z",
+          "author": {
+            "id": "ari:cloud:trello::user/6a8f03e72f1758f6e32bc5a6",
+            "fullName": "Jason",
+            "avatarUrl": "https://trello-members.s3.amazonaws.com/6a8f03e72f1758f6e32bc5a6/9f12f068dba982d637bcb31f0324a632"
+          }
+        }
+      ],
+      "commentsHasMore": false,
+      "list": {
+        "id": "ari:cloud:trello::list/workspace/6a8f03e71844a6c1103692dc/6ad0d7ed5320127c04c18ab3",
+        "name": "\u26d4 Blocked / needs Jason"
+      },
+      "board": {
+        "id": "ari:cloud:trello::board/workspace/6a8f03e71844a6c1103692dc/6ad086eb6adf74cfd0674abf",
+        "name": "Greg Agent \u2014 ND desktop companion"
+      }
+    },
+    {
+      "id": "ari:cloud:trello::card/workspace/6a8f03e71844a6c1103692dc/6ad0e8d1f93288575b28671e",
+      "name": "A5 Greg visual reset: one measured master, unified palette/scale + stripe/pixelation QA",
+      "description": "BLOCKING VISUAL ACCEPTANCE \u2014 Jason, 2026-10-15. Greg changes colour, design and proportions between animations; moving causes apparent stripes and pixelation. Beta must use the best consistent set possible.\n\nDECISION: one canonical photo-based character master, measured template, locked palette/markings/stroke, stable world scale and manifest for ALL animations. One source of truth is mandatory. Runtime may use one atlas or multiple bounded atlas pages exported from the SAME template; making one huge PNG alone does not fix inconsistent drawings.\n\nREAD: assets/heel/anatomy-v2-photo-based/UNIFIED-ART-SPEC.md, template.json, REFERENCES.md; handoffs/codex-to-claude-greg-visual-reset-2026-10-15.md (saved).\n\nPHOTO EVIDENCE: Google Photos Greg search surveyed to oldest result; 1,567 distinct search-result links encountered, including duplicates/videos/artwork/unrelated matches (not an exhaustive verified photo count). 21 selected Google Photos references plus 11 local Greg images saved/indexed privately. All angles required: front, both profiles, front/rear three-quarter, rear, standing, sitting, lying, curled and movement. Longer adult torso/back, believable shoulders/elbows/stifles/hocks, less exaggerated jowls; grey/charcoal coat, dark nose/muzzle, actual irregular chest marking. Subtle natural fur-covered male sheath where visible. Existing short side-view art rejected.\n\nTEMPLATE: provisional 192x208 logical frame, baseline y196, root (96,196), safe rect x12..180/y12..196; 2x source proposed. Final accepted landmarks and palette must be frozen on the reviewed master. Constant physical size across poses; no automatic per-frame bounding-box normalization. Transparent lossless PNG; no texture/coat stripes or green fringe. Page count may change, geometry/scale must not.\n\nSOURCE CHECK EXECUTED: current code already manifest-driven (A3a Done). Current Dot/smooth PNG dimensions match manifests; zero non-transparent pixels on cell borders in both. This does not reproduce or fix native stripes/pixelation. CLAUDE: reproduce exact current defect in real window; inspect source frame vs displayed frame, density, wrong rect/row selection, fractional sampling, scaling/adjacent cells, image-rendering and compression. Do not assume art-only or renderer-only root cause. Codex has not changed app code.\n\nDONE: corrected multi-angle master and walk proof visually checked; all clips regenerated/normalized from it; all actions/transition/loop seams observed at 128px and actual native/Retina size on light/dark; no colour/size pulses, anatomy drift, stripes, pixelation, clipping or prop jitter; reduced-motion and Off verified; screenshots/video plus exact asset hash/manifest recorded. Frame counts and passing structural tests alone are insufficient.\n\nFuture AI video tooling is optional, not connected/purchased; any output still uses the same master and temporal/alpha/scale QA. Preserve old packs and compatible fallback until replacement acceptance.\n\nSESSION OUTPUT \u2014 2026-10-15:\nSaved handoff: handoffs/codex-to-claude-greg-visual-reset-2026-10-15.md.\nNew candidate: assets/heel/anatomy-v2-photo-based/final/multi-angle-study-v2-flat.png (nine static views, RGBA 1254x1254; SHA256 6ae159026106304e22e783fc02c6022b4bfa854c426629c6d60a586fe7fab9d6).\nThis is an UNAPPROVED MODEL STUDY, not a calibrated atlas or rebuilt animation set. Initial study was too patchy; v2 is flatter but still needs exact palette/landmark/world-scale review and transparent clearance/edge cleanup (33 non-transparent outer-border pixels). Do not auto-fit poses into cells or treat the study's layout as runtime frame rectangles. Existing art remains preserved. Full rebuild, corrected walk proof and native defect reproduction/fix are pending.\nTrello read-back verification: 17 related existing card descriptions updated and 3 new cards created. Completed platform statuses retained. Audit: assets/heel/anatomy-v2-photo-based/trello-update-audit.json.",
+      "url": "https://trello.com/c/S8JdeGot/79-a5-greg-visual-reset-one-measured-master-unified-palette-scale-stripe-pixelation-qa",
+      "shortUrl": "https://trello.com/c/S8JdeGot",
+      "closed": false,
+      "complete": false,
+      "position": 0.5,
+      "lastActivityAt": "2026-10-15T15:14:09.402Z",
+      "startedAt": null,
+      "due": {
+        "date": null,
+        "complete": false
+      },
+      "listId": "ari:cloud:trello::list/workspace/6a8f03e71844a6c1103692dc/6ad0871896d2c66af249f9fe",
+      "boardId": "ari:cloud:trello::board/workspace/6a8f03e71844a6c1103692dc/6ad086eb6adf74cfd0674abf",
+      "labels": [],
+      "labelsHasMore": false,
+      "checklists": [],
+      "checklistsHasMore": false,
+      "members": [],
+      "comments": [],
+      "commentsHasMore": false,
+      "list": {
+        "id": "ari:cloud:trello::list/workspace/6a8f03e71844a6c1103692dc/6ad0871896d2c66af249f9fe",
+        "name": "v1 \u2014 After real use"
+      },
+      "board": {
+        "id": "ari:cloud:trello::board/workspace/6a8f03e71844a6c1103692dc/6ad086eb6adf74cfd0674abf",
+        "name": "Greg Agent \u2014 ND desktop companion"
+      }
+    },
+    {
+      "id": "ari:cloud:trello::card/workspace/6a8f03e71844a6c1103692dc/6ad0e8dd8952694d74955b80",
+      "name": "A6 Greg extra behaviours: integrate 12 clips after unified anatomy and visual reset",
+      "description": "Jason requested pacing back/forth, ball play, offering/fetching ball, play bow, chewing stick, ear scratch, yawn, sniff/search, stretch, paw-over-face error, and optional non-graphic poop/pee gags.\n\nCURRENT ART: assets/heel/extra-v1/final has 12 review-draft clips, 262 timed cells (195 selected generated source drawings, derived repeats/mirrors disclosed). This is NOT a visually accepted replacement: side anatomy was rejected and palette/proportions must be rebuilt through A5/A3b's master. Existing ZIP predates the rejection notice; do not mistake it for approved current art. Handoff: handoffs/codex-to-claude-extra-behaviours-2026-10-15.md.\n\nUse the same fixed physical scale, palette, markings and anchors for every extra. Pacing must use believable four-legged gait and natural turns, with no foot sliding or torso shortening. Avoid clipping root travel inside a 192px window: coordinate native window motion or an explicit stage, not double translation. Ball/stick contact must remain attached to mouth/paw correctly; props clear at completion.\n\nCalm/Lively/Off and reduced motion govern scheduling; no ambient play while typing, panel is open, focus active or Off. Toilet gags are optional manual/opt-in one-shots, non-graphic, never the only explanation of a real error; show actionable error text. All props removed on exit; cooldowns prevent repetitive distraction.\n\nDONE: all 12 corrected clips packaged under the shared atlas manifest, played and interrupted in the real app; loop/one-shot and state entry/exit checked; anchors/scale/palette consistent with core and nature actions; optional gags disabled unless explicitly enabled.",
+      "url": "https://trello.com/c/F0816jgq/80-a6-greg-extra-behaviours-integrate-12-clips-after-unified-anatomy-and-visual-reset",
+      "shortUrl": "https://trello.com/c/F0816jgq",
+      "closed": false,
+      "complete": false,
+      "position": 16395,
+      "lastActivityAt": "2026-10-15T14:53:17.729Z",
+      "startedAt": null,
+      "due": {
+        "date": null,
+        "complete": false
+      },
+      "listId": "ari:cloud:trello::list/workspace/6a8f03e71844a6c1103692dc/6ad0871896d2c66af249f9fe",
+      "boardId": "ari:cloud:trello::board/workspace/6a8f03e71844a6c1103692dc/6ad086eb6adf74cfd0674abf",
+      "labels": [],
+      "labelsHasMore": false,
+      "checklists": [],
+      "checklistsHasMore": false,
+      "members": [],
+      "comments": [],
+      "commentsHasMore": false,
+      "list": {
+        "id": "ari:cloud:trello::list/workspace/6a8f03e71844a6c1103692dc/6ad0871896d2c66af249f9fe",
+        "name": "v1 \u2014 After real use"
+      },
+      "board": {
+        "id": "ari:cloud:trello::board/workspace/6a8f03e71844a6c1103692dc/6ad086eb6adf74cfd0674abf",
+        "name": "Greg Agent \u2014 ND desktop companion"
+      }
+    },
+    {
+      "id": "ari:cloud:trello::card/workspace/6a8f03e71844a6c1103692dc/6ad0e8e77c9b4e18c5268d3f",
+      "name": "A7 Greg nature behaviours: sniff trail, nibble grass, pick up and carry sticks",
+      "description": "Jason's requested natural dog behaviours: nose-down sniffing while walking, nibbling grass, lowering head to pick up a stick, then carrying the stick. Use actual canine poses and believable mouth/ground contact.\n\nCURRENT ART: assets/heel/nature-v1 contains provisional source strips for sniff-trail (18), graze-grass (16), pick-up-stick (16), carry-stick (attempted 18). All remain ANATOMY-UNAPPROVED. Carry source has merged bodies/props and failed extraction (4 suspicious body groups), so it is not a usable 18-frame delivered animation. No nature final atlas or accepted pack exists.\n\nDEPENDENCY: A5 unified photo-based master and measurements; A3b authoring; same palette, skull/torso/limbs/size/ground baseline across core, extras and nature. Body must not shorten to fit cells. Avoid detached tails, back nubs, changing sticks, hovering grass or paw/ground sliding. Preserve calm natural timing and adequate authored in-betweens; show entry and exit.\n\nSeparate manual preview/one-shot triggers from infrequent Calm/Lively scheduling. Off, focus, typing, panel use and reduced motion suppress optional roaming. Props stay within scene bounds and clear on exit.\n\nDONE: four coherent corrected clips with actual frame counts/timings/provenance, source references, transparent atlas page/rects, contact sheets and real app playback evidence. No completion claim from generated source strips alone.",
+      "url": "https://trello.com/c/mAM5xYCB/81-a7-greg-nature-behaviours-sniff-trail-nibble-grass-pick-up-and-carry-sticks",
+      "shortUrl": "https://trello.com/c/mAM5xYCB",
+      "closed": false,
+      "complete": false,
+      "position": 32779,
+      "lastActivityAt": "2026-10-15T14:53:27.095Z",
+      "startedAt": null,
+      "due": {
+        "date": null,
+        "complete": false
+      },
+      "listId": "ari:cloud:trello::list/workspace/6a8f03e71844a6c1103692dc/6ad0871896d2c66af249f9fe",
+      "boardId": "ari:cloud:trello::board/workspace/6a8f03e71844a6c1103692dc/6ad086eb6adf74cfd0674abf",
+      "labels": [],
+      "labelsHasMore": false,
+      "checklists": [],
+      "checklistsHasMore": false,
+      "members": [],
+      "comments": [],
+      "commentsHasMore": false,
+      "list": {
+        "id": "ari:cloud:trello::list/workspace/6a8f03e71844a6c1103692dc/6ad0871896d2c66af249f9fe",
+        "name": "v1 \u2014 After real use"
+      },
+      "board": {
+        "id": "ari:cloud:trello::board/workspace/6a8f03e71844a6c1103692dc/6ad086eb6adf74cfd0674abf",
+        "name": "Greg Agent \u2014 ND desktop companion"
+      }
+    }
+  ],
+  "updates": [
+    {
+      "id": "ari:cloud:trello::card/workspace/6a8f03e71844a6c1103692dc/6ad0875b651ed3ebde8e641e",
+      "previousName": "D5 Mascot art (name decided: Heel)",
+      "name": "D5 Mascot art (name decided: Heel)",
+      "description": "LATEST ART UPDATE \u2014 2026-10-15, puppy-style full beta\n\nJason explicitly wants the softer rounded puppy-like illustrated Greg, not the realistic anatomy study, and ALL animation families. New exported pack: assets/heel/puppy-v1/greg-puppy-full-beta.zip. Preview: assets/heel/puppy-v1/final/preview.html (localhost8876). Inventory/manifest: assets/heel/puppy-v1/README.md and final/manifest.json. Latest Claude handoff: handoffs/codex-to-claude-puppy-full-pack-2026-10-15.md.\n\nDELIVERED ART:34 clips,768 timed frames,648 generated source poses. Includes sitting, both walks, pacing, ball play/offer, bow, chew/pick-up/carry stick, scratch, yawn, sniff/search/trail, grass, stretch, paw-over-face, optional poop/pee gags, six quiet states,16 gaze targets and sit/lie/curl/wake/turn transitions. Left walk is mirrored;96-frame pacing is composed, not96 new drawings. Shared192\u00d7208 cells, three atlas pages with2\u00d7 versions; Dot-compatible row export included.\n\nEXECUTED: expected source/extract counts, bounds, all768 atlas/frame round trips and zero-alpha borders; browser loads34 clips, loop counters advance and one-shots stop. OPEN: generated shape/colour drift, pacing-turn join, occasional rest eye-opening, gaze-angle calibration and curl transition polish; native integration, reduced-motion/state transitions, and reported stripes/pixelation acceptance. Do not mark these Done from asset existence or build success. Keep previous completed platform work and current fallbacks. Optional antics respect focus/Off/quiet; bathroom gags opt-in.\n\nThis supersedes older pending-art/realistic-style statements below; historical evidence retained.\n\n--- Historical card context ---\n\n## 2026-10-15 \u2014 Greg visual consistency reset (Jason)\n\nDecision updated: Heel uses original Greg artwork; Greg is the chosen mascot. Remaining decision is acceptance of the corrected photo-based model, not whether to use a placeholder. Review ALL angles, real chest markings, charcoal coat/dark muzzle, longer adult torso and natural male anatomy. Freeze palette, proportions, stroke and template before regenerating.\n\nCanonical follow-up: https://trello.com/c/S8JdeGot\nExtra behaviours: https://trello.com/c/F0816jgq\nNature behaviours: https://trello.com/c/mAM5xYCB\nSpec: assets/heel/anatomy-v2-photo-based/UNIFIED-ART-SPEC.md\nHandoff: handoffs/codex-to-claude-greg-visual-reset-2026-10-15.md\n\nThis update supersedes conflicting earlier art assumptions. Existing completed code/integration evidence remains historical; corrected artwork and native visual acceptance are pending.\n\n---\n\nName: Heel (decided 2026-10-15). Mascot still open. Idea: a dog, since Greg is your dog (original art of your own dog avoids cloning the friend's Bunny/Owl). Pick art source (hand-made / generated / commissioned). Not blocking v0 \u2014 use a placeholder blob. Greg nutrition app rename: undecided, untouched.",
+      "ok": true
+    },
+    {
+      "id": "ari:cloud:trello::card/workspace/6a8f03e71844a6c1103692dc/6ad0c80b6cd2fbeeec0f4b74",
+      "previousName": "A1 Swap mascot art: Riff -> Greg (Dot-compatible sheet, primary)",
+      "name": "A1 Swap mascot art: Riff -> Greg (Dot-compatible sheet, primary)",
+      "description": "LATEST ART UPDATE \u2014 2026-10-15, puppy-style full beta\n\nJason explicitly wants the softer rounded puppy-like illustrated Greg, not the realistic anatomy study, and ALL animation families. New exported pack: assets/heel/puppy-v1/greg-puppy-full-beta.zip. Preview: assets/heel/puppy-v1/final/preview.html (localhost8876). Inventory/manifest: assets/heel/puppy-v1/README.md and final/manifest.json. Latest Claude handoff: handoffs/codex-to-claude-puppy-full-pack-2026-10-15.md.\n\nDELIVERED ART:34 clips,768 timed frames,648 generated source poses. Includes sitting, both walks, pacing, ball play/offer, bow, chew/pick-up/carry stick, scratch, yawn, sniff/search/trail, grass, stretch, paw-over-face, optional poop/pee gags, six quiet states,16 gaze targets and sit/lie/curl/wake/turn transitions. Left walk is mirrored;96-frame pacing is composed, not96 new drawings. Shared192\u00d7208 cells, three atlas pages with2\u00d7 versions; Dot-compatible row export included.\n\nEXECUTED: expected source/extract counts, bounds, all768 atlas/frame round trips and zero-alpha borders; browser loads34 clips, loop counters advance and one-shots stop. OPEN: generated shape/colour drift, pacing-turn join, occasional rest eye-opening, gaze-angle calibration and curl transition polish; native integration, reduced-motion/state transitions, and reported stripes/pixelation acceptance. Do not mark these Done from asset existence or build success. Keep previous completed platform work and current fallbacks. Optional antics respect focus/Off/quiet; bathroom gags opt-in.\n\nThis supersedes older pending-art/realistic-style statements below; historical evidence retained.\n\n--- Historical card context ---\n\n## 2026-10-15 \u2014 Greg visual consistency reset (Jason)\n\nThe Riff-to-Greg integration remains historically Done. That does not mean all artwork is currently accepted. Jason rejected short side anatomy and now reports stripes, pixelation, colour/size/design drift during movement. Keep this integration history and fallback; replacement art must pass A5 and A3b before swapping.\n\nCanonical follow-up: https://trello.com/c/S8JdeGot\nExtra behaviours: https://trello.com/c/F0816jgq\nNature behaviours: https://trello.com/c/mAM5xYCB\nSpec: assets/heel/anatomy-v2-photo-based/UNIFIED-ART-SPEC.md\nHandoff: handoffs/codex-to-claude-greg-visual-reset-2026-10-15.md\n\nThis update supersedes conflicting earlier art assumptions. Existing completed code/integration evidence remains historical; corrected artwork and native visual acceptance are pending.\n\n---\n\nSTATUS: approved by Jason 2026-10-15, being executed now.\n\nDECISION (Jason): use the Dot layout as the MAIN set (9 actions + 16 look directions), Greg art, not Riff. Dense six-state sheet stays optional (see V1-11).\n\nSOURCE: assets/heel/smooth-v1/final/compatible-dot/spritesheet-extended.png (1536x2288, 8 cols x 11 rows, 192x208 cells, 73 populated cells). SHA-256 4353761c6e78bdaf0a5673aac3c54025a61bd841af4d1fc9dcf673b1b3c5e68a (checked, matches handoff). Manifest: compatible-dot/dot-animations.json.\nHANDOFF: handoffs/codex-to-claude-2026-10-15-1425.md (from Codex).\n\nPLAN: copy PNG to public/mascot/ under a Greg-specific name, point Sprite.tsx at it (was /mascot/riff.png). Manifest row names and timings are to be diffed against src/mascot/atlas.ts for all rows before claiming a match. KEEP the Riff PNG in the repo and assets/riff untouched. Note: handoff cites src/panel/TodayTab.tsx, which moved to src/today/TodayTab.tsx.\n\nFINISH LINE (observed in the REAL app, not just build):\n- Greg PNG loads, correct 8x11 layout, clean transparency, no clipping at desktop size.\n- Exercise all nine action rows + 16 look directions; keep panel events, greeting one-shot, click/drag.\n- Watch repeated loops at real size incl. last->first frame boundary and state switches. More actions != smooth: if a loop is janky, name the exact action/boundary and refine it.\n- Calm behavior: jumps/runs only on appropriate triggers. The standard Dot sheet has NO curled-up sleep clip: do not fake Rest with another row.\n- Verify reduced motion (OS setting) end to end. Run tests/typecheck after changes. Report observed desktop behavior separately from static checks.\n\nDO NOT: use smooth-v1/registered-gait/ (rejected), delete earlier variants, touch Riff's OpenAI Dot account pet, read dense 16-col frames with Dot geometry.\n\nKNOWN LIMITATIONS (from Codex): small outline variation between generated frames; Focus slightly warmer/olive than Idle; no authored transition clips (sit->lie, wake); Jason has not visually approved any Greg animation yet.",
+      "ok": true
+    },
+    {
+      "id": "ari:cloud:trello::card/workspace/6a8f03e71844a6c1103692dc/6ad0c95ceab4ae31aa559b57",
+      "previousName": "A2 Use the rest of Greg's actions + fix art issues + reduced-motion check",
+      "name": "A2 Use the rest of Greg's actions + fix art issues + reduced-motion check",
+      "description": "LATEST ART UPDATE \u2014 2026-10-15, puppy-style full beta\n\nJason explicitly wants the softer rounded puppy-like illustrated Greg, not the realistic anatomy study, and ALL animation families. New exported pack: assets/heel/puppy-v1/greg-puppy-full-beta.zip. Preview: assets/heel/puppy-v1/final/preview.html (localhost8876). Inventory/manifest: assets/heel/puppy-v1/README.md and final/manifest.json. Latest Claude handoff: handoffs/codex-to-claude-puppy-full-pack-2026-10-15.md.\n\nDELIVERED ART:34 clips,768 timed frames,648 generated source poses. Includes sitting, both walks, pacing, ball play/offer, bow, chew/pick-up/carry stick, scratch, yawn, sniff/search/trail, grass, stretch, paw-over-face, optional poop/pee gags, six quiet states,16 gaze targets and sit/lie/curl/wake/turn transitions. Left walk is mirrored;96-frame pacing is composed, not96 new drawings. Shared192\u00d7208 cells, three atlas pages with2\u00d7 versions; Dot-compatible row export included.\n\nEXECUTED: expected source/extract counts, bounds, all768 atlas/frame round trips and zero-alpha borders; browser loads34 clips, loop counters advance and one-shots stop. OPEN: generated shape/colour drift, pacing-turn join, occasional rest eye-opening, gaze-angle calibration and curl transition polish; native integration, reduced-motion/state transitions, and reported stripes/pixelation acceptance. Do not mark these Done from asset existence or build success. Keep previous completed platform work and current fallbacks. Optional antics respect focus/Off/quiet; bathroom gags opt-in.\n\nThis supersedes older pending-art/realistic-style statements below; historical evidence retained.\n\n--- Historical card context ---\n\n## 2026-10-15 \u2014 Greg visual consistency reset (Jason)\n\nExpand the art-fix scope to the entire set: one photo-based master, locked grey palette, chest marking, outline, head/body/leg proportions and physical scale. Rebuild rejected side poses; recolouring or mirroring alone cannot repair anatomy. Diagnose stripe/pixelation in real playback, compare source frames vs renderer. Include every Dot action/look, six quiet states and transitions. No per-frame bounding-box resizing.\n\nCanonical follow-up: https://trello.com/c/S8JdeGot\nExtra behaviours: https://trello.com/c/F0816jgq\nNature behaviours: https://trello.com/c/mAM5xYCB\nSpec: assets/heel/anatomy-v2-photo-based/UNIFIED-ART-SPEC.md\nHandoff: handoffs/codex-to-claude-greg-visual-reset-2026-10-15.md\n\nThis update supersedes conflicting earlier art assumptions. Existing completed code/integration evidence remains historical; corrected artwork and native visual acceptance are pending.\n\n---\n\nFollow-up to A1 (swap done, idle + panel reactions confirmed by Jason).\n\nNOT USED BY THE APP YET: running-right/left (e.g. while Greg is dragged), review (e.g. while reading the inbox, S7), the 16 look directions (our 'look' is only a sweep; add pointer-following or look-at-panel). Calm rule: runs/jumps only on real triggers, never as constant idle motion.\n\nART ISSUES (measured 2026-10-15): (1) running-left row ~4.7 lightness points lighter and ~5% vs 11-16% saturation compared with other rows: needs recolour/regenerate (Codex's pipeline, see handoff). (2) 'thinking' maps to row 7, a lying pose: sit->lie is an abrupt cut; needs an authored transition or a different mapping. (3) Idle frames have near-identical silhouettes: motion is blink-level, judge in the real app. (4) No Rest pose: see V1-11.\n\nVERIFY IN THE REAL APP: reduced motion (OS setting on/off while running), last->first frame boundary of each loop, state switches, CPU use of the mascot window idle. Name the exact action/boundary if a loop is janky.",
+      "ok": true
+    },
+    {
+      "id": "ari:cloud:trello::card/workspace/6a8f03e71844a6c1103692dc/6ad0cb41a442905d7dfce771",
+      "previousName": "17 A3a Manifest-driven mascot player (prereq for sleep/dense art; no new art needed)",
+      "name": "17 A3a Manifest-driven mascot player (prereq for sleep/dense art; no new art needed)",
+      "description": "LATEST ART UPDATE \u2014 2026-10-15, puppy-style full beta\n\nJason explicitly wants the softer rounded puppy-like illustrated Greg, not the realistic anatomy study, and ALL animation families. New exported pack: assets/heel/puppy-v1/greg-puppy-full-beta.zip. Preview: assets/heel/puppy-v1/final/preview.html (localhost8876). Inventory/manifest: assets/heel/puppy-v1/README.md and final/manifest.json. Latest Claude handoff: handoffs/codex-to-claude-puppy-full-pack-2026-10-15.md.\n\nDELIVERED ART:34 clips,768 timed frames,648 generated source poses. Includes sitting, both walks, pacing, ball play/offer, bow, chew/pick-up/carry stick, scratch, yawn, sniff/search/trail, grass, stretch, paw-over-face, optional poop/pee gags, six quiet states,16 gaze targets and sit/lie/curl/wake/turn transitions. Left walk is mirrored;96-frame pacing is composed, not96 new drawings. Shared192\u00d7208 cells, three atlas pages with2\u00d7 versions; Dot-compatible row export included.\n\nEXECUTED: expected source/extract counts, bounds, all768 atlas/frame round trips and zero-alpha borders; browser loads34 clips, loop counters advance and one-shots stop. OPEN: generated shape/colour drift, pacing-turn join, occasional rest eye-opening, gaze-angle calibration and curl transition polish; native integration, reduced-motion/state transitions, and reported stripes/pixelation acceptance. Do not mark these Done from asset existence or build success. Keep previous completed platform work and current fallbacks. Optional antics respect focus/Off/quiet; bathroom gags opt-in.\n\nThis supersedes older pending-art/realistic-style statements below; historical evidence retained.\n\n--- Historical card context ---\n\n## 2026-10-15 \u2014 Greg visual consistency reset (Jason)\n\nA3a is now Done and current source confirms manifest-driven playback. A5 is follow-up, not a claim this player is missing. Extend it only as required for source-density-aware 2x textures, atlas page + per-frame sourceRect, fixed logical frame/root and transitions. Current schema limits action frames to columns and uses uniform rows: a giant/packed sheet cannot be dropped in without matching manifest/player changes. Preserve fallback; reproduce stripes at actual native/Retina sizes, verify every action and boundary.\n\nCanonical follow-up: https://trello.com/c/S8JdeGot\nExtra behaviours: https://trello.com/c/F0816jgq\nNature behaviours: https://trello.com/c/mAM5xYCB\nSpec: assets/heel/anatomy-v2-photo-based/UNIFIED-ART-SPEC.md\nHandoff: handoffs/codex-to-claude-greg-visual-reset-2026-10-15.md\n\nThis update supersedes conflicting earlier art assumptions. Existing completed code/integration evidence remains historical; corrected artwork and native visual acceptance are pending.\n\n---\n\nFrom Codex handoff (updated 2026-10-15 14:44), codex-to-claude-2026-10-15-1425.md. Jason wants ALL Dot animations smooth with more frames.\n\nWHAT I CAN BUILD NOW (no new art): replace hardcoded 8-col / 16-look / timers in src/mascot with a manifest-driven player:\n- manifest per sheet: columns, cell size, per-action frame list (rect/position), per-frame durations, loop vs one-shot, look angle samples (angles in degrees, clockwise).\n- generate a manifest for the CURRENT sparse 8x11 Greg sheet (converter from dot-animations.json) so it is testable with real art today; keep the 8x11 sheet + manifest unchanged as the fallback.\n- monotonic-clock timeline via requestAnimationFrame (no chained timers); suspend when the window is hidden; explicit reduced-motion handling.\n- look by angle (nearest sample, 360->0 wrap, rapid changes); NOT a spinning idle loop.\n- tests: timeline math, wrap, loop/one-shot, manifest validation (frames in sheet, durations match).\nNOT claiming smoothness: only new art can add in-between poses.\n\nDONE = tests + manifest of current sheet plays identically to today in the real window; a custom 24x11 manifest with placeholder cells validates.",
+      "ok": true
+    },
+    {
+      "id": "ari:cloud:trello::card/workspace/6a8f03e71844a6c1103692dc/6ad0cb4a79ca86e635fa9e90",
+      "previousName": "A3b Dense full-repertoire Greg art (BLOCKED for Claude: needs image generation, Codex/Jason)",
+      "name": "A3b Full puppy-style Greg repertoire \u2014 beta art exported; visual/native acceptance pending",
+      "description": "LATEST ART UPDATE \u2014 2026-10-15, puppy-style full beta\n\nJason explicitly wants the softer rounded puppy-like illustrated Greg, not the realistic anatomy study, and ALL animation families. New exported pack: assets/heel/puppy-v1/greg-puppy-full-beta.zip. Preview: assets/heel/puppy-v1/final/preview.html (localhost8876). Inventory/manifest: assets/heel/puppy-v1/README.md and final/manifest.json. Latest Claude handoff: handoffs/codex-to-claude-puppy-full-pack-2026-10-15.md.\n\nDELIVERED ART:34 clips,768 timed frames,648 generated source poses. Includes sitting, both walks, pacing, ball play/offer, bow, chew/pick-up/carry stick, scratch, yawn, sniff/search/trail, grass, stretch, paw-over-face, optional poop/pee gags, six quiet states,16 gaze targets and sit/lie/curl/wake/turn transitions. Left walk is mirrored;96-frame pacing is composed, not96 new drawings. Shared192\u00d7208 cells, three atlas pages with2\u00d7 versions; Dot-compatible row export included.\n\nEXECUTED: expected source/extract counts, bounds, all768 atlas/frame round trips and zero-alpha borders; browser loads34 clips, loop counters advance and one-shots stop. OPEN: generated shape/colour drift, pacing-turn join, occasional rest eye-opening, gaze-angle calibration and curl transition polish; native integration, reduced-motion/state transitions, and reported stripes/pixelation acceptance. Do not mark these Done from asset existence or build success. Keep previous completed platform work and current fallbacks. Optional antics respect focus/Off/quiet; bathroom gags opt-in.\n\nThis supersedes older pending-art/realistic-style statements below; historical evidence retained.\n\n--- Historical card context ---\n\n## 2026-10-15 \u2014 Greg visual consistency reset (Jason)\n\nBLOCKING ART GATE: previous side body is rejected (short torso, unnatural legs). Jason requires consistent Greg anatomy, palette, scale, stroke and markings in EVERY frame/action. Use 32 locally indexed photo references covering all angles; long standing reference G0032 is primary proportion authority. Include subtle natural fur-covered male sheath when visible. One measured master/template and shared manifest (A5), then walk proof, then all 9 Dot actions + looks + quiet states + extras/nature. Existing frame targets remain authoring targets, not completed art. Output a combined review sheet and bounded runtime pages when appropriate. Do not force huge textures or resize curled/sitting/standing silhouettes to identical boxes.\n\nCanonical follow-up: https://trello.com/c/S8JdeGot\nExtra behaviours: https://trello.com/c/F0816jgq\nNature behaviours: https://trello.com/c/mAM5xYCB\nSpec: assets/heel/anatomy-v2-photo-based/UNIFIED-ART-SPEC.md\nHandoff: handoffs/codex-to-claude-greg-visual-reset-2026-10-15.md\n\nThis update supersedes conflicting earlier art assumptions. Existing completed code/integration evidence remains historical; corrected artwork and native visual acceptance are pending.\n\n---\n\nART DELIVERABLE, not code. Claude has no image generation in this environment. From the Codex handoff (updated 14:44).\n\nTARGET authored poses per action: idle 16, running-right 24, running-left 24, waving 16, jumping 24, failed 16, waiting 16, running(processing/focus) 16, review 16 = 168 poses. Look directions: 32 samples at 11.25 deg (keep the original 16 as every-other anchors), body still, eyes/head only. Extras kept separate: Rest (curled sleep), quiet Done (wag).\n\nFORMAT: custom Heel atlas (proposed 24 cols x 11 rows of 192x208 = 4608x2288; actions rows 0-8, looks row 9 samples 0-23, row 10 samples 24-31) + manifest. NOT compatible with the standard Dot uploader. Keep the standard 8x11 sheet as fallback.\n\nRULES: lock scale/foot anchors/palette/markings; no arbitrary duplicates, no dissolves between incompatible poses, no limb-warp interpolation; label generated vs reused vs unfilled honestly; do not use smooth-v1/registered-gait/ (rejected). Fix known issues: running-left row is lighter/greyer (measured 2026-10-15), Focus slightly olive, no sit->lie transition.\n\nNeeds A3a (player) to display it. Verify in the real app: 3 full cycles per loop incl. 128px on light/dark, loop seams, one-shots, direction wrap, reduced motion, frame pacing/CPU.",
+      "ok": true
+    },
+    {
+      "id": "ari:cloud:trello::card/workspace/6a8f03e71844a6c1103692dc/6ad0d89976c74544f2ade748",
+      "previousName": "14 A4a Idle life engine: pure behaviour state machine (look, wave, stretch, lie down, sleep, walk) + Calm/Lively/Off",
+      "name": "14 A4a Idle life engine: pure behaviour state machine (look, wave, stretch, lie down, sleep, walk) + Calm/Lively/Off",
+      "description": "LATEST ART UPDATE \u2014 2026-10-15, puppy-style full beta\n\nJason explicitly wants the softer rounded puppy-like illustrated Greg, not the realistic anatomy study, and ALL animation families. New exported pack: assets/heel/puppy-v1/greg-puppy-full-beta.zip. Preview: assets/heel/puppy-v1/final/preview.html (localhost8876). Inventory/manifest: assets/heel/puppy-v1/README.md and final/manifest.json. Latest Claude handoff: handoffs/codex-to-claude-puppy-full-pack-2026-10-15.md.\n\nDELIVERED ART:34 clips,768 timed frames,648 generated source poses. Includes sitting, both walks, pacing, ball play/offer, bow, chew/pick-up/carry stick, scratch, yawn, sniff/search/trail, grass, stretch, paw-over-face, optional poop/pee gags, six quiet states,16 gaze targets and sit/lie/curl/wake/turn transitions. Left walk is mirrored;96-frame pacing is composed, not96 new drawings. Shared192\u00d7208 cells, three atlas pages with2\u00d7 versions; Dot-compatible row export included.\n\nEXECUTED: expected source/extract counts, bounds, all768 atlas/frame round trips and zero-alpha borders; browser loads34 clips, loop counters advance and one-shots stop. OPEN: generated shape/colour drift, pacing-turn join, occasional rest eye-opening, gaze-angle calibration and curl transition polish; native integration, reduced-motion/state transitions, and reported stripes/pixelation acceptance. Do not mark these Done from asset existence or build success. Keep previous completed platform work and current fallbacks. Optional antics respect focus/Off/quiet; bathroom gags opt-in.\n\nThis supersedes older pending-art/realistic-style statements below; historical evidence retained.\n\n--- Historical card context ---\n\n## 2026-10-15 \u2014 Greg visual consistency reset (Jason)\n\nKeep the completed scheduler and guards. Visual follow-up uses A5's accepted common body/palette/scale for every behaviour. Correct row meaning: Dot waiting = listening; Dot running (row 7) is the lying/processing pose. New ball/stick/sniff/grass actions belong to A6/A7 after their art is accepted. Preserve Calm/Lively/Off, typing/panel/focus guards and reduced-motion static fallback. Toilet gags optional/manual or explicit opt-in; no surprise repeated gags.\n\nCanonical follow-up: https://trello.com/c/S8JdeGot\nExtra behaviours: https://trello.com/c/F0816jgq\nNature behaviours: https://trello.com/c/mAM5xYCB\nSpec: assets/heel/anatomy-v2-photo-based/UNIFIED-ART-SPEC.md\nHandoff: handoffs/codex-to-claude-greg-visual-reset-2026-10-15.md\n\nThis update supersedes conflicting earlier art assumptions. Existing completed code/integration evidence remains historical; corrected artwork and native visual acceptance are pending.\n\n---\n\nJason: when idle Greg shouldn't just stare. He should sometimes look around, lie down, go to sleep, walk across the screen. Pure, tested scheduler (no UI): states idle -> look-around / wave / stretch / lie-down -> sleep (after long idle) / walk; weighted random with minimum gaps; seeded RNG for tests. Rules for an ND user: never while the panel is open or the person is typing, never during a focus time-box, nothing sudden (always a lead-in), Quiet mode = none, prefers-reduced-motion = static, setting \"Greg's activity: Calm (default) / Lively / Off\". Wake on pointer or panel open.\nUses existing Dot rows now (idle, waving, look rows, running-left/right, waiting=lying); sleep/rest art arrives with A3a (dense sheet).\nDONE = unit tests for every transition and every guard (panel open, quiet, reduced motion, budget); 1h of simulated time produces behaviours within the Calm frequency caps.\nEffort: medium (3h).",
+      "ok": true
+    },
+    {
+      "id": "ari:cloud:trello::card/workspace/6a8f03e71844a6c1103692dc/6ad0d8a172d1ca9d26d916b4",
+      "previousName": "15 A4b Walk across the screen (window glides with running rows, eased, stays on screen)",
+      "name": "15 A4b Walk across the screen (window glides with running rows, eased, stays on screen)",
+      "description": "LATEST ART UPDATE \u2014 2026-10-15, puppy-style full beta\n\nJason explicitly wants the softer rounded puppy-like illustrated Greg, not the realistic anatomy study, and ALL animation families. New exported pack: assets/heel/puppy-v1/greg-puppy-full-beta.zip. Preview: assets/heel/puppy-v1/final/preview.html (localhost8876). Inventory/manifest: assets/heel/puppy-v1/README.md and final/manifest.json. Latest Claude handoff: handoffs/codex-to-claude-puppy-full-pack-2026-10-15.md.\n\nDELIVERED ART:34 clips,768 timed frames,648 generated source poses. Includes sitting, both walks, pacing, ball play/offer, bow, chew/pick-up/carry stick, scratch, yawn, sniff/search/trail, grass, stretch, paw-over-face, optional poop/pee gags, six quiet states,16 gaze targets and sit/lie/curl/wake/turn transitions. Left walk is mirrored;96-frame pacing is composed, not96 new drawings. Shared192\u00d7208 cells, three atlas pages with2\u00d7 versions; Dot-compatible row export included.\n\nEXECUTED: expected source/extract counts, bounds, all768 atlas/frame round trips and zero-alpha borders; browser loads34 clips, loop counters advance and one-shots stop. OPEN: generated shape/colour drift, pacing-turn join, occasional rest eye-opening, gaze-angle calibration and curl transition polish; native integration, reduced-motion/state transitions, and reported stripes/pixelation acceptance. Do not mark these Done from asset existence or build success. Keep previous completed platform work and current fallbacks. Optional antics respect focus/Off/quiet; bathroom gags opt-in.\n\nThis supersedes older pending-art/realistic-style statements below; historical evidence retained.\n\n--- Historical card context ---\n\n## 2026-10-15 \u2014 Greg visual consistency reset (Jason)\n\nKeep completed native traversal. New visual acceptance requires corrected long adult side anatomy and a coherent four-legged gait in both directions, same palette/scale as sitting/rest, no sliding paws, body-length pulses, coat bands or pixelation. Mirroring a row is not sufficient if the source body is wrong. Coordinate sprite root travel with native window travel once, not twice. Reproduce the user-reported movement stripes in the real app and distinguish source art from sampling/frame-rectangle errors.\n\nCanonical follow-up: https://trello.com/c/S8JdeGot\nExtra behaviours: https://trello.com/c/F0816jgq\nNature behaviours: https://trello.com/c/mAM5xYCB\nSpec: assets/heel/anatomy-v2-photo-based/UNIFIED-ART-SPEC.md\nHandoff: handoffs/codex-to-claude-greg-visual-reset-2026-10-15.md\n\nThis update supersedes conflicting earlier art assumptions. Existing completed code/integration evidence remains historical; corrected artwork and native visual acceptance are pending.\n\n---\n\nRust tweens the mascot window along the bottom of the work area (ease in/out, ~60fps timer, stops on any pointer or key activity near it) while the sprite plays running-left/right; direction matches travel. Never leaves the visible area of the current monitor; never over the panel; the docked panel (if it was open) is skipped by A4a rules. Ends in a sit or lie. Pure path planner (start, end, speed, bounds) with tests.\nKnown art flaw: running-left row is greyer (A2) - fix or mirror running-right.\nDONE = real window: trigger via driver; Greg's window position sampled from the OS list moves monotonically across and stays inside bounds; returns/ends where planned; click on him mid-walk stops him.\nEffort: medium (3h).",
+      "ok": true
+    },
+    {
+      "id": "ari:cloud:trello::card/workspace/6a8f03e71844a6c1103692dc/6ad0d8a99c9a38a2a9211a6d",
+      "previousName": "16 A4c Hide = run off screen; Show = run back in (no vanishing) + \"Show Greg\" in tray",
+      "name": "16 A4c Hide = run off screen; Show = run back in (no vanishing) + \"Show Greg\" in tray",
+      "description": "LATEST ART UPDATE \u2014 2026-10-15, puppy-style full beta\n\nJason explicitly wants the softer rounded puppy-like illustrated Greg, not the realistic anatomy study, and ALL animation families. New exported pack: assets/heel/puppy-v1/greg-puppy-full-beta.zip. Preview: assets/heel/puppy-v1/final/preview.html (localhost8876). Inventory/manifest: assets/heel/puppy-v1/README.md and final/manifest.json. Latest Claude handoff: handoffs/codex-to-claude-puppy-full-pack-2026-10-15.md.\n\nDELIVERED ART:34 clips,768 timed frames,648 generated source poses. Includes sitting, both walks, pacing, ball play/offer, bow, chew/pick-up/carry stick, scratch, yawn, sniff/search/trail, grass, stretch, paw-over-face, optional poop/pee gags, six quiet states,16 gaze targets and sit/lie/curl/wake/turn transitions. Left walk is mirrored;96-frame pacing is composed, not96 new drawings. Shared192\u00d7208 cells, three atlas pages with2\u00d7 versions; Dot-compatible row export included.\n\nEXECUTED: expected source/extract counts, bounds, all768 atlas/frame round trips and zero-alpha borders; browser loads34 clips, loop counters advance and one-shots stop. OPEN: generated shape/colour drift, pacing-turn join, occasional rest eye-opening, gaze-angle calibration and curl transition polish; native integration, reduced-motion/state transitions, and reported stripes/pixelation acceptance. Do not mark these Done from asset existence or build success. Keep previous completed platform work and current fallbacks. Optional antics respect focus/Off/quiet; bathroom gags opt-in.\n\nThis supersedes older pending-art/realistic-style statements below; historical evidence retained.\n\n--- Historical card context ---\n\n## 2026-10-15 \u2014 Greg visual consistency reset (Jason)\n\nKeep completed hide/show integration history. Replacement entrance/exit poses must use the same accepted A5 model, size, palette and corrected gait as walking/idle, with natural turns and clean frame/loop boundaries. Remaining persistence/launch/quit/reduced-motion work is tracked on 16b; this visual follow-up does not assert those paths are complete.\n\nCanonical follow-up: https://trello.com/c/S8JdeGot\nExtra behaviours: https://trello.com/c/F0816jgq\nNature behaviours: https://trello.com/c/mAM5xYCB\nSpec: assets/heel/anatomy-v2-photo-based/UNIFIED-ART-SPEC.md\nHandoff: handoffs/codex-to-claude-greg-visual-reset-2026-10-15.md\n\nThis update supersedes conflicting earlier art assumptions. Existing completed code/integration evidence remains historical; corrected artwork and native visual acceptance are pending.\n\n---\n\nJason: hiding should not just make him disappear; he runs/walks off screen, and comes back on screen. Hide: run to the nearest screen edge, window hidden after he's fully off; hidden state remembered across restarts. Show: from the tray menu / right-click on the tray / hotkey / app relaunch (second launch) he runs in from the edge back to his home spot. Also: launch = he walks on instead of popping in; quit = he waves then walks off (500ms cap so quit never feels slow). Ideas to consider (cards if wanted): peek from the screen edge when hidden, sleep curled up off-screen corner, greet with a wave on first show of the day, follow-the-cursor look rows while the panel is open.\nDONE = real window: hide -> window position leaves the screen then window hidden; show -> returns to home; state survives restart; reduced motion = instant fade instead.\nEffort: medium (3h). Depends on A4b path planner.",
+      "ok": true
+    },
+    {
+      "id": "ari:cloud:trello::card/workspace/6a8f03e71844a6c1103692dc/6ad0e61569f0ae8941fe5f37",
+      "previousName": "16b A4c remainder: hidden state survives restart, launch walk-on, quit wave, reduced-motion fade",
+      "name": "16b A4c remainder: hidden state survives restart, launch walk-on, quit wave, reduced-motion fade",
+      "description": "LATEST ART UPDATE \u2014 2026-10-15, puppy-style full beta\n\nJason explicitly wants the softer rounded puppy-like illustrated Greg, not the realistic anatomy study, and ALL animation families. New exported pack: assets/heel/puppy-v1/greg-puppy-full-beta.zip. Preview: assets/heel/puppy-v1/final/preview.html (localhost8876). Inventory/manifest: assets/heel/puppy-v1/README.md and final/manifest.json. Latest Claude handoff: handoffs/codex-to-claude-puppy-full-pack-2026-10-15.md.\n\nDELIVERED ART:34 clips,768 timed frames,648 generated source poses. Includes sitting, both walks, pacing, ball play/offer, bow, chew/pick-up/carry stick, scratch, yawn, sniff/search/trail, grass, stretch, paw-over-face, optional poop/pee gags, six quiet states,16 gaze targets and sit/lie/curl/wake/turn transitions. Left walk is mirrored;96-frame pacing is composed, not96 new drawings. Shared192\u00d7208 cells, three atlas pages with2\u00d7 versions; Dot-compatible row export included.\n\nEXECUTED: expected source/extract counts, bounds, all768 atlas/frame round trips and zero-alpha borders; browser loads34 clips, loop counters advance and one-shots stop. OPEN: generated shape/colour drift, pacing-turn join, occasional rest eye-opening, gaze-angle calibration and curl transition polish; native integration, reduced-motion/state transitions, and reported stripes/pixelation acceptance. Do not mark these Done from asset existence or build success. Keep previous completed platform work and current fallbacks. Optional antics respect focus/Off/quiet; bathroom gags opt-in.\n\nThis supersedes older pending-art/realistic-style statements below; historical evidence retained.\n\n--- Historical card context ---\n\n## 2026-10-15 \u2014 Greg visual consistency reset (Jason)\n\nUse the A5 canonical model/template for launch walk-on, quit wave/run-off and re-entry. Same physical size/palette/markings through all action switches; no short body, coat stripes, pixelation or pop in scale. Keep existing \u2264500ms quit budget, persistence and reduced-motion acceptance; final evidence must come from the real window.\n\nCanonical follow-up: https://trello.com/c/S8JdeGot\nExtra behaviours: https://trello.com/c/F0816jgq\nNature behaviours: https://trello.com/c/mAM5xYCB\nSpec: assets/heel/anatomy-v2-photo-based/UNIFIED-ART-SPEC.md\nHandoff: handoffs/codex-to-claude-greg-visual-reset-2026-10-15.md\n\nThis update supersedes conflicting earlier art assumptions. Existing completed code/integration evidence remains historical; corrected artwork and native visual acceptance are pending.\n\n---\n\nLeft over from card 16 (hide/show shipped in 487ab89). (1) Hidden state remembered across restarts: persist 'hidden' + rest x; on launch stay hidden, 'Show Greg' runs him in. (2) Launch = he walks on instead of popping in (needs the webview ready before the run event, or a Rust-only pose fallback). (3) Quit = he waves then walks off, still <=500ms. (4) Reduced motion = short opacity fade instead of an instant hide/show. (5) Real-window verification of quit run-off (\u2264500ms then process gone). DONE = each executed in the real app; restart test uses the detached driver. Effort: small-medium (2h). Not blocking anything.",
+      "ok": true
+    },
+    {
+      "id": "ari:cloud:trello::card/workspace/6a8f03e71844a6c1103692dc/6ad0d8b204edfbf4cfb34184",
+      "previousName": "18 A4d Sleep: lie down, curl up, snore-free zzz; wakes on touch or panel open (needs A3a + dense REST art)",
+      "name": "18 A4d Sleep: lie down, curl up, snore-free zzz; wakes on touch or panel open (needs A3a + dense REST art)",
+      "description": "LATEST ART UPDATE \u2014 2026-10-15, puppy-style full beta\n\nJason explicitly wants the softer rounded puppy-like illustrated Greg, not the realistic anatomy study, and ALL animation families. New exported pack: assets/heel/puppy-v1/greg-puppy-full-beta.zip. Preview: assets/heel/puppy-v1/final/preview.html (localhost8876). Inventory/manifest: assets/heel/puppy-v1/README.md and final/manifest.json. Latest Claude handoff: handoffs/codex-to-claude-puppy-full-pack-2026-10-15.md.\n\nDELIVERED ART:34 clips,768 timed frames,648 generated source poses. Includes sitting, both walks, pacing, ball play/offer, bow, chew/pick-up/carry stick, scratch, yawn, sniff/search/trail, grass, stretch, paw-over-face, optional poop/pee gags, six quiet states,16 gaze targets and sit/lie/curl/wake/turn transitions. Left walk is mirrored;96-frame pacing is composed, not96 new drawings. Shared192\u00d7208 cells, three atlas pages with2\u00d7 versions; Dot-compatible row export included.\n\nEXECUTED: expected source/extract counts, bounds, all768 atlas/frame round trips and zero-alpha borders; browser loads34 clips, loop counters advance and one-shots stop. OPEN: generated shape/colour drift, pacing-turn join, occasional rest eye-opening, gaze-angle calibration and curl transition polish; native integration, reduced-motion/state transitions, and reported stripes/pixelation acceptance. Do not mark these Done from asset existence or build success. Keep previous completed platform work and current fallbacks. Optional antics respect focus/Off/quiet; bathroom gags opt-in.\n\nThis supersedes older pending-art/realistic-style statements below; historical evidence retained.\n\n--- Historical card context ---\n\n## 2026-10-15 \u2014 Greg visual consistency reset (Jason)\n\nKeep completed sleep wiring. Rebuild rest/focus/sit/wake art with A5's one physical scale, palette and body model. Curling naturally reduces occupied bounding box; never scale it up to fill the cell. Author sit\u2192lie\u2192curl and wake transitions rather than treating a hold/crossfade as new anatomical in-betweens. Confirm state switches do not change coat colour, skull/torso proportions or ground plane.\n\nCanonical follow-up: https://trello.com/c/S8JdeGot\nExtra behaviours: https://trello.com/c/F0816jgq\nNature behaviours: https://trello.com/c/mAM5xYCB\nSpec: assets/heel/anatomy-v2-photo-based/UNIFIED-ART-SPEC.md\nHandoff: handoffs/codex-to-claude-greg-visual-reset-2026-10-15.md\n\nThis update supersedes conflicting earlier art assumptions. Existing completed code/integration evidence remains historical; corrected artwork and native visual acceptance are pending.\n\n---\n\nUses the smooth-v1 pack (assets/heel/smooth-v1/final: 16 cols x 6 rows, rows idle / listening / focus / nudge / done / rest) via the manifest-driven player (A3a). Sequence: lie down (focus pose) -> curl up (rest) loop; wake = lift head -> sit. No transition art exists (\"direct switches\"): use a short cross-hold (pause 300ms in the lying pose) rather than inventing frames. Triggered by A4a (long idle, e.g. after 10 min) or the right-click \"Go to sleep\"; any interaction wakes him.\nDONE = real window: after the idle threshold (set to 30s by an env override for the test) the rest row plays; opening the panel wakes him; reduced motion = static curled frame.\nEffort: small-medium (2h) once A3a lands.",
+      "ok": true
+    },
+    {
+      "id": "ari:cloud:trello::card/workspace/6a8f03e71844a6c1103692dc/6ad0c812e69df5f465bcb294",
+      "previousName": "V1-11 Greg dense six-state set (Rest, quiet Done, Focus) + transitions",
+      "name": "V1-11 Greg dense six-state set (Rest, quiet Done, Focus) + transitions",
+      "description": "LATEST ART UPDATE \u2014 2026-10-15, puppy-style full beta\n\nJason explicitly wants the softer rounded puppy-like illustrated Greg, not the realistic anatomy study, and ALL animation families. New exported pack: assets/heel/puppy-v1/greg-puppy-full-beta.zip. Preview: assets/heel/puppy-v1/final/preview.html (localhost8876). Inventory/manifest: assets/heel/puppy-v1/README.md and final/manifest.json. Latest Claude handoff: handoffs/codex-to-claude-puppy-full-pack-2026-10-15.md.\n\nDELIVERED ART:34 clips,768 timed frames,648 generated source poses. Includes sitting, both walks, pacing, ball play/offer, bow, chew/pick-up/carry stick, scratch, yawn, sniff/search/trail, grass, stretch, paw-over-face, optional poop/pee gags, six quiet states,16 gaze targets and sit/lie/curl/wake/turn transitions. Left walk is mirrored;96-frame pacing is composed, not96 new drawings. Shared192\u00d7208 cells, three atlas pages with2\u00d7 versions; Dot-compatible row export included.\n\nEXECUTED: expected source/extract counts, bounds, all768 atlas/frame round trips and zero-alpha borders; browser loads34 clips, loop counters advance and one-shots stop. OPEN: generated shape/colour drift, pacing-turn join, occasional rest eye-opening, gaze-angle calibration and curl transition polish; native integration, reduced-motion/state transitions, and reported stripes/pixelation acceptance. Do not mark these Done from asset existence or build success. Keep previous completed platform work and current fallbacks. Optional antics respect focus/Off/quiet; bathroom gags opt-in.\n\nThis supersedes older pending-art/realistic-style statements below; historical evidence retained.\n\n--- Historical card context ---\n\n## 2026-10-15 \u2014 Greg visual consistency reset (Jason)\n\nUnify six-state art with the full Dot repertoire and A6/A7 under A5's common master/template. Current 96 timed cells remain review drafts and are not a complete consistent replacement. Remove olive/warm palette drift and textured bands; match physical head/body scale across idle/listening/focus/nudge/done/rest. Include authored transitions and real-app loop/seam checks. Runtime may use multiple atlas pages, all exported from the exact same template.\n\nCanonical follow-up: https://trello.com/c/S8JdeGot\nExtra behaviours: https://trello.com/c/F0816jgq\nNature behaviours: https://trello.com/c/mAM5xYCB\nSpec: assets/heel/anatomy-v2-photo-based/UNIFIED-ART-SPEC.md\nHandoff: handoffs/codex-to-claude-greg-visual-reset-2026-10-15.md\n\nThis update supersedes conflicting earlier art assumptions. Existing completed code/integration evidence remains historical; corrected artwork and native visual acceptance are pending.\n\n---\n\nOPTIONAL extension after A1. Coexists with the Dot set; never replaces it.\n\nASSETS: assets/heel/smooth-v1/final/heel-smooth.png (3072x1248, 16 cols x 6 rows, 192x208 cells; rows: idle, listening, focus, nudge, done, rest; 96 timed cells). Exact per-frame timings in heel-animations.json: keep the quiet holds, no uniform frame rate. Player: smooth-v1/final/preview.html. Pack: smooth-v1/greg-heel-animation-pack.zip (18.8 MB).\n\nWHY: the Dot sheet has no curled-up Rest (needed for Off / low-capacity mode, see V1-7) and its Done is a jump; the dense Done is a quiet contented wag, better for a calm companion.\n\nWORK: separate atlas definition for the 16-col geometry (never interpret dense frames with Dot geometry); map Rest->Off/Low mode, Done->completion, Focus->focus session (S6); consider authored transition clips (sit->lie, wake). Dense Done is 8 drawings forward+reversed (disclosed). Focus palette is slightly olive vs Idle: match to grey.\n\nVERIFY in the real app: reduced motion, loop boundaries, state switches, performance. Do not call it smooth from frame count alone.",
+      "ok": true
+    },
+    {
+      "id": "ari:cloud:trello::card/workspace/6a8f03e71844a6c1103692dc/6ad0ace8159f65e1cc66c840",
+      "previousName": "V1-8 Full Settings tab: privacy, quiet, capacity, mascot, skills",
+      "name": "V1-8 Full Settings tab: privacy, quiet, capacity, mascot, skills",
+      "description": "LATEST ART UPDATE \u2014 2026-10-15, puppy-style full beta\n\nJason explicitly wants the softer rounded puppy-like illustrated Greg, not the realistic anatomy study, and ALL animation families. New exported pack: assets/heel/puppy-v1/greg-puppy-full-beta.zip. Preview: assets/heel/puppy-v1/final/preview.html (localhost8876). Inventory/manifest: assets/heel/puppy-v1/README.md and final/manifest.json. Latest Claude handoff: handoffs/codex-to-claude-puppy-full-pack-2026-10-15.md.\n\nDELIVERED ART:34 clips,768 timed frames,648 generated source poses. Includes sitting, both walks, pacing, ball play/offer, bow, chew/pick-up/carry stick, scratch, yawn, sniff/search/trail, grass, stretch, paw-over-face, optional poop/pee gags, six quiet states,16 gaze targets and sit/lie/curl/wake/turn transitions. Left walk is mirrored;96-frame pacing is composed, not96 new drawings. Shared192\u00d7208 cells, three atlas pages with2\u00d7 versions; Dot-compatible row export included.\n\nEXECUTED: expected source/extract counts, bounds, all768 atlas/frame round trips and zero-alpha borders; browser loads34 clips, loop counters advance and one-shots stop. OPEN: generated shape/colour drift, pacing-turn join, occasional rest eye-opening, gaze-angle calibration and curl transition polish; native integration, reduced-motion/state transitions, and reported stripes/pixelation acceptance. Do not mark these Done from asset existence or build success. Keep previous completed platform work and current fallbacks. Optional antics respect focus/Off/quiet; bathroom gags opt-in.\n\nThis supersedes older pending-art/realistic-style statements below; historical evidence retained.\n\n--- Historical card context ---\n\n## 2026-10-15 \u2014 Greg visual consistency reset (Jason)\n\nMascot settings follow A5/A6/A7: Calm/Lively/Off and quiet/reduced-motion controls apply to all optional behaviours, including future sniff/grass/ball/stick actions. Optional toilet gags require explicit enable/manual trigger and cooldowns. Size control applies one logical/world scale consistently to every animation and hit region; it must not rescale each clip independently.\n\nCanonical follow-up: https://trello.com/c/S8JdeGot\nExtra behaviours: https://trello.com/c/F0816jgq\nNature behaviours: https://trello.com/c/mAM5xYCB\nSpec: assets/heel/anatomy-v2-photo-based/UNIFIED-ART-SPEC.md\nHandoff: handoffs/codex-to-claude-greg-visual-reset-2026-10-15.md\n\nThis update supersedes conflicting earlier art assumptions. Existing completed code/integration evidence remains historical; corrected artwork and native visual acceptance are pending.\n\n---\n\nEach group ships with its feature (Quiet with S8, Privacy with S7). v1 adds: Capacity (Normal/Low/Off), Mascot (character, size, reset position, launch at login, hotkey), Skills (list vendored nd-skills, on/off, read text), Data (location, export, delete all). See docs/ND-SPEC.md > Settings tab.",
+      "ok": true
+    },
+    {
+      "id": "ari:cloud:trello::card/workspace/6a8f03e71844a6c1103692dc/6ad087c6872ee7bbc8ca2563",
+      "previousName": "V1-7 Capacity modes: Normal / Low / Off",
+      "name": "V1-7 Capacity modes: Normal / Low / Off",
+      "description": "LATEST ART UPDATE \u2014 2026-10-15, puppy-style full beta\n\nJason explicitly wants the softer rounded puppy-like illustrated Greg, not the realistic anatomy study, and ALL animation families. New exported pack: assets/heel/puppy-v1/greg-puppy-full-beta.zip. Preview: assets/heel/puppy-v1/final/preview.html (localhost8876). Inventory/manifest: assets/heel/puppy-v1/README.md and final/manifest.json. Latest Claude handoff: handoffs/codex-to-claude-puppy-full-pack-2026-10-15.md.\n\nDELIVERED ART:34 clips,768 timed frames,648 generated source poses. Includes sitting, both walks, pacing, ball play/offer, bow, chew/pick-up/carry stick, scratch, yawn, sniff/search/trail, grass, stretch, paw-over-face, optional poop/pee gags, six quiet states,16 gaze targets and sit/lie/curl/wake/turn transitions. Left walk is mirrored;96-frame pacing is composed, not96 new drawings. Shared192\u00d7208 cells, three atlas pages with2\u00d7 versions; Dot-compatible row export included.\n\nEXECUTED: expected source/extract counts, bounds, all768 atlas/frame round trips and zero-alpha borders; browser loads34 clips, loop counters advance and one-shots stop. OPEN: generated shape/colour drift, pacing-turn join, occasional rest eye-opening, gaze-angle calibration and curl transition polish; native integration, reduced-motion/state transitions, and reported stripes/pixelation acceptance. Do not mark these Done from asset existence or build success. Keep previous completed platform work and current fallbacks. Optional antics respect focus/Off/quiet; bathroom gags opt-in.\n\nThis supersedes older pending-art/realistic-style statements below; historical evidence retained.\n\n--- Historical card context ---\n\n## 2026-10-15 \u2014 Greg visual consistency reset (Jason)\n\nKeep user-controlled capacity; never infer it. Off suppresses optional behaviours. Low/Focus preserve quiet static/rest presence without ambient roaming, ball/stick/grass actions or toilet gags. Rest uses the same A5 physical scale/palette as the other poses, naturally occupying less space when curled. OS reduced-motion is respected independently.\n\nCanonical follow-up: https://trello.com/c/S8JdeGot\nExtra behaviours: https://trello.com/c/F0816jgq\nNature behaviours: https://trello.com/c/mAM5xYCB\nSpec: assets/heel/anatomy-v2-photo-based/UNIFIED-ART-SPEC.md\nHandoff: handoffs/codex-to-claude-greg-visual-reset-2026-10-15.md\n\nThis update supersedes conflicting earlier art assumptions. Existing completed code/integration evidence remains historical; corrected artwork and native visual acceptance are pending.\n\n---\n\nUser-set (never inferred from behavior \u2014 nd router guardrail). Low = functional-minimums: one task, no chips, no inbox, shortest copy. Off = nothing optional. Quiet body-doubling presence (\"Focus\" chip in the reference) lives here.",
+      "ok": true
+    },
+    {
+      "id": "ari:cloud:trello::card/workspace/6a8f03e71844a6c1103692dc/6ad0875a9e38e61b96ea2c64",
+      "previousName": "D4 Interrupt policy: when may it speak? (default quiet)",
+      "name": "D4 Interrupt policy: when may it speak? (default quiet)",
+      "description": "LATEST ART UPDATE \u2014 2026-10-15, puppy-style full beta\n\nJason explicitly wants the softer rounded puppy-like illustrated Greg, not the realistic anatomy study, and ALL animation families. New exported pack: assets/heel/puppy-v1/greg-puppy-full-beta.zip. Preview: assets/heel/puppy-v1/final/preview.html (localhost8876). Inventory/manifest: assets/heel/puppy-v1/README.md and final/manifest.json. Latest Claude handoff: handoffs/codex-to-claude-puppy-full-pack-2026-10-15.md.\n\nDELIVERED ART:34 clips,768 timed frames,648 generated source poses. Includes sitting, both walks, pacing, ball play/offer, bow, chew/pick-up/carry stick, scratch, yawn, sniff/search/trail, grass, stretch, paw-over-face, optional poop/pee gags, six quiet states,16 gaze targets and sit/lie/curl/wake/turn transitions. Left walk is mirrored;96-frame pacing is composed, not96 new drawings. Shared192\u00d7208 cells, three atlas pages with2\u00d7 versions; Dot-compatible row export included.\n\nEXECUTED: expected source/extract counts, bounds, all768 atlas/frame round trips and zero-alpha borders; browser loads34 clips, loop counters advance and one-shots stop. OPEN: generated shape/colour drift, pacing-turn join, occasional rest eye-opening, gaze-angle calibration and curl transition polish; native integration, reduced-motion/state transitions, and reported stripes/pixelation acceptance. Do not mark these Done from asset existence or build success. Keep previous completed platform work and current fallbacks. Optional antics respect focus/Off/quiet; bathroom gags opt-in.\n\nThis supersedes older pending-art/realistic-style statements below; historical evidence retained.\n\n--- Historical card context ---\n\n## 2026-10-15 \u2014 Greg visual consistency reset (Jason)\n\nAnimation is also an interruption channel: apply quiet/default-off optional-motion rules to A6/A7. Sniffing, pacing, ball/stick play and grass eating must not distract during focus/typing/panel use. Toilet gags are optional manual/opt-in one-shots; real errors retain clear actionable text. No sounds, sparkles or repetitive attention seeking.\n\nCanonical follow-up: https://trello.com/c/S8JdeGot\nExtra behaviours: https://trello.com/c/F0816jgq\nNature behaviours: https://trello.com/c/mAM5xYCB\nSpec: assets/heel/anatomy-v2-photo-based/UNIFIED-ART-SPEC.md\nHandoff: handoffs/codex-to-claude-greg-visual-reset-2026-10-15.md\n\nThis update supersedes conflicting earlier art assumptions. Existing completed code/integration evidence remains historical; corrected artwork and native visual acceptance are pending.\n\n---\n\nAutism/ADHD tension: nudges help re-entry but interruptions cost a lot (context switch, sensory). Proposed defaults:\n- Silent by default; mascot shows a passive badge, no sound, no popups.\n- It speaks only at: (a) user-set time-box ends, (b) declared-goal drift after N min (v1), (c) user opens it.\n- Interrupt budget: max 3/day, user-adjustable; \"quiet hours\" + \"do not disturb\" toggle one click.\n- Transition warnings (10/5/1 min) opt-in.\nDecide: default budget number and whether drift nudges are on by default.",
+      "ok": true
+    },
+    {
+      "id": "ari:cloud:trello::card/workspace/6a8f03e71844a6c1103692dc/6ad0878adc4c7f684e05105c",
+      "previousName": "S8 Interrupt budget + quiet mode + one-click off",
+      "name": "S8 Interrupt budget + quiet mode + one-click off",
+      "description": "LATEST ART UPDATE \u2014 2026-10-15, puppy-style full beta\n\nJason explicitly wants the softer rounded puppy-like illustrated Greg, not the realistic anatomy study, and ALL animation families. New exported pack: assets/heel/puppy-v1/greg-puppy-full-beta.zip. Preview: assets/heel/puppy-v1/final/preview.html (localhost8876). Inventory/manifest: assets/heel/puppy-v1/README.md and final/manifest.json. Latest Claude handoff: handoffs/codex-to-claude-puppy-full-pack-2026-10-15.md.\n\nDELIVERED ART:34 clips,768 timed frames,648 generated source poses. Includes sitting, both walks, pacing, ball play/offer, bow, chew/pick-up/carry stick, scratch, yawn, sniff/search/trail, grass, stretch, paw-over-face, optional poop/pee gags, six quiet states,16 gaze targets and sit/lie/curl/wake/turn transitions. Left walk is mirrored;96-frame pacing is composed, not96 new drawings. Shared192\u00d7208 cells, three atlas pages with2\u00d7 versions; Dot-compatible row export included.\n\nEXECUTED: expected source/extract counts, bounds, all768 atlas/frame round trips and zero-alpha borders; browser loads34 clips, loop counters advance and one-shots stop. OPEN: generated shape/colour drift, pacing-turn join, occasional rest eye-opening, gaze-angle calibration and curl transition polish; native integration, reduced-motion/state transitions, and reported stripes/pixelation acceptance. Do not mark these Done from asset existence or build success. Keep previous completed platform work and current fallbacks. Optional antics respect focus/Off/quiet; bathroom gags opt-in.\n\nThis supersedes older pending-art/realistic-style statements below; historical evidence retained.\n\n--- Historical card context ---\n\n## 2026-10-15 \u2014 Greg visual consistency reset (Jason)\n\nApply quiet mode, one-click Off and interrupt guards to every new A6/A7 animation, not only speech. Stop optional roaming during focus, typing and panel interaction; allow a stable held/rest pose for reduced motion. Do not repeatedly trigger error/toilet gags, and clear props on interruption/exit.\n\nCanonical follow-up: https://trello.com/c/S8JdeGot\nExtra behaviours: https://trello.com/c/F0816jgq\nNature behaviours: https://trello.com/c/mAM5xYCB\nSpec: assets/heel/anatomy-v2-photo-based/UNIFIED-ART-SPEC.md\nHandoff: handoffs/codex-to-claude-greg-visual-reset-2026-10-15.md\n\nThis update supersedes conflicting earlier art assumptions. Existing completed code/integration evidence remains historical; corrected artwork and native visual acceptance are pending.\n\n---\n\nImplements D4. Counter persisted; mascot never speaks past budget; \"Off\" mode removes all optional scaffolding (mirrors /nd off). Copy rules: no shame, no streaks, never-miss-twice recovery wording (biz: atomic-habits/never-miss-twice).",
+      "ok": true
+    },
+    {
+      "id": "ari:cloud:trello::card/workspace/6a8f03e71844a6c1103692dc/6ad0d891b5cb85e92a67eecb",
+      "previousName": "13 R1 Right-click menu on Greg (native): Open / Settings / Hide / Sleep / Walk / Quit",
+      "name": "13 R1 Right-click menu on Greg (native): Open / Settings / Hide / Sleep / Walk / Quit",
+      "description": "LATEST ART UPDATE \u2014 2026-10-15, puppy-style full beta\n\nJason explicitly wants the softer rounded puppy-like illustrated Greg, not the realistic anatomy study, and ALL animation families. New exported pack: assets/heel/puppy-v1/greg-puppy-full-beta.zip. Preview: assets/heel/puppy-v1/final/preview.html (localhost8876). Inventory/manifest: assets/heel/puppy-v1/README.md and final/manifest.json. Latest Claude handoff: handoffs/codex-to-claude-puppy-full-pack-2026-10-15.md.\n\nDELIVERED ART:34 clips,768 timed frames,648 generated source poses. Includes sitting, both walks, pacing, ball play/offer, bow, chew/pick-up/carry stick, scratch, yawn, sniff/search/trail, grass, stretch, paw-over-face, optional poop/pee gags, six quiet states,16 gaze targets and sit/lie/curl/wake/turn transitions. Left walk is mirrored;96-frame pacing is composed, not96 new drawings. Shared192\u00d7208 cells, three atlas pages with2\u00d7 versions; Dot-compatible row export included.\n\nEXECUTED: expected source/extract counts, bounds, all768 atlas/frame round trips and zero-alpha borders; browser loads34 clips, loop counters advance and one-shots stop. OPEN: generated shape/colour drift, pacing-turn join, occasional rest eye-opening, gaze-angle calibration and curl transition polish; native integration, reduced-motion/state transitions, and reported stripes/pixelation acceptance. Do not mark these Done from asset existence or build success. Keep previous completed platform work and current fallbacks. Optional antics respect focus/Off/quiet; bathroom gags opt-in.\n\nThis supersedes older pending-art/realistic-style statements below; historical evidence retained.\n\n--- Historical card context ---\n\n## 2026-10-15 \u2014 Greg visual consistency reset (Jason)\n\nKeep the native menu Done. Future manual previews/actions for A6/A7 should use a restrained labelled submenu if needed, separate from scheduler defaults. One-shot actions return to the correct idle/rest state and clean up props; interruption/Hide/Quit remains responsive. All actions use A5's accepted model and scale.\n\nCanonical follow-up: https://trello.com/c/S8JdeGot\nExtra behaviours: https://trello.com/c/F0816jgq\nNature behaviours: https://trello.com/c/mAM5xYCB\nSpec: assets/heel/anatomy-v2-photo-based/UNIFIED-ART-SPEC.md\nHandoff: handoffs/codex-to-claude-greg-visual-reset-2026-10-15.md\n\nThis update supersedes conflicting earlier art assumptions. Existing completed code/integration evidence remains historical; corrected artwork and native visual acceptance are pending.\n\n---\n\nToday right-click is blocked. Proposed menu (Jason: \"figure out what it should be\"; quit + settings + hide required):\n  Open Heel  (or Close Heel when open)\n  Settings\u2026\n  \u2500\n  Go to sleep  / Wake up\n  Take a walk   (walks across the screen and back, A4b)\n  Quiet mode (no wandering, no walking, no sound)   [check mark]\n  \u2500\n  Hide Greg  (he runs off screen, A4c)   /  Show Greg (tray menu has it too)\n  \u2500\n  Quit Heel\nNative Tauri menu popped by Rust on the webview's contextmenu event (invoke `show_mascot_menu`), reuses open_settings / toggle_panel; items that depend on A4 behaviours are added as those land (menu built from a pure list so it is unit-testable).\nDONE = real window: menu appears at the pointer on right-click (driver triggers the same command), each item calls its handler; quit exits; hide/show round-trips. Click on a menu item itself unverifiable without input.\nEffort: medium (2.5h).",
+      "ok": true
+    },
+    {
+      "id": "ari:cloud:trello::card/workspace/6a8f03e71844a6c1103692dc/6ad0d5504c5e640b55925318",
+      "previousName": "21 F9 Keyboard / screen-reader / reduced-motion pass (keyboard + contrast DONE 2026-10-15; rest after D7)",
+      "name": "21 F9 Keyboard / screen-reader / reduced-motion pass (keyboard + contrast DONE 2026-10-15; rest after D7)",
+      "description": "LATEST ART UPDATE \u2014 2026-10-15, puppy-style full beta\n\nJason explicitly wants the softer rounded puppy-like illustrated Greg, not the realistic anatomy study, and ALL animation families. New exported pack: assets/heel/puppy-v1/greg-puppy-full-beta.zip. Preview: assets/heel/puppy-v1/final/preview.html (localhost8876). Inventory/manifest: assets/heel/puppy-v1/README.md and final/manifest.json. Latest Claude handoff: handoffs/codex-to-claude-puppy-full-pack-2026-10-15.md.\n\nDELIVERED ART:34 clips,768 timed frames,648 generated source poses. Includes sitting, both walks, pacing, ball play/offer, bow, chew/pick-up/carry stick, scratch, yawn, sniff/search/trail, grass, stretch, paw-over-face, optional poop/pee gags, six quiet states,16 gaze targets and sit/lie/curl/wake/turn transitions. Left walk is mirrored;96-frame pacing is composed, not96 new drawings. Shared192\u00d7208 cells, three atlas pages with2\u00d7 versions; Dot-compatible row export included.\n\nEXECUTED: expected source/extract counts, bounds, all768 atlas/frame round trips and zero-alpha borders; browser loads34 clips, loop counters advance and one-shots stop. OPEN: generated shape/colour drift, pacing-turn join, occasional rest eye-opening, gaze-angle calibration and curl transition polish; native integration, reduced-motion/state transitions, and reported stripes/pixelation acceptance. Do not mark these Done from asset existence or build success. Keep previous completed platform work and current fallbacks. Optional antics respect focus/Off/quiet; bathroom gags opt-in.\n\nThis supersedes older pending-art/realistic-style statements below; historical evidence retained.\n\n--- Historical card context ---\n\n## 2026-10-15 \u2014 Greg visual consistency reset (Jason)\n\nInclude every A5/A6/A7 action, transition and roam mode in real-window reduced-motion QA: held meaningful pose, no auto pacing/play/grass/toilet loops. Controls remain keyboard/screen-reader usable; do not announce every sprite frame. Visual acceptance includes 128px/native/Retina scale, light/dark, no stripe/row bleed, pixelation, clipping, palette or scale jumps. Source-only tests do not establish the user-reported native defect is fixed.\n\nCanonical follow-up: https://trello.com/c/S8JdeGot\nExtra behaviours: https://trello.com/c/F0816jgq\nNature behaviours: https://trello.com/c/mAM5xYCB\nSpec: assets/heel/anatomy-v2-photo-based/UNIFIED-ART-SPEC.md\nHandoff: handoffs/codex-to-claude-greg-visual-reset-2026-10-15.md\n\nThis update supersedes conflicting earlier art assumptions. Existing completed code/integration evidence remains historical; corrected artwork and native visual acceptance are pending.\n\n---\n\nPROGRESS 2026-10-15: keyboard walk done in the browser pane with real key events: textarea focused on open; Enter sends; Tab order Close/chip -> Now checkbox -> conversation (focusable) -> receipts summary -> Jump to latest -> drawer -> Plan -> Stuck -> Park it -> ask box -> Send; every stop shows a focus outline; no trap. FINDING: placeholder contrast 2.98:1 (fails AA) - fixed by D3 (Radix TextArea). All other pairs measured >= 4.14:1 (UI line) / >= 7.5:1 (text).\nREMAINING: Esc/Space on Radix components after D3-D5; reduced motion (chevron, scroll, mascot) after D7; VoiceOver cannot be driven here - the accessibility tree is reviewed instead and that limit is stated.\nDONE = D7's contrast table + tree names recorded; no focus trap; Esc behaviour confirmed.\nEffort left: small (1h).",
+      "ok": true
+    },
+    {
+      "id": "ari:cloud:trello::card/workspace/6a8f03e71844a6c1103692dc/6ad0e8d1f93288575b28671e",
+      "previousName": "A5 Greg visual reset: one measured master, unified palette/scale + stripe/pixelation QA",
+      "name": "A5 Greg visual reset: one measured master, unified palette/scale + stripe/pixelation QA",
+      "description": "LATEST ART UPDATE \u2014 2026-10-15, puppy-style full beta\n\nJason explicitly wants the softer rounded puppy-like illustrated Greg, not the realistic anatomy study, and ALL animation families. New exported pack: assets/heel/puppy-v1/greg-puppy-full-beta.zip. Preview: assets/heel/puppy-v1/final/preview.html (localhost8876). Inventory/manifest: assets/heel/puppy-v1/README.md and final/manifest.json. Latest Claude handoff: handoffs/codex-to-claude-puppy-full-pack-2026-10-15.md.\n\nDELIVERED ART:34 clips,768 timed frames,648 generated source poses. Includes sitting, both walks, pacing, ball play/offer, bow, chew/pick-up/carry stick, scratch, yawn, sniff/search/trail, grass, stretch, paw-over-face, optional poop/pee gags, six quiet states,16 gaze targets and sit/lie/curl/wake/turn transitions. Left walk is mirrored;96-frame pacing is composed, not96 new drawings. Shared192\u00d7208 cells, three atlas pages with2\u00d7 versions; Dot-compatible row export included.\n\nEXECUTED: expected source/extract counts, bounds, all768 atlas/frame round trips and zero-alpha borders; browser loads34 clips, loop counters advance and one-shots stop. OPEN: generated shape/colour drift, pacing-turn join, occasional rest eye-opening, gaze-angle calibration and curl transition polish; native integration, reduced-motion/state transitions, and reported stripes/pixelation acceptance. Do not mark these Done from asset existence or build success. Keep previous completed platform work and current fallbacks. Optional antics respect focus/Off/quiet; bathroom gags opt-in.\n\nThis supersedes older pending-art/realistic-style statements below; historical evidence retained.\n\n--- Historical card context ---\n\nBLOCKING VISUAL ACCEPTANCE \u2014 Jason, 2026-10-15. Greg changes colour, design and proportions between animations; moving causes apparent stripes and pixelation. Beta must use the best consistent set possible.\n\nDECISION: one canonical photo-based character master, measured template, locked palette/markings/stroke, stable world scale and manifest for ALL animations. One source of truth is mandatory. Runtime may use one atlas or multiple bounded atlas pages exported from the SAME template; making one huge PNG alone does not fix inconsistent drawings.\n\nREAD: assets/heel/anatomy-v2-photo-based/UNIFIED-ART-SPEC.md, template.json, REFERENCES.md; handoffs/codex-to-claude-greg-visual-reset-2026-10-15.md (saved).\n\nPHOTO EVIDENCE: Google Photos Greg search surveyed to oldest result; 1,567 distinct search-result links encountered, including duplicates/videos/artwork/unrelated matches (not an exhaustive verified photo count). 21 selected Google Photos references plus 11 local Greg images saved/indexed privately. All angles required: front, both profiles, front/rear three-quarter, rear, standing, sitting, lying, curled and movement. Longer adult torso/back, believable shoulders/elbows/stifles/hocks, less exaggerated jowls; grey/charcoal coat, dark nose/muzzle, actual irregular chest marking. Subtle natural fur-covered male sheath where visible. Existing short side-view art rejected.\n\nTEMPLATE: provisional 192x208 logical frame, baseline y196, root (96,196), safe rect x12..180/y12..196; 2x source proposed. Final accepted landmarks and palette must be frozen on the reviewed master. Constant physical size across poses; no automatic per-frame bounding-box normalization. Transparent lossless PNG; no texture/coat stripes or green fringe. Page count may change, geometry/scale must not.\n\nSOURCE CHECK EXECUTED: current code already manifest-driven (A3a Done). Current Dot/smooth PNG dimensions match manifests; zero non-transparent pixels on cell borders in both. This does not reproduce or fix native stripes/pixelation. CLAUDE: reproduce exact current defect in real window; inspect source frame vs displayed frame, density, wrong rect/row selection, fractional sampling, scaling/adjacent cells, image-rendering and compression. Do not assume art-only or renderer-only root cause. Codex has not changed app code.\n\nDONE: corrected multi-angle master and walk proof visually checked; all clips regenerated/normalized from it; all actions/transition/loop seams observed at 128px and actual native/Retina size on light/dark; no colour/size pulses, anatomy drift, stripes, pixelation, clipping or prop jitter; reduced-motion and Off verified; screenshots/video plus exact asset hash/manifest recorded. Frame counts and passing structural tests alone are insufficient.\n\nFuture AI video tooling is optional, not connected/purchased; any output still uses the same master and temporal/alpha/scale QA. Preserve old packs and compatible fallback until replacement acceptance.\n\nSESSION OUTPUT \u2014 2026-10-15:\nSaved handoff: handoffs/codex-to-claude-greg-visual-reset-2026-10-15.md.\nNew candidate: assets/heel/anatomy-v2-photo-based/final/multi-angle-study-v2-flat.png (nine static views, RGBA 1254x1254; SHA256 6ae159026106304e22e783fc02c6022b4bfa854c426629c6d60a586fe7fab9d6).\nThis is an UNAPPROVED MODEL STUDY, not a calibrated atlas or rebuilt animation set. Initial study was too patchy; v2 is flatter but still needs exact palette/landmark/world-scale review and transparent clearance/edge cleanup (33 non-transparent outer-border pixels). Do not auto-fit poses into cells or treat the study's layout as runtime frame rectangles. Existing art remains preserved. Full rebuild, corrected walk proof and native defect reproduction/fix are pending.\nTrello read-back verification: 17 related existing card descriptions updated and 3 new cards created. Completed platform statuses retained. Audit: assets/heel/anatomy-v2-photo-based/trello-update-audit.json.",
+      "ok": true
+    },
+    {
+      "id": "ari:cloud:trello::card/workspace/6a8f03e71844a6c1103692dc/6ad0e8dd8952694d74955b80",
+      "previousName": "A6 Greg extra behaviours: integrate 12 clips after unified anatomy and visual reset",
+      "name": "A6 Greg extra behaviours: integrate 12 clips after unified anatomy and visual reset",
+      "description": "LATEST ART UPDATE \u2014 2026-10-15, puppy-style full beta\n\nJason explicitly wants the softer rounded puppy-like illustrated Greg, not the realistic anatomy study, and ALL animation families. New exported pack: assets/heel/puppy-v1/greg-puppy-full-beta.zip. Preview: assets/heel/puppy-v1/final/preview.html (localhost8876). Inventory/manifest: assets/heel/puppy-v1/README.md and final/manifest.json. Latest Claude handoff: handoffs/codex-to-claude-puppy-full-pack-2026-10-15.md.\n\nDELIVERED ART:34 clips,768 timed frames,648 generated source poses. Includes sitting, both walks, pacing, ball play/offer, bow, chew/pick-up/carry stick, scratch, yawn, sniff/search/trail, grass, stretch, paw-over-face, optional poop/pee gags, six quiet states,16 gaze targets and sit/lie/curl/wake/turn transitions. Left walk is mirrored;96-frame pacing is composed, not96 new drawings. Shared192\u00d7208 cells, three atlas pages with2\u00d7 versions; Dot-compatible row export included.\n\nEXECUTED: expected source/extract counts, bounds, all768 atlas/frame round trips and zero-alpha borders; browser loads34 clips, loop counters advance and one-shots stop. OPEN: generated shape/colour drift, pacing-turn join, occasional rest eye-opening, gaze-angle calibration and curl transition polish; native integration, reduced-motion/state transitions, and reported stripes/pixelation acceptance. Do not mark these Done from asset existence or build success. Keep previous completed platform work and current fallbacks. Optional antics respect focus/Off/quiet; bathroom gags opt-in.\n\nThis supersedes older pending-art/realistic-style statements below; historical evidence retained.\n\n--- Historical card context ---\n\nJason requested pacing back/forth, ball play, offering/fetching ball, play bow, chewing stick, ear scratch, yawn, sniff/search, stretch, paw-over-face error, and optional non-graphic poop/pee gags.\n\nCURRENT ART: assets/heel/extra-v1/final has 12 review-draft clips, 262 timed cells (195 selected generated source drawings, derived repeats/mirrors disclosed). This is NOT a visually accepted replacement: side anatomy was rejected and palette/proportions must be rebuilt through A5/A3b's master. Existing ZIP predates the rejection notice; do not mistake it for approved current art. Handoff: handoffs/codex-to-claude-extra-behaviours-2026-10-15.md.\n\nUse the same fixed physical scale, palette, markings and anchors for every extra. Pacing must use believable four-legged gait and natural turns, with no foot sliding or torso shortening. Avoid clipping root travel inside a 192px window: coordinate native window motion or an explicit stage, not double translation. Ball/stick contact must remain attached to mouth/paw correctly; props clear at completion.\n\nCalm/Lively/Off and reduced motion govern scheduling; no ambient play while typing, panel is open, focus active or Off. Toilet gags are optional manual/opt-in one-shots, non-graphic, never the only explanation of a real error; show actionable error text. All props removed on exit; cooldowns prevent repetitive distraction.\n\nDONE: all 12 corrected clips packaged under the shared atlas manifest, played and interrupted in the real app; loop/one-shot and state entry/exit checked; anchors/scale/palette consistent with core and nature actions; optional gags disabled unless explicitly enabled.",
+      "ok": true
+    },
+    {
+      "id": "ari:cloud:trello::card/workspace/6a8f03e71844a6c1103692dc/6ad0e8e77c9b4e18c5268d3f",
+      "previousName": "A7 Greg nature behaviours: sniff trail, nibble grass, pick up and carry sticks",
+      "name": "A7 Greg nature behaviours: sniff trail, nibble grass, pick up and carry sticks",
+      "description": "LATEST ART UPDATE \u2014 2026-10-15, puppy-style full beta\n\nJason explicitly wants the softer rounded puppy-like illustrated Greg, not the realistic anatomy study, and ALL animation families. New exported pack: assets/heel/puppy-v1/greg-puppy-full-beta.zip. Preview: assets/heel/puppy-v1/final/preview.html (localhost8876). Inventory/manifest: assets/heel/puppy-v1/README.md and final/manifest.json. Latest Claude handoff: handoffs/codex-to-claude-puppy-full-pack-2026-10-15.md.\n\nDELIVERED ART:34 clips,768 timed frames,648 generated source poses. Includes sitting, both walks, pacing, ball play/offer, bow, chew/pick-up/carry stick, scratch, yawn, sniff/search/trail, grass, stretch, paw-over-face, optional poop/pee gags, six quiet states,16 gaze targets and sit/lie/curl/wake/turn transitions. Left walk is mirrored;96-frame pacing is composed, not96 new drawings. Shared192\u00d7208 cells, three atlas pages with2\u00d7 versions; Dot-compatible row export included.\n\nEXECUTED: expected source/extract counts, bounds, all768 atlas/frame round trips and zero-alpha borders; browser loads34 clips, loop counters advance and one-shots stop. OPEN: generated shape/colour drift, pacing-turn join, occasional rest eye-opening, gaze-angle calibration and curl transition polish; native integration, reduced-motion/state transitions, and reported stripes/pixelation acceptance. Do not mark these Done from asset existence or build success. Keep previous completed platform work and current fallbacks. Optional antics respect focus/Off/quiet; bathroom gags opt-in.\n\nThis supersedes older pending-art/realistic-style statements below; historical evidence retained.\n\n--- Historical card context ---\n\nJason's requested natural dog behaviours: nose-down sniffing while walking, nibbling grass, lowering head to pick up a stick, then carrying the stick. Use actual canine poses and believable mouth/ground contact.\n\nCURRENT ART: assets/heel/nature-v1 contains provisional source strips for sniff-trail (18), graze-grass (16), pick-up-stick (16), carry-stick (attempted 18). All remain ANATOMY-UNAPPROVED. Carry source has merged bodies/props and failed extraction (4 suspicious body groups), so it is not a usable 18-frame delivered animation. No nature final atlas or accepted pack exists.\n\nDEPENDENCY: A5 unified photo-based master and measurements; A3b authoring; same palette, skull/torso/limbs/size/ground baseline across core, extras and nature. Body must not shorten to fit cells. Avoid detached tails, back nubs, changing sticks, hovering grass or paw/ground sliding. Preserve calm natural timing and adequate authored in-betweens; show entry and exit.\n\nSeparate manual preview/one-shot triggers from infrequent Calm/Lively scheduling. Off, focus, typing, panel use and reduced motion suppress optional roaming. Props stay within scene bounds and clear on exit.\n\nDONE: four coherent corrected clips with actual frame counts/timings/provenance, source references, transparent atlas page/rects, contact sheets and real app playback evidence. No completion claim from generated source strips alone.",
+      "ok": true
+    }
+  ],
+  "verification": [
+    {
+      "status": "fulfilled",
+      "value": {
+        "id": "ari:cloud:trello::card/workspace/6a8f03e71844a6c1103692dc/6ad0875b651ed3ebde8e641e",
+        "name": "D5 Mascot art (name decided: Heel)",
+        "url": "https://trello.com/c/Mb9PHuPZ/5-d5-mascot-art-name-decided-heel",
+        "descriptionMatches": true,
+        "nameMatches": true
+      }
+    },
+    {
+      "status": "fulfilled",
+      "value": {
+        "id": "ari:cloud:trello::card/workspace/6a8f03e71844a6c1103692dc/6ad0c80b6cd2fbeeec0f4b74",
+        "name": "A1 Swap mascot art: Riff -> Greg (Dot-compatible sheet, primary)",
+        "url": "https://trello.com/c/AXes51nW/37-a1-swap-mascot-art-riff-greg-dot-compatible-sheet-primary",
+        "descriptionMatches": true,
+        "nameMatches": true
+      }
+    },
+    {
+      "status": "fulfilled",
+      "value": {
+        "id": "ari:cloud:trello::card/workspace/6a8f03e71844a6c1103692dc/6ad0c95ceab4ae31aa559b57",
+        "name": "A2 Use the rest of Greg's actions + fix art issues + reduced-motion check",
+        "url": "https://trello.com/c/09WlERKf/39-a2-use-the-rest-of-gregs-actions-fix-art-issues-reduced-motion-check",
+        "descriptionMatches": true,
+        "nameMatches": true
+      }
+    },
+    {
+      "status": "fulfilled",
+      "value": {
+        "id": "ari:cloud:trello::card/workspace/6a8f03e71844a6c1103692dc/6ad0cb41a442905d7dfce771",
+        "name": "17 A3a Manifest-driven mascot player (prereq for sleep/dense art; no new art needed)",
+        "url": "https://trello.com/c/AJRxT8Xw/42-17-a3a-manifest-driven-mascot-player-prereq-for-sleep-dense-art-no-new-art-needed",
+        "descriptionMatches": true,
+        "nameMatches": true
+      }
+    },
+    {
+      "status": "fulfilled",
+      "value": {
+        "id": "ari:cloud:trello::card/workspace/6a8f03e71844a6c1103692dc/6ad0cb4a79ca86e635fa9e90",
+        "name": "A3b Full puppy-style Greg repertoire \u2014 beta art exported; visual/native acceptance pending",
+        "url": "https://trello.com/c/DAEkTasT/43-a3b-full-puppy-style-greg-repertoire-beta-art-exported-visual-native-acceptance-pending",
+        "descriptionMatches": true,
+        "nameMatches": true
+      }
+    },
+    {
+      "status": "fulfilled",
+      "value": {
+        "id": "ari:cloud:trello::card/workspace/6a8f03e71844a6c1103692dc/6ad0d89976c74544f2ade748",
+        "name": "14 A4a Idle life engine: pure behaviour state machine (look, wave, stretch, lie down, sleep, walk) + Calm/Lively/Off",
+        "url": "https://trello.com/c/M5UAj5TE/66-14-a4a-idle-life-engine-pure-behaviour-state-machine-look-wave-stretch-lie-down-sleep-walk-calm-lively-off",
+        "descriptionMatches": true,
+        "nameMatches": true
+      }
+    },
+    {
+      "status": "fulfilled",
+      "value": {
+        "id": "ari:cloud:trello::card/workspace/6a8f03e71844a6c1103692dc/6ad0d8a172d1ca9d26d916b4",
+        "name": "15 A4b Walk across the screen (window glides with running rows, eased, stays on screen)",
+        "url": "https://trello.com/c/shm8WGiy/67-15-a4b-walk-across-the-screen-window-glides-with-running-rows-eased-stays-on-screen",
+        "descriptionMatches": true,
+        "nameMatches": true
+      }
+    },
+    {
+      "status": "fulfilled",
+      "value": {
+        "id": "ari:cloud:trello::card/workspace/6a8f03e71844a6c1103692dc/6ad0d8a99c9a38a2a9211a6d",
+        "name": "16 A4c Hide = run off screen; Show = run back in (no vanishing) + \"Show Greg\" in tray",
+        "url": "https://trello.com/c/9p2R66j8/68-16-a4c-hide-run-off-screen-show-run-back-in-no-vanishing-show-greg-in-tray",
+        "descriptionMatches": true,
+        "nameMatches": true
+      }
+    },
+    {
+      "status": "fulfilled",
+      "value": {
+        "id": "ari:cloud:trello::card/workspace/6a8f03e71844a6c1103692dc/6ad0e61569f0ae8941fe5f37",
+        "name": "16b A4c remainder: hidden state survives restart, launch walk-on, quit wave, reduced-motion fade",
+        "url": "https://trello.com/c/SRmF74Zp/78-16b-a4c-remainder-hidden-state-survives-restart-launch-walk-on-quit-wave-reduced-motion-fade",
+        "descriptionMatches": true,
+        "nameMatches": true
+      }
+    },
+    {
+      "status": "fulfilled",
+      "value": {
+        "id": "ari:cloud:trello::card/workspace/6a8f03e71844a6c1103692dc/6ad0d8b204edfbf4cfb34184",
+        "name": "18 A4d Sleep: lie down, curl up, snore-free zzz; wakes on touch or panel open (needs A3a + dense REST art)",
+        "url": "https://trello.com/c/lPrh8SBZ/69-18-a4d-sleep-lie-down-curl-up-snore-free-zzz-wakes-on-touch-or-panel-open-needs-a3a-dense-rest-art",
+        "descriptionMatches": true,
+        "nameMatches": true
+      }
+    },
+    {
+      "status": "fulfilled",
+      "value": {
+        "id": "ari:cloud:trello::card/workspace/6a8f03e71844a6c1103692dc/6ad0c812e69df5f465bcb294",
+        "name": "V1-11 Greg dense six-state set (Rest, quiet Done, Focus) + transitions",
+        "url": "https://trello.com/c/TP6xHJpJ/38-v1-11-greg-dense-six-state-set-rest-quiet-done-focus-transitions",
+        "descriptionMatches": true,
+        "nameMatches": true
+      }
+    },
+    {
+      "status": "fulfilled",
+      "value": {
+        "id": "ari:cloud:trello::card/workspace/6a8f03e71844a6c1103692dc/6ad0ace8159f65e1cc66c840",
+        "name": "V1-8 Full Settings tab: privacy, quiet, capacity, mascot, skills",
+        "url": "https://trello.com/c/CBYfH3bq/33-v1-8-full-settings-tab-privacy-quiet-capacity-mascot-skills",
+        "descriptionMatches": true,
+        "nameMatches": true
+      }
+    },
+    {
+      "status": "fulfilled",
+      "value": {
+        "id": "ari:cloud:trello::card/workspace/6a8f03e71844a6c1103692dc/6ad087c6872ee7bbc8ca2563",
+        "name": "V1-7 Capacity modes: Normal / Low / Off",
+        "url": "https://trello.com/c/U9x10IUT/23-v1-7-capacity-modes-normal-low-off",
+        "descriptionMatches": true,
+        "nameMatches": true
+      }
+    },
+    {
+      "status": "fulfilled",
+      "value": {
+        "id": "ari:cloud:trello::card/workspace/6a8f03e71844a6c1103692dc/6ad0875a9e38e61b96ea2c64",
+        "name": "D4 Interrupt policy: when may it speak? (default quiet)",
+        "url": "https://trello.com/c/iOuUhWRQ/4-d4-interrupt-policy-when-may-it-speak-default-quiet",
+        "descriptionMatches": true,
+        "nameMatches": true
+      }
+    },
+    {
+      "status": "fulfilled",
+      "value": {
+        "id": "ari:cloud:trello::card/workspace/6a8f03e71844a6c1103692dc/6ad0878adc4c7f684e05105c",
+        "name": "S8 Interrupt budget + quiet mode + one-click off",
+        "url": "https://trello.com/c/miLoeRCa/15-s8-interrupt-budget-quiet-mode-one-click-off",
+        "descriptionMatches": true,
+        "nameMatches": true
+      }
+    },
+    {
+      "status": "fulfilled",
+      "value": {
+        "id": "ari:cloud:trello::card/workspace/6a8f03e71844a6c1103692dc/6ad0d891b5cb85e92a67eecb",
+        "name": "13 R1 Right-click menu on Greg (native): Open / Settings / Hide / Sleep / Walk / Quit",
+        "url": "https://trello.com/c/UVxP7KV5/65-13-r1-right-click-menu-on-greg-native-open-settings-hide-sleep-walk-quit",
+        "descriptionMatches": true,
+        "nameMatches": true
+      }
+    },
+    {
+      "status": "fulfilled",
+      "value": {
+        "id": "ari:cloud:trello::card/workspace/6a8f03e71844a6c1103692dc/6ad0d5504c5e640b55925318",
+        "name": "21 F9 Keyboard / screen-reader / reduced-motion pass (keyboard + contrast DONE 2026-10-15; rest after D7)",
+        "url": "https://trello.com/c/bkJrGUrA/52-21-f9-keyboard-screen-reader-reduced-motion-pass-keyboard-contrast-done-2026-10-15-rest-after-d7",
+        "descriptionMatches": true,
+        "nameMatches": true
+      }
+    },
+    {
+      "status": "fulfilled",
+      "value": {
+        "id": "ari:cloud:trello::card/workspace/6a8f03e71844a6c1103692dc/6ad0e8d1f93288575b28671e",
+        "name": "A5 Greg visual reset: one measured master, unified palette/scale + stripe/pixelation QA",
+        "url": "https://trello.com/c/S8JdeGot/79-a5-greg-visual-reset-one-measured-master-unified-palette-scale-stripe-pixelation-qa",
+        "descriptionMatches": true,
+        "nameMatches": true
+      }
+    },
+    {
+      "status": "fulfilled",
+      "value": {
+        "id": "ari:cloud:trello::card/workspace/6a8f03e71844a6c1103692dc/6ad0e8dd8952694d74955b80",
+        "name": "A6 Greg extra behaviours: integrate 12 clips after unified anatomy and visual reset",
+        "url": "https://trello.com/c/F0816jgq/80-a6-greg-extra-behaviours-integrate-12-clips-after-unified-anatomy-and-visual-reset",
+        "descriptionMatches": true,
+        "nameMatches": true
+      }
+    },
+    {
+      "status": "fulfilled",
+      "value": {
+        "id": "ari:cloud:trello::card/workspace/6a8f03e71844a6c1103692dc/6ad0e8e77c9b4e18c5268d3f",
+        "name": "A7 Greg nature behaviours: sniff trail, nibble grass, pick up and carry sticks",
+        "url": "https://trello.com/c/mAM5xYCB/81-a7-greg-nature-behaviours-sniff-trail-nibble-grass-pick-up-and-carry-sticks",
+        "descriptionMatches": true,
+        "nameMatches": true
+      }
+    }
+  ]
+}

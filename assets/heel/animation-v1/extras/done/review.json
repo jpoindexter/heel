@@ -1,0 +1,112 @@
+{
+  "ok": true,
+  "frames_root": "/Users/jasonpoindexter/Documents/GitHub/Greg agent/assets/heel/animation-v1/extras/done/frames",
+  "states": [
+    "idle"
+  ],
+  "errors": [],
+  "warnings": [],
+  "rows": [
+    {
+      "state": "idle",
+      "expected_frames": 6,
+      "actual_frames": 6,
+      "extraction_method": "components",
+      "ok": true,
+      "errors": [],
+      "warnings": [],
+      "frames": [
+        {
+          "index": 0,
+          "file": "/Users/jasonpoindexter/Documents/GitHub/Greg agent/assets/heel/animation-v1/extras/done/frames/idle/00.png",
+          "width": 192,
+          "height": 208,
+          "nontransparent_pixels": 19823,
+          "bbox": [
+            21,
+            5,
+            159,
+            203
+          ],
+          "edge_pixels": 0,
+          "chroma_adjacent_pixels": 123
+        },
+        {
+          "index": 1,
+          "file": "/Users/jasonpoindexter/Documents/GitHub/Greg agent/assets/heel/animation-v1/extras/done/frames/idle/01.png",
+          "width": 192,
+          "height": 208,
+          "nontransparent_pixels": 19412,
+          "bbox": [
+            36,
+            5,
+            160,
+            203
+          ],
+          "edge_pixels": 0,
+          "chroma_adjacent_pixels": 137
+        },
+        {
+          "index": 2,
+          "file": "/Users/jasonpoindexter/Documents/GitHub/Greg agent/assets/heel/animation-v1/extras/done/frames/idle/02.png",
+          "width": 192,
+          "height": 208,
+          "nontransparent_pixels": 19820,
+          "bbox": [
+            37,
+            5,
+            175,
+            203
+          ],
+          "edge_pixels": 0,
+          "chroma_adjacent_pixels": 164
+        },
+        {
+          "index": 3,
+          "file": "/Users/jasonpoindexter/Documents/GitHub/Greg agent/assets/heel/animation-v1/extras/done/frames/idle/03.png",
+          "width": 192,
+          "height": 208,
+          "nontransparent_pixels": 19476,
+          "bbox": [
+            35,
+            5,
+            159,
+            203
+          ],
+          "edge_pixels": 0,
+          "chroma_adjacent_pixels": 126
+        },
+        {
+          "index": 4,
+          "file": "/Users/jasonpoindexter/Documents/GitHub/Greg agent/assets/heel/animation-v1/extras/done/frames/idle/04.png",
+          "width": 192,
+          "height": 208,
+          "nontransparent_pixels": 19851,
+          "bbox": [
+            21,
+            5,
+            159,
+            203
+          ],
+          "edge_pixels": 0,
+          "chroma_adjacent_pixels": 145
+        },
+        {
+          "index": 5,
+          "file": "/Users/jasonpoindexter/Documents/GitHub/Greg agent/assets/heel/animation-v1/extras/done/frames/idle/05.png",
+          "width": 192,
+          "height": 208,
+          "nontransparent_pixels": 19469,
+          "bbox": [
+            36,
+            5,
+            160,
+            203
+          ],
+          "edge_pixels": 0,
+          "chroma_adjacent_pixels": 143
+        }
+      ]
+    }
+  ]
+}

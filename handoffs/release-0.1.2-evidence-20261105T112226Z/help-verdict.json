@@ -1,0 +1,17 @@
+{
+  "verdict": "Fail",
+  "reason": "Requested visible keyboard focus indicator missing in light and dark.",
+  "topicCount": 9,
+  "tabReachedAll": true,
+  "spaceAndEnterActivation": true,
+  "numberedSteps": true,
+  "lightAndDarkObserved": true,
+  "wrapObserved": true,
+  "scrollToFinalStepsObserved": true,
+  "focusRingVisible": false,
+  "codeFinding": "settings.css references --focus-ring-width; no definition found in src/design/tokens.css or Radix themes stylesheet.",
+  "keyboardNavigationBaseline": "off",
+  "keyboardNavigationRestored": "off",
+  "appearanceBaseline": "System",
+  "appearanceRestored": "System"
+}

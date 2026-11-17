@@ -1,0 +1,1 @@
+16-phase right-facing slow walk; canonical identity and flat charcoal palette; fixed scale/baseline; layout guide only; magenta chroma; no props/effects. Mirror each extracted frame individually for leftward walking, retaining chronology. Add explicit root travel and turn handling in playback; no whole-strip reversal.

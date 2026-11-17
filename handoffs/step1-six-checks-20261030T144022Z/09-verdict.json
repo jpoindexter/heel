@@ -1,0 +1,10 @@
+{
+  "toastBefore": true,
+  "menuOpen": true,
+  "toastDuringMenu": false,
+  "settingsRemains": true,
+  "listClosed": true,
+  "toastAfter": true,
+  "pass": true,
+  "note": "Menu modal AX omits background notice. Notice present immediately before and after; screenshot while menu open shows the notice card partly obscured by the menu. No claim that full notice text is exposed while modal list is open."
+}

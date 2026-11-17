@@ -1,0 +1,144 @@
+diff --git a/src/settings/BrainSelect.tsx b/src/settings/BrainSelect.tsx
+index 4e83569..73ac0d7 100644
+--- a/src/settings/BrainSelect.tsx
++++ b/src/settings/BrainSelect.tsx
+@@ -1,15 +1,17 @@
+ import { useState } from "react";
+ import { Select, Text } from "@radix-ui/themes";
+ import type { BrainStateDto } from "../../shared/api";
+-import type { ProviderId } from "../../shared/providers";
+-import { brainGroups, optionValue, parseOption } from "./brain-model";
++import { isKeyedProvider, type ProviderId } from "../../shared/providers";
++import { useNotices } from "../ui/notices";
++import { brainGroups, labelFor, optionValue, parseOption } from "./brain-model";
+ 
+-type Props = { state: BrainStateDto; onChoose: (provider: ProviderId, model: string | null) => void };
++type Props = { state: BrainStateDto; onChoose: (provider: ProviderId, model: string | null) => void; onSetup: () => void };
+ 
+ /** One selector for every AI: the subscriptions Heel detects, local models, and API keys, each provider's models as its options. */
+-export function BrainSelect({ state, onChoose }: Props) {
++export function BrainSelect({ state, onChoose, onSetup }: Props) {
+   const { provider, model } = state.settings;
+   const [open, setOpen] = useState(false);
++  const { show: notify } = useNotices();
+   // A toast that appears while the list is open becomes Radix's top layer and takes Esc; close the list ourselves and mark the key handled.
+   const onKeyDown = (event: React.KeyboardEvent) => {
+     if (event.key !== "Escape") return;
+@@ -18,7 +20,11 @@ export function BrainSelect({ state, onChoose }: Props) {
+   };
+   const choose = (value: string) => {
+     const next = parseOption(value);
+-    if (next) onChoose(next.provider, next.model);
++    if (!next) return;
++    if (isKeyedProvider(next.provider) && !state.providers.find((p) => p.id === next.provider)?.ready) {
++      onSetup();
++      notify({ message: `${labelFor(state, next.provider)} needs a key. Add it below; your selected AI is unchanged.`, tone: "info" });
++    } else onChoose(next.provider, next.model);
+   };
+   return (
+     <div className="field">
+@@ -36,7 +42,7 @@ export function BrainSelect({ state, onChoose }: Props) {
+           ))}
+         </Select.Content>
+       </Select.Root>
+-      <Text as="p" id="brain-help" size="1" color="gray">Subscriptions signed in on this Mac show as ready. Greyed entries say what they need.</Text>
++      <Text as="p" id="brain-help" size="1" color="gray">Subscriptions signed in on this Mac show as ready. API-key entries open setup; greyed entries say what they need.</Text>
+     </div>
+   );
+ }
+diff --git a/src/settings/BrainSettings.tsx b/src/settings/BrainSettings.tsx
+index 494d668..0a681b2 100644
+--- a/src/settings/BrainSettings.tsx
++++ b/src/settings/BrainSettings.tsx
+@@ -1,4 +1,5 @@
+ import { Button, Callout, Flex, Heading, Text } from "@radix-ui/themes";
++import { useState } from "react";
+ import { isKeyedProvider } from "../../shared/providers";
+ import { client } from "../api/default-client";
+ import { modelText } from "./brain-model";
+@@ -11,6 +12,7 @@ type Props = { active: boolean; onSaved?: () => void };
+ 
+ export function BrainSettings({ active, onSaved }: Props) {
+   const brain = useBrain(client, active, onSaved);
++  const [keysOpen, setKeysOpen] = useState(false);
+   const { view, test } = brain;
+   const ready = view.phase === "ready" ? view : null;
+   const text = ready ? modelText(ready.state) : null;
+@@ -30,8 +32,11 @@ export function BrainSettings({ active, onSaved }: Props) {
+       )}
+       {ready && (
+         <>
+-          <BrainSelect state={ready.state} onChoose={(provider, model) => void brain.choose(provider, model)} />
+-          <details className="brain-keys" open={keyedChosen}>
++          <BrainSelect state={ready.state} onSetup={() => setKeysOpen(true)} onChoose={(provider, model) => {
++            setKeysOpen(false);
++            void brain.choose(provider, model);
++          }} />
++          <details className="brain-keys" open={keyedChosen || keysOpen} onToggle={(event) => setKeysOpen(event.currentTarget.open)}>
+             <summary>
+               <Text size="2" weight="medium">API keys</Text> <Text size="1" color="gray">Anthropic, OpenAI, Mistral</Text>
+             </summary>
+diff --git a/src/settings/brain-model.test.ts b/src/settings/brain-model.test.ts
+index 588e702..8b77743 100644
+--- a/src/settings/brain-model.test.ts
++++ b/src/settings/brain-model.test.ts
+@@ -1,5 +1,6 @@
+ import { describe, expect, it } from "vitest";
+ import type { BrainStateDto } from "../../shared/api";
++import { KEYED_PROVIDER_IDS } from "../../shared/providers";
+ import { brainGroups, changeMessage, modelText, modelToCommit, optionValue, parseOption } from "./brain-model";
+ 
+ describe("modelToCommit", () => {
+@@ -25,6 +26,20 @@ const state = (provider: BrainStateDto["settings"]["provider"], model: string |
+ });
+ 
+ describe("brainGroups", () => {
++  it.each(KEYED_PROVIDER_IDS)("lets a person choose %s to open its missing-key setup", (id) => {
++    const missingKey = state("claude");
++    missingKey.providers = [{ id, label: id, installed: true, ready: false, detail: "No API key yet", models: [] }];
++    expect(brainGroups(missingKey)[0]!.options).toEqual([
++      { value: optionValue(id, null), label: `${id} · Add API key…`, disabled: false },
++    ]);
++  });
++
++  it("keeps an unavailable local provider disabled", () => {
++    const local = state("ollama");
++    local.providers = [{ id: "ollama", label: "Local", installed: true, ready: false, detail: "Ollama isn't running", models: [] }];
++    expect(brainGroups(local)[0]!.options[0]!.disabled).toBe(true);
++  });
++
+   it("gives a CLI provider its default entry, a local provider its models only, and keeps a provider that needs setup listed but disabled", () => {
+     const groups = brainGroups(state("claude"));
+     expect(groups.map((g) => [g.id, g.ready, g.options.map((o) => [o.label, o.disabled ?? false])])).toEqual([
+diff --git a/src/settings/brain-model.ts b/src/settings/brain-model.ts
+index 307b5a9..ff4a60a 100644
+--- a/src/settings/brain-model.ts
++++ b/src/settings/brain-model.ts
+@@ -1,5 +1,5 @@
+ import type { BrainStateDto } from "../../shared/api";
+-import { PROVIDER_IDS, type ProviderId } from "../../shared/providers";
++import { isKeyedProvider, PROVIDER_IDS, type ProviderId } from "../../shared/providers";
+ 
+ /** Providers Heel can run with no model chosen (the CLIs pick their own; Anthropic and Mistral have a current default). Ollama and OpenAI need a pick. */
+ const HAS_DEFAULT_MODEL: readonly ProviderId[] = ["claude", "codex", "anthropic", "mistral"];
+@@ -18,7 +18,10 @@ export function parseOption(value: string): { provider: ProviderId; model: strin
+ }
+ 
+ function optionsOf(group: BrainStateDto["providers"][number], chosen: ProviderId | null, saved: string | null): BrainOption[] {
+-  if (!group.ready) return [{ value: optionValue(group.id, null), label: group.detail, disabled: true }];
++  if (!group.ready) {
++    const keyed = isKeyedProvider(group.id);
++    return [{ value: optionValue(group.id, null), label: keyed ? `${group.label} · Add API key…` : group.detail, disabled: !keyed }];
++  }
+   const options: BrainOption[] = [];
+   // With a list to pick from, the default entry says so; without one (the CLIs) the provider's name is the whole entry.
+   if (HAS_DEFAULT_MODEL.includes(group.id)) options.push({ value: optionValue(group.id, null), label: group.models.length ? `${group.label} · default model` : group.label });
+@@ -29,7 +32,7 @@ function optionsOf(group: BrainStateDto["providers"][number], chosen: ProviderId
+   return options;
+ }
+ 
+-/** One group per provider for the selector: a provider that isn't ready keeps its place, disabled, with what to do. */
++/** Missing-key entries open setup; unavailable subscriptions and local servers stay disabled. */
+ export function brainGroups(state: BrainStateDto): BrainGroup[] {
+   const { provider, model } = state.settings;
+   return state.providers.map((p) => ({ id: p.id, label: p.label, ready: p.ready, detail: p.detail, options: optionsOf(p, provider, model) }));

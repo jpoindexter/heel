@@ -1,0 +1,32 @@
+The following is a diff from the previous accessibility tree for Window: "Heel panel" with ~ and + representing changed and added elements, respectively. Removed elements are summarized by ID range.
+~							81 container (expanded) Secondary Actions: Collapse
+~								82 summary Debug, Value: on
++									83 text Debug
++								84 text What Heel noted about itself: where and when, never what you wrote. Hand it over when something breaks.
++								85 text Panel log
++								86 container Panel log
++									87 text 2026-10-27 10:51:27 info  layers: today
+2026-10-27 10:51:27 warn  helper: starting
+2026-10-27 10:51:30 info  helper: running
+2026-10-27 13:35:49 info  layers: today
+2026-10-27 13:35:49 warn  helper: starting
+2026-10-27 13:35:52 info  helper: running
+2026-10-27 13:36:10 info  layers: settings
+2026-10-27 13:49:28 info  layers: today
+2026-10-30 13:03:30 info  layers: today
+2026-10-30 13:03:30 warn  helper: starting
+2026-10-30 13:03:33 info  helper: running
+2026-10-30 13:07:16 info  layers: history
+2026-10-30 1
++								88 text Helper log
++								89 container Helper log
++									90 text (node:88990) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+Heel sidecar listening on 127.0.0.1:50749 (data: /Users/jasonpoindexter/Library/Application Support/studio.theft.heel)
+(node:14800) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+Heel sidecar listening on 127.0.0.1:55842 (data: /Users
++								91 button Copy report
++								92 button Export report…
++								93 button Clear log
+The focused UI element is 82 summary Debug, Value: on

@@ -1,0 +1,28 @@
+{
+  "stapler-dmg": {
+    "exit": 0,
+    "output": "Processing: /Users/jasonpoindexter/Documents/GitHub/Greg agent/src-tauri/target/release/bundle/dmg/Heel_0.1.2_aarch64.dmg\nThe validate action worked!"
+  },
+  "stapler-app": {
+    "exit": 0,
+    "output": "Processing: /Users/jasonpoindexter/Documents/GitHub/Greg agent/src-tauri/target/release/bundle/macos/Heel.app\nThe validate action worked!"
+  },
+  "gatekeeper-dmg": {
+    "exit": 0,
+    "output": "src-tauri/target/release/bundle/dmg/Heel_0.1.2_aarch64.dmg: accepted\nsource=Notarized Developer ID\norigin=Developer ID Application: Jason Poindexter (5352PXMNV5)"
+  },
+  "gatekeeper-app": {
+    "exit": 0,
+    "output": "src-tauri/target/release/bundle/macos/Heel.app: accepted\nsource=Notarized Developer ID\norigin=Developer ID Application: Jason Poindexter (5352PXMNV5)"
+  },
+  "identity": {
+    "appVersion": "0.1.2",
+    "executableSha256": "daba5c6f4c8c139e35be24633402c463281f5db7001d3b6f8f4f95ac55d4f320",
+    "dmgSha256": "f6026c77a0ce2c36ed8adcab4b3a295fb4c6f361891b267e6b62bce9127ab976",
+    "dmgBytes": 41276276,
+    "sourceCommit": "5338adb40d527e7ba14eb4e9a663faf3412d8cf0",
+    "processes": [
+      "84548 /Users/jasonpoindexter/Documents/GitHub/Greg agent/src-tauri/target/release/bundle/macos/Heel.app/Contents/MacOS/heel"
+    ]
+  }
+}

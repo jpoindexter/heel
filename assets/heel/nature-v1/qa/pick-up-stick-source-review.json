@@ -1,0 +1,17 @@
+{
+  "status": "ANATOMY_UNAPPROVED",
+  "reason": "User rejected existing sidebody anatomy; parent establishing real-photo-grounded standingprofile andwalkanchors. Preserve draft; do not promote/extract as approvedproduction.",
+  "source": "/Users/jasonpoindexter/Documents/GitHub/Greg agent/assets/heel/nature-v1/decoded/pick-up-stick.png",
+  "actualCompleteBodyComponents": 16,
+  "sourceBoundaryOpaquePixels": 0,
+  "observedAction": "Standing threequarter Greg bends head until nose/mouth touches stick, closes atcentre, rises carrying throughfinalpose.",
+  "stickShape": "Short straight muted tan-brown blunt rounded rod, aboutheadwidth, thicker/cleaner than oldchewstick.",
+  "knownDefects": [
+    "Sidebodyanatomy unapproved byuser",
+    "Three detached nonprop artefacts sourceareas130/97/53; notcleaned",
+    "Small connectedbacknubs inheadloweringposes mayreadasmisplacedtailtips"
+  ],
+  "smoothnessVerified": false,
+  "generationAndRepairPaused": true,
+  "nextStep": "Await parent new real-photo-grounded standingprofile andwalkanchors before regeneration."
+}

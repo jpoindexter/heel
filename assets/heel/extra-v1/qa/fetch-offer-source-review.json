@@ -1,0 +1,20 @@
+{
+  "source": "/Users/jasonpoindexter/Documents/GitHub/Greg agent/assets/heel/extra-v1/decoded/fetch-offer.png",
+  "actualPoseCount": 16,
+  "sourceSize": [
+    2172,
+    724
+  ],
+  "visualSourceReviewed": true,
+  "bodyComponentsCount": 16,
+  "character": "Charcoal grey Greg, dark nose and muzzle, white chin and chest",
+  "background": "#FF00FF",
+  "clippingObserved": false,
+  "detachedEffectsObserved": false,
+  "warnings": [
+    "Tiny attached pink tongue appears briefly in release pose.",
+    "Ball size varies slightly mouth-to-floor; native playback remains required."
+  ],
+  "motionSmoothnessVerified": false,
+  "parentExtractionAndPlaybackRequired": true
+}

@@ -1,0 +1,229 @@
+{
+  "method": "Whole-frame integer horizontal translations of bundled extracted generatedpixels to commonhead-bandcenter96; unchangedsharedscale and baseline.",
+  "frames": [
+    {
+      "frame": 0,
+      "headBandCenterBefore": 101.5,
+      "translation": [
+        -6,
+        0
+      ],
+      "bbox": [
+        26,
+        8,
+        154,
+        200
+      ]
+    },
+    {
+      "frame": 1,
+      "headBandCenterBefore": 101.5,
+      "translation": [
+        -6,
+        0
+      ],
+      "bbox": [
+        26,
+        8,
+        154,
+        200
+      ]
+    },
+    {
+      "frame": 2,
+      "headBandCenterBefore": 99.5,
+      "translation": [
+        -4,
+        0
+      ],
+      "bbox": [
+        29,
+        8,
+        155,
+        200
+      ]
+    },
+    {
+      "frame": 3,
+      "headBandCenterBefore": 96.5,
+      "translation": [
+        0,
+        0
+      ],
+      "bbox": [
+        34,
+        8,
+        157,
+        200
+      ]
+    },
+    {
+      "frame": 4,
+      "headBandCenterBefore": 94.5,
+      "translation": [
+        2,
+        0
+      ],
+      "bbox": [
+        40,
+        8,
+        156,
+        200
+      ]
+    },
+    {
+      "frame": 5,
+      "headBandCenterBefore": 89.5,
+      "translation": [
+        6,
+        0
+      ],
+      "bbox": [
+        38,
+        8,
+        165,
+        200
+      ]
+    },
+    {
+      "frame": 6,
+      "headBandCenterBefore": 87.5,
+      "translation": [
+        8,
+        0
+      ],
+      "bbox": [
+        40,
+        8,
+        168,
+        200
+      ]
+    },
+    {
+      "frame": 7,
+      "headBandCenterBefore": 88.0,
+      "translation": [
+        8,
+        0
+      ],
+      "bbox": [
+        40,
+        8,
+        168,
+        200
+      ]
+    },
+    {
+      "frame": 8,
+      "headBandCenterBefore": 88.0,
+      "translation": [
+        8,
+        0
+      ],
+      "bbox": [
+        40,
+        8,
+        168,
+        200
+      ]
+    },
+    {
+      "frame": 9,
+      "headBandCenterBefore": 87.5,
+      "translation": [
+        8,
+        0
+      ],
+      "bbox": [
+        40,
+        8,
+        168,
+        200
+      ]
+    },
+    {
+      "frame": 10,
+      "headBandCenterBefore": 89.5,
+      "translation": [
+        6,
+        0
+      ],
+      "bbox": [
+        38,
+        8,
+        165,
+        200
+      ]
+    },
+    {
+      "frame": 11,
+      "headBandCenterBefore": 94.5,
+      "translation": [
+        2,
+        0
+      ],
+      "bbox": [
+        40,
+        8,
+        156,
+        200
+      ]
+    },
+    {
+      "frame": 12,
+      "headBandCenterBefore": 96.5,
+      "translation": [
+        0,
+        0
+      ],
+      "bbox": [
+        34,
+        8,
+        157,
+        200
+      ]
+    },
+    {
+      "frame": 13,
+      "headBandCenterBefore": 99.5,
+      "translation": [
+        -4,
+        0
+      ],
+      "bbox": [
+        29,
+        8,
+        155,
+        200
+      ]
+    },
+    {
+      "frame": 14,
+      "headBandCenterBefore": 101.5,
+      "translation": [
+        -6,
+        0
+      ],
+      "bbox": [
+        26,
+        8,
+        154,
+        200
+      ]
+    },
+    {
+      "frame": 15,
+      "headBandCenterBefore": 101.5,
+      "translation": [
+        -6,
+        0
+      ],
+      "bbox": [
+        26,
+        8,
+        154,
+        200
+      ]
+    }
+  ]
+}

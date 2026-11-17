@@ -1,0 +1,196 @@
+{
+  "status": "UNAPPROVED_MODEL_STUDY_NOT_ANIMATION_ATLAS",
+  "executed": [
+    "32 selected reference files copied and indexed with provenance and hashes",
+    "All selected source image long edges at least 1440px",
+    "Four photo contact sheets visually reviewed",
+    "Both generated model studies viewed",
+    "Image dimensions, alpha and hashes read directly",
+    "17 Trello updated descriptions and 3 new descriptions read-back verified"
+  ],
+  "visualReview": {
+    "v1": "Longer torso and more natural leg structure than rejected side draft, but excessive shading patches and visible scale drift: not accepted.",
+    "v2": "Flatter, quieter coat and smaller true lower chest patch. Nine static views present. Still needs exact palette lock, per-view landmark/physical-scale calibration, anatomy/identity acceptance and alpha fringe inspection. Layout is an irregular model study, not equal atlas cells. Both generated PNGs have a small number of non-transparent outer-border pixels; transparent safety margins are not accepted. Generated RGB fills are not an exact quantized match to proposed hex palette. No measured equal-cell atlas packing has been done."
+  },
+  "notExecuted": [
+    "No new full animation repertoire generated from this study",
+    "No measured master landmark lock or user visual acceptance",
+    "No corrected walk proof",
+    "No native-window reproduction or fix of stripe/pixelation issue",
+    "No 2x player extension or replacement app integration"
+  ],
+  "files": [
+    {
+      "path": "assets/heel/anatomy-v2-photo-based/final/multi-angle-study-v1.png",
+      "dimensions": [
+        1254,
+        1254
+      ],
+      "mode": "RGBA",
+      "sha256": "bbea80081dea53bb01bba2c33acb14673354d0bccb5bd84a52ef1e6b4f57dd8d",
+      "alphaRange": [
+        0,
+        255
+      ],
+      "occupiedBounds": [
+        0,
+        15,
+        1254,
+        1254
+      ],
+      "nontransparentOuterBorderPixels": 32,
+      "dominantOpaqueColours": [
+        {
+          "rgb": [
+            83,
+            82,
+            82
+          ],
+          "pixels": 19680
+        },
+        {
+          "rgb": [
+            84,
+            83,
+            83
+          ],
+          "pixels": 16247
+        },
+        {
+          "rgb": [
+            83,
+            83,
+            82
+          ],
+          "pixels": 15173
+        },
+        {
+          "rgb": [
+            82,
+            81,
+            81
+          ],
+          "pixels": 13686
+        },
+        {
+          "rgb": [
+            83,
+            83,
+            83
+          ],
+          "pixels": 13217
+        },
+        {
+          "rgb": [
+            82,
+            82,
+            82
+          ],
+          "pixels": 11897
+        },
+        {
+          "rgb": [
+            82,
+            82,
+            81
+          ],
+          "pixels": 10743
+        },
+        {
+          "rgb": [
+            84,
+            84,
+            83
+          ],
+          "pixels": 9302
+        }
+      ]
+    },
+    {
+      "path": "assets/heel/anatomy-v2-photo-based/final/multi-angle-study-v2-flat.png",
+      "dimensions": [
+        1254,
+        1254
+      ],
+      "mode": "RGBA",
+      "sha256": "6ae159026106304e22e783fc02c6022b4bfa854c426629c6d60a586fe7fab9d6",
+      "alphaRange": [
+        0,
+        255
+      ],
+      "occupiedBounds": [
+        18,
+        16,
+        1253,
+        1254
+      ],
+      "nontransparentOuterBorderPixels": 33,
+      "dominantOpaqueColours": [
+        {
+          "rgb": [
+            89,
+            89,
+            89
+          ],
+          "pixels": 38676
+        },
+        {
+          "rgb": [
+            89,
+            90,
+            90
+          ],
+          "pixels": 37295
+        },
+        {
+          "rgb": [
+            88,
+            89,
+            89
+          ],
+          "pixels": 33078
+        },
+        {
+          "rgb": [
+            90,
+            90,
+            90
+          ],
+          "pixels": 30855
+        },
+        {
+          "rgb": [
+            88,
+            88,
+            88
+          ],
+          "pixels": 19687
+        },
+        {
+          "rgb": [
+            89,
+            89,
+            90
+          ],
+          "pixels": 17601
+        },
+        {
+          "rgb": [
+            90,
+            91,
+            91
+          ],
+          "pixels": 16602
+        },
+        {
+          "rgb": [
+            87,
+            88,
+            88
+          ],
+          "pixels": 13344
+        }
+      ]
+    }
+  ]
+}

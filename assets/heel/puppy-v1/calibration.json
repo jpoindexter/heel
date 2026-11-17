@@ -1,0 +1,194 @@
+{
+  "idle": {
+    "logicalScale": 0.387097,
+    "headHeightSourcePx": 124,
+    "headHeightLogicalTargetPx": 48,
+    "method": "manual approximate neutral-head calibration; one uniform scale per entire clip; visual comparison required"
+  },
+  "walk-right": {
+    "logicalScale": 0.786885,
+    "headHeightSourcePx": 61,
+    "headHeightLogicalTargetPx": 48,
+    "method": "manual approximate neutral-head calibration; one uniform scale per entire clip; visual comparison required"
+  },
+  "ball-play": {
+    "logicalScale": 0.648649,
+    "headHeightSourcePx": 74,
+    "headHeightLogicalTargetPx": 48,
+    "method": "manual approximate neutral-head calibration; one uniform scale per entire clip; visual comparison required"
+  },
+  "listening": {
+    "logicalScale": 0.387097,
+    "headHeightSourcePx": 124,
+    "headHeightLogicalTargetPx": 48,
+    "method": "manual approximate neutral-head calibration; one uniform scale per entire clip; visual comparison required"
+  },
+  "focus": {
+    "logicalScale": 0.387097,
+    "headHeightSourcePx": 124,
+    "headHeightLogicalTargetPx": 48,
+    "method": "manual approximate neutral-head calibration; one uniform scale per entire clip; visual comparison required"
+  },
+  "nudge": {
+    "logicalScale": 0.387097,
+    "headHeightSourcePx": 124,
+    "headHeightLogicalTargetPx": 48,
+    "method": "manual approximate neutral-head calibration; one uniform scale per entire clip; visual comparison required"
+  },
+  "done": {
+    "logicalScale": 0.4,
+    "headHeightSourcePx": 120,
+    "headHeightLogicalTargetPx": 48,
+    "method": "manual approximate neutral-head calibration; one uniform scale per entire clip; visual comparison required"
+  },
+  "rest": {
+    "logicalScale": 0.410256,
+    "headHeightSourcePx": 117,
+    "headHeightLogicalTargetPx": 48,
+    "method": "manual approximate neutral-head calibration; one uniform scale per entire clip; visual comparison required"
+  },
+  "wave": {
+    "logicalScale": 0.4,
+    "headHeightSourcePx": 120,
+    "headHeightLogicalTargetPx": 48,
+    "method": "manual approximate neutral-head calibration; one uniform scale per entire clip; visual comparison required"
+  },
+  "jump": {
+    "logicalScale": 0.510638,
+    "headHeightSourcePx": 94,
+    "headHeightLogicalTargetPx": 48,
+    "method": "manual approximate neutral-head calibration; one uniform scale per entire clip; visual comparison required"
+  },
+  "error": {
+    "logicalScale": 0.393443,
+    "headHeightSourcePx": 122,
+    "headHeightLogicalTargetPx": 48,
+    "method": "manual approximate neutral-head calibration; one uniform scale per entire clip; visual comparison required"
+  },
+  "review": {
+    "logicalScale": 0.393443,
+    "headHeightSourcePx": 122,
+    "headHeightLogicalTargetPx": 48,
+    "method": "manual approximate neutral-head calibration; one uniform scale per entire clip; visual comparison required"
+  },
+  "fetch-offer": {
+    "logicalScale": 0.592593,
+    "headHeightSourcePx": 81,
+    "headHeightLogicalTargetPx": 48,
+    "method": "manual approximate neutral-head calibration; one uniform scale per entire clip; visual comparison required"
+  },
+  "play-bow": {
+    "logicalScale": 0.6,
+    "headHeightSourcePx": 80,
+    "headHeightLogicalTargetPx": 48,
+    "method": "manual approximate neutral-head calibration; one uniform scale per entire clip; visual comparison required"
+  },
+  "chew-stick": {
+    "logicalScale": 0.380952,
+    "headHeightSourcePx": 126,
+    "headHeightLogicalTargetPx": 48,
+    "method": "manual approximate neutral-head calibration; one uniform scale per entire clip; visual comparison required"
+  },
+  "scratch-ear": {
+    "logicalScale": 0.393443,
+    "headHeightSourcePx": 122,
+    "headHeightLogicalTargetPx": 48,
+    "method": "manual approximate neutral-head calibration; one uniform scale per entire clip; visual comparison required"
+  },
+  "yawn": {
+    "logicalScale": 0.390244,
+    "headHeightSourcePx": 123,
+    "headHeightLogicalTargetPx": 48,
+    "method": "manual approximate neutral-head calibration; one uniform scale per entire clip; visual comparison required"
+  },
+  "sniff-search": {
+    "logicalScale": 0.5,
+    "headHeightSourcePx": 96,
+    "headHeightLogicalTargetPx": 48,
+    "method": "manual approximate neutral-head calibration; one uniform scale per entire clip; visual comparison required"
+  },
+  "stretch": {
+    "logicalScale": 0.615385,
+    "headHeightSourcePx": 78,
+    "headHeightLogicalTargetPx": 48,
+    "method": "manual approximate neutral-head calibration; one uniform scale per entire clip; visual comparison required"
+  },
+  "error-facepalm": {
+    "logicalScale": 0.390244,
+    "headHeightSourcePx": 123,
+    "headHeightLogicalTargetPx": 48,
+    "method": "manual approximate neutral-head calibration; one uniform scale per entire clip; visual comparison required"
+  },
+  "poop-gag": {
+    "logicalScale": 0.623377,
+    "headHeightSourcePx": 77,
+    "headHeightLogicalTargetPx": 48,
+    "method": "manual approximate neutral-head calibration; one uniform scale per entire clip; visual comparison required"
+  },
+  "pee-gag": {
+    "logicalScale": 0.666667,
+    "headHeightSourcePx": 72,
+    "headHeightLogicalTargetPx": 48,
+    "method": "revised approximate neutral-head calibration after envelope check; one scale for full clip; not exact anatomical measurement"
+  },
+  "sniff-trail": {
+    "logicalScale": 0.716418,
+    "headHeightSourcePx": 67,
+    "headHeightLogicalTargetPx": 48,
+    "method": "revised approximate neutral-head calibration after envelope check; one scale for full clip; not exact anatomical measurement"
+  },
+  "graze-grass": {
+    "logicalScale": 0.631579,
+    "headHeightSourcePx": 76,
+    "headHeightLogicalTargetPx": 48,
+    "method": "manual approximate neutral-head calibration; one uniform scale per entire clip; visual comparison required"
+  },
+  "pick-up-stick": {
+    "logicalScale": 0.738462,
+    "headHeightSourcePx": 65,
+    "headHeightLogicalTargetPx": 48,
+    "method": "manual approximate neutral-head calibration; one uniform scale per entire clip; visual comparison required"
+  },
+  "carry-stick": {
+    "logicalScale": 0.727273,
+    "headHeightSourcePx": 66,
+    "headHeightLogicalTargetPx": 48,
+    "method": "manual approximate neutral-head calibration; one uniform scale per entire clip; visual comparison required"
+  },
+  "sit-down": {
+    "logicalScale": 0.607595,
+    "headHeightSourcePx": 79,
+    "headHeightLogicalTargetPx": 48,
+    "method": "manual approximate neutral-head calibration; one uniform scale per entire clip; visual comparison required"
+  },
+  "lie-down": {
+    "logicalScale": 0.448598,
+    "headHeightSourcePx": 107,
+    "headHeightLogicalTargetPx": 48,
+    "method": "manual approximate neutral-head calibration; one uniform scale per entire clip; visual comparison required"
+  },
+  "curl-up": {
+    "logicalScale": 0.631579,
+    "headHeightSourcePx": 76,
+    "headHeightLogicalTargetPx": 48,
+    "method": "manual approximate neutral-head calibration; one uniform scale per entire clip; visual comparison required"
+  },
+  "wake-up": {
+    "logicalScale": 0.64,
+    "headHeightSourcePx": 75,
+    "headHeightLogicalTargetPx": 48,
+    "method": "manual approximate neutral-head calibration; one uniform scale per entire clip; visual comparison required"
+  },
+  "turn-around": {
+    "logicalScale": 0.685714,
+    "headHeightSourcePx": 70,
+    "headHeightLogicalTargetPx": 48,
+    "method": "revised approximate neutral-head calibration after envelope check; one scale for full clip; not exact anatomical measurement"
+  },
+  "look-directions": {
+    "logicalScale": 0.390244,
+    "headHeightSourcePx": 123,
+    "headHeightLogicalTargetPx": 48,
+    "method": "manual approximate neutral-head calibration; one uniform scale per entire clip; visual comparison required"
+  }
+}

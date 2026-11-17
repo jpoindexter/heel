@@ -1,0 +1,13 @@
+{
+  "release": "Published notarized prerelease",
+  "url": "https://github.com/jpoindexter/heel/releases/tag/v0.1.2",
+  "notarySubmission": "16e264a2-6cc9-430d-a648-d7e1b693220c",
+  "notaryStatus": "Accepted",
+  "dmgSha256": "f6026c77a0ce2c36ed8adcab4b3a295fb4c6f361891b267e6b62bce9127ab976",
+  "help": "Fail: focus ring absent",
+  "feedback": "Fail: no actual draft in current mailto configuration",
+  "allDatabaseTablesUnchanged": true,
+  "panelPositionChanged": true,
+  "appAndHelperStopped": true,
+  "trelloComments": 2
+}

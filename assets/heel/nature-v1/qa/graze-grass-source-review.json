@@ -1,0 +1,20 @@
+{
+  "status": "PROVISIONAL_UNAPPROVED_ANATOMY",
+  "approval": false,
+  "reason": "User corrected side-body anatomy; parent requires new approved neutral standing and walking references before accepting any nature clip.",
+  "source": "/Users/jasonpoindexter/Documents/GitHub/Greg agent/assets/heel/nature-v1/decoded/graze-grass.png",
+  "actualVisiblePoses": 16,
+  "majorBodyComponents": 16,
+  "sourceSize": [
+    2172,
+    724
+  ],
+  "grassVisibleInEachPose": true,
+  "mouthGrassContactVisible": "Lowered nibbling poses show continuous blade contact with lower lip; detailed crop saved.",
+  "warnings": [
+    "Side-body proportions unapproved; do not integrate or treat as accepted.",
+    "Coat has slight olive tint; neutral grey colour repair deferred until new anatomical reference.",
+    "Native playback not reviewed."
+  ],
+  "nextAction": "Await parent new anatomically approved reference. No further generation or repair."
+}

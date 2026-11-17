@@ -1,0 +1,93 @@
+Window: "Heel panel", App: Heel.
+0 standard window Heel panel, Secondary Actions: Raise
+	1 scroll area
+		2 HTML content Description: Heel, URL: tauri://localhost
+			3 container
+				4 button Back
+				5 heading Settings, Value: 1
+					6 text Settings
+				7 button Back to Greg
+				8 button Close panel
+				9 container Settings
+					10 container (expanded) Secondary Actions: Collapse
+						11 summary Help How Heel works, Value: on
+							12 heading Help, Value: 2
+								13 text Help
+							14 text How Heel works
+						15 container How Heel works
+							16 heading How Heel works, Value: 3
+								17 text How Heel works
+							18 summary Open Heel and find your way, Value: off
+								19 text Open Heel and find your way
+							20 summary Choose the AI Heel uses, Value: off
+								21 text Choose the AI Heel uses
+							22 summary Add, finish and park tasks, Value: off
+								23 text Add, finish and park tasks
+							24 summary Run a focus time-box, Value: off
+								25 text Run a focus time-box
+							26 summary Read your email with Heel, Value: off
+								27 text Read your email with Heel
+							28 container (expanded) Secondary Actions: Collapse
+								29 summary Find anything, Value: on
+									30 text Find anything
+								31 content list
+									32 container Press Command K (or the magnifier) to search your tasks, parked ideas, finished tasks, saved notes and what you said to Heel.
+										33 list marker 1
+										34 text Press Command K (or the magnifier) to search your tasks, parked ideas, finished tasks, saved notes and what you said to Heel.
+							35 summary Report a bug or suggest an idea, Value: off
+								36 text Report a bug or suggest an idea
+							37 summary Your data, Value: off
+								38 text Your data
+							39 summary When something is off, Value: off
+								40 text When something is off
+					41 summary Look Dark · Comfortable, Value: off
+						42 heading Look, Value: 2
+							43 text Look
+						44 text Dark · Comfortable
+					45 summary Greg Lively · notices on · attention off, Value: off
+						46 heading Greg, Value: 2
+							47 text Greg
+						48 text Lively · notices on · attention off
+					49 container (collapsed) Secondary Actions: Expand
+						50 summary Ways of working Time-box · Pickle jar, Value: off
+							51 heading Ways of working, Value: 2
+								52 text Ways of working
+							53 text Time-box · Pickle jar
+						54 stepper 0
+							55 unknown
+							56 unknown
+						57 stepper 0
+							58 unknown
+							59 unknown
+					60 summary Brain AI and skills, Value: off
+						61 heading Brain, Value: 2
+							62 text Brain
+						63 text AI and skills
+					64 summary Email Gmail, read-only, Value: off
+						65 heading Email, Value: 2
+							66 text Email
+						67 text Gmail, read-only
+					68 summary Startup Login, Dock, Value: off
+						69 heading Startup, Value: 2
+							70 text Startup
+						71 text Login, Dock
+					72 summary Privacy & data Back up, wipe, Value: off
+						73 heading Privacy & data, Value: 2
+							74 text Privacy & data
+						75 text Back up, wipe
+					76 summary About Heel 0.1.2 · send feedback, Value: off
+						77 heading About, Value: 2
+							78 text About
+						79 text Heel 0.1.2 · send feedback
+				80 button (collapsed) More, Secondary Actions: Expand
+				81 button What's on your mind?
+				82 container Notifications (F8)
+83 menu bar
+	84 Heel
+	85 File
+	86 Edit
+	87 View
+	88 Window
+	89 Help
+
+The focused UI element is 29 summary Find anything, Value: on

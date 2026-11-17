@@ -1,0 +1,105 @@
+Window: "Heel panel", App: Heel.
+0 standard window Heel panel, Secondary Actions: Raise
+	1 scroll area
+		2 HTML content Description: Heel, URL: tauri://localhost
+			3 container
+				4 button Back
+				5 heading Settings, Value: 1
+					6 text Settings
+				7 button Back to Greg
+				8 button Close panel
+				9 container Settings
+					10 summary Help How Heel works, Value: off
+						11 heading Help, Value: 2
+							12 text Help
+						13 text How Heel works
+					14 summary Look System · Comfortable, Value: off
+						15 heading Look, Value: 2
+							16 text Look
+						17 text System · Comfortable
+					18 summary Greg Lively · notices on · attention off, Value: off
+						19 heading Greg, Value: 2
+							20 text Greg
+						21 text Lively · notices on · attention off
+					22 container (collapsed) Secondary Actions: Expand
+						23 summary Ways of working Time-box · Pickle jar, Value: off
+							24 heading Ways of working, Value: 2
+								25 text Ways of working
+							26 text Time-box · Pickle jar
+						27 stepper 0
+							28 unknown
+							29 unknown
+						30 stepper 0
+							31 unknown
+							32 unknown
+					33 summary Brain AI and skills, Value: off
+						34 heading Brain, Value: 2
+							35 text Brain
+						36 text AI and skills
+					37 summary Email Gmail, read-only, Value: off
+						38 heading Email, Value: 2
+							39 text Email
+						40 text Gmail, read-only
+					41 summary Startup Login, Dock, Value: off
+						42 heading Startup, Value: 2
+							43 text Startup
+						44 text Login, Dock
+					45 summary Privacy & data Back up, wipe, Value: off
+						46 heading Privacy & data, Value: 2
+							47 text Privacy & data
+						48 text Back up, wipe
+					49 container (expanded) Secondary Actions: Collapse
+						50 summary About Heel 0.1.2 · send feedback, Value: on
+							51 heading About, Value: 2
+								52 text About
+							53 text Heel 0.1.2 · send feedback
+						54 container Send feedback
+							55 heading Send feedback, Value: 3
+								56 text Send feedback
+							57 container
+								58 text Goes to  jason@theft.studio . Heel opens an email in your mail app; nothing is sent until you press Send there.
+							59 container
+								60 (settable, unknown) Kind of feedback
+									61 radio button Something broke, Value: 1
+									62 radio button An idea, Value: 0
+								63 text In one line
+								64 text field (settable) In one line, Value: Codex check — ignore
+								65 text What happened
+								66 text entry area (settable) What happened, Value: [text entry area]
+									67 text (settable) Temporary release verification draft. Please ignore; this message will not be sent.
+								68 text How to make it happen again (optional)
+								69 text entry area (settable) How to make it happen again (optional), Value: [text entry area]
+								70 switch (settable, boolean) Include the debug report (version, Mac, logs; never your tasks, messages or mail), Value: on
+								71 text  Include the debug report (version, Mac, logs; never your tasks, messages or mail)
+								72 button Write the email…
+						73 container About
+							74 description list
+								75 container
+									76 text Heel 0.1.2
+								77 container
+									78 text Mac macOS (Darwin 25.6.0)
+								79 container
+									80 text Data folder /Users/jasonpoindexter/Library/Application Support/studio.theft.heel
+								81 container
+									82 text Helper port 62485 · Node v24.18.0 · database v6
+								83 container
+									84 text Brain claude
+								85 container
+									86 text Attention sense off
+								87 container
+									88 text Kept 0 tasks · 0 parked · 0 documents
+							89 button Restart helper
+							90 summary Debug, Value: off
+								91 text Debug
+				92 button (collapsed) More, Secondary Actions: Expand
+				93 button What's on your mind?
+				94 container Notifications (F8)
+95 menu bar
+	96 Heel
+	97 File
+	98 Edit
+	99 View
+	100 Window
+	101 Help
+
+The focused UI element is 66 text entry area (settable) What happened, Value: [text entry area]

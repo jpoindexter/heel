@@ -1,0 +1,3 @@
+src-tauri/target/release/bundle/macos/Heel.app: accepted
+source=Notarized Developer ID
+origin=Developer ID Application: Jason Poindexter (5352PXMNV5)

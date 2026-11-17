@@ -1,0 +1,20 @@
+[
+  {
+    "cardId": "ari:cloud:trello::card/workspace/6a8f03e71844a6c1103692dc/6ad0b78aae0ae84a75145172",
+    "cardName": "V1-10 Ship build: bundle the sidecar, start/stop with the app, notarize",
+    "text": "Done — notarization for v0.1.2 (2026-11-05). Apple accepted submission 16e264a2-6cc9-430d-a648-d7e1b693220c using the validated heel Keychain profile. App and DMG stapled; stapler validate passed; Gatekeeper accepted both with source=Notarized Developer ID. Published prerelease: https://github.com/jpoindexter/heel/releases/tag/v0.1.2 . GitHub asset digest equals local DMG SHA256 f6026c77a0ce2c36ed8adcab4b3a295fb4c6f361891b267e6b62bce9127ab976. 758 tests/typecheck passed. Existing releases unchanged. Not verified: installation on another Mac; broader card scope not re-certified. Full local handback: handoffs/codex-to-claude-notarize-release-2026-11-05.md. Card not moved.",
+    "readback": {
+      "id": "ari:cloud:trello::action/6aec6a2f9e4c92c6f06978d0",
+      "exactTextMatch": true
+    }
+  },
+  {
+    "cardId": "ari:cloud:trello::card/workspace/6a8f03e71844a6c1103692dc/6aec58d2e37f60259de089fa",
+    "cardName": "T1 TESTER RELEASE: Send feedback + crash Email details to jason@theft.studio, Settings › Help, signed DMG on GitHub",
+    "text": "Native checks on notarized v0.1.2 (2026-11-05): Help — Fail overall: all nine topics open, wrap and operate via Tab + Space/Enter in light/dark, but the focus outline is absent; settings.css references an undefined --focus-ring-width token. Feedback — Fail in current configuration: UI accepted the temporary test form and reported email open; macOS mailto handler is Brave, and no actual draft appeared in Brave or Mail. To/subject/body therefore remain unverified; nothing sent and no existing draft deleted. Appearance/system keyboard settings restored; all database tables unchanged. Saved panel position shifted during testing and is recorded in the handback. Notarized prerelease and digest verified: https://github.com/jpoindexter/heel/releases/tag/v0.1.2 . Follow-up: fix Help focus token and make the feedback success/fallback truthful for handlers that do not create a draft. Card not moved.",
+    "readback": {
+      "id": "ari:cloud:trello::action/6aec6a31b4f83546d45d573d",
+      "exactTextMatch": true
+    }
+  }
+]

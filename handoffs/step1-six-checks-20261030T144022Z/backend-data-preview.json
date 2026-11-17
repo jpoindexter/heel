@@ -1,0 +1,44 @@
+{
+  "ok": true,
+  "data": {
+    "dataDir": "/Users/jasonpoindexter/Library/Application Support/studio.theft.heel",
+    "retentionDays": 30,
+    "counts": {
+      "tasks": 2,
+      "parked": 0,
+      "messages": 8,
+      "documents": 0,
+      "skills": 0
+    },
+    "files": [
+      {
+        "name": "heel.db",
+        "bytes": 81920
+      },
+      {
+        "name": "heel.db-shm",
+        "bytes": 32768
+      },
+      {
+        "name": "heel.db-wal",
+        "bytes": 0
+      },
+      {
+        "name": "mascot-hidden.json",
+        "bytes": 16
+      },
+      {
+        "name": "panel-place.json",
+        "bytes": 33
+      },
+      {
+        "name": "panel-size-v2.json",
+        "bytes": 30
+      },
+      {
+        "name": "shell-settings.json",
+        "bytes": 62
+      }
+    ]
+  }
+}

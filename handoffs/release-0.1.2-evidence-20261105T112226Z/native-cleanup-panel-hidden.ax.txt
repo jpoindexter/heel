@@ -1,0 +1,14 @@
+Window: "Heel", App: Heel.
+0 standard window Heel, Secondary Actions: Raise
+	1 scroll area
+		2 HTML content Description: Heel, URL: tauri://localhost
+			3 image Heel, your companion. Click to open the panel.
+4 menu bar
+	5 Heel
+	6 File
+	7 Edit
+	8 View
+	9 Window
+	10 Help
+
+The focused UI element is 2 HTML content Description: Heel, URL: tauri://localhost

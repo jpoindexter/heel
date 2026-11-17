@@ -1,0 +1,65 @@
+{
+  "method": "integer horizontal translation of generated pixels to common head-band center 96; preserves shared scale and foot baseline",
+  "frames": [
+    {
+      "frame": 0,
+      "head_band_y": [
+        10,
+        60
+      ],
+      "head_center_before": 102.0,
+      "translation_x": -6,
+      "translation_y": 0
+    },
+    {
+      "frame": 1,
+      "head_band_y": [
+        10,
+        60
+      ],
+      "head_center_before": 94.5,
+      "translation_x": 2,
+      "translation_y": 0
+    },
+    {
+      "frame": 2,
+      "head_band_y": [
+        10,
+        60
+      ],
+      "head_center_before": 86.5,
+      "translation_x": 10,
+      "translation_y": 0
+    },
+    {
+      "frame": 3,
+      "head_band_y": [
+        10,
+        60
+      ],
+      "head_center_before": 95.0,
+      "translation_x": 1,
+      "translation_y": 0
+    },
+    {
+      "frame": 4,
+      "head_band_y": [
+        10,
+        60
+      ],
+      "head_center_before": 102.0,
+      "translation_x": -6,
+      "translation_y": 0
+    },
+    {
+      "frame": 5,
+      "head_band_y": [
+        10,
+        60
+      ],
+      "head_center_before": 94.5,
+      "translation_x": 2,
+      "translation_y": 0
+    }
+  ]
+}
